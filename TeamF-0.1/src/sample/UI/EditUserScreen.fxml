@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView editable="true" layoutX="34.0" layoutY="44.0" prefHeight="526.0" prefWidth="956.0">
+        <columns>
+          <TableColumn fx:id="lastNameCol" prefWidth="127.0" text="Last Name" />
+          <TableColumn fx:id="firstNameCol" minWidth="0.0" prefWidth="126.0" text="First Name"/>
+            <TableColumn fx:id="idNumCol" prefWidth="125.0" text="ID#" />
+            <TableColumn fx:id="usernameCol" minWidth="0.0" prefWidth="192.0" text="Username" />
+            <TableColumn fx:id="passwordCol" prefWidth="192.0" text="Password" />
+            <TableColumn fx:id="positionCol" prefWidth="192.0" text="Position" />
+        </columns>
+      </TableView>
+      <Button layoutX="231.0" layoutY="609.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Add User" />
+      <Button layoutX="418.0" layoutY="609.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Remove User" />
+      <Button layoutX="601.0" layoutY="609.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Edit User" />
+      <Button layoutX="880.0" layoutY="700.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Exit" />
+   </children>
+</AnchorPane>

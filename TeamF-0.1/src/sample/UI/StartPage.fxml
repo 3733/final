@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StartPageController">
+   <children>
+      <ImageView fitHeight="117.0" fitWidth="602.0" layoutX="211.0" layoutY="146.0">
+         <image>
+            <Image url="@Icons/BWH_logo_new.jpg" />
+         </image>
+      </ImageView>
+      <TextField fx:id="searchBox" layoutX="184.0" layoutY="273.0" prefHeight="78.0" prefWidth="572.0" promptText="Search by Room or Doctor">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </TextField>
+      <Button layoutX="756.0" layoutY="273.0" mnemonicParsing="false" onAction="#search" prefHeight="78.0" prefWidth="82.0">
+         <graphic>
+            <ImageView fitHeight="69.0" fitWidth="68.0" onDragDetected="#search">
+               <image>
+                  <Image url="@Icons/BTgrBoMGc.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="628.0" layoutY="670.0" mnemonicParsing="false" onAction="#login" prefHeight="66.0" prefWidth="163.0" style="-fx-background-color: #8aacb8;" text="LOG IN" textFill="#464545" underline="true" wrapText="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <SplitMenuButton layoutX="813.0" layoutY="670.0" mnemonicParsing="false" onAction="#language" prefHeight="66.0" prefWidth="104.0">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Chinese">
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="64.0">
+                     <image>
+                        <Image url="@Icons/Chinaflag.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuItem>
+          <MenuItem mnemonicParsing="false" text="English">
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="64.0">
+                     <image>
+                        <Image url="@Icons/USFlag.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="German">
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="64.0">
+                     <image>
+                        <Image url="@Icons/GermanFlag.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" text="Spanich">
+               <graphic>
+                  <ImageView fitHeight="49.0" fitWidth="64.0">
+                     <image>
+                        <Image url="@Icons/SpainFlag.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuItem>
+        </items>
+         <graphic>
+            <ImageView fitHeight="49.0" fitWidth="64.0">
+               <image>
+                  <Image url="@Icons/USFlag.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </SplitMenuButton>
+      <Button layoutX="927.0" layoutY="670.0" mnemonicParsing="false" onAction="#help" prefHeight="66.0" prefWidth="66.0">
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="55.0">
+               <image>
+                  <Image url="@Icons/Help-icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

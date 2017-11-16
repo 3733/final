@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminPageController">
+   <children>
+      <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="768.0" prefWidth="770.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1088.0" prefWidth="1600.0">
+               <children>
+                  <ImageView fitHeight="1088.0" fitWidth="1600.0">
+                     <image>
+                        <Image url="@Icons/01_thefirstfloor.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content></ScrollPane>
+      <Slider layoutX="614.0" layoutY="20.0" showTickLabels="true" showTickMarks="true" />
+      <Button layoutX="769.0" layoutY="422.0" mnemonicParsing="false" onAction="#addUser" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #baced5;" text="Add Users" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="769.0" layoutY="307.0" mnemonicParsing="false" onAction="#edit" prefHeight="114.0" prefWidth="254.0" text="Edit Map" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="769.0" layoutY="1.0" mnemonicParsing="false" onAction="#logout" prefHeight="67.0" prefWidth="254.0" text="Log Out" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="769.0" layoutY="652.0" mnemonicParsing="false" onAction="#settings" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #baced5;" text="Settings" underline="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="769.0" layoutY="537.0" mnemonicParsing="false" onAction="#removeUser" prefHeight="114.0" prefWidth="254.0" text="Remove Users" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="769.0" layoutY="192.0" mnemonicParsing="false" onAction="#serviceRequest" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #baced5;" text="Service Requests" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

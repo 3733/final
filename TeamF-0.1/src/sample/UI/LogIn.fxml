@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginPageController">
+   <children>
+      <GridPane layoutX="119.0" layoutY="164.0" prefHeight="221.0" prefWidth="402.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="156.0000213623047" minHeight="10.0" prefHeight="49.20000610351562" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="160.00000610351563" minHeight="0.0" prefHeight="50.79999389648438" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="184.20003356933591" minHeight="6.599999999999994" prefHeight="44.40000915527344" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="184.20003356933591" minHeight="10.0" prefHeight="89.19999084472656" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="27.0" prefWidth="97.0" text="Username:" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="27.0" prefWidth="97.0" text="Password:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="username" GridPane.columnIndex="1" />
+            <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#login" prefHeight="38.0" prefWidth="76.0" text="Log In" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#cancel" prefHeight="38.0" prefWidth="76.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Label fx:id="invalidLoginText" opacity="0.34" text="Username or Password was Incorrect" textFill="#e20505" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <Label layoutX="254.0" layoutY="81.0" text="Log In">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="47.0" fitWidth="248.0" layoutX="378.0" layoutY="24.0">
+         <image>
+            <Image url="@Icons/BWH_logo_new.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

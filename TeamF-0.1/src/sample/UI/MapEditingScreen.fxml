@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+   <children>
+      <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="768.0" prefWidth="770.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1088.0" prefWidth="1600.0">
+               <children>
+                  <ImageView fitHeight="1088.0" fitWidth="1600.0">
+                     <image>
+                        <Image url="@Icons/01_thefirstfloor.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="540.0" layoutY="279.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="496.0" layoutY="388.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="572.0" layoutY="320.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="572.0" layoutY="356.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="496.0" layoutY="320.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="496.0" layoutY="255.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="671.0" layoutY="299.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="671.0" layoutY="310.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="501.0" layoutY="414.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="491.0" layoutY="686.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="458.0" layoutY="666.0">
+                     <image>
+                        <Image url="@Icons/dot.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </content></ScrollPane>
+      <Slider layoutX="614.0" layoutY="20.0" showTickLabels="true" showTickMarks="true" />
+      <Button layoutX="770.0" layoutY="654.0" mnemonicParsing="false" onAction="#editEdges" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #8bdb9c;" text="Edit Path" underline="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button layoutX="770.0" layoutY="424.0" mnemonicParsing="false" onAction="#editNodes" prefHeight="114.0" prefWidth="254.0" text="Add Node" underline="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="backButton" layoutX="769.0" layoutY="1.0" mnemonicParsing="false" onAction="#openMapScreen" prefHeight="62.0" prefWidth="254.0" text="&lt;Back">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="770.0" layoutY="539.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #ec3f3f;" text="Remove Node" underline="true">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Button>
+      <TextField layoutX="827.0" layoutY="371.0" prefHeight="38.0" prefWidth="54.0" />
+      <TextField layoutX="919.0" layoutY="371.0" prefHeight="38.0" prefWidth="54.0" />
+      <Label layoutX="792.0" layoutY="343.0" text="Coordinates">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="807.0" layoutY="376.0" text="X:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="901.0" layoutY="376.0" text="Y:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

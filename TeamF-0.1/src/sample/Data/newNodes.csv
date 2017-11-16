@@ -1,0 +1,49 @@
+NODEID,XCOORD,YCOORD,FLOOR,BUILDING,NODETYPE,LONGNAME,SHORTNAME,TEAMASSIGNED
+FDEPT00101               ,1614,829,1   ,Tower          ,DEPT,Center for International Medecine                           ,CIM                 ,F
+FHALL00101               ,1622,808,1   ,Tower          ,HALL,CIM Hall Point 1                                            ,CIMHP1              ,F
+FSTAI00101               ,1689,805,1   ,Tower          ,STAI,CIM Stair1                                                  ,CIMS1               ,F
+FSTAI00201               ,1734,805,1   ,Tower          ,STAI,CIM Stair2                                                  ,CIMS2               ,F
+FHALL00201               ,1640,850,1   ,Tower          ,HALL,Chapel Hall Point 1                                         ,CHP1                ,F
+FHALL00301               ,1788,850,1   ,Tower          ,HALL,Chapel Hall Point 2                                         ,CHP2                ,F
+FHALL00401               ,1772,850,1   ,Tower          ,HALL,Chapel Hall Alcove                                          ,CHA                 ,F
+FHALL00501               ,1629,900,1   ,Tower          ,HALL,CIM Hall Entrance                                           ,CIMHE               ,F
+FHALL00601               ,1629,930,1   ,Tower          ,HALL,Spiritual Hall Point 1                                      ,SHP1                ,F
+FHALL00701               ,1759,900,1   ,Tower          ,HALL,Chapel Hall Entrance                                        ,CHE                 ,F
+FEXIT00101               ,1554,930,1   ,Tower          ,EXIT,Staff Area Entrance                                         ,SAE                 ,F
+FSERV00101               ,1724,930,1   ,Tower          ,SERV,Multifaith Chapel                                           ,MFC                 ,F
+FHALL00801               ,1772,930,1   ,Tower          ,HALL,Tower Hall Point 1                                          ,THP1                ,F
+FHALL00901               ,1868,930,1   ,Tower          ,HALL,Tower Hall Point 2                                          ,THP2                ,F
+FSERV00201               ,1951,877,1   ,Tower          ,SERV,ATM                                                         ,ATM                 ,F
+FRETL00101               ,1978,838,1   ,Tower          ,RETL,Vending Machine                                             ,VEND                ,F
+FEXIT00201               ,2017,803,1   ,Tower          ,EXIT,Back Exit                                                   ,BEXIT               ,F
+FSTAI00301               ,2067,821,1   ,Tower          ,STAI,Lobby Stairs #2                                             ,LS2                 ,F
+FSERV00301               ,1601,1025,1   ,Tower          ,SERV,Medical Cashier                                             ,MCSH                ,F
+FHALL01001               ,1627,1044,1   ,Tower          ,HALL,Spiritual Hall Point 2                                      ,SHP2                ,F
+FHALL01101               ,1639,1058,1   ,Tower          ,HALL,Spiritual Hall Point 3                                      ,SHP3                ,F
+FDEPT00201               ,1766,1024,1   ,Tower          ,DEPT,International Patient Center                                ,IPC                 ,F
+FHALL01201               ,1760,1060,1   ,Tower          ,HALL,Internation Hall Point 1                                    ,IHP1                ,F
+FHALL01301               ,1760,952,1   ,Tower          ,HALL,International Hall Pont 2                                   ,IHP2                ,F
+FHALL01401               ,1772,1212,1   ,Tower          ,HALL,Internation Hall Point 3                                    ,IHP3                ,F
+FDEPT00301               ,1787,1144,1   ,Tower          ,DEPT,Sharf Admitting Center                                      ,SAC                 ,F
+FHALL01501               ,1739,1120,1   ,Tower          ,HALL,Library Hall Point 1                                        ,LHP1                ,F
+FSERV00401               ,1713,1137,1   ,Tower          ,SERV,Kessler Library                                             ,KL                  ,F
+FHALL01601               ,1640,1120,1   ,Tower          ,HALL,Library Hall Point 2                                        ,LHP2                ,F
+FDEPT00401               ,1527,1114,1   ,Tower          ,DEPT,Bretholz Center for Patients and Families                   ,BCPF                ,F
+FDEPT00501               ,1480,1065,1   ,Tower          ,DEPT,Waiting Area 1                                              ,WA1                 ,F
+FRETL00201               ,1477,1245,1   ,Tower          ,RETL,Au Bon Pain                                                 ,ABP                 ,F
+FEXIT00301               ,1614,1245,1   ,Tower          ,EXIT,Au Bon  Pain Entrance                                       ,ABPE                ,F
+FRETL00301               ,1595,1318,1   ,Tower          ,RETL,Valet Cashier                                               ,VCSH                ,F
+FINFO00101               ,1700,1244,1   ,Tower          ,INFO,Lobby Information Desk                                      ,LID                 ,F
+FEXIT00401               ,1754,1355,1   ,Tower          ,EXIT,Lobby Main Entrance                                         ,LME                 ,F
+FDEPT00601               ,1843,1244,1   ,Tower          ,DEPT,Obstretics Admitting                                        ,OBA                 ,F
+FSTAI00401               ,1922,1241,1   ,Tower          ,STAI,Lobby Stairs #1                                             ,LS1                 ,F
+FEXIT00501               ,2067,1267,1   ,Tower          ,EXIT,Emergency Room Interior Entrance                            ,ERIE                ,F
+FDEPT00701               ,2127,1288,1   ,Tower          ,DEPT,Emergency Room                                              ,ER                  ,F
+FEXIT00601               ,2091,1365,1   ,Tower          ,EXIT,Emergency Room Exterior Entrance                            ,EREE                ,F
+FSERV00501               ,2128,964,1   ,Tower          ,SERV,Lobby Bathroom 1                                            ,LB1                 ,F
+FSERV00601               ,2128,1005,1   ,Tower          ,SERV,Lobby Bathroom 2                                            ,LB2                 ,F
+FHALL01701               ,2010,938,1   ,Tower          ,HALL,Lobby Node 1                                                ,LBN1                ,F
+FHALL01801               ,2014,1220,1   ,Tower          ,HALL,Lobby Node 2                                                ,LBN2                ,F
+WELEV00M01               ,1810,1280,1   ,Tower          ,ELEV,Elevator M Floor 1                                          ,Elevator M1         ,F
+WHALL00101               ,2160,910,1   ,45 Francis     ,HALL,Hallway Connector 1 Floor 1                                 ,Hallway W0101       ,F
+WELEV00L01               ,1810,930,1   ,Tower          ,ELEV,Elevator L Floor 1                                          ,Elevator L1         ,F
