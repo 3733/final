@@ -2,7 +2,7 @@
 * Purpose: to add additional Request for IT ServiceRequestell */
 
 
-package controllers;
+package sample.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -30,10 +30,6 @@ import java.text.*;
 
 
 public class ServiceRequestController implements Initializable{
-
-
-
-
 
     //top menu bar
     @FXML
