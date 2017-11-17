@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Array;
 import java.util.Properties;
 
 
@@ -85,9 +86,10 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     public void assistanceSendRequest() throws MissingFieldException{    //when the Send button is pressed
+        ArrayList<Integer> assistingEmployees = new ArrayList<Integer>();
         AssistanceRequest newAssist = new AssistanceRequest(assistanceNode, assistanceDescription.getText(),
-                Integer.parseInt(assistanceID.getText()), assistanceTime.getText(), 00000,
-                "assistance", Integer.parseInt(assistanceUrgency.getText()));
+                Integer.parseInt(assistanceID.getText()), assistanceTime.getText(), 0000,
+                "assistance", "unaccepted", Integer.parseInt(assistanceUrgency.getText()));
         requestList.add(newAssist);               //new service request is made and added to priority queue
         testEmbeddedDB.addAssistanceRequest(newAssist);
 
@@ -95,6 +97,8 @@ public class ServiceRequestController implements Initializable{
         assistanceDescription.clear();
         ID++;                                           //increments service ID counter
         assistancePane.setExpanded(false);              //closes the request menu
+
+        refreshTable();
     }
 
 
@@ -140,8 +144,9 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     public void foodSendRequest() throws MissingFieldException{
+        ArrayList<Integer> foodEmployees = new ArrayList<Integer>();
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
-                foodTime.getText(), 00000, "food", foodPatient.getText(),
+                foodTime.getText(), 0000, "food", "unaccepted", foodPatient.getText(),
                         foodServingTime.getText(), foodOrder.getText());
         requestList.add(newFood);
         testEmbeddedDB.addFoodRequest(newFood);
@@ -152,6 +157,8 @@ public class ServiceRequestController implements Initializable{
         foodDescription.clear();
         ID++;
         foodPane.setExpanded(false);
+
+        refreshTable();
     }
 
 
@@ -193,9 +200,10 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     public void transportSendRequest() throws MissingFieldException{
+        ArrayList<Integer> transportingEmployees = new ArrayList<Integer>();
         TransportRequest newTransport = new TransportRequest(transportNode, transportDescription.getText(),
-                Integer.parseInt(transportID.getText()), transportTime.getText(), 00000,
-                "transport", false, transportPatient.getText(), transportType.getText());
+                Integer.parseInt(transportID.getText()), transportTime.getText(), 0000,
+                "transport", "unaccepted",false, transportPatient.getText(), transportType.getText());
         requestList.add(newTransport);
         testEmbeddedDB.addTransportRequest(newTransport);
 
@@ -204,6 +212,8 @@ public class ServiceRequestController implements Initializable{
         transportDescription.clear();
         ID++;
         transportPane.setExpanded(false);
+
+        refreshTable();
     }
 
 
@@ -243,9 +253,10 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     public void cleanSendRequest() throws MissingFieldException{
+        ArrayList<Integer> cleaningEmployees = new ArrayList<Integer>();
         CleaningRequest newClean = new CleaningRequest(cleanNode, cleanDescription.getText(),
-                Integer.parseInt(cleanID.getText()), cleanTime.getText(), 00000,
-                "cleaning", Integer.parseInt(cleanLevel.getText()));
+                Integer.parseInt(cleanID.getText()), cleanTime.getText(), 0000,
+                "cleaning", "unaccepted", Integer.parseInt(cleanLevel.getText()));
         requestList.add(newClean);
         testEmbeddedDB.addCleaningRequest(newClean);
 
@@ -253,6 +264,8 @@ public class ServiceRequestController implements Initializable{
         cleanDescription.clear();
         ID++;
         cleanPane.setExpanded(false);
+
+        refreshTable();
     }
 
 
@@ -292,9 +305,10 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     public void securitySendRequest() throws MissingFieldException{
+        ArrayList<Integer> securityEmployees = new ArrayList<Integer>();
         SecurityRequest newSecurity = new SecurityRequest(securityNode, securityDescription.getText(),
-                Integer.parseInt(securityID.getText()), securityTime.getText(), 00000,
-                "security", Integer.parseInt(securityLevel.getText()));
+                Integer.parseInt(securityID.getText()), securityTime.getText(), 0000,
+                "security", "unaccepted", Integer.parseInt(securityLevel.getText()));
         requestList.add(newSecurity);
         testEmbeddedDB.addSecurityRequest(newSecurity);
 
@@ -302,6 +316,8 @@ public class ServiceRequestController implements Initializable{
         securityDescription.clear();
         ID++;
         securityPane.setExpanded(false);
+
+        refreshTable();
     }
 
     @FXML
@@ -309,9 +325,6 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     private TextArea itDescription;
-
-    @FXML
-    private Button sendItRequest;
 
     @FXML
     private TextField itUrgency;
@@ -335,9 +348,10 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     public void itSendRequest() throws MissingFieldException{
+        ArrayList<Integer> itEmployees = new ArrayList<Integer>();
         ItRequest newIt = new ItRequest(n1, itDescription.getText(),
-                Integer.parseInt(itID.getText()), itTime.getText(), 00000,
-                "it", Integer.parseInt(itUrgency.getText()));
+                Integer.parseInt(itID.getText()), itTime.getText(), 0000,
+                "it", "unaccepted", Integer.parseInt(itUrgency.getText()));
         requestList.add(newIt);
         testEmbeddedDB.addItRequest(newIt);
 
@@ -345,7 +359,13 @@ public class ServiceRequestController implements Initializable{
         itDescription.clear();
         ID++;
         itPane.setExpanded(false);
+
+        refreshTable();
     }
+
+
+
+    //viewable list of requests
 
     @FXML
     private TableView<ServiceRequest> tableView;
@@ -356,24 +376,38 @@ public class ServiceRequestController implements Initializable{
     @FXML
     private TableColumn<ServiceRequest, String> status;
 
-    @FXML
-    private Button refresh;
-
+             //formatted list of requests that go into table
     private ObservableList<ServiceRequest> requestObserve = FXCollections.observableArrayList();
+
+             //formats a string into being able to be displayed in table
+    public StringProperty stringToStringProperty(String cellEntry) {
+        return new SimpleStringProperty(cellEntry);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        requests.setCellValueFactory(cellData -> cellData.getValue().getRequestType());
-        status.setCellValueFactory(cellData -> cellData.getValue().getStatus());
+        requests.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getType()));   //sets service name in column
+        status.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getStatus()));   //sets service status in column
         counter = 0;
     }
 
     private int counter;
 
-    @FXML
-    private Button deletebutt;
 
-    public void deleterequest()
+    public void acceptRequest()
+    {
+        ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
+
+        requestSelected.acceptRequest();
+
+        for(int i = 0; i < requestObserve.size(); i++){             //looks for the selected service in the table
+            if(requestSelected.serviceID == (requestObserve.get(i)).serviceID)
+                requestObserve.set(i, requestSelected);
+        }
+
+    }
+
+    public void deleteRequest()
     {
         ObservableList<ServiceRequest> selectedRows, allrequests;
         allrequests = tableView.getItems();
@@ -392,23 +426,21 @@ public class ServiceRequestController implements Initializable{
     @FXML
     public void refreshTable() {
         int i = 0;
-        //using data from database
+      /*  //using data from database
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
       for (i = counter; i < arrayOfRequestsFromDatabase.size();i++) {
           requestObserve.add(arrayOfRequestsFromDatabase.get(i));
       }
-
-      counter = i;
-      tableView.setItems(requestObserve);
+*/
 
         //using local data from array
-        /*for(i = counter; i < requestList.size(); i++) {
+        for(i = counter; i < requestList.size(); i++)
             requestObserve.add(requestList.get(i));
-            // requests.setText((requestList.get(i)).typeOfRequest);
-        }*/
 
+        counter = i;
+        tableView.setItems(requestObserve);
     }
 
 

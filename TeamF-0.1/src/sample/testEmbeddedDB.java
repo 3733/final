@@ -187,6 +187,7 @@ public class testEmbeddedDB {
                 String serviceTime = r.getString("servicetime");
                 int serviceEmployeeID = r.getInt("serviceemployeeid");
                 String typeofreq = r.getString("typeofrequest");
+                String status = r.getString("status");
                 String patName = r.getString("patientname");
                 String timeToBeServed = r.getString("timetobeserved");
                 String order = r.getString("foodorder");
@@ -198,27 +199,27 @@ public class testEmbeddedDB {
 
                 if(typeofreq.contains("food")){
                     req = new FoodRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
-                            typeofreq, patName, timeToBeServed, order);
+                            typeofreq, status, patName, timeToBeServed, order);
 
                 } else if(typeofreq.contains("assistance")){
                     req = new AssistanceRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
-                            typeofreq, urgency);
+                            typeofreq, status, urgency);
 
                 } else if(typeofreq.contains("transport")){
                     req = new TransportRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
-                            typeofreq, arrival, patName, typeOfTransport);
+                            typeofreq, status, arrival, patName, typeOfTransport);
 
                 } else if(typeofreq.contains("cleaning")){
                     req = new CleaningRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
-                            typeofreq, urgency);
+                            typeofreq, status, urgency);
 
                 } else if(typeofreq.contains("security")){
                     req = new SecurityRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
-                            typeofreq, urgency);
+                            typeofreq, status, urgency);
 
                 } else if(typeofreq.contains("it")){
                     req = new ItRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
-                            typeofreq, urgency);
+                            typeofreq, status, urgency);
                 }
 
                 requests.add(req);
