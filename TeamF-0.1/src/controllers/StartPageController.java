@@ -1,4 +1,4 @@
-package sample;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Main;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

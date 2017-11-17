@@ -1,4 +1,4 @@
-package sample;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import sample.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -68,7 +69,7 @@ public class NavigationPageController {
         Vector<Node> dbnodes = new Vector<Node>();
 
 
-        for (int i =0;i<testEmbeddedDB.getAllNodes().size();i++){
+        for (int i = 0; i< testEmbeddedDB.getAllNodes().size(); i++){
 
             dbnodes.add(testEmbeddedDB.getAllNodes().get(i));
         }
@@ -224,7 +225,7 @@ public class NavigationPageController {
         String nameDest = path.get(length - 1).getShortName();
 
         // Opening the image
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
+        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/views/Icons/01_thefirstfloor.png"));
         Graphics2D pathImage =  firstFloor.createGraphics();
 
         // Setting up the proper color settings

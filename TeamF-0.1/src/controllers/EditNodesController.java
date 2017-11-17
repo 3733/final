@@ -1,8 +1,10 @@
-package sample;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import sample.Main;
+import sample.testEmbeddedDB;
 
 public class EditNodesController {
     @FXML

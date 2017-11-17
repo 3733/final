@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginPageController">
+<AnchorPane maxHeight="480.0" maxWidth="640.0" minHeight="480.0" minWidth="640.0" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginPageController">
    <children>
       <GridPane layoutX="119.0" layoutY="164.0" prefHeight="221.0" prefWidth="402.0">
         <columnConstraints>

@@ -2,7 +2,7 @@
 * Purpose: to add additional Request for IT ServiceRequestell */
 
 
-package sample;
+package controllers;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -21,8 +21,7 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 
-
-import sample.testEmbeddedDB;
+import sample.*;
 
 import javax.xml.ws.Service;
 import java.net.URL;
@@ -84,7 +83,7 @@ public class ServiceRequestController implements Initializable{
     }
 
     @FXML
-    public void assistanceSendRequest() throws MissingFieldException{    //when the Send button is pressed
+    public void assistanceSendRequest() throws MissingFieldException {    //when the Send button is pressed
         AssistanceRequest newAssist = new AssistanceRequest(assistanceNode, assistanceDescription.getText(),
                 Integer.parseInt(assistanceID.getText()), assistanceTime.getText(), 00000,
                 "assistance", Integer.parseInt(assistanceUrgency.getText()));

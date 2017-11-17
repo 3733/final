@@ -1,7 +1,8 @@
-package sample;
+package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import sample.Main;
 
 public class AdminPageController {
     @FXML
