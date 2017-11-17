@@ -1,6 +1,6 @@
 package sample;
 
-import controllers.NavigationPageController;
+import sample.controllers.NavigationPageController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

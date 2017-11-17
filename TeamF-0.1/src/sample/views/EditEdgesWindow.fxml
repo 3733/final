@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EditEdgesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EditEdgesController">
    <children>
       <Button fx:id="addEdgebtn" layoutX="178.0" layoutY="329.0" mnemonicParsing="false" onAction="#addEdgeButton" prefHeight="35.0" prefWidth="108.0" text="Add Edge" />
       <Button fx:id="removeEdgebtn" layoutX="446.0" layoutY="329.0" mnemonicParsing="false" onAction="#removeEdgeButton" prefHeight="35.0" prefWidth="108.0" text="Remove Edge" />
