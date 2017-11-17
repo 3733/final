@@ -64,7 +64,7 @@ public class NavigationPageController {
     // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
     @FXML
     public void go() throws IOException,InterruptedException{
-
+        /*
         Vector<Node> Vec = new Vector<Node>(10);
         Node n1 = new Node("FDEPT00101", 1614, 829, 1, "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
         Vec.addElement(n1);
@@ -87,8 +87,7 @@ public class NavigationPageController {
         InverseVec.addElement(n3);
         InverseVec.addElement(n3);
         InverseVec.addElement(n2);
-        InverseVec.addElement(n1);
-/*
+        InverseVec.addElement(n1); */
 
         Vector<Node> dbnodes = new Vector<Node>();
 
@@ -174,8 +173,8 @@ public class NavigationPageController {
 
 
          Vector<Node> Path =CuurMap.AStar(CuurMap.getMap().get(0),MinNode);
-*/
-        testDrawDirections(InverseVec);
+        testDrawDirections(Path);
+        Data.data.path = Path;
         //drawDirections(path);
     }
 
@@ -195,9 +194,9 @@ public class NavigationPageController {
     @FXML
     public void sendMsg() throws Exception{
         //Vector<Node> msgVec = new Vector<Node>(10);
-        EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng");
+        EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
         //go();
-        emailService.sendEmail(NavigationPageController.directions(path), email.getText());
+        emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
     }
 
     // Button to return to the welcome screen
@@ -246,16 +245,16 @@ public class NavigationPageController {
         BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
         Graphics2D pathImage = firstFloor.createGraphics();
         int length = path.size();
+        String nameDest = path.get(length-1).getShortName();
+        String nameDept = path.get(0).getShortName();
 
+        Data.data.currentMap = "path" + nameDept + "-" + nameDest;
         // Setting up the proper color settings
-        pathImage.setStroke(new BasicStroke(7)); // Controlling the width of the shapes drawn
+        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
 
         // Iterate through all the path nodes to draw the path
         for(int i = 0; i < length ; i++) {
             Node node = path.get(i);
-            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,20,20);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,20,20);
             if(i + 1 < length){
                 Node node2 = path.get(i+1);
                 // Lines are drawn offset,
@@ -264,50 +263,15 @@ public class NavigationPageController {
             }
         }
 
-        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-        System.out.println("Image set on map");
-    }
-    // Purpose: Draw a path on the map
-    @FXML
-    public void drawDirections(Vector<Node> path) throws IOException,InterruptedException {
-        String nameDep = path.get(0).getShortName();
-        int length = path.size();
-        String nameDest = path.get(length - 1).getShortName();
-
-        // Opening the image
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
-        Graphics2D pathImage =  firstFloor.createGraphics();
-
-        // Setting up the proper color settings
-        pathImage.setStroke(new BasicStroke(7)); // Controlling the width of the shapes drawn
-        pathImage.setColor( new java.awt.Color(2,97,187)); // This color is the same blue as logo
-
-        // Iterate through all the path nodes to draw the path
-        for(int i = 0; i < length ; i++) {
+        for(int i = 0; i < length; i++) {
             Node node = path.get(i);
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,20,20);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,20,20);
-            if(i + 1 < length){
-                Node node2 = path.get(i+1);
-                // Lines are drawn offset,
-                pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(),node2.getxCoordinate() ,node2.getyCoordinate());
-            }
+            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
+            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
         }
 
-        // Saving the image in a new file, uses the departure location and destination in the name of the map
-        ImageIO.write(firstFloor, "PNG", new File("path" + nameDep + "-" + nameDest + ".png"));
 
-        //clearFile("./TeamF-0.1/src/sample/UI/GeneratedImages/path" + nameDep + "-" + nameDest + ".png");
-        /*FileWriter data = new FileWriter("./TeamF-0.1/src/sample/Data/Data.txt", false);
-        PrintWriter writer2 = new PrintWriter(data);
-        writer2.printf("%s","./TeamF-0.1/src/sample/UI/GeneratedImages/path" + nameDep + "-" + nameDest + ".png");
-        writer2.close();
-        data.close();*/
-        // Set the saved image as the new map
-        Data.data.map = map.getImage();
-        Data.data.currentMap = "path" + nameDep + "-" + nameDest + ".png";
-        //Thread.sleep(2000); // Wait before reading and setting the image as the new map
-        map.setImage(new Image(new FileInputStream("path" + nameDep + "-" + nameDest + ".png")));
-        System.out.println("Image edited and saved");
+        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
+        System.out.println("Image set on map");
     }
 }
