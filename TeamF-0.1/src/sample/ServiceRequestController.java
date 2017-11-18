@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -88,8 +87,9 @@ public class ServiceRequestController implements Initializable{
     public void assistanceSendRequest() throws MissingFieldException{    //when the Send button is pressed
         ArrayList<Integer> assistingEmployees = new ArrayList<Integer>();
         AssistanceRequest newAssist = new AssistanceRequest(assistanceNode, assistanceDescription.getText(),
-                Integer.parseInt(assistanceID.getText()), assistanceTime.getText(), 0000,
-                "assistance", "unaccepted", Integer.parseInt(assistanceUrgency.getText()));
+                Integer.parseInt(assistanceID.getText()), assistanceTime.getText(), "", "",
+                0000, "assistance", "unaccepted",
+                Integer.parseInt(assistanceUrgency.getText()));
         requestList.add(newAssist);               //new service request is made and added to priority queue
         testEmbeddedDB.addAssistanceRequest(newAssist);
 
@@ -134,7 +134,7 @@ public class ServiceRequestController implements Initializable{
         foodMenu.setItems(FXCollections.observableArrayList(
                 "Apple pie", "Banana", "Catfish soup", "Chicken parmesan", "Chocolate cake", "Lasagna",
                 "Loaf of bread", "Lobster casserole", "Mashed potatoes", "Olive pizza", "Orange juice", "Oreos",
-                "Popcorn shrimps", "Sardines", "Smoked salmon", "Steak", "Tuna potato", "Water"));
+                "Popcorn shrimps", "Sardines", "Smoked salmon", "Steak with lamb sauce", "Tuna potato", "Water"));
     }
 
     private Node foodNode;
@@ -151,8 +151,8 @@ public class ServiceRequestController implements Initializable{
     public void foodSendRequest() throws MissingFieldException{
         ArrayList<Integer> foodEmployees = new ArrayList<Integer>();
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
-                foodTime.getText(), 0000, "food", "unaccepted", foodPatient.getText(),
-                        foodServingTime.getText(), (String)foodMenu.getValue());
+                foodTime.getText(),"", "", 0000, "food",
+                "unaccepted", foodPatient.getText(), foodServingTime.getText(), (String)foodMenu.getValue());
 
         requestList.add(newFood);
         testEmbeddedDB.addFoodRequest(newFood);
@@ -207,8 +207,9 @@ public class ServiceRequestController implements Initializable{
     public void transportSendRequest() throws MissingFieldException{
         ArrayList<Integer> transportingEmployees = new ArrayList<Integer>();
         TransportRequest newTransport = new TransportRequest(transportNode, transportDescription.getText(),
-                Integer.parseInt(transportID.getText()), transportTime.getText(), 0000,
-                "transport", "unaccepted",false, transportPatient.getText(), transportType.getText());
+                Integer.parseInt(transportID.getText()), transportTime.getText(), "", "",
+                0000, "transport", "unaccepted",false,
+                transportPatient.getText(), transportType.getText());
         requestList.add(newTransport);
         testEmbeddedDB.addTransportRequest(newTransport);
 
@@ -260,7 +261,7 @@ public class ServiceRequestController implements Initializable{
     public void cleanSendRequest() throws MissingFieldException{
         ArrayList<Integer> cleaningEmployees = new ArrayList<Integer>();
         CleaningRequest newClean = new CleaningRequest(cleanNode, cleanDescription.getText(),
-                Integer.parseInt(cleanID.getText()), cleanTime.getText(), 0000,
+                Integer.parseInt(cleanID.getText()), cleanTime.getText(), "", "",0000,
                 "cleaning", "unaccepted", Integer.parseInt(cleanLevel.getText()));
         requestList.add(newClean);
         testEmbeddedDB.addCleaningRequest(newClean);
@@ -312,8 +313,9 @@ public class ServiceRequestController implements Initializable{
     public void securitySendRequest() throws MissingFieldException{
         ArrayList<Integer> securityEmployees = new ArrayList<Integer>();
         SecurityRequest newSecurity = new SecurityRequest(securityNode, securityDescription.getText(),
-                Integer.parseInt(securityID.getText()), securityTime.getText(), 0000,
-                "security", "unaccepted", Integer.parseInt(securityLevel.getText()));
+                Integer.parseInt(securityID.getText()), securityTime.getText(), "", "",
+                0000, "security", "unaccepted",
+                Integer.parseInt(securityLevel.getText()));
         requestList.add(newSecurity);
         testEmbeddedDB.addSecurityRequest(newSecurity);
 
@@ -355,7 +357,7 @@ public class ServiceRequestController implements Initializable{
     public void itSendRequest() throws MissingFieldException{
         ArrayList<Integer> itEmployees = new ArrayList<Integer>();
         ItRequest newIt = new ItRequest(n1, itDescription.getText(),
-                Integer.parseInt(itID.getText()), itTime.getText(), 0000,
+                Integer.parseInt(itID.getText()), itTime.getText(), "", "",0000,
                 "it", "unaccepted", Integer.parseInt(itUrgency.getText()));
         requestList.add(newIt);
         testEmbeddedDB.addItRequest(newIt);
@@ -404,6 +406,9 @@ public class ServiceRequestController implements Initializable{
         ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
 
         requestSelected.acceptRequest();
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("h:mm a");
+        requestSelected.setAcceptTime(ft.format(date));
 
         for(int i = 0; i < requestObserve.size(); i++){             //looks for the selected service in the table
             if(requestSelected.serviceID == (requestObserve.get(i)).serviceID)
@@ -423,6 +428,9 @@ public class ServiceRequestController implements Initializable{
         //loop over the selected rows and remove the ServiceRequest objects from the table
         for (ServiceRequest req: selectedRows)
         {
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat ("h:mm a");
+            req.setFinishTime(ft.format(date));
             allrequests.remove(req);
         }
     }

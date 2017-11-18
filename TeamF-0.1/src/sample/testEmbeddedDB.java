@@ -185,6 +185,8 @@ public class testEmbeddedDB {
                 String desc = r.getString("description");
                 int serviceID = r.getInt("serviceid");
                 String serviceTime = r.getString("servicetime");
+                String acceptTime = r.getString("accepttime");
+                String finishTime = r.getString("finishtime");
                 int serviceEmployeeID = r.getInt("serviceemployeeid");
                 String typeofreq = r.getString("typeofrequest");
                 String status = r.getString("status");
@@ -198,27 +200,27 @@ public class testEmbeddedDB {
                 n = testEmbeddedDB.getNode(dest);
 
                 if(typeofreq.contains("food")){
-                    req = new FoodRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
+                    req = new FoodRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, status, patName, timeToBeServed, order);
 
                 } else if(typeofreq.contains("assistance")){
-                    req = new AssistanceRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
+                    req = new AssistanceRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, status, urgency);
 
                 } else if(typeofreq.contains("transport")){
-                    req = new TransportRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
+                    req = new TransportRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, status, arrival, patName, typeOfTransport);
 
                 } else if(typeofreq.contains("cleaning")){
-                    req = new CleaningRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
+                    req = new CleaningRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, status, urgency);
 
                 } else if(typeofreq.contains("security")){
-                    req = new SecurityRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
+                    req = new SecurityRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, status, urgency);
 
                 } else if(typeofreq.contains("it")){
-                    req = new ItRequest(n, desc, serviceID, serviceTime, serviceEmployeeID,
+                    req = new ItRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, status, urgency);
                 }
 
