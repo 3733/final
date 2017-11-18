@@ -224,7 +224,7 @@ public class NavigationPageController {
         String nameDest = path.get(length - 1).getShortName();
 
         // Opening the image
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/views/Icons/01_thefirstfloor.png"));
+        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
         Graphics2D pathImage =  firstFloor.createGraphics();
 
         // Setting up the proper color settings

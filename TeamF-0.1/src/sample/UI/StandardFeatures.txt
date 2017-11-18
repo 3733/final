@@ -1,0 +1,6 @@
+Close Button: 16 x 16
+Pop Up Size: 250 X 500
+Main Screen Size: 1000 x 2000
+Menu Bar Size: (width of screen) x 35
+Drawer Size: 200 x 1000
+Small Icon: 85 x 97

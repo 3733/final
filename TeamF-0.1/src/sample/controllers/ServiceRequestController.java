@@ -23,7 +23,6 @@ import java.util.Properties;
 
 import sample.*;
 
-import javax.xml.ws.Service;
 import java.net.URL;
 import java.util.*;
 import java.text.*;
