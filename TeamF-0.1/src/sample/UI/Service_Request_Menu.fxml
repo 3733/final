@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -122,11 +123,11 @@
                                           <Label prefHeight="35.0" prefWidth="171.0" text="Patient Name" GridPane.rowIndex="2" />
                                           <Label prefHeight="69.0" prefWidth="152.0" text="Food Order" GridPane.rowIndex="4" />
                                           <TextField fx:id="foodPatient" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <TextField fx:id="foodOrder" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                           <Label fx:id="foodID" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="0.0" GridPane.columnIndex="1" />
                                           <Label prefHeight="35.0" prefWidth="171.0" text="Time To Be Served" GridPane.rowIndex="3" />
                                           <TextField fx:id="foodServingTime" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           <Label fx:id="foodTime" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ChoiceBox fx:id="foodMenu" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                        </children>
                                     </GridPane>
                                     <TextArea fx:id="foodDescription" layoutX="369.0" layoutY="12.0" prefHeight="198.0" prefWidth="341.0" promptText="Describe your request here.">

@@ -119,7 +119,7 @@ public class ServiceRequestController implements Initializable{
     private TextField foodServingTime;
 
     @FXML
-    private TextField foodOrder;
+    private ChoiceBox foodMenu;
 
     @FXML
     private TextArea foodDescription;
@@ -130,6 +130,11 @@ public class ServiceRequestController implements Initializable{
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("h:mm a");
         foodTime.setText(ft.format(date));;
+
+        foodMenu.setItems(FXCollections.observableArrayList(
+                "Apple pie", "Banana", "Catfish soup", "Chicken parmesan", "Chocolate cake", "Lasagna",
+                "Loaf of bread", "Lobster casserole", "Mashed potatoes", "Olive pizza", "Orange juice", "Oreos",
+                "Popcorn shrimps", "Sardines", "Smoked salmon", "Steak", "Tuna potato", "Water"));
     }
 
     private Node foodNode;
@@ -147,13 +152,13 @@ public class ServiceRequestController implements Initializable{
         ArrayList<Integer> foodEmployees = new ArrayList<Integer>();
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
                 foodTime.getText(), 0000, "food", "unaccepted", foodPatient.getText(),
-                        foodServingTime.getText(), foodOrder.getText());
+                        foodServingTime.getText(), (String)foodMenu.getValue());
+
         requestList.add(newFood);
         testEmbeddedDB.addFoodRequest(newFood);
 
         foodPatient.clear();
         foodServingTime.clear();
-        foodOrder.clear();
         foodDescription.clear();
         ID++;
         foodPane.setExpanded(false);
