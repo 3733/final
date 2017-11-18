@@ -172,6 +172,7 @@ public class testEmbeddedDB {
         Vector<ServiceRequest> requests = new Vector<ServiceRequest>();
 
         try{
+            int i;
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
