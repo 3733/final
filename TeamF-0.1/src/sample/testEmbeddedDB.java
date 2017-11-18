@@ -124,7 +124,7 @@ public class testEmbeddedDB {
             System.out.println("Nodes dropped.");
 
         } catch (Exception e){
-            System.out.println("errorqqqqiiiiiiiqqqq: " + e.getMessage());
+            System.out.println("error: " + e.getMessage());
         }
     }
 
@@ -139,6 +139,8 @@ public class testEmbeddedDB {
             System.out.println("error: " + e.getMessage());
         }
     }
+
+    //Talal wants to work on this
 
     public static void createServiceRequestTable(){
         try{
@@ -165,6 +167,26 @@ public class testEmbeddedDB {
 
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
+        }
+    }
+
+    public static void createStaffTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("CREATE TABLE Staff (" +
+                    "employeeName Char(25) NOT NULL PRIMARY KEY ," +
+                    "password CHAR(30)," +
+                    "rank CHAR(60)," +
+                    "employeeID INTEGER NOT NULL," +
+                    "employeeEmail CHAR(30))");
+
+            c.close();
+
+        } catch (Exception e){
+            System.out.println("createStaffTable error: " + e.getMessage());
         }
     }
 
