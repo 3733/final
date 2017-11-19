@@ -1,0 +1,12 @@
+.root{
+    -fx-background-color: #3498db;
+    -fx-font-size: 12px;
+    -fx-font: Montserrat;
+}
+.jfx-drawer{
+    -fx-background-color: #e8e8e8;
+}
+
+.hamburer{
+    -fx-border-color: #8e8e8e;
+}

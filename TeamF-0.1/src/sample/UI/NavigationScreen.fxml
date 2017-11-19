@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1387.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.NavigationPageController">
+    <children>
+        <MenuBar prefHeight="35.0" prefWidth="1000.0">
+            <menus>
+                <Menu mnemonicParsing="false">
+                    <graphic>
+                        <JFXHamburger />
+                    </graphic>
+                </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label text="Home" />
+               </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label text="Back" />
+               </graphic>
+            </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane prefHeight="835.0" prefWidth="1282.0">
+            <children>
+                <JFXDrawer defaultDrawerSize="50.0" direction="RIGHT" prefHeight="716.0" prefWidth="200.0">
+                    <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <AnchorPane prefHeight="107.0" prefWidth="200.0">
+                                    <children>
+                                        <HBox prefHeight="100.0" prefWidth="200.0">
+                                            <children>
+                                                <ImageView fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../../../../../newUI/src/views/Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                                                    </image>
+                                                    <HBox.margin>
+                                                        <Insets left="15.0" top="10.0" />
+                                                    </HBox.margin>
+                                                </ImageView>
+                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                    <children>
+                                                        <JFXBadge prefHeight="25.0" prefWidth="25.0" />
+                                                        <JFXBadge prefHeight="25.0" prefWidth="25.0">
+                                                            <children>
+                                                                <Label text="Log In">
+                                                                    <font>
+                                                                        <Font name="Montserrat Regular" size="12.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </JFXBadge>
+                                                        <JFXBadge prefHeight="25.0" prefWidth="25.0">
+                                                            <children>
+                                                                <Label text="Help">
+                                                                    <font>
+                                                                        <Font name="Montserrat Regular" size="12.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </JFXBadge>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                    <children>
+                                        <HBox prefHeight="100.0" prefWidth="200.0">
+                                            <children>
+                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                    <children>
+                                                        <JFXRadioButton text="Start">
+                                                            <font>
+                                                                <Font name="Montserrat Regular" size="12.0" />
+                                                            </font>
+                                                            <padding>
+                                                                <Insets top="10.0" />
+                                                            </padding>
+                                                            <VBox.margin>
+                                                                <Insets top="40.0" />
+                                                            </VBox.margin>
+                                                        </JFXRadioButton>
+                                                        <JFXRadioButton text="End">
+                                                            <font>
+                                                                <Font name="Montserrat Regular" size="12.0" />
+                                                            </font>
+                                                            <VBox.margin>
+                                                                <Insets top="60.0" />
+                                                            </VBox.margin>
+                                                        </JFXRadioButton>
+                                                    </children>
+                                                </VBox>
+                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                    <children>
+                                                        <JFXTextField prefHeight="20.0" prefWidth="71.0">
+                                                            <VBox.margin>
+                                                                <Insets top="30.0" />
+                                                            </VBox.margin>
+                                                        </JFXTextField>
+                                                        <JFXTextField>
+                                                            <VBox.margin>
+                                                                <Insets />
+                                                            </VBox.margin>
+                                                            <padding>
+                                                                <Insets top="65.0" />
+                                                            </padding>
+                                                        </JFXTextField>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </AnchorPane>
+                        <HBox prefHeight="38.0" prefWidth="200.0">
+                           <children>
+                              <JFXCheckBox text="Stairs">
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                              </JFXCheckBox>
+                              <JFXCheckBox text="Elevator">
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                              </JFXCheckBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER" prefHeight="68.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton buttonType="RAISED" onAction="#go" text="Go" />
+                           </children>
+                        </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </JFXDrawer>
+                <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+                    <children>
+                        <ImageView fitHeight="785.0" fitWidth="1311.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../../newUI/src/views/Icons/01_thefirstfloor.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>

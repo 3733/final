@@ -3,15 +3,10 @@ package sample;
 import sample.controllers.NavigationPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Vector;
 
 public class Main extends Application {
 
@@ -30,16 +25,21 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
         start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 1024, 768);
+        start.getStylesheets().add("sample/UI/style.css");
         login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 640, 480);
-        map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1024, 768);
+        login.getStylesheets().add("sample/UI/style.css");
+        map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1336, 791);
+        map.getStylesheets().add("sample/UI/style.css");
         admin = new Scene(FXMLLoader.load(getClass().getResource("UI/AdminControls.fxml")), 1024, 768);
+        admin.getStylesheets().add("sample/UI/style.css");
         service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1024, 768);
+        service.getStylesheets().add("sample/UI/style.css");
         mapEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/MapEditingScreen.fxml")), 1024,768);
+        mapEdit.getStylesheets().add("sample/UI/style.css");
         nodeEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/EditNodesWindow.fxml")), 600,400);
+        nodeEdit.getStylesheets().add("sample/UI/style.css");
         edgeEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/EditEdgesWindow.fxml")), 600,400);
-//        itError = new Scene(FXMLLoader.load(getClass().getResource("UI/It_Error.fxml")), 500, 202);
-//        itRequest = new Scene(FXMLLoader.load(getClass().getResource("UI/ItRequest.fxml")), 500, 500);
-        //Parent root = FXMLLoader.load(getClass().getResource("UI/StartPage.fxml"));
+        edgeEdit.getStylesheets().add("sample/UI/style.css");
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
