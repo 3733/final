@@ -4,3 +4,4 @@ Main Screen Size: 1000 x 2000
 Menu Bar Size: (width of screen) x 35
 Drawer Size: 200 x 1000
 Small Icon: 85 x 97
+Rippler Fill: #e8e8e8

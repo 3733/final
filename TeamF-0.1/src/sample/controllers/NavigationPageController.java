@@ -1,10 +1,13 @@
 package sample.controllers;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import sample.*;
 
 import javax.imageio.ImageIO;
@@ -13,7 +16,15 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Vector;
 
-public class NavigationPageController {
+public class NavigationPageController{
+
+    //new components
+    @FXML
+    private JFXHamburger hamburger;
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private ImageView icon;
 
     // Contains the user zoom setting
     @FXML
