@@ -9,6 +9,7 @@ import java.util.Vector;
 public class testEmbeddedDB {
 
     Connection c;
+    Vector<Node> goodNodes;
 
 
     public testEmbeddedDB(){
@@ -23,15 +24,15 @@ public class testEmbeddedDB {
             final String url = "jdbc:derby:Skynet";
             c = DriverManager.getConnection(url);
 
-            testEmbeddedDB.dropTables();
+            //testEmbeddedDB.dropTables();
 
-            testEmbeddedDB.createTable();
+            //testEmbeddedDB.createTable();
 
-            testEmbeddedDB.fillNodesTable();
+            //testEmbeddedDB.fillNodesTable();
 
             //testEmbeddedDB.createPrimKey();
 
-            testEmbeddedDB.fillEdgesTable();
+            //testEmbeddedDB.fillEdgesTable();
 
             /*Node test = new Node("dickbutt", 4, 4,
                     4, "test", "test", "test",
@@ -58,7 +59,13 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.dropServiceRequests();
 
+            testEmbeddedDB.dropStaff();
+
             testEmbeddedDB.createServiceRequestTable();
+
+            testEmbeddedDB.createStaffTable();
+
+            testEmbeddedDB.createAssignmentsTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -82,6 +89,7 @@ public class testEmbeddedDB {
         }
     }
 
+    //depricated
     public static void createPrimKey(){
         try{
             final String url = "jdbc:derby:Skynet";
@@ -124,7 +132,7 @@ public class testEmbeddedDB {
             System.out.println("Nodes dropped.");
 
         } catch (Exception e){
-            System.out.println("errorqqqqiiiiiiiqqqq: " + e.getMessage());
+            System.out.println("error: " + e.getMessage());
         }
     }
 
@@ -136,15 +144,45 @@ public class testEmbeddedDB {
             s.execute("DROP TABLE SERVICEREQUESTS");
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("dropServiceRequest error: " + e.getMessage());
         }
     }
+
+    public static void dropStaff(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DROP TABLE STAFF");
+
+            s.close();
+
+        } catch (Exception e){
+            System.out.println("dropStaff error: " + e.getMessage());
+        }
+    }
+
+    public static void dropAssignments(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DROP TABLE ASSIGNMENTS");
+
+        } catch (Exception e){
+            System.out.println("dropAssignments error: " + e.getMessage());
+        }
+    }
+
+    //Talal wants to work on this
 
     public static void createServiceRequestTable(){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
+
+            //remove the servieceEmployee ID from this table!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             s.execute("CREATE TABLE ServiceRequests (" +
                     "destination CHAR(25) NOT NULL ," +
@@ -158,13 +196,55 @@ public class testEmbeddedDB {
                     "foodOrder CHAR(30) DEFAULT NULL ," +
                     "urgency INTEGER DEFAULT NULL ," +
                     "arrival BOOLEAN DEFAULT FALSE ," +
-                    "typeOfTransport CHAR(60) DEFAULT NULL ," +
+                    "typeOfTransport CHAR(60) DEFAULT NULL," +
+                    "completionStatus CHAR(11) DEFAULT NULL," +
+                    "acceptTime CHAR(20) DEFAULT NULL , " +
+                    "finishTime CHAR(20) DEFAULT NULL , " +
                     "PRIMARY KEY (serviceID))");
 
             s.close();
 
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
+        }
+    }
+
+    public static void createStaffTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("CREATE TABLE Staff (" +
+                    "employeeName Char(25) NOT NULL," +
+                    "password CHAR(30)," +
+                    "rank CHAR(60)," +
+                    "username CHAR(25), " +
+                    "employeeID INTEGER NOT NULL PRIMARY KEY," +
+                    "employeeType CHAR (30)," +
+                    "employeeEmail CHAR(30))");
+
+            c.close();
+
+        } catch (Exception e){
+            System.out.println("createStaffTable error: " + e.getMessage());
+        }
+    }
+
+    public static void createAssignmentsTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("CREATE TABLE Assignments (" +
+                    "employeeID INTEGER," +
+                    "serviceID INTEGER," +
+                    "FOREIGN KEY (employeeID) REFERENCES STAFF(EMPLOYEEID)," +
+                    "FOREIGN KEY (serviceID) REFERENCES SERVICEREQUESTS(SERVICEID))");
+
+        } catch (Exception e){
+            System.out.println("createAssignmentsTable error: " + e.getMessage());
         }
     }
 
@@ -344,7 +424,7 @@ public class testEmbeddedDB {
             q.close();
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("addAssistanceRequest error: " + e.getMessage());
         }
 
     }
