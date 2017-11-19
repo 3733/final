@@ -2,6 +2,7 @@ package sample.controllers;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -25,6 +26,8 @@ public class NavigationPageController{
     private JFXDrawer drawer;
     @FXML
     private javafx.scene.image.ImageView icon;
+    @FXML
+    private JFXTextField startField;
 
     // Contains the user zoom setting
     @FXML
