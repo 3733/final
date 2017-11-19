@@ -28,7 +28,7 @@ public class Main extends Application {
         start.getStylesheets().add("sample/UI/style.css");
         login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 640, 480);
         login.getStylesheets().add("sample/UI/style.css");
-        map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1336, 791);
+        map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1337, 817);
         map.getStylesheets().add("sample/UI/style.css");
         admin = new Scene(FXMLLoader.load(getClass().getResource("UI/AdminControls.fxml")), 1024, 768);
         admin.getStylesheets().add("sample/UI/style.css");

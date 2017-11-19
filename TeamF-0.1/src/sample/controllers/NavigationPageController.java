@@ -24,7 +24,7 @@ public class NavigationPageController{
     @FXML
     private JFXDrawer drawer;
     @FXML
-    private ImageView icon;
+    private javafx.scene.image.ImageView icon;
 
     // Contains the user zoom setting
     @FXML

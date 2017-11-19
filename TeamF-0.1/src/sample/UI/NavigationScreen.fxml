@@ -5,6 +5,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -18,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1387.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.NavigationPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.NavigationPageController">
     <children>
         <MenuBar prefHeight="35.0" prefWidth="1000.0">
             <menus>
@@ -29,19 +30,14 @@
                 </Menu>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label text="Home" />
-               </graphic>
-            </Menu>
-            <Menu mnemonicParsing="false">
-               <graphic>
                   <Label text="Back" />
                </graphic>
             </Menu>
             </menus>
         </MenuBar>
-        <AnchorPane prefHeight="835.0" prefWidth="1282.0">
+        <AnchorPane prefHeight="793.0" prefWidth="1328.0">
             <children>
-                <JFXDrawer defaultDrawerSize="50.0" direction="RIGHT" prefHeight="716.0" prefWidth="200.0">
+                <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0">
                     <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                             <children>
@@ -49,7 +45,7 @@
                                     <children>
                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                             <children>
-                                                <ImageView fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="icon" fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@../../../../../newUI/src/views/Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
                                                     </image>
@@ -145,23 +141,67 @@
                                  </HBox.margin>
                               </JFXCheckBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="68.0" prefWidth="200.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="46.0" prefWidth="228.0">
                            <children>
                               <JFXButton buttonType="RAISED" onAction="#go" text="Go" />
                            </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
                         </HBox>
+                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="228.0">
+                           <children>
+                              <Label text="Send Directions by Email" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin></HBox>
+                        <HBox prefHeight="34.0" prefWidth="228.0">
+                           <children>
+                              <JFXTextField unFocusColor="#8e8e8e">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="15.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXButton buttonType="RAISED" prefHeight="26.0" prefWidth="58.0" text="Send" />
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </HBox>
+                        <JFXListView prefHeight="358.0" prefWidth="228.0">
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </JFXListView>
                             </children>
                         </VBox>
                     </children>
                 </JFXDrawer>
                 <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
                     <children>
-                        <ImageView fitHeight="785.0" fitWidth="1311.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../../../../../newUI/src/views/Icons/01_thefirstfloor.png" />
+                                <Image url="@Icons/01_thefirstfloor.png" />
                             </image>
                         </ImageView>
+                  <JFXTextField layoutX="136.0" layoutY="37.0" prefHeight="26.0" prefWidth="838.0" styleClass=".text-field" />
+                  <JFXButton layoutX="974.0" layoutY="35.0" onAction="#go">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/BTgrBoMGc.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                     </children>
                 </AnchorPane>
             </children>
