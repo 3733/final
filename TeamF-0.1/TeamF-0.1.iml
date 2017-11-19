@@ -50,7 +50,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/softEng Libs/derbytools.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/softEng Libs/derbynet.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -59,7 +59,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/softEng Libs/derbynet.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/softEng Libs/derbytools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
