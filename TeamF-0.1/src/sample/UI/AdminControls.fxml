@@ -106,6 +106,9 @@
                                              <VBox.margin>
                                                 <Insets top="30.0" />
                                              </VBox.margin>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
                                           </JFXTextField>
                                           <JFXTextField>
                                              <VBox.margin>
@@ -114,6 +117,9 @@
                                              <padding>
                                                 <Insets top="65.0" />
                                              </padding>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
                                           </JFXTextField>
                                        </children>
                                     </VBox>
@@ -127,11 +133,17 @@
                                  <HBox.margin>
                                     <Insets left="25.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
                               </JFXCheckBox>
                               <JFXCheckBox text="Elevator">
                                  <HBox.margin>
                                     <Insets left="25.0" />
                                  </HBox.margin>
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
                               </JFXCheckBox>
                            </children>
                            <VBox.margin>
@@ -140,7 +152,10 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="46.0" prefWidth="228.0">
                            <children>
-                              <JFXButton buttonType="RAISED" text="Go" />
+                              <JFXButton buttonType="RAISED" text="Go">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font></JFXButton>
                            </children>
                            <VBox.margin>
                               <Insets top="25.0" />
@@ -152,7 +167,7 @@
                                  <children>
                                     <Label alignment="TOP_CENTER" text="Settings">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="Montserrat Regular" size="14.0" />
                                        </font></Label>
                                  </children>
                               </HBox>
@@ -161,20 +176,18 @@
                                     <Label text="Make a Service Request">
                                        <padding>
                                           <Insets bottom="10.0" />
-                                       </padding></Label>
+                                       </padding>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font></Label>
                                  </children>
                               </JFXBadge>
                               <JFXBadge>
                                  <children>
-                                    <Label text="Edit Map" />
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </JFXBadge>
-                              <JFXBadge>
-                                 <children>
-                                    <Label text="Add User" />
+                                    <Label text="Edit Map">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font></Label>
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
@@ -182,7 +195,21 @@
                               </JFXBadge>
                               <JFXBadge>
                                  <children>
-                                    <Label text="Remove User" />
+                                    <Label text="Add User">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font></Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </JFXBadge>
+                              <JFXBadge>
+                                 <children>
+                                    <Label text="Remove User">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font></Label>
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
@@ -201,7 +228,10 @@
                         <Image url="@Icons/01_thefirstfloor.png" />
                      </image>
                   </ImageView>
-                  <JFXTextField layoutX="136.0" layoutY="37.0" prefHeight="26.0" prefWidth="838.0" styleClass=".text-field-search" />
+                  <JFXTextField layoutX="136.0" layoutY="37.0" prefHeight="26.0" prefWidth="838.0" styleClass=".text-field-search">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font></JFXTextField>
                   <JFXButton layoutX="974.0" layoutY="35.0">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
