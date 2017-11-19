@@ -1,121 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MapEditPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="793.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.NavigationPageController">
    <children>
-      <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="768.0" prefWidth="770.0">
-         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1088.0" prefWidth="1600.0">
+      <MenuBar prefHeight="35.0" prefWidth="1000.0">
+         <menus>
+            <Menu mnemonicParsing="false" />
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label text="Back" />
+               </graphic>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="746.0" prefWidth="1338.0">
+         <children>
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="752.0" prefWidth="228.0">
                <children>
-                  <ImageView fitHeight="1088.0" fitWidth="1600.0">
+                  <VBox prefHeight="752.0" prefWidth="228.0">
+                     <children>
+                        <AnchorPane prefHeight="107.0" prefWidth="200.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fx:id="icon" fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXBadge prefHeight="25.0" prefWidth="25.0" />
+                                          <JFXBadge prefHeight="25.0" prefWidth="25.0">
+                                             <children>
+                                                <Label text="Log Out">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </JFXBadge>
+                                          <JFXBadge prefHeight="25.0" prefWidth="25.0">
+                                             <children>
+                                                <Label text="Help">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </JFXBadge>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <Label text="X Coord">
+                                             <VBox.margin>
+                                                <Insets left="25.0" top="40.0" />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets top="10.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Y Coord">
+                                             <VBox.margin>
+                                                <Insets left="25.0" top="60.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXTextField fx:id="startField" prefHeight="20.0" prefWidth="71.0" styleClass="null">
+                                             <VBox.margin>
+                                                <Insets top="30.0" />
+                                             </VBox.margin>
+                                          </JFXTextField>
+                                          <JFXTextField styleClass="null">
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets top="65.0" />
+                                             </padding>
+                                          </JFXTextField>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
+                                 <children>
+                                    <JFXButton buttonType="RAISED" text="Remove Node">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXButton buttonType="RAISED" text="Add Node">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </JFXDrawer>
+            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+               <children>
+                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1105.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/01_thefirstfloor.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="540.0" layoutY="279.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="496.0" layoutY="388.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="572.0" layoutY="320.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="572.0" layoutY="356.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="496.0" layoutY="320.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="496.0" layoutY="255.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="671.0" layoutY="299.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="671.0" layoutY="310.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="501.0" layoutY="414.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="491.0" layoutY="686.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="458.0" layoutY="666.0">
-                     <image>
-                        <Image url="@Icons/dot.png" />
-                     </image>
-                  </ImageView>
                </children>
             </AnchorPane>
-         </content></ScrollPane>
-      <Slider layoutX="614.0" layoutY="20.0" showTickLabels="true" showTickMarks="true" />
-      <Button layoutX="770.0" layoutY="654.0" mnemonicParsing="false" onAction="#editEdges" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #8bdb9c;" text="Edit Path" underline="true">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Button>
-      <Button layoutX="770.0" layoutY="424.0" mnemonicParsing="false" onAction="#editNodes" prefHeight="114.0" prefWidth="254.0" text="Add Node" underline="true">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Button>
-      <Button fx:id="backButton" layoutX="769.0" layoutY="1.0" mnemonicParsing="false" onAction="#openMapScreen" prefHeight="62.0" prefWidth="254.0" text="&lt;Back">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button layoutX="770.0" layoutY="539.0" mnemonicParsing="false" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #ec3f3f;" text="Remove Node" underline="true">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Button>
-      <TextField layoutX="827.0" layoutY="371.0" prefHeight="38.0" prefWidth="54.0" />
-      <TextField layoutX="919.0" layoutY="371.0" prefHeight="38.0" prefWidth="54.0" />
-      <Label layoutX="792.0" layoutY="343.0" text="Coordinates">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="807.0" layoutY="376.0" text="X:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="901.0" layoutY="376.0" text="Y:">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</VBox>
