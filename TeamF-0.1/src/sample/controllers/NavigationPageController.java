@@ -1,9 +1,6 @@
 package sample.controllers;
 
-import com.jfoenix.controls.JFXDrawer;
-import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -57,11 +54,11 @@ public class NavigationPageController{
 
     // Contains stairs option
     @FXML
-    private CheckBox stairs;
+    private JFXCheckBox stairs;
 
     // Contains the elevator option
     @FXML
-    private  CheckBox elevator;
+    private JFXCheckBox elevator;
 
     // Contains the Invalid email error message
     @FXML

@@ -25,7 +25,7 @@
             <menus>
                 <Menu mnemonicParsing="false">
                <graphic>
-                  <JFXButton ripplerFill="#8e8e8e" text="Back">
+                  <JFXButton onAction="#back" ripplerFill="#8e8e8e" text="Back">
                      <font>
                         <Font name="Montserrat Regular" size="12.0" />
                      </font>
@@ -127,7 +127,7 @@
                                         </HBox>
                                     </children>
                                 </AnchorPane>
-                        <HBox fx:id="elevator" prefHeight="38.0" prefWidth="200.0">
+                        <HBox prefHeight="38.0" prefWidth="200.0">
                            <children>
                               <JFXCheckBox fx:id="stairs" onAction="#go" text="Stairs">
                                  <HBox.margin>

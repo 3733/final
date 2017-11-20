@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,14 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginPageController">
    <children>
-      <MenuBar>
-        <menus>
-          <Menu mnemonicParsing="false" text="Back" />
-        </menus>
-      </MenuBar>
+      <MenuBar prefHeight="21.0" prefWidth="600.0" />
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Label text="Log In">
@@ -69,24 +63,24 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField GridPane.columnIndex="1">
+                  <JFXTextField fx:id="username" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="15.0" />
                      </GridPane.margin>
                   </JFXTextField>
-                  <JFXPasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXPasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <JFXButton buttonType="RAISED" contentDisplay="CENTER" text="Log In">
+                        <JFXButton buttonType="RAISED" contentDisplay="CENTER" onAction="#login" ripplerFill="#e8e8e8" style="-fx-background-color: #ffffff;" text="Log In">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>
                         </JFXButton>
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <HBox alignment="TOP_CENTER" prefHeight="56.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <JFXButton buttonType="RAISED" contentDisplay="CENTER" text="Cancel">
+                        <JFXButton buttonType="RAISED" contentDisplay="CENTER" onAction="#back" style="-fx-background-color: #ffffff;" text="Cancel">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>
@@ -97,5 +91,13 @@
             </GridPane>
          </children>
       </HBox>
+      <Label fx:id="invalidLoginText1" opacity="0.34" text="Username or Password was Incorrect" textFill="#e20505" visible="false">
+         <font>
+            <Font name="Montserrat Regular" size="14.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" left="160.0" right="50.0" />
+         </VBox.margin>
+      </Label>
    </children>
 </VBox>

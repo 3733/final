@@ -26,7 +26,7 @@ public class Main extends Application {
         stage = primaryStage;
         start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
-        login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 640, 480);
+        login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 600, 344);
         login.getStylesheets().add("sample/UI/style.css");
         map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1386, 810);
         map.getStylesheets().add("sample/UI/style.css");
