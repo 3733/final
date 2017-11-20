@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.TreeTableColumn?>
@@ -14,14 +13,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.NavigationPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EditUsersController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label text="Back" />
+                  <JFXButton onAction="#back" ripplerFill="#8e8e8e" text="Back">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
+                  </JFXButton>
                </graphic>
             </Menu>
          </menus>
@@ -50,7 +54,10 @@
                                           <JFXBadge prefHeight="25.0" prefWidth="25.0" />
                                           <JFXBadge prefHeight="25.0" prefWidth="25.0">
                                              <children>
-                                                <JFXButton text="Help" />
+                                                <JFXButton text="Help">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font></JFXButton>
                                              </children>
                                           </JFXBadge>
                                        </children>
@@ -63,17 +70,26 @@
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton text="Edit User">
+                                    <JFXButton ripplerFill="#8e8e8e" text="Edit User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
                                     </JFXButton>
-                                    <JFXButton text="Add User">
+                                    <JFXButton ripplerFill="#8e8e8e" text="Add User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
                                     </JFXButton>
-                                    <JFXButton text="Remove User" />
+                                    <JFXButton ripplerFill="#8e8e8e" text="Remove User">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font></JFXButton>
                                  </children>
                                  <padding>
                                     <Insets top="20.0" />

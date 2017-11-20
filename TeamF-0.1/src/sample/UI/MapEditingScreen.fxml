@@ -15,14 +15,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="793.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.NavigationPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="793.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MapEditPageController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
-            <Menu mnemonicParsing="false" />
             <Menu mnemonicParsing="false">
                <graphic>
-                  <Label text="Back" />
+                  <JFXButton onAction="#back" ripplerFill="#8e8e8e" text="Back">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
+                  </JFXButton>
                </graphic>
             </Menu>
          </menus>
@@ -48,24 +51,22 @@
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
                                           <JFXBadge prefHeight="25.0" prefWidth="25.0" />
-                                          <JFXBadge prefHeight="25.0" prefWidth="25.0">
-                                             <children>
-                                                <Label text="Log Out">
-                                                   <font>
-                                                      <Font name="Montserrat Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </JFXBadge>
-                                          <JFXBadge prefHeight="25.0" prefWidth="25.0">
-                                             <children>
-                                                <Label text="Help">
-                                                   <font>
-                                                      <Font name="Montserrat Regular" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </JFXBadge>
+                                          <JFXButton onAction="#logout" ripplerFill="#8e8e8e" text="Log Out">
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="25.0" />
+                                             </VBox.margin>
+                                          </JFXButton>
+                                          <JFXButton onAction="#help" ripplerFill="#8e8e8e" text="Help">
+                                             <VBox.margin>
+                                                <Insets left="25.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                          </JFXButton>
                                        </children>
                                     </VBox>
                                  </children>
@@ -122,18 +123,26 @@
                         </AnchorPane>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="228.0">
+                                 <children>
+                                    <Label alignment="CENTER" prefWidth="80.0" text="Options">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="14.0" />
+                                       </font></Label>
+                                 </children>
+                              </HBox>
                               <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton buttonType="RAISED" text="Remove Node">
+                                    <JFXButton onAction="#editNodes" ripplerFill="#8e8e8e" text="Edit Nodes">
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
                                     </JFXButton>
                                  </children>
                               </HBox>
-                              <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                              <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton buttonType="RAISED" text="Add Node">
+                                    <JFXButton buttonType="RAISED" onAction="#editEdges" text="Edit Edges">
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>

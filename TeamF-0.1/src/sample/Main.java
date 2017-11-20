@@ -22,6 +22,7 @@ public class Main extends Application {
     private static Scene nodeEdit;
     private static Scene edgeEdit;
     private static Scene editUsers;
+    private static Scene genError;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -36,7 +37,7 @@ public class Main extends Application {
         admin.getStylesheets().add("sample/UI/style.css");
         service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1024, 768);
         service.getStylesheets().add("sample/UI/style.css");
-        mapEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/MapEditingScreen.fxml")), 1024,768);
+        mapEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/MapEditingScreen.fxml")), 1386,810);
         mapEdit.getStylesheets().add("sample/UI/style.css");
         nodeEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/EditNodesWindow.fxml")), 600,400);
         nodeEdit.getStylesheets().add("sample/UI/style.css");
@@ -44,6 +45,8 @@ public class Main extends Application {
         edgeEdit.getStylesheets().add("sample/UI/style.css");
         editUsers = new Scene(FXMLLoader.load(getClass().getResource("UI/EditUserScreen.fxml")), 1386,810);
         editUsers.getStylesheets().add("sample/UI/style.css");
+        genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
+        genError.getStylesheets().add("sample/UI/style.css");
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
@@ -93,6 +96,11 @@ public class Main extends Application {
 
     public static void editUsersScreen(){
         stage.setScene(editUsers);
+        stage.centerOnScreen();
+    }
+
+    public static void genErrorScreen(){
+        stage.setScene(genError);
         stage.centerOnScreen();
     }
 

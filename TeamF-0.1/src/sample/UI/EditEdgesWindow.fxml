@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,9 +16,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EditEdgesController">
    <children>
-      <Button fx:id="addEdgebtn" layoutX="178.0" layoutY="329.0" mnemonicParsing="false" onAction="#addEdgeButton" prefHeight="35.0" prefWidth="108.0" text="Add Edge" />
-      <Button fx:id="removeEdgebtn" layoutX="446.0" layoutY="329.0" mnemonicParsing="false" onAction="#removeEdgeButton" prefHeight="35.0" prefWidth="108.0" text="Remove Edge" />
-      <Button fx:id="editEdgebtn" layoutX="313.0" layoutY="329.0" mnemonicParsing="false" onAction="#editEdgeButton" prefHeight="35.0" prefWidth="108.0" text="Edit Edge" />
+      <MenuBar prefHeight="26.0" prefWidth="600.0">
+         <menus>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <JFXButton onAction="#openMapEditing" prefHeight="28.0" prefWidth="25.0">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/closeButton.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </graphic>
+            </Menu>
+         </menus>
+      </MenuBar>
       <GridPane layoutX="72.0" layoutY="23.0" prefHeight="274.0" prefWidth="482.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.39996337890625" minWidth="10.0" prefWidth="192.199951171875" />
@@ -27,24 +46,46 @@
          <children>
             <Label text="Edge ID" GridPane.halignment="CENTER">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Montserrat Regular" size="14.0" />
                </font>
             </Label>
             <Label text="Start Node" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Montserrat Regular" size="14.0" />
                </font>
             </Label>
             <Label text="End Node" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Montserrat Regular" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="edgeIDField" GridPane.columnIndex="1" />
-            <TextField fx:id="startNodeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="endNodeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="edgeIDField" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="startNodeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="endNodeField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
+         <padding>
+            <Insets right="45.0" />
+         </padding>
       </GridPane>
-      <Button fx:id="backButton" layoutX="50.0" layoutY="329.0" mnemonicParsing="false" onAction="#openMapEditing" prefHeight="35.0" prefWidth="108.0" text="Back" />
+      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="334.0" onAction="#addEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add Edge">
+         <font>
+            <Font name="Montserrat Regular" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="194.0" layoutY="334.0" onAction="#editEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit Edge">
+         <font>
+            <Font name="Montserrat Regular" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="317.0" layoutY="335.0" onAction="#removeEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Remove Edge">
+         <font>
+            <Font name="Montserrat Regular" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="471.0" layoutY="335.0" onAction="#openMapEditing" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
+         <font>
+            <Font name="Montserrat Regular" size="12.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

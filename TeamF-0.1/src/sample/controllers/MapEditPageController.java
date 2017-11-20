@@ -22,4 +22,10 @@ public class MapEditPageController {
     public void openMapScreen() {
         Main.mapScreen();
     }
+    @FXML
+    public void help(){Main.genErrorScreen();}
+    @FXML
+    public void logout(){Main.startScreen();}
+    @FXML
+    public void back(){Main.startScreen();}
 }

@@ -20,4 +20,6 @@ public class AdminPageController {
     public void editUsers(){Main.editUsersScreen();}
     @FXML
     public void back(){Main.startScreen();}
+    @FXML
+    public void help(){Main.genErrorScreen();}
 }

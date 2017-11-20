@@ -1,5 +1,7 @@
 package sample.controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -10,17 +12,17 @@ public class EditEdgesController {
     @FXML
     private Button backButton;
     @FXML
-    private TextField edgeIDField;
+    private JFXTextField edgeIDField;
     @FXML
-    private TextField startNodeField;
+    private JFXTextField startNodeField;
     @FXML
-    private TextField endNodeField;
+    private JFXTextField endNodeField;
     @FXML
-    private Button addEdgebtn;
+    private JFXButton addEdgebtn;
     @FXML
-    private Button editEdgebtn;
+    private JFXButton editEdgebtn;
     @FXML
-    private Button removeEdgebtn;
+    private JFXButton removeEdgebtn;
 
     public void addEdgeButton(){
         testEmbeddedDB.addEdges(edgeIDField.getText(), startNodeField.getText(), endNodeField.getText());

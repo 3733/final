@@ -1,5 +1,6 @@
 package sample.controllers;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -10,21 +11,21 @@ public class EditNodesController {
     @FXML
     private Button backButton;
     @FXML
-    private TextField nodeIDField;
+    private JFXTextField nodeIDField;
     @FXML
-    private TextField xCoordField;
+    private JFXTextField xCoordField;
     @FXML
-    private TextField yCoordField;
+    private JFXTextField yCoordField;
     @FXML
-    private TextField floorField;
+    private JFXTextField floorField;
     @FXML
-    private TextField buildingField;
+    private JFXTextField buildingField;
     @FXML
-    private TextField nodeTypeField;
+    private JFXTextField nodeTypeField;
     @FXML
-    private TextField longNameField;
+    private JFXTextField longNameField;
     @FXML
-    private TextField shortNameField;
+    private JFXTextField shortNameField;
     @FXML
     private Button addNodebtn;
     @FXML
