@@ -16,6 +16,12 @@ public class AdminPageController {
     @FXML
     public void serviceRequest() {Main.serviceScreen();}
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
     @FXML
     public void addUser(){
 

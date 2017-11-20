@@ -20,6 +20,12 @@ public class EditEdgesController {
     @FXML
     private Button removeEdgebtn;
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
     public void addEdgeButton(){
         testEmbeddedDB.addEdges(edgeIDField.getText(), startNodeField.getText(), endNodeField.getText());
     }

@@ -17,6 +17,12 @@ public class ItErrorController {
     @FXML
     private Button noIt;
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
     @FXML
     public void yesRequest(){
         //Main.itRequestScreen();

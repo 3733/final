@@ -8,12 +8,16 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
+import javax.imageio.ImageIO;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import com.sun.mail.smtp.SMTPMessage;
 import javax.mail.internet.MimeMessage;
+
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.ImageView;
 
 // Created by Stephanie and Floris, updated 11/14/17 to include images
 // Note: Antivirus and firewalls can cause problems with sending emails
@@ -23,11 +27,13 @@ public class EmailService implements Data {
     String passWord;
     //Testing component, has a testable message to be used in junit
     String status;
+    ImageView map;
 
-    public EmailService(String userName, String passWord) {
+    public EmailService(String userName, String passWord, ImageView map) {
         this.userName = userName;
         this.passWord = passWord;
         this.status = "Setting up email services...";
+        this.map = map;
     }
 
     // HTML Email format, copy and paste as necessary
@@ -347,6 +353,7 @@ public class EmailService implements Data {
     // Purpose: Sending an email through google's SMTP Server
     // Parameters: String Directions, String receiver (email address)
     public void sendEmail(String directions, String receiver) throws InvalidEmailException, IOException {
+        ImageIO.write(SwingFXUtils.fromFXImage(map.getImage(),null), "PNG", new File(Data.data.currentMap+".png"));
         System.out.println(status);
         // Check to see if a valid email address was entered
         if (receiver.length() < 4 || !(receiver.contains("@"))) {
@@ -380,7 +387,7 @@ public class EmailService implements Data {
 
         mainBody.setContent(formatEmail(directions), "text/html; charset=utf-8"); // Enter
 
-        String filePath = Data.data.currentMap;
+        String filePath = Data.data.currentMap + ".png";
         DataSource mapFile = new FileDataSource(filePath);
         image.setDataHandler(new DataHandler(mapFile));
         image.setHeader("Content-ID", "<image>");
