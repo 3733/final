@@ -270,7 +270,7 @@ public class testEmbeddedDB {
                 String finishTime = r.getString("finishtime");
                 int serviceEmployeeID = r.getInt("serviceemployeeid");
                 String typeofreq = r.getString("typeofrequest");
-                String status = r.getString("status");
+                String status = r.getString("completionStatus");
                 String patName = r.getString("patientname");
                 String timeToBeServed = r.getString("timetobeserved");
                 String order = r.getString("foodorder");
