@@ -24,7 +24,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
-        start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 1024, 768);
+        start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
         login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 640, 480);
         login.getStylesheets().add("sample/UI/style.css");
