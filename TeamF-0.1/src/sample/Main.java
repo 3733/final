@@ -25,6 +25,16 @@ public class Main extends Application {
     private static Scene mapEdit;
     private static Scene nodeEdit;
     private static Scene edgeEdit;
+    
+    public static AdminPageController adminPageController = new AdminPageController();
+    public static EditEdgesController editEdgesController = new EditEdgesController();
+    public static EditNodesController editNodesController = new EditNodesController();
+    public static LoginPageController loginPageController = new LoginPageController();
+    public static MapEditPageController mapEditPageController = new MapEditPageController();
+    public static NavigationPageController navigationPageController = new NavigationPageController();
+    public static ServiceRequestController serviceRequestController = new ServiceRequestController();
+    public static StartPageController startPageController = new StartPageController();
+    
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
