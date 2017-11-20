@@ -33,7 +33,7 @@ public class testEmbeddedDB {
             //testEmbeddedDB.createPrimKey();
 
             //testEmbeddedDB.fillEdgesTable();
-
+/*
             Node test = new Node("dickbutt", 4, 4,
                     4, "test", "test", "test",
                     "test",'t');
@@ -73,7 +73,7 @@ public class testEmbeddedDB {
             testEmbeddedDB.addItRequest(i);
 
             testEmbeddedDB.addSecurityRequest(s);
-
+*/
             //testEmbeddedDB.getAllServiceRequests();
 
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
