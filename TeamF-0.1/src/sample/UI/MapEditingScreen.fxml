@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="793.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MapEditPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MapEditPageController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
@@ -32,9 +32,9 @@
       </MenuBar>
       <AnchorPane prefHeight="746.0" prefWidth="1338.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="752.0" prefWidth="228.0">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="771.0" prefWidth="228.0">
                <children>
-                  <VBox prefHeight="752.0" prefWidth="228.0">
+                  <VBox prefHeight="779.0" prefWidth="228.0">
                      <children>
                         <AnchorPane prefHeight="107.0" prefWidth="200.0">
                            <children>
@@ -106,6 +106,9 @@
                                              <VBox.margin>
                                                 <Insets top="30.0" />
                                              </VBox.margin>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
                                           </JFXTextField>
                                           <JFXTextField styleClass="null">
                                              <VBox.margin>
@@ -114,6 +117,9 @@
                                              <padding>
                                                 <Insets top="65.0" />
                                              </padding>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
                                           </JFXTextField>
                                        </children>
                                     </VBox>
@@ -155,9 +161,9 @@
                   </VBox>
                </children>
             </JFXDrawer>
-            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="771.0" prefWidth="1158.0">
                <children>
-                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1105.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/01_thefirstfloor.png" />
                      </image>

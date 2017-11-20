@@ -36,6 +36,9 @@ public class NavigationPageController{
         Main.loginScreen();
     }
 
+    @FXML
+    public void help(){Main.genErrorScreen();}
+
     // Contains the user zoom setting
     @FXML
     private Slider zoom;

@@ -102,7 +102,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </SplitMenuButton>
-            <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;">
+            <JFXButton buttonType="RAISED" onAction="#help" prefHeight="32.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;">
                <graphic>
                   <ImageView fitHeight="33.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>

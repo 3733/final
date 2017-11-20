@@ -54,7 +54,7 @@
                                           <JFXBadge prefHeight="25.0" prefWidth="25.0" />
                                           <JFXBadge prefHeight="25.0" prefWidth="25.0">
                                              <children>
-                                                <JFXButton text="Help">
+                                                <JFXButton onAction="#help" text="Help">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="12.0" />
                                                    </font></JFXButton>

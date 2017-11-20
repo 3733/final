@@ -16,6 +16,9 @@ public class LoginPageController {
     @FXML
     private Label invalidLoginText;
 
+    @FXML
+    public void help(){Main.genErrorScreen();}
+
 
     @FXML
     public void login(){

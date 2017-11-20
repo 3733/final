@@ -1,7 +1,9 @@
+
 .root{
     -fx-background-color: #C5EFF7;
     -fx-font-size: 12px;
-    -fx-font: Montserrat;
+    -fx-font-family: Montserrat-Regular;
+
 }
 .jfx-drawer{
     -fx-background-color: #e8e8e8;
@@ -31,8 +33,18 @@
     -jfx-rippler-fill: #e8e8e8;
 }
 
-.jfx-radio-button .dot {
-    -fx-mark-highlight-color: #C5EFF7 ;
-    -fx-mark-color: #C5EFF7;
+.tab-pane .tab:selected
+{
+    -fx-background-color: #ffffff;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #8e8e8e;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #1F3A93;
 }
 

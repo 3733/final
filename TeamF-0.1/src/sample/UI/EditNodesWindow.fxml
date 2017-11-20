@@ -5,8 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -71,29 +69,45 @@
                   <Font name="Montserrat Regular" size="14.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="nodeIDField" GridPane.columnIndex="1" />
-            <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="xCoordField" />
-            <JFXTextField fx:id="yCoordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXTextField fx:id="floorField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <JFXTextField fx:id="buildingField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <JFXTextField fx:id="nodeTypeField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <JFXTextField fx:id="longNameField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <JFXTextField fx:id="shortNameField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <JFXTextField fx:id="nodeIDField" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="xCoordField">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="yCoordField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="floorField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="buildingField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="nodeTypeField" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="longNameField" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
+            <JFXTextField fx:id="shortNameField" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font></JFXTextField>
          </children>
       </GridPane>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <JFXButton onAction="#openMapEditing" prefHeight="28.0" prefWidth="35.0" ripplerFill="#8e8e8e" text="Button">
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="23.0">
-                           <image>
-                              <Image url="@Icons/closeButton.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                  <JFXButton onAction="#openMapEditing" prefHeight="26.0" prefWidth="43.0" ripplerFill="#8e8e8e" text="Back" />
                </graphic>
             </Menu>
          </menus></MenuBar>

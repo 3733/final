@@ -33,9 +33,9 @@ public class Main extends Application {
         login.getStylesheets().add("sample/UI/style.css");
         map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1386, 810);
         map.getStylesheets().add("sample/UI/style.css");
-        admin = new Scene(FXMLLoader.load(getClass().getResource("UI/AdminControls.fxml")), 1024, 768);
+        admin = new Scene(FXMLLoader.load(getClass().getResource("UI/AdminControls.fxml")), 1386, 810);
         admin.getStylesheets().add("sample/UI/style.css");
-        service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1024, 768);
+        service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1386, 810);
         service.getStylesheets().add("sample/UI/style.css");
         mapEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/MapEditingScreen.fxml")), 1386,810);
         mapEdit.getStylesheets().add("sample/UI/style.css");

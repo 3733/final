@@ -5,5 +5,8 @@ import sample.Main;
 
 public class EditUsersController {
     @FXML
-    public void back(){ Main.startScreen();}
+    public void back(){ Main.adminScreen();}
+
+    @FXML
+    public void help(){Main.genErrorScreen();}
 }
