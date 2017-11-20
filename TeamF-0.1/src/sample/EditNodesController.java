@@ -30,6 +30,12 @@ public class EditNodesController {
     @FXML
     private Button removeNodebtn;
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
     public int getxCoord(){
         return Integer.parseInt(xCoordField.getText());
     }

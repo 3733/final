@@ -13,6 +13,12 @@ public class LoginPageController {
     @FXML
     private Label invalidLoginText;
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
     @FXML
     public void cancel(){
         Main.startScreen();
