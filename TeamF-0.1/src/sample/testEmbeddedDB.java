@@ -34,7 +34,7 @@ public class testEmbeddedDB {
 
             //testEmbeddedDB.fillEdgesTable();
 
-            Node test = new Node("dickbutt", 4, 4,
+            /*Node test = new Node("dickbutt", 4, 4,
                     4, "test", "test", "test",
                     "test",'t');
 
@@ -72,14 +72,14 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.addItRequest(i);
 
-            testEmbeddedDB.addSecurityRequest(s);
+            testEmbeddedDB.addSecurityRequest(s);*/
 
             //testEmbeddedDB.getAllServiceRequests();
 
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            /*testEmbeddedDB.dropAssignments();
+            testEmbeddedDB.dropAssignments();
 
             testEmbeddedDB.dropServiceRequests();
 
@@ -89,7 +89,7 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.createStaffTable();
 
-            testEmbeddedDB.createAssignmentsTable();*/
+            testEmbeddedDB.createAssignmentsTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -212,7 +212,7 @@ public class testEmbeddedDB {
             s.execute("CREATE TABLE ServiceRequests (" +
                     "destination CHAR(25) NOT NULL ," +
                     "description CHAR(60) NOT NULL ," +
-                    "serviceID INTEGER NOT NULL," +
+                    "serviceID BIGINT NOT NULL," +
                     "serviceTime CHAR(20) NOT NULL ," +
                     "typeOfRequest CHAR(30) NOT NULL ," +
                     "patientName CHAR(40) DEFAULT NULL ," +
@@ -240,13 +240,13 @@ public class testEmbeddedDB {
             Statement s = c.createStatement();
 
             s.execute("CREATE TABLE Staff (" +
-                    "employeeName Char(25) NOT NULL," +
-                    "password CHAR(30)," +
-                    "rank CHAR(60)," +
-                    "username CHAR(25), " +
-                    "employeeID INTEGER NOT NULL PRIMARY KEY," +
+                    "firstName Char(25) NOT NULL," +
+                    "lastName CHAR(30), " +
+                    "employeeID BIGINT NOT NULL PRIMARY KEY," +
                     "employeeType CHAR (30)," +
-                    "employeeEmail CHAR(30))");
+                    "employeeEmail CHAR(30)," +
+                    "password CHAR(25)," +
+                    "username CHAR(25) UNIQUE )");
 
             c.close();
 
@@ -262,8 +262,8 @@ public class testEmbeddedDB {
             Statement s = c.createStatement();
 
             s.execute("CREATE TABLE Assignments (" +
-                    "employeeID INTEGER," +
-                    "serviceID INTEGER," +
+                    "employeeID BIGINT," +
+                    "serviceID BIGINT," +
                     "FOREIGN KEY (employeeID) REFERENCES STAFF(EMPLOYEEID)," +
                     "FOREIGN KEY (serviceID) REFERENCES SERVICEREQUESTS(SERVICEID))");
 
@@ -980,11 +980,8 @@ public class testEmbeddedDB {
 
             c.close();
 
-
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
         }
     }
-
-
 }
