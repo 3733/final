@@ -31,3 +31,8 @@
     -jfx-rippler-fill: #e8e8e8;
 }
 
+.jfx-radio-button .dot {
+    -fx-mark-highlight-color: #C5EFF7 ;
+    -fx-mark-color: #C5EFF7;
+}
+

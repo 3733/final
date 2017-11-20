@@ -2,6 +2,7 @@ package sample.controllers;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -28,6 +29,15 @@ public class NavigationPageController{
     private javafx.scene.image.ImageView icon;
     @FXML
     private JFXTextField startField;
+    @FXML
+    private JFXRadioButton start;
+    @FXML JFXRadioButton end;
+
+    //to login from navigation screen
+    @FXML
+    public void login(){
+        Main.loginScreen();
+    }
 
     // Contains the user zoom setting
     @FXML
