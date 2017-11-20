@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -81,5 +83,10 @@
       </GridPane>
       <Button fx:id="backButton" layoutX="182.0" layoutY="347.0" mnemonicParsing="false" onAction="#openMapEditing" prefHeight="35.0" prefWidth="108.0" text="Back" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0" />
+      <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="568.0" layoutY="2.0">
+         <image>
+            <Image url="@Icons/closeButton.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
