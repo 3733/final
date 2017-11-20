@@ -645,7 +645,7 @@ public class testEmbeddedDB {
                     "nodeType CHAR(4), " +
                     "longName CHAR(60), " +
                     "shortName CHAR(20), " +
-                    "teamAssigned CHAR(1)," +
+                    "teamAssigned CHAR(6)," +
                     "PRIMARY KEY (nodeID)" +
                     ")");
 
