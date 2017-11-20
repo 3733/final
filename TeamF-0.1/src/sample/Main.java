@@ -21,6 +21,8 @@ public class Main extends Application {
     private static Scene mapEdit;
     private static Scene nodeEdit;
     private static Scene edgeEdit;
+    private static Scene editUsers;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
@@ -40,6 +42,8 @@ public class Main extends Application {
         nodeEdit.getStylesheets().add("sample/UI/style.css");
         edgeEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/EditEdgesWindow.fxml")), 600,400);
         edgeEdit.getStylesheets().add("sample/UI/style.css");
+        editUsers = new Scene(FXMLLoader.load(getClass().getResource("UI/EditUserScreen.fxml")), 1386,810);
+        editUsers.getStylesheets().add("sample/UI/style.css");
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
@@ -86,6 +90,12 @@ public class Main extends Application {
         stage.setScene(edgeEdit);
         stage.centerOnScreen();
     }
+
+    public static void editUsersScreen(){
+        stage.setScene(editUsers);
+        stage.centerOnScreen();
+    }
+
 
     public static void main(String[] args) throws IOException{
 

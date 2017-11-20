@@ -16,19 +16,8 @@ public class AdminPageController {
     }
     @FXML
     public void serviceRequest() {Main.serviceScreen();}
-
     @FXML
-    public void addUser(){
-
-    }
-
+    public void editUsers(){Main.editUsersScreen();}
     @FXML
-    public void removeUser(){
-
-    }
-
-    @FXML
-    public void settings(){
-
-    }
+    public void back(){Main.startScreen();}
 }
