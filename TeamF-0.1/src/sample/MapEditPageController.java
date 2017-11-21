@@ -27,5 +27,5 @@ public class MapEditPageController {
     @FXML
     public void logout(){Main.startScreen();}
     @FXML
-    public void back(){Main.startScreen();}
+    public void back(){Main.adminScreen();}
 }
