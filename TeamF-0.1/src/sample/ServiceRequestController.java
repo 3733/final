@@ -4,6 +4,8 @@
 
 package sample;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -49,13 +51,20 @@ public class ServiceRequestController implements Initializable{
         this.mainController = main;
     }
 
+    @FXML
+    public void help(){Main.genErrorScreen();}
+
+    @FXML
+    public void logout(){Main.startScreen();}
+
+
     public static int ID = 1;   //service ID counter
     Node n1 = new Node("FDEPT00101", 1614, 829, 1, "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
     ArrayList<ServiceRequest> requestList = new ArrayList<ServiceRequest>();  //list to hold local service requests
 
     //assistance requests
     @FXML
-    private TitledPane assistancePane;
+    private Tab assistancePane;
 
     @FXML
     private Label assistanceID;
@@ -64,7 +73,7 @@ public class ServiceRequestController implements Initializable{
     private Label assistanceTime;
 
     @FXML
-    private TextField assistanceUrgency;
+    private JFXTextField assistanceUrgency;
 
     @FXML
     private TextArea assistanceDescription;
@@ -101,7 +110,7 @@ public class ServiceRequestController implements Initializable{
         assistanceUrgency.clear();                      //clears textfields
         assistanceDescription.clear();
         ID++;                                           //increments service ID counter
-        assistancePane.setExpanded(false);              //closes the request menu
+        //closes the request menu
 
         refreshTable();
     }
@@ -109,7 +118,7 @@ public class ServiceRequestController implements Initializable{
 
     //food requests
     @FXML
-    private TitledPane foodPane;
+    private Tab foodPane;
 
     @FXML
     private Label foodID;
@@ -118,10 +127,10 @@ public class ServiceRequestController implements Initializable{
     private Label foodTime;
 
     @FXML
-    private TextField foodPatient;
+    private JFXTextField foodPatient;
 
     @FXML
-    private TextField foodServingTime;
+    private JFXTextField foodServingTime;
 
     @FXML
     private ChoiceBox foodMenu;
@@ -166,14 +175,13 @@ public class ServiceRequestController implements Initializable{
         foodServingTime.clear();
         foodDescription.clear();
         ID++;
-        foodPane.setExpanded(false);
 
         refreshTable();
     }
 
 
     //transport requests
-    @FXML TitledPane transportPane;
+    @FXML Tab transportPane;
 
     @FXML
     private Label transportID;
@@ -182,10 +190,10 @@ public class ServiceRequestController implements Initializable{
     private Label transportTime;
 
     @FXML
-    private TextField transportPatient;
+    private JFXTextField transportPatient;
 
     @FXML
-    private TextField transportType;
+    private JFXTextField transportType;
 
     @FXML
     private TextArea transportDescription;
@@ -222,7 +230,6 @@ public class ServiceRequestController implements Initializable{
         transportType.clear();
         transportDescription.clear();
         ID++;
-        transportPane.setExpanded(false);
 
         refreshTable();
     }
@@ -230,7 +237,7 @@ public class ServiceRequestController implements Initializable{
 
     //cleaning requests
     @FXML
-    private TitledPane cleanPane;
+    private Tab cleanPane;
 
     @FXML
     private Label cleanID;
@@ -239,7 +246,7 @@ public class ServiceRequestController implements Initializable{
     private Label cleanTime;
 
     @FXML
-    private TextField cleanLevel;
+    private JFXTextField cleanLevel;
 
     @FXML
     private TextArea cleanDescription;
@@ -274,7 +281,6 @@ public class ServiceRequestController implements Initializable{
         cleanLevel.clear();
         cleanDescription.clear();
         ID++;
-        cleanPane.setExpanded(false);
 
         refreshTable();
     }
@@ -282,7 +288,7 @@ public class ServiceRequestController implements Initializable{
 
     //security requests
     @FXML
-    private TitledPane securityPane;
+    private Tab securityPane;
 
     @FXML
     private Label securityID;
@@ -291,7 +297,7 @@ public class ServiceRequestController implements Initializable{
     private Label securityTime;
 
     @FXML
-    private TextField securityLevel;
+    private JFXTextField securityLevel;
 
     @FXML
     private TextArea securityDescription;
@@ -327,7 +333,6 @@ public class ServiceRequestController implements Initializable{
         securityLevel.clear();
         securityDescription.clear();
         ID++;
-        securityPane.setExpanded(false);
 
         refreshTable();
     }
@@ -335,13 +340,13 @@ public class ServiceRequestController implements Initializable{
 
     //it requests
     @FXML
-    private TitledPane itPane;
+    private Tab itPane;
 
     @FXML
     private TextArea itDescription;
 
     @FXML
-    private TextField itUrgency;
+    private JFXTextField itUrgency;
 
     @FXML
     private Label itID;
@@ -372,7 +377,6 @@ public class ServiceRequestController implements Initializable{
         itUrgency.clear();
         itDescription.clear();
         ID++;
-        itPane.setExpanded(false);
 
         refreshTable();
     }
@@ -386,6 +390,9 @@ public class ServiceRequestController implements Initializable{
 
     @FXML
     private TableColumn<ServiceRequest, String> requests;
+
+    @FXML
+    private JFXButton refrrresh;
 
     @FXML
     private TableColumn<ServiceRequest, String> status;
@@ -406,6 +413,9 @@ public class ServiceRequestController implements Initializable{
     }
 
     private int counter;
+
+    @FXML
+    private JFXButton deletebutt;
 
     @FXML
     private javafx.scene.image.ImageView map;
