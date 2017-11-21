@@ -29,6 +29,8 @@ import java.net.URL;
 import java.util.*;
 import java.text.*;
 
+import static sample.Main.getLoggedInGuy;
+
 
 public class ServiceRequestController implements Initializable{
 
@@ -397,8 +399,8 @@ public class ServiceRequestController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        requests.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getType()));   //sets service name in column
-        status.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getStatus()));   //sets service status in column
+        requests.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getType().replace(" ", "")));   //sets service name in column
+        status.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getStatus().replace(" ", "")));   //sets service status in column
         counter = 0;
     }
 
@@ -409,15 +411,22 @@ public class ServiceRequestController implements Initializable{
     {
         ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
 
-        requestSelected.acceptRequest();
+
         Date date = new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("h:mm a");
+
+        requestSelected.acceptRequest();
         requestSelected.setAcceptTime(ft.format(date));
+
+        //links the service request with updated status and acceptTime to a staff member in the database
+        testEmbeddedDB.addAssignment(requestSelected.getServiceID(), getLoggedInGuy().getEmployeeID(),
+                requestSelected.getAcceptTime(), requestSelected.getStatus());
 
         for(int i = 0; i < requestObserve.size(); i++){             //looks for the selected service in the table
             if(requestSelected.serviceID == (requestObserve.get(i)).serviceID)
                 requestObserve.set(i, requestSelected);
         }
+        refreshTable();
 
     }
 
@@ -435,6 +444,11 @@ public class ServiceRequestController implements Initializable{
             Date date = new Date();
             SimpleDateFormat ft = new SimpleDateFormat ("h:mm a");
             req.setFinishTime(ft.format(date));
+            req.finishRequest();
+
+            testEmbeddedDB.editCompletionStatus(req.getServiceID(), req.getStatus());
+            testEmbeddedDB.editFinishTime(req.getServiceID(), req.getFinishTime());
+
             allrequests.remove(req);
         }
     }

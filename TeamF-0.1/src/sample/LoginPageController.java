@@ -44,6 +44,7 @@ public class LoginPageController {
         LinkedList<Staff> everyone = testEmbeddedDB.getAllStaff();
         for(Staff person : everyone){
             if(person.getUsername().trim().equals(name) && person.getPassword().trim().equals(pass)){
+                Main.setLoggedInGuy(person);
                 return true;
             }
         }

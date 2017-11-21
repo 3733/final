@@ -97,7 +97,7 @@ public class testEmbeddedDB {
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            /*testEmbeddedDB.dropAssignmentsTable();
+            testEmbeddedDB.dropAssignmentsTable();
 
             testEmbeddedDB.dropServiceRequestsTable();
 
@@ -107,7 +107,7 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.createStaffTable();
 
-            testEmbeddedDB.createAssignmentsTable();*/
+            testEmbeddedDB.createAssignmentsTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -692,6 +692,16 @@ public class testEmbeddedDB {
 
     public static void addAssignment(long serviceID, long employeeID, String startTime, String compStat){
         try{
+
+            //update the start-time in the assignment table
+
+            testEmbeddedDB.editStartTime(serviceID, startTime);
+
+            //update the completion status
+
+            testEmbeddedDB.editCompletionStatus(serviceID, compStat);
+
+
             //add the sid and eid to assignment table
             final String url = "jdbc:derby:Skynet";
 
@@ -704,13 +714,6 @@ public class testEmbeddedDB {
 
             s.close();
 
-            //update the start-time in the assignment table
-
-            testEmbeddedDB.editStartTime(serviceID, startTime);
-
-            //update the completion status
-
-            testEmbeddedDB.editCompletionStatus(serviceID, compStat);
 
         } catch (Exception e){
             System.out.println("addAssignment error: " + e.getMessage());
@@ -733,13 +736,29 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void editCompletionStatus(long serviceID, String completeionStatus){
+    public static void editFinishTime(long serviceID, String finishTime){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
 
-            s.execute("UPDATE SERVICEREQUESTS SET completionstatus = '" + completeionStatus +
+            s.execute("UPDATE SERVICEREQUESTS SET FINISHTIME = '" + finishTime + "' WHERE SERVICEID = " +
+                    serviceID);
+
+            s.close();
+
+        } catch (Exception e){
+            System.out.println("editFinishTime error: " + e.getMessage());
+        }
+    }
+
+    public static void editCompletionStatus(long serviceID, String completionStatus){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("UPDATE SERVICEREQUESTS SET completionstatus = '" + completionStatus +
                     "' WHERE SERVICEID = " + serviceID);
 
             s.close();

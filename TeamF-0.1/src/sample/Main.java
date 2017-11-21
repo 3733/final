@@ -16,6 +16,7 @@ import java.util.Vector;
 public class Main extends Application {
 
     private  static String destination;
+    private  static Staff loggedInGuy;
 
     private static Stage stage;
     private static Scene start;
@@ -165,12 +166,23 @@ public class Main extends Application {
         return place;
     }
 
+
+    public static void setLoggedInGuy(Staff user){
+        loggedInGuy = user;
+    }
+
+    public static Staff getLoggedInGuy(){
+        return loggedInGuy;
+    }
     public static void main(String[] args) throws IOException{
-        //Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
-        //Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
-
-
         testEmbeddedDB db = new testEmbeddedDB();
+
+        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
+        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
+        testEmbeddedDB.addStaff(Gary);
+        testEmbeddedDB.addStaff(Eirin);
+
+
 
 
         //controller.drawDirections(Vec);

@@ -60,6 +60,7 @@ public abstract class ServiceRequest {
     public void setAcceptTime(String acceptTime) { this.acceptTime = acceptTime; }
     public void setFinishTime(String finishTime) { this.finishTime = finishTime; }
     public void acceptRequest() {this.completionStatus = "accepted"; }
+    public void finishRequest() {this.completionStatus = "finished"; }
 
 
 }
