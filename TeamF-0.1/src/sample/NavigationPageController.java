@@ -191,15 +191,6 @@ public class NavigationPageController implements Initializable{
                 pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(),node2.getxCoordinate() ,node2.getyCoordinate());
             }
         }
-
-        for(int i = 0; i < length; i++) {
-            Node node = path.get(i);
-            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-        }
-
-
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
         System.out.println("Image set on map");
     }
