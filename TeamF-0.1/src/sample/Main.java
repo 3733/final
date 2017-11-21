@@ -167,7 +167,9 @@ public class Main extends Application {
 
     public static void main(String[] args) throws IOException{
         Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
-        Staff Gary = new Staff("Gary", "Stockman", 6678, "Fucking", "Oak", "Janitor", "gary@fuckingoak.com");
+        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
+        testEmbeddedDB.addStaff(Eirin);
+        testEmbeddedDB.addStaff(Gary);
         //testEmbeddedDB db = new testEmbeddedDB();
 
 
