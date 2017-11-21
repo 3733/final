@@ -168,7 +168,7 @@ public class Main extends Application {
 
         // testEmbeddedDB db = new testEmbeddedDB();
 
-
+        //WHY CRULE WURLD
         //controller.drawDirections(Vec);
         launch(args);
     }
