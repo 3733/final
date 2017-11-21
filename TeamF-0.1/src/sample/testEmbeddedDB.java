@@ -79,7 +79,7 @@ public class testEmbeddedDB {
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            /*testEmbeddedDB.dropAssignments();
+            testEmbeddedDB.dropAssignments();
 
             testEmbeddedDB.dropServiceRequests();
 
@@ -89,7 +89,7 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.createStaffTable();
 
-            testEmbeddedDB.createAssignmentsTable();*/
+            testEmbeddedDB.createAssignmentsTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -224,6 +224,7 @@ public class testEmbeddedDB {
                     "completionStatus CHAR(11) NOT NULL ," +
                     "acceptTime CHAR(20) NOT NULL , " +
                     "finishTime CHAR(20) NOT NULL , " +
+                    "serviceemployeeid INTEGER ," +
                     "PRIMARY KEY (serviceID))");
 
             s.close();
@@ -361,7 +362,7 @@ public class testEmbeddedDB {
                 String nodetype = r.getString("nodeType");
                 String longname = r.getString("longname");
                 String shortname = r.getString("shortname");
-                char team = r.getString("teamassigned").charAt(5);
+                char team = r.getString("teamassigned").charAt(0);
 
                 n = new Node(nodeID, xcord, ycoord, floor, building, nodetype, longname, shortname, team);
 
