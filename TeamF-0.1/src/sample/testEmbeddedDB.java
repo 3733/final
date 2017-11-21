@@ -89,7 +89,7 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.addStaff(rob);*/
 
-            testEmbeddedDB.addAssignment(5555, 1111, "now" , "started");
+            //testEmbeddedDB.addAssignment(5555, 1111, "now" , "started");
 
             //testEmbeddedDB.getAllServiceRequests();
 
