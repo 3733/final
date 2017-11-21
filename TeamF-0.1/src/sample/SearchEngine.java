@@ -1,11 +1,17 @@
 package sample;
 
+import org.apache.commons.lang3.StringUtils;
 import sample.Map;
 import sample.Node;
 
 import java.util.Vector;
 
+
+
 public class SearchEngine {
+
+    public static final double MAX_SCORE_FOR_NO_FIRST_LETTER_MATCH = 0.3;
+    public static final double MIN_SCORE = 0.3;
 
     /**
      * This is the SearchPath algorithm to find the most efficient path given String,denoting the destination of the user.
@@ -21,7 +27,9 @@ public class SearchEngine {
 
     public static Vector<Node> SearchPath(String search, Map map, Node kiosk){
 
+
         Vector<Node> r = new Vector<>();
+
 
         if ( search !=  ""){
             for(int i = 0; i<map.getNodes().size();i++){
@@ -31,6 +39,12 @@ public class SearchEngine {
             }
         }
 
+
+        //Vector<Node> r = findMatches(search,map.getNodes());
+
+        for(int i=0;i<r.size();i++){
+            System.out.println(i+": "+r.get(i).getLongName());
+        }
         Node MinNode = kiosk;
         Double MinDistance=1000000.0;
 
@@ -42,8 +56,35 @@ public class SearchEngine {
             }
         }
 
+        int editDistance = StringUtils.getLevenshteinDistance(searchName, NodeName);
+        System.out.println();
+        double score = (NodeName.length() - editDistance) / NodeName.length();
 
-        return map.Dijkstras(kiosk,MinNode);
+        if (searchName.charAt(0) != NodeName.charAt(0)) {
+            score = Math.min(score, MAX_SCORE_FOR_NO_FIRST_LETTER_MATCH);
+        }
+
+        return Math.max(0.0, Math.min(score, 1.0));
+    }
+
+
+
+
+
+    public static Vector<Node> findMatches(String searchLocation, Vector<Node> ListOfNodes) {
+
+        Vector<Node> results = new Vector<>();
+
+        for(int i = 0;i<ListOfNodes.size();i++) {
+
+            double score = scoreName(searchLocation, ListOfNodes.get(i).getLongName());
+
+            if (score > MIN_SCORE) {
+                results.add(ListOfNodes.get(i));
+            }
+        }
+
+        return results;
     }
 
 

@@ -19,9 +19,6 @@ import java.text.*;
 public class ServiceRequestController implements Initializable{
 
 
-
-
-
     //top menu bar
     @FXML
     public void backToStart() { Main.startScreen();}
@@ -29,6 +26,11 @@ public class ServiceRequestController implements Initializable{
     @FXML
     public void backToAdmin() {Main.adminScreen();}
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
 
     public static int ID = 1;   //service ID counter
     Node n1 = new Node("FDEPT00101", 1614, 829, 1, "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');

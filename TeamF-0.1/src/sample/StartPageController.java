@@ -20,10 +20,25 @@ public class StartPageController {
     @FXML
     private Button helpButton;
 
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
     @FXML
-    public void search(){
+    public String getSearch(){
+        return searchBox.getText();
+    }
+
+
+    @FXML
+    public void search() throws IOException, InterruptedException {
         //System.out.print(searchBox.getText());
-        Main.mapScreen(searchBox.getText());
+        if(getSearch().length()>0) {
+            Main.setDestination(getSearch());
+        }
+        Main.mapScreen();
     }
 
     @FXML

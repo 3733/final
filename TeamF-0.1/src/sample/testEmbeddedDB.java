@@ -254,7 +254,7 @@ public class testEmbeddedDB {
                 String nodetype = r.getString("nodeType");
                 String longname = r.getString("longname");
                 String shortname = r.getString("shortname");
-                char team = r.getString("teamassigned").charAt(0);
+                char team = r.getString("teamassigned").charAt(5);
 
                 n = new Node(nodeID, xcord, ycoord, floor, building, nodetype, longname, shortname, team);
 
@@ -524,7 +524,7 @@ public class testEmbeddedDB {
                     "nodeType CHAR(4), " +
                     "longName CHAR(60), " +
                     "shortName CHAR(20), " +
-                    "teamAssigned CHAR(1)," +
+                    "teamAssigned CHAR(6)," +
                     "PRIMARY KEY (nodeID)" +
                     ")");
 
@@ -551,7 +551,7 @@ public class testEmbeddedDB {
         try{
             Connection c = DriverManager.getConnection(url);
             l = new CSVLoader(c);
-            l.loadCSV("TeamF-0.1/src/sample/Data/newNodes.csv", "NODES", true);
+            l.loadCSV("TeamF-0.1/src/sample/Data/MapFNodes.csv", "NODES", true);
 
             c.close();
 
@@ -585,7 +585,7 @@ public class testEmbeddedDB {
         try{
             Connection c = DriverManager.getConnection(url);
             l = new CSVLoader(c);
-            l.loadCSV("TeamF-0.1/src/sample/Data/newEdges.csv", "EDGES", true);
+            l.loadCSV("TeamF-0.1/src/sample/Data/MapFEdges.csv", "EDGES", true);
 
             c.close();
 
