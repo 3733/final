@@ -39,6 +39,7 @@ public class StartPageController {
             Main.setDestination(getSearch());
         }
         Main.mapScreen();
+        searchBox.clear();
     }
 
     @FXML

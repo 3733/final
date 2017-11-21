@@ -3,6 +3,7 @@ package sample;
 import com.opencsv.CSVWriter;
 import java.io.FileWriter;
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.Vector;
 
 
@@ -606,6 +607,87 @@ public class testEmbeddedDB {
         } catch (Exception e){
             System.out.println("addStaff error: " + e.getMessage());
         }
+    }
+
+    public static void removeStaff(long staffID){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+            s.execute("DELETE FROM STAFF WHERE EMPLOYEEID = "+staffID);
+
+            c.close();
+
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+    }
+
+    public static Staff getStaff(long personalID){
+        Staff n = null;
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM STAFF WHERE EMPLOYEEID = "+ personalID);
+
+            while(r.next()){
+                String firstName = r.getString("FIRSTNAME");
+                String lastName = r.getString("LASTNAME");
+                long employeeID = r.getLong("EMPLOYEEID");
+                String username = r.getString("USERNAME");
+                String password = r.getString("PASSWORD");
+                String employeeType = r.getString("EMPLOYEETYPE");
+                String employeeEmail = r.getString("EMPLOYEEEMAIL");
+
+                n = new Staff(firstName, lastName, employeeID, username, password, employeeType, employeeEmail);
+            }
+
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+
+        return n;
+    }
+
+    public static LinkedList<Staff> getAllStaff(){
+        //ArrayList<Node> allNodes = new ArrayList<Node>();
+        LinkedList<Staff> allStaff = new  LinkedList<Staff>();
+        try{
+            Staff p;
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM STAFF");
+
+            while(r.next()) {
+                String firstName = r.getString("FIRSTNAME");
+                String lastName = r.getString("LASTNAME");
+                long employeeID = r.getLong("EMPLOYEEID");
+                String username = r.getString("USERNAME");
+                String password = r.getString("PASSWORD");
+                String employeeType = r.getString("EMPLOYEETYPE");
+                String employeeEmail = r.getString("EMPLOYEEEMAIL");
+
+                p = new Staff(firstName, lastName, employeeID, username, password, employeeType, employeeEmail);
+
+                p = testEmbeddedDB.getStaff(r.getLong("EMPLOYEEID"));
+
+                allStaff.add(p);
+                //System.out.println("nodeID: " + name);
+            }
+
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+
+        return allStaff;
+
     }
 
     public static void addAssignment(long serviceID, long employeeID, String startTime, String compStat){
