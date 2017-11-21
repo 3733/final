@@ -329,6 +329,8 @@ public class ServiceRequestController implements Initializable{
         refreshTable();
     }
 
+
+    //it requests
     @FXML
     private TitledPane itPane;
 
@@ -441,19 +443,19 @@ public class ServiceRequestController implements Initializable{
     @FXML
     public void refreshTable() {
         int i = 0;
-      /*  //using data from database
+        //using data from database
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
       for (i = counter; i < arrayOfRequestsFromDatabase.size();i++) {
           requestObserve.add(arrayOfRequestsFromDatabase.get(i));
       }
-*/
 
+/*
         //using local data from array
         for(i = counter; i < requestList.size(); i++)
             requestObserve.add(requestList.get(i));
-
+*/
         counter = i;
         tableView.setItems(requestObserve);
     }

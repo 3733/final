@@ -38,6 +38,15 @@ public class testEmbeddedDB {
                     4, "test", "test", "test",
                     "test",'t');
 
+            Staff bob = new Staff("bob", "larkson", 1111, "boblrksn",
+                    "test", "assistance", "bob@bob.com");
+
+            Staff tom = new Staff("tom", "larkson", 2222, "tomlrksn",
+                    "test", "assistance", "bob@bob.com");
+
+            Staff rob = new Staff("rob", "larkson", 3333, "roblrksn",
+                    "test", "assistance", "bob@bob.com");
+
             FoodRequest f = new FoodRequest(test, "test", 2, "test",
                     "test", "test", 12321, "food",
                     "incomplete", "bob", "now", "pizzza");
@@ -62,7 +71,7 @@ public class testEmbeddedDB {
                     "tetst", "test", 5,"security",
                     "security", 4);
 
-            testEmbeddedDB.addFoodRequest(f);
+            /*testEmbeddedDB.addFoodRequest(f);
 
             testEmbeddedDB.addAssistanceRequest(a);
 
@@ -74,16 +83,24 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.addSecurityRequest(s);
 
+            testEmbeddedDB.addStaff(bob);
+
+            testEmbeddedDB.addStaff(tom);
+
+            testEmbeddedDB.addStaff(rob);*/
+
+            testEmbeddedDB.addAssignment(5555, 1111, "now" , "started");
+
             //testEmbeddedDB.getAllServiceRequests();
 
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            /*testEmbeddedDB.dropAssignments();
+            /*testEmbeddedDB.dropAssignmentsTable();
 
-            testEmbeddedDB.dropServiceRequests();
+            testEmbeddedDB.dropServiceRequestsTable();
 
-            testEmbeddedDB.dropStaff();
+            testEmbeddedDB.dropStaffTable();
 
             testEmbeddedDB.createServiceRequestTable();
 
@@ -161,7 +178,7 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void dropServiceRequests(){
+    public static void dropServiceRequestsTable(){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
@@ -173,7 +190,7 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void dropStaff(){
+    public static void dropStaffTable(){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
@@ -187,7 +204,7 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void dropAssignments(){
+    public static void dropAssignmentsTable(){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
@@ -212,7 +229,7 @@ public class testEmbeddedDB {
             s.execute("CREATE TABLE ServiceRequests (" +
                     "destination CHAR(25) NOT NULL ," +
                     "description CHAR(60) NOT NULL ," +
-                    "serviceID INTEGER NOT NULL," +
+                    "serviceID BIGINT NOT NULL," +
                     "serviceTime CHAR(20) NOT NULL ," +
                     "typeOfRequest CHAR(30) NOT NULL ," +
                     "patientName CHAR(40) DEFAULT NULL ," +
@@ -224,6 +241,7 @@ public class testEmbeddedDB {
                     "completionStatus CHAR(11) NOT NULL ," +
                     "acceptTime CHAR(20) NOT NULL , " +
                     "finishTime CHAR(20) NOT NULL , " +
+                    "serviceemployeeid BIGINT," +
                     "PRIMARY KEY (serviceID))");
 
             s.close();
@@ -240,13 +258,13 @@ public class testEmbeddedDB {
             Statement s = c.createStatement();
 
             s.execute("CREATE TABLE Staff (" +
-                    "employeeName Char(25) NOT NULL," +
-                    "password CHAR(30)," +
-                    "rank CHAR(60)," +
-                    "username CHAR(25), " +
-                    "employeeID INTEGER NOT NULL PRIMARY KEY," +
+                    "firstName Char(25) NOT NULL," +
+                    "lastName CHAR(30), " +
+                    "employeeID BIGINT NOT NULL PRIMARY KEY," +
                     "employeeType CHAR (30)," +
-                    "employeeEmail CHAR(30))");
+                    "employeeEmail CHAR(30)," +
+                    "password CHAR(25)," +
+                    "username CHAR(25) UNIQUE )");
 
             c.close();
 
@@ -262,8 +280,8 @@ public class testEmbeddedDB {
             Statement s = c.createStatement();
 
             s.execute("CREATE TABLE Assignments (" +
-                    "employeeID INTEGER," +
-                    "serviceID INTEGER," +
+                    "employeeID BIGINT," +
+                    "serviceID BIGINT," +
                     "FOREIGN KEY (employeeID) REFERENCES STAFF(EMPLOYEEID)," +
                     "FOREIGN KEY (serviceID) REFERENCES SERVICEREQUESTS(SERVICEID))");
 
@@ -572,6 +590,83 @@ public class testEmbeddedDB {
         }
     }
 
+    public static void addStaff(Staff p){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("INSERT INTO STAFF (FIRSTNAME, LASTNAME, EMPLOYEEID, EMPLOYEETYPE, " +
+                    "EMPLOYEEEMAIL, PASSWORD, USERNAME) VALUES ('" + p.firstName + "', '" + p.lastName + "'," +
+                    p.employeeID + ", '" + p.employeeType + "', '" + p.employeeEmail + "','" +
+                    p.password + "', '" + p.username + "')");
+
+            s.close();
+
+        } catch (Exception e){
+            System.out.println("addStaff error: " + e.getMessage());
+        }
+    }
+
+    public static void addAssignment(long serviceID, long employeeID, String startTime, String compStat){
+        try{
+            //add the sid and eid to assignment table
+            final String url = "jdbc:derby:Skynet";
+
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("INSERT INTO ASSIGNMENTS (EMPLOYEEID, SERVICEID) VALUES ((SELECT EMPLOYEEID " +
+                    "from STAFF WHERE STAFF.EMPLOYEEID = " + employeeID + "), (SELECT SERVICEID from " +
+                    "SERVICEREQUESTS WHERE SERVICEREQUESTS.SERVICEID = " + serviceID + "))");
+
+            s.close();
+
+            //update the start-time in the assignment table
+
+            testEmbeddedDB.editStartTime(serviceID, startTime);
+
+            //update the completion status
+
+            testEmbeddedDB.editCompletionStatus(serviceID, compStat);
+
+        } catch (Exception e){
+            System.out.println("addAssignment error: " + e.getMessage());
+        }
+    }
+
+    public static void editStartTime(long serviceID, String startTime){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("UPDATE SERVICEREQUESTS SET ACCEPTTIME = '" + startTime + "' WHERE SERVICEID = " +
+                    serviceID);
+
+            s.close();
+
+        } catch (Exception e){
+            System.out.println("editStartTime error: " + e.getMessage());
+        }
+    }
+
+    public static void editCompletionStatus(long serviceID, String completeionStatus){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            s.execute("UPDATE SERVICEREQUESTS SET completionstatus = '" + completeionStatus +
+                    "' WHERE SERVICEID = " + serviceID);
+
+            s.close();
+
+        } catch (Exception e){
+            System.out.println("editCompletionStatus error: " + e.getMessage());
+        }
+    }
+
     public static Node getNode(String nodeID){
         Node n = null;
 
@@ -645,7 +740,7 @@ public class testEmbeddedDB {
                     "nodeType CHAR(4), " +
                     "longName CHAR(60), " +
                     "shortName CHAR(20), " +
-                    "teamAssigned CHAR(1)," +
+                    "teamAssigned CHAR(6)," +
                     "PRIMARY KEY (nodeID)" +
                     ")");
 
@@ -787,7 +882,8 @@ public class testEmbeddedDB {
             Connection c = DriverManager.getConnection(url);
 
             Statement s = c.createStatement();
-            s.execute("INSERT INTO EDGES (EDGEID, STARTNODE, ENDNODE) VALUES ('"+edgeID+"','" +startNodes+"','" +endNodes+"')");
+            s.execute("INSERT INTO EDGES (EDGEID, STARTNODE, ENDNODE) VALUES ('"+edgeID+"','"
+                    +startNodes+"','" +endNodes+"')");
 
             c.close();
 
@@ -980,11 +1076,8 @@ public class testEmbeddedDB {
 
             c.close();
 
-
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
         }
     }
-
-
 }

@@ -57,6 +57,11 @@ public class NavigationPageController implements Initializable{
     }
 
     @FXML
+    public void mapClick() throws IOException {
+        drawAll();
+    }
+
+    @FXML
     public void dragMap(){
         //map.setX();
         //map.setY();
@@ -384,5 +389,31 @@ public class NavigationPageController implements Initializable{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void drawAll() throws IOException{
+        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
+        Graphics2D pathImage = firstFloor.createGraphics();
+        Vector<Edge> edges = testEmbeddedDB.getAllEdges();
+        Vector<Node> nodes = testEmbeddedDB.getAllNodes();
+        int edgeLength = edges.size();
+        int nodeLength = nodes.size();
+        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
+        for(int i = 0; i < edgeLength; i++ ) {
+            Node nodeStart = edges.get(i).getStart();
+            System.out.println("Start: " + nodeStart.getShortName());
+            Node nodeEnd = edges.get(i).getEnd();
+            System.out.println("Stop: " + nodeEnd.getShortName());
+            pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
+            pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
+        }
+        for(int i = 0; i < nodeLength; i++){
+            Node node = nodes.get(i);
+            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
+            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+        }
+        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
     }
 }

@@ -55,7 +55,7 @@ public abstract class ServiceRequest {
     public String getType() {
         return this.typeOfRequest;
     }
-    public String getStatus() { return completionStatus; }
+    public String getStatus() { return this.completionStatus; }
 
     public void setAcceptTime(String acceptTime) { this.acceptTime = acceptTime; }
     public void setFinishTime(String finishTime) { this.finishTime = finishTime; }
