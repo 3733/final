@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -21,7 +22,7 @@ import java.lang.reflect.Array;
 import java.util.Properties;
 
 
-
+import javafx.scene.image.Image;
 import sample.testEmbeddedDB;
 
 import javax.xml.ws.Service;
@@ -406,9 +407,10 @@ public class ServiceRequestController implements Initializable{
 
     private int counter;
 
+    @FXML
+    private javafx.scene.image.ImageView map;
 
-    public void acceptRequest()
-    {
+    public void acceptRequest() throws InvalidEmailException, IOException {
         ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
 
 
@@ -427,6 +429,11 @@ public class ServiceRequestController implements Initializable{
                 requestObserve.set(i, requestSelected);
         }
         refreshTable();
+
+        //emailing the service request to the employee
+        //map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+        //EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
+        //emailService.sendEmail(requestSelected.getType(), "tjaber15@gmail.com");
 
     }
 
