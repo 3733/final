@@ -23,7 +23,7 @@ public class StartPageController {
     @FXML
     public void search(){
         //System.out.print(searchBox.getText());
-        Main.mapScreen();
+        Main.mapScreen(searchBox.getText());
     }
 
     @FXML

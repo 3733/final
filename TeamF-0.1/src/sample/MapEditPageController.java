@@ -18,6 +18,6 @@ public class MapEditPageController {
 
     @FXML
     public void openMapScreen() {
-        Main.mapScreen();
+       // Main.mapScreen();
     }
 }

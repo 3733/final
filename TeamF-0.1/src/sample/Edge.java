@@ -1,5 +1,7 @@
 package sample;
 
+import sample.Node;
+
 public class Edge {
 
     //Fields

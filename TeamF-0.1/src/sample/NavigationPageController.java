@@ -5,7 +5,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,6 +13,12 @@ import java.io.*;
 import java.util.Vector;
 
 public class NavigationPageController {
+
+    @FXML
+    protected void initialize(){
+        System.out.println("HELLO WORLD");
+
+    }
 
     // Contains the user zoom setting
     @FXML
@@ -45,6 +50,25 @@ public class NavigationPageController {
 
     private Vector<Node> path = new Vector<Node>();
 
+    private Map CurMap;
+
+    private Node Kiosk;
+
+
+    public void setMap(Map m){
+        this.CurMap = m;
+        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
+    }
+
+    public void setKiosk(Node k){
+        this.Kiosk = k;
+
+    }
+
+    public void setSearch(String s){
+        this.destination.setText(s);
+    }
+
     @FXML
     public void dragMap(){
         //map.setX();
@@ -65,93 +89,16 @@ public class NavigationPageController {
     public void go() throws IOException,InterruptedException{
 
 
-        Vector<Node> dbnodes = new Vector<Node>();
+        //Returns
+        long st = System.currentTimeMillis();
+        this.path= SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk);
+        long et = System.currentTimeMillis();
+        System.out.println(et-st+"<===ALGO");
 
-
-        for (int i =0;i<testEmbeddedDB.getAllNodes().size();i++){
-
-            dbnodes.add(testEmbeddedDB.getAllNodes().get(i));
-        }
-
-
-        Vector <Edge> EdgesBad = new Vector<>();
-
-        Vector <Edge> EdgesGood = new Vector<>();
-
-        for (int i =0;i<testEmbeddedDB.getAllEdges().size();i++){
-
-            EdgesBad.add(testEmbeddedDB.getAllEdges().get(i));
-        }
-
-        for(int i =0;i<EdgesBad.size();i++){
-
-            String ID;
-            String StID;
-            String EndID;
-            Node Start = null;
-            Node End = null;
-
-            ID = EdgesBad.get(i).getEdgeID();
-            StID = EdgesBad.get(i).getStart().getNodeID();
-            EndID = EdgesBad.get(i).getEnd().getNodeID();
-
-            for(int j = 0; j< dbnodes.size();j++){
-
-                if(dbnodes.get(j).getNodeID().equals(StID)){
-                    Start = dbnodes.get(j);
-
-                }else if(dbnodes.get(j).getNodeID().equals(EndID)){
-
-                    End = dbnodes.get(j);
-                }
-            }
-
-            Edge e = new Edge(ID,Start,End);
-
-
-            EdgesGood.add(e);
-        }
-
-        Map CuurMap = new Map(dbnodes, EdgesGood);
-
-
-
-        CuurMap.BuildMap();
-
-
-        for (int i =0; i<CuurMap.getMap().size();i++){
-
-            System.out.println((i+1)+ " : "+CuurMap.getMap().get(i).getLongName());
-
-            for (int j =0; j<CuurMap.getMap().get(i).getNeighbors().size();j++){
-
-                System.out.println( "      =====> "+CuurMap.getMap().get(i).getNeighbors().get(j).getLongName());
-            }
-        }
-
-        SearchEngine Engine = new SearchEngine(CuurMap.getMap());
-
-        Vector<Node> SearchLocations = Engine.SearchPath(destination.getText());
-
-
-
-        //KIOSK LOCATION
-        Node MinNode = CuurMap.getMap().get(0);
-        Double MinDistance=1000000.0;
-
-        for(int i =0; i<SearchLocations.size();i++ ){
-            if(MinDistance  > CuurMap.TotalDistance(CuurMap.AStar(CuurMap.getMap().get(0),SearchLocations.get(i)))){
-                MinDistance = CuurMap.TotalDistance(CuurMap.AStar(CuurMap.getMap().get(0),SearchLocations.get(i)));
-                MinNode = SearchLocations.get(i);
-            }
-        }
-
-
-
-         Vector<Node> Path =CuurMap.AStar(CuurMap.getMap().get(0),MinNode);
-
-        path = Path;
-        drawDirections(Path);
+        st = System.currentTimeMillis();
+        drawDirections(path);
+        et = System.currentTimeMillis();
+        System.out.println(et-st+"<===DR");
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -255,7 +202,7 @@ public class NavigationPageController {
         // Set the saved image as the new map
         Data.data.map = map.getImage();
         Data.data.currentMap = "path" + nameDep + "-" + nameDest + ".png";
-        Thread.sleep(2000); // Wait before reading and setting the image as the new map
+        //Thread.sleep(2000); // Wait before reading and setting the image as the new map
         map.setImage(new Image(new FileInputStream("path" + nameDep + "-" + nameDest + ".png")));
         System.out.println("Image edited and saved");
     }
