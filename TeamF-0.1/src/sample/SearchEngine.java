@@ -41,10 +41,12 @@ public class SearchEngine {
 
 
         //Vector<Node> r = findMatches(search,map.getNodes());
-
+/*
         for(int i=0;i<r.size();i++){
             System.out.println(i+": "+r.get(i).getLongName());
         }
+        */
+
         Node MinNode = kiosk;
         Double MinDistance=1000000.0;
 
@@ -56,6 +58,10 @@ public class SearchEngine {
             }
         }
 
+        return map.AStar(kiosk,MinNode);
+
+        /*
+
         int editDistance = StringUtils.getLevenshteinDistance(searchName, NodeName);
         System.out.println();
         double score = (NodeName.length() - editDistance) / NodeName.length();
@@ -65,11 +71,12 @@ public class SearchEngine {
         }
 
         return Math.max(0.0, Math.min(score, 1.0));
+        */
     }
 
 
 
-
+/*
 
     public static Vector<Node> findMatches(String searchLocation, Vector<Node> ListOfNodes) {
 
@@ -88,7 +95,9 @@ public class SearchEngine {
     }
 
 
+    scoreName
 
+*/
 
 }
 
