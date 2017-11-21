@@ -1,4 +1,4 @@
-package sample.controllers;
+package sample;
 
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
@@ -6,8 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import sample.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -25,10 +23,12 @@ public class NavigationPageController{
     @FXML
     private javafx.scene.image.ImageView icon;
     @FXML
-    private JFXTextField startField;
+    private Label sendLabel;
     @FXML
-    private JFXRadioButton start;
-    @FXML JFXRadioButton end;
+    private JFXButton sendButton;
+    @FXML
+    private JFXListView directionSteps;
+
 
     //to login from navigation screen
     @FXML
@@ -45,7 +45,7 @@ public class NavigationPageController{
 
     // Contains the user email entry
     @FXML
-    private TextField email;
+    private JFXTextField email;
 
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
@@ -88,6 +88,11 @@ public class NavigationPageController{
     @FXML
     public void go() throws IOException,InterruptedException{
 
+        //makes other options visible
+        sendLabel.setVisible(true);
+        email.setVisible(true);
+        sendButton.setVisible(true);
+        directionSteps.setVisible(true);
 
         Vector<Node> dbnodes = new Vector<Node>();
 

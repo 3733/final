@@ -1,4 +1,4 @@
-package sample.controllers;
+package sample;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;

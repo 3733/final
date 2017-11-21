@@ -2,7 +2,7 @@
 * Purpose: to add additional Request for IT ServiceRequestell */
 
 
-package sample.controllers;
+package sample;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;

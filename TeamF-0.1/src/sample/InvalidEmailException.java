@@ -1,9 +1,5 @@
 package sample;
 
-import sample.controllers.NavigationPageController;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 public class InvalidEmailException extends Exception{
     String invalidEmail;
     public InvalidEmailException(String invalidEmail){

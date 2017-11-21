@@ -1,6 +1,5 @@
 package sample;
 
-import sample.controllers.NavigationPageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
