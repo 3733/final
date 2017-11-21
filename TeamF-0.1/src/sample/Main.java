@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.Vector;
@@ -25,6 +26,7 @@ public class Main extends Application {
     private static Scene mapEdit;
     private static Scene nodeEdit;
     private static Scene edgeEdit;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
@@ -44,6 +46,7 @@ public class Main extends Application {
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
+
     }
 
     public static void loginScreen(){

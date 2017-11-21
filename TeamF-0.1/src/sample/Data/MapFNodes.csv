@@ -42,8 +42,8 @@ FHALL02401,1965,1280,1,Tower,HALL,Lobby Hallway 2,Hallway F02401,Team F
 FHALL02501,1965,1239,1,Tower,HALL,Lobby Hallway 3,Hallway F02501,Team F
 FSTAI00301,1947,1239,1,Tower,STAI,Lobby Escalator,Lobby Escalator,Team F
 FHALL02601,2026,1239,1,Tower,HALL,Lobby Hallway 4,Hallway F02601,Team F
-FHALL02701,2066,1239,1,Tower,HALL,Lobby Emergency Hallway,Emergency Hallway,Team F
-FDEPT00501,2066,1275,1,Tower,DEPT,Emergency Entrance,Emergency,Team F
+FHALL02701,2066,1239,1,Tower,HALL,Lobby Hallway 7,Hallway F02701,Team F
+FDEPT00501,2128,1300,1,Tower,DEPT,Emergency Department,Emergency,Team F
 FHALL02801,1748,1280,1,Tower,HALL,Lobby Entrance Hallway,HallwayF02801,Team F
 FEXIT00201,1748,1321,1,Tower,EXIT,75 Francis Valet Drop-off,75 Francis Exit,Team F
 FHALL02901,1700,1280,1,Tower,HALL,75 Lobby,75 Lobby,Team F
@@ -54,3 +54,6 @@ FRETL00201,1609,1246,1,Tower,RETL,Au Bon Pain,ABP,Team F
 FHALL03101,2026,976,1,Tower,HALL,Lobby Hallway 6,Hallway F02801,Team F
 FREST00101,2091,976,1,Tower,REST,Bathroom 75 Lobby,Bathroom Lobby,Team F
 FEXIT00301,2099,1357,1,Tower,EXIT,Emergency Department Entrance,Emergency Entrance,Team F
+FHALL03201,1758,1029,1,Tower,HALL,Tower Hallway 13 ,Hallway F03201,Team F
+FDEPT00601,1780,1029,1,Tower,DEPT,International Patient Center,IPC,Team F
+FHALL03301,2066,1282,1,Tower,HALL,Emergency Hallway,Hallway F03301,Team F

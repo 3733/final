@@ -178,7 +178,7 @@ public class NavigationPageController {
 
 
          Vector<Node> Path =CuurMap.AStar(CuurMap.getMap().get(0),MinNode);
-        testDrawDirections(Path);
+        //testDrawDirections(Path);
         Data.data.path = Path;
         //drawDirections(path);
     }
@@ -245,40 +245,10 @@ public class NavigationPageController {
         return out;
     }
 
-    @FXML
-    public void testDrawDirections(Vector<Node> path) throws IOException {
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
-        Graphics2D pathImage = firstFloor.createGraphics();
-        int length = path.size();
-        String nameDest = path.get(length-1).getShortName();
-        String nameDept = path.get(0).getShortName();
-
-        Data.data.currentMap = "path" + nameDept + "-" + nameDest;
-        // Setting up the proper color settings
-        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
-
-        // Iterate through all the path nodes to draw the path
-        for(int i = 0; i < length ; i++) {
-            Node node = path.get(i);
-            if(i + 1 < length){
-                Node node2 = path.get(i+1);
-                // Lines are drawn offset,
-                pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
-                pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(),node2.getxCoordinate() ,node2.getyCoordinate());
-            }
-        }
-
-        for(int i = 0; i < length; i++) {
-            Node node = path.get(i);
-            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-        }
 
 
-        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-        System.out.println("Image set on map");
-    }
+
+
 
     @FXML
     public void drawAll() throws IOException{
