@@ -34,7 +34,7 @@ public class testEmbeddedDB {
             //testEmbeddedDB.createPrimKey();
 
             //testEmbeddedDB.fillEdgesTable();
-
+/*
             Node test = new Node("dickbutt", 4, 4,
                     4, "test", "test", "test",
                     "test",'t');
@@ -71,7 +71,7 @@ public class testEmbeddedDB {
             SecurityRequest s = new SecurityRequest(test, "test", 5555, "test",
                     "tetst", "test", 5,"security",
                     "security", 4);
-
+*/
             /*testEmbeddedDB.addFoodRequest(f);
 
             testEmbeddedDB.addAssistanceRequest(a);
