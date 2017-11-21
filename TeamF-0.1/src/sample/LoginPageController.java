@@ -1,14 +1,17 @@
 package sample;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import sample.Main;
 
 public class LoginPageController {
     @FXML
-    private TextField username;
+    private JFXTextField username;
 
     @FXML
-    private TextField password;
+    private JFXPasswordField password;
 
     @FXML
     private Label invalidLoginText;
@@ -20,9 +23,8 @@ public class LoginPageController {
     }
 
     @FXML
-    public void cancel(){
-        Main.startScreen();
-    }
+    public void help(){Main.genErrorScreen();}
+
 
     @FXML
     public void login(){
@@ -35,9 +37,8 @@ public class LoginPageController {
         }
     }
 
-    @FXML
-    public void sendMsg(){
 
-    }
+    @FXML
+    public void back(){Main.startScreen();}
 
 }

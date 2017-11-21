@@ -2,7 +2,6 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 
 public class MapEditPageController {
@@ -29,4 +28,11 @@ public class MapEditPageController {
     public void openMapScreen() throws IOException, InterruptedException {
         Main.mapScreen();
     }
+
+    @FXML
+    public void help(){Main.genErrorScreen();}
+    @FXML
+    public void logout(){Main.startScreen();}
+    @FXML
+    public void back(){Main.adminScreen();}
 }

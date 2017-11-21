@@ -2,6 +2,7 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import sample.Main;
 
 public class ItErrorController {
 
