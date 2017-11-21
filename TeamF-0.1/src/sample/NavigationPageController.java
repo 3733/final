@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.embed.swing.SwingFXUtils;
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -19,13 +20,37 @@ import java.util.Vector;
 
 public class NavigationPageController implements Initializable{
 
+    //new components
+    @FXML
+    private JFXHamburger hamburger;
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private javafx.scene.image.ImageView icon;
+    @FXML
+    private Label sendLabel;
+    @FXML
+    private JFXButton sendButton;
+    @FXML
+    private JFXListView directionSteps;
+
+
+    //to login from navigation screen
+    @FXML
+    public void login(){
+        Main.loginScreen();
+    }
+
+    @FXML
+    public void help(){Main.genErrorScreen();}
+
     // Contains the user zoom setting
     @FXML
     private Slider zoom;
 
     // Contains the user email entry
     @FXML
-    private TextField email;
+    private JFXTextField email;
 
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
@@ -37,11 +62,11 @@ public class NavigationPageController implements Initializable{
 
     // Contains stairs option
     @FXML
-    private CheckBox stairs;
+    private JFXCheckBox stairs;
 
     // Contains the elevator option
     @FXML
-    private  CheckBox elevator;
+    private JFXCheckBox elevator;
 
     // Contains the Invalid email error message
     @FXML

@@ -13,7 +13,7 @@ public abstract class ServiceRequest {
     protected int serviceID;
     protected String serviceTime;
     protected int serviceEmployeeID;
-    protected String typeOfRequest;
+    public String typeOfRequest;
 
     public ServiceRequest(Node destination, String description, int serviceID, String serviceTime, int serviceEmployeeID, String typeOfRequest) {
         this.destination = destination;
