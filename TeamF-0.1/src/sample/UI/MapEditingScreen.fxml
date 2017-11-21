@@ -133,7 +133,7 @@
                                  <children>
                                     <Label alignment="CENTER" prefWidth="80.0" text="Options">
                                        <font>
-                                          <Font name="Montserrat Regular" size="14.0" />
+                                          <Font name="Montserrat Regular" size="16.0" />
                                        </font></Label>
                                  </children>
                               </HBox>
@@ -141,16 +141,16 @@
                                  <children>
                                     <JFXButton onAction="#editNodes" ripplerFill="#8e8e8e" text="Edit Nodes">
                                        <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
+                                          <Font name="Montserrat Regular" size="14.0" />
                                        </font>
                                     </JFXButton>
                                  </children>
                               </HBox>
                               <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton buttonType="RAISED" onAction="#editEdges" text="Edit Edges">
+                                    <JFXButton buttonType="RAISED" onAction="#editEdges" ripplerFill="#8e8e8e" text="Edit Edges">
                                        <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
+                                          <Font name="Montserrat Regular" size="14.0" />
                                        </font>
                                     </JFXButton>
                                  </children>
@@ -163,7 +163,7 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="771.0" prefWidth="1158.0">
                <children>
-                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" layoutX="12.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icons/01_thefirstfloor.png" />
                      </image>

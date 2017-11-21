@@ -173,13 +173,13 @@
                                  <children>
                                     <Label alignment="TOP_CENTER" text="Settings">
                                        <font>
-                                          <Font name="Montserrat Regular" size="14.0" />
+                                          <Font name="Montserrat Regular" size="16.0" />
                                        </font></Label>
                                  </children>
                               </HBox>
                               <JFXButton contentDisplay="CENTER" onAction="#serviceRequest" ripplerFill="#8e8e8e" text="Make A Service Request">
                                  <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
+                                    <Font name="Montserrat Regular" size="14.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="30.0" />
@@ -187,7 +187,7 @@
                               </JFXButton>
                               <JFXButton contentDisplay="CENTER" onAction="#edit" prefHeight="23.0" prefWidth="156.0" ripplerFill="#8e8e8e" text="Edit Map">
                                  <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
+                                    <Font name="Montserrat Regular" size="14.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="30.0" />
@@ -195,7 +195,7 @@
                               </JFXButton>
                               <JFXButton contentDisplay="CENTER" onAction="#editUsers" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" text="Edit Users">
                                  <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
+                                    <Font name="Montserrat Regular" size="14.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="30.0" />
