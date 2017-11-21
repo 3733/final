@@ -169,7 +169,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="29.0" prefWidth="242.0">
                            <children>
-                              <Label prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email">
+                              <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email" visible="false">
                                  <font>
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font>
@@ -182,7 +182,7 @@
                            </VBox.margin></HBox>
                         <HBox prefHeight="34.0" prefWidth="228.0">
                            <children>
-                              <JFXTextField fx:id="email" unFocusColor="#8e8e8e">
+                              <JFXTextField fx:id="email" unFocusColor="#8e8e8e" visible="false">
                                  <font>
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font>
@@ -190,7 +190,7 @@
                                     <Insets left="15.0" right="10.0" />
                                  </HBox.margin>
                               </JFXTextField>
-                              <JFXButton fx:id="sendMsg" buttonType="RAISED" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #ffffff;" text="Send">
+                              <JFXButton fx:id="sendButton" buttonType="RAISED" onAction="#sendMsg" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #ffffff;" text="Send" visible="false">
                                  <font>
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font>
@@ -202,7 +202,7 @@
                               <Insets />
                            </VBox.margin>
                         </HBox>
-                        <JFXListView prefHeight="318.0" prefWidth="242.0">
+                        <JFXListView prefHeight="318.0" prefWidth="242.0" visible="false">
                            <VBox.margin>
                               <Insets top="25.0" />
                            </VBox.margin>
