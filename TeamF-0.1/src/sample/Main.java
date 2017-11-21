@@ -101,8 +101,7 @@ public class Main extends Application {
         //edgeEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/EditEdgesWindow.fxml")), 600,400);
 //        itError = new Scene(FXMLLoader.load(getClass().getResource("UI/It_Error.fxml")), 500, 202);
 //        itRequest = new Scene(FXMLLoader.load(getClass().getResource("UI/ItRequest.fxml")), 500, 500);
-
-
+        //Parent root = FXMLLoader.load(getClass().getResource("UI/StartPage.fxml"));
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
