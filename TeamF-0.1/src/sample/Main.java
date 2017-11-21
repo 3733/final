@@ -203,7 +203,7 @@ public class Main extends Application {
 
         //NavigationPageController controller = new NavigationPageController();
 
-        // testEmbeddedDB db = new testEmbeddedDB();
+        //testEmbeddedDB db = new testEmbeddedDB();
 
 
         //controller.drawDirections(Vec);
