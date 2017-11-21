@@ -2,6 +2,7 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import sample.Main;
 
 public class AdminPageController {
     @FXML
@@ -23,17 +24,9 @@ public class AdminPageController {
     }
 
     @FXML
-    public void addUser(){
-
-    }
-
+    public void editUsers(){Main.editUsersScreen();}
     @FXML
-    public void removeUser(){
-
-    }
-
+    public void back(){Main.startScreen();}
     @FXML
-    public void settings(){
-
-    }
+    public void help(){Main.genErrorScreen();}
 }

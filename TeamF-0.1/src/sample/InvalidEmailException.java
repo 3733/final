@@ -1,8 +1,5 @@
 package sample;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 public class InvalidEmailException extends Exception{
     String invalidEmail;
     public InvalidEmailException(String invalidEmail){

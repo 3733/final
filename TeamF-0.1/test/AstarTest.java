@@ -3,7 +3,8 @@ package sample;
 import java.util.Vector;
 
 public class AstarTest {
-/*
+
+    /*
     public static void main (String[] args){
 
 
@@ -17,7 +18,6 @@ public class AstarTest {
         Node g = new Node ("7",8,8,1,"HALL","asd","big","small",'f');
 
 
-
         //test 1 answ a,c,e,g
 
         Edge aEdge = new Edge ("1",a,b);
@@ -27,10 +27,6 @@ public class AstarTest {
         Edge eEdge = new Edge ("5",a,c);
         Edge fEdge = new Edge ("6",c,e);
         Edge gEdge = new Edge ("7",e,g);
-
-
-        //test2 answ a,c,d,g
-
         Edge hEdge = new Edge ("8",c,d);
         Edge iEdge = new Edge ("9",d,g);
         Edge jEdge = new Edge ("10",b,f);
@@ -78,6 +74,6 @@ public class AstarTest {
 
 
     }
+    */
 }
-*/
-}
+

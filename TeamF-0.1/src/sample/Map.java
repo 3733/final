@@ -1,7 +1,6 @@
 package sample;
 
 
-import javax.swing.tree.DefaultTreeCellEditor;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -9,7 +8,7 @@ public class Map {
 
 
     // List of all the nodes of the map
-    private Vector<Node> Map = new Vector<Node>();
+    private Vector<Node> Nodes = new Vector<Node>();
 
     //List of all the edges of the map
     private Vector<Edge> Edges = new Vector<Edge>();
@@ -20,20 +19,20 @@ public class Map {
 
     //Constructor
 
-    public Map(Vector<Node> Map, Vector<Edge> Edges){
-        this.Map = Map;
+    public Map(Vector<Node> Nodes, Vector<Edge> Edges){
+        this.Nodes = Nodes;
         this.Edges = Edges;
     }
 
 
 
     //Getters and Setters
-    public Vector<Node> getMap() {
-        return Map;
+    public Vector<Node> getNodes() {
+        return Nodes;
     }
 
-    public void setMap(Vector<Node> map) {
-        Map = map;
+    public void setNodes(Vector<Node> Nodes) {
+        this.Nodes = Nodes;
     }
 
     public Vector<Edge> getEdges() {
@@ -58,7 +57,7 @@ public class Map {
     //Testing Functions
     public void addToMap(Node N){
 
-        Map.add(N);
+        Nodes.add(N);
     }
 
     public void addToEdges(Edge E){
@@ -213,9 +212,9 @@ public class Map {
         HashMap<Node,Double> gScore  = new HashMap<>();
 
 
-        for (int i=1; i< Map.size();i++){
+        for (int i=1; i< Nodes.size();i++){
 
-            gScore.put(Map.get(i),1000000.0);
+            gScore.put(Nodes.get(i),1000000.0);
         }
 
 
@@ -229,9 +228,9 @@ public class Map {
 
         HashMap<Node,Double> fScore  = new HashMap<>();
 
-        for (int i=1; i< Map.size();i++){
+        for (int i=1; i< Nodes.size();i++){
 
-            fScore.put(Map.get(i),1000000.0);
+            fScore.put(Nodes.get(i),1000000.0);
         }
 
         // For the first node, that value is completely heuristic.
@@ -283,4 +282,222 @@ public class Map {
 
         return null;
     }
+
+
+
+    /**
+     * This is the A* algorithm to find the most efficient path
+     * <p>
+     *   A* is designed so that it finds the most cost efficient path. Now with multiple floors based
+     *   on elevators and stairs
+     * </p>
+     * @param   Start  starting point for the A* algorithm
+     * @param   End   desired location
+     * @return  ListPoint it returns a vector that contains the nodes, that the minimum path from Start to End consists of.
+     */
+
+    public Vector<Node> BFSearch(Node Start, Node End){    // throws pathnotfoundEx
+
+
+        //a FIFO open_set
+            Vector<Node> openSet = new Vector<>();
+        //an empty set to maintain visited nodes
+            Vector<Node> closedSet = new Vector<>();
+        //a dictionary to maintain meta information (used for path formation)
+            HashMap<Node,Node> cameFrom = new HashMap<>();
+
+
+        cameFrom.put(null,Start);
+
+        openSet.add(Start);
+
+        closedSet.add(Start);
+
+        while(openSet.size()>0) {
+
+            Node Current = openSet.remove(0);
+
+            if (Current.equals(End)) {
+                return reconstructPath(cameFrom, Current);
+
+            }
+
+            for (int i = 0; i < Current.getNeighbors().size(); i++) {
+/*
+                if (closedSet.contains(Current.getNeighbors().get(i))) {
+
+                    continue;
+                }
+*/
+
+                if (!closedSet.contains(Current.getNeighbors().get(i))) {
+
+                    closedSet.add(Current.getNeighbors().get(i));
+                    cameFrom.put(Current.getNeighbors().get(i),Current);
+                    openSet.add(Current.getNeighbors().get(i));
+
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+
+    /**
+     * This is the A* algorithm to find the most efficient path
+     * <p>
+     *   A* is designed so that it finds the most cost efficient path. Now with multiple floors based
+     *   on elevators and stairs
+     * </p>
+     * @param   Start  starting point for the A* algorithm
+     * @param   End   desired location
+     * @return  ListPoint it returns a vector that contains the nodes, that the minimum path from Start to End consists of.
+     */
+
+
+    public Vector<Node> DFSearch(Node Start, Node End){
+
+
+        //a FIFO open_set
+        Vector<Node> openSet = new Vector<>();
+        //an empty set to maintain visited nodes
+        Vector<Node> closedSet = new Vector<>();
+        //a dictionary to maintain meta information (used for path formation)
+        HashMap<Node,Node> cameFrom = new HashMap<>();
+
+        openSet.add(Start);
+        closedSet.add(Start);
+        cameFrom.put(null,Start);
+
+
+
+        while(openSet.size()>0) {
+
+            Node Current = openSet.remove(0);
+
+            if (Current.equals(End)) {
+                return reconstructPath(cameFrom, Current);
+
+            }
+
+
+            for (int i = 0; i < Current.getNeighbors().size(); i++) {
+
+                if (closedSet.contains(Current.getNeighbors().get(i))) {
+
+                    continue;
+                }
+
+
+                if (!closedSet.contains(Current.getNeighbors().get(i))) {
+
+
+                    closedSet.add(Current.getNeighbors().get(i));
+                    cameFrom.put(Current.getNeighbors().get(i),Current);
+                    openSet.add(Current.getNeighbors().get(i));
+                }else{
+                    openSet.remove(0);
+                }
+            }
+
+        }
+
+        return null;
+    }
+
+
+    /**
+     * This is the A* algorithm to find the most efficient path
+     * <p>
+     *   A* is designed so that it finds the most cost efficient path. Now with multiple floors based
+     *   on elevators and stairs
+     * </p>
+     * @param   Start  starting point for the A* algorithm
+     * @param   End   desired location
+     * @return  ListPoint it returns a vector that contains the nodes, that the minimum path from Start to End consists of.
+     */
+
+
+    public Vector<Node> Dijkstras(Node Start, Node End){
+
+        // The set of nodes already evaluated
+        Vector<Node> closedSet = new Vector<>();
+
+        // The set of currently discovered nodes that are not evaluated yet
+        Vector<Node> openSet = new Vector<>();
+
+        // Initially, only the start node is known.
+        openSet.add(Start);
+
+        // For each node, which node it can most efficiently be reached from.
+        // If a node can be reached from many nodes, cameFrom will eventually contain the
+        // most efficient previous step.
+        HashMap<Node,Node> cameFrom = new HashMap<>();
+
+        // For each node, the cost of getting from the start node to that node.Map with default value of Infinity
+        HashMap<Node,Double> gScore  = new HashMap<>();
+
+
+        for (int i=1; i< Nodes.size();i++){
+
+            gScore.put(Nodes.get(i),1000000.0);
+        }
+
+
+        // The cost of going from start to start is zero.
+        gScore.put(Start,0.0);
+
+
+
+
+        // The node in openSet having the lowest fScore value
+        Node Current;
+        while(openSet.size()>0){
+
+            Current = openSet.get(0);
+
+            if (Current.equals(End)){
+                return reconstructPath(cameFrom, Current);
+            }
+
+            openSet.remove(Current);
+            closedSet.add(Current);
+
+
+            for( int i=0; i< Current.getNeighbors().size();i++){
+
+                // Ignore the neighbor which is already evaluated
+                if (closedSet.contains(Current.getNeighbors().get(i))){
+                    continue;
+                }
+
+                // Discover a new node
+                if (!openSet.contains(Current.getNeighbors().get(i))){
+                    openSet.add(Current.getNeighbors().get(i));
+                }
+
+
+                // The distance from start to a neighbor
+                double gScoreT = gScore.get(Current) + HeuristicCost(Current,Current.getNeighbors().get(i));
+
+                if (gScoreT >= gScore.get(Current.getNeighbors().get(i))){
+
+                    continue;		// This is not a better path
+                }
+
+
+                // This path is the best until now. Record it!
+                cameFrom.put(Current.getNeighbors().get(i),Current);
+                gScore.put(Current.getNeighbors().get(i),gScoreT);
+
+
+            }
+        }
+
+        return null;
+    }
+
+
 }

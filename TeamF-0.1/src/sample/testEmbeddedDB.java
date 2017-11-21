@@ -1,6 +1,7 @@
 package sample;
 
 import com.opencsv.CSVWriter;
+
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.LinkedList;
@@ -20,7 +21,7 @@ public class testEmbeddedDB {
             //these two lines are a last ditch effort to make the database work
             //delete it completely (from the project) and run these lines
             //final String url = "jdbc:derby:Skynet;create=true";
-            //Connection c = DriverManager.getConnection(url);
+            //Connection con = DriverManager.getConnection(url);
 
             final String url = "jdbc:derby:Skynet";
             Connection con = DriverManager.getConnection(url);
@@ -97,17 +98,17 @@ public class testEmbeddedDB {
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            testEmbeddedDB.dropAssignmentsTable();
+            /*testEmbeddedDB.dropAssignmentsTable();
 
-            testEmbeddedDB.dropServiceRequestsTable();
+            testEmbeddedDB.dropServiceRequestsTable();*/
 
-            testEmbeddedDB.dropStaffTable();
+            //testEmbeddedDB.dropStaffTable();
 
-            testEmbeddedDB.createServiceRequestTable();
+            //testEmbeddedDB.createServiceRequestTable();
 
-            testEmbeddedDB.createStaffTable();
+            //testEmbeddedDB.createStaffTable();
 
-            testEmbeddedDB.createAssignmentsTable();
+            //testEmbeddedDB.createAssignmentsTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
