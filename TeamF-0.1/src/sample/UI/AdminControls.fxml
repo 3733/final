@@ -10,6 +10,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -177,12 +179,24 @@
                                        </font></Label>
                                  </children>
                               </HBox>
+                              <HBox alignment="CENTER" prefHeight="72.0" prefWidth="228.0">
+                                 <children>
+                                    <SplitMenuButton mnemonicParsing="false" text="Choose Pathfinding">
+                                      <items>
+                                          <MenuItem mnemonicParsing="false" text="A*" />
+                                        <MenuItem fx:id="algoMenu" mnemonicParsing="false" text="Breadth First" />
+                                        <MenuItem mnemonicParsing="false" text="Depth First" />
+                                          <MenuItem mnemonicParsing="false" text="Dijkstra" />
+                                      </items>
+                                    </SplitMenuButton>
+                                 </children>
+                              </HBox>
                               <JFXButton contentDisplay="CENTER" onAction="#serviceRequest" ripplerFill="#8e8e8e" text="Make A Service Request">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" />
+                                    <Insets left="25.0" />
                                  </VBox.margin>
                               </JFXButton>
                               <JFXButton contentDisplay="CENTER" onAction="#edit" prefHeight="23.0" prefWidth="156.0" ripplerFill="#8e8e8e" text="Edit Map">

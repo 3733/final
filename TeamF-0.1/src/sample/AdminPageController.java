@@ -1,10 +1,15 @@
 package sample;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import sample.Main;
 
 public class AdminPageController {
+
+    @FXML
+    private SplitMenuButton algoMenu;
+
     @FXML
     public void logout(){
         Main.startScreen();
@@ -29,4 +34,8 @@ public class AdminPageController {
     public void back(){Main.startScreen();}
     @FXML
     public void help(){Main.genErrorScreen();}
+
+    @FXML
+    public void setAlgorithm(){}
+
 }
