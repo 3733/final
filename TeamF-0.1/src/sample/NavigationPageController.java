@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,17 +73,32 @@ public class NavigationPageController implements Initializable{
     @FXML
     private static Label invalidEmailText;
 
-    private Vector<Node> path = new Vector<Node>();
 
     private Main mainController;
 
-    public void setMainController(Main main){
-        this.mainController = main;
+    public void setMainController(Main in){
+        mainController = in;
     }
 
-    @FXML
-    public void mapClick() throws IOException {
-        drawAll();
+    private Vector<Node> path = new Vector<Node>();
+
+    private Map CurMap;
+
+    private Node Kiosk;
+
+
+    public void setMap(Map m){
+        this.CurMap = m;
+        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
+    }
+
+    public void setKiosk(Node k){
+        this.Kiosk = k;
+
+    }
+
+    public void setSearch(String s){
+        this.destination.setText(s);
     }
 
     @FXML
@@ -101,9 +117,24 @@ public class NavigationPageController implements Initializable{
     }
 
     // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
+
+    public void findPath(String in) throws IOException {
+        //Returns
+        long st = System.currentTimeMillis();
+        this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
+        long et = System.currentTimeMillis();
+        System.out.println(et-st+"<===ALGO");
+
+        st = System.currentTimeMillis();
+        testDrawDirections(path);
+        et = System.currentTimeMillis();
+        System.out.println(et-st+"<===DR");
+    }
     @FXML
     public void go() throws IOException,InterruptedException{
         findPath(destination.getText());
+
+
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -180,7 +211,6 @@ public class NavigationPageController implements Initializable{
         Data.data.currentMap = "path" + nameDept + "-" + nameDest;
         // Setting up the proper color settings
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
-
         // Iterate through all the path nodes to draw the path
         for(int i = 0; i < length ; i++) {
             Node node = path.get(i);
@@ -195,96 +225,6 @@ public class NavigationPageController implements Initializable{
         System.out.println("Image set on map");
     }
 
-    @FXML
-    public void findPath(String destination)throws IOException,InterruptedException{
-        Vector<Node> dbnodes = new Vector<Node>();
-
-
-        for (int i =0;i<testEmbeddedDB.getAllNodes().size();i++){
-
-            dbnodes.add(testEmbeddedDB.getAllNodes().get(i));
-        }
-
-
-        Vector <Edge> EdgesBad = new Vector<>();
-
-        Vector <Edge> EdgesGood = new Vector<>();
-
-        for (int i =0;i<testEmbeddedDB.getAllEdges().size();i++){
-
-            EdgesBad.add(testEmbeddedDB.getAllEdges().get(i));
-        }
-
-        for(int i =0;i<EdgesBad.size();i++){
-
-            String ID;
-            String StID;
-            String EndID;
-            Node Start = null;
-            Node End = null;
-
-            ID = EdgesBad.get(i).getEdgeID();
-            StID = EdgesBad.get(i).getStart().getNodeID();
-            EndID = EdgesBad.get(i).getEnd().getNodeID();
-
-            for(int j = 0; j< dbnodes.size();j++){
-
-                if(dbnodes.get(j).getNodeID().equals(StID)){
-                    Start = dbnodes.get(j);
-
-                }else if(dbnodes.get(j).getNodeID().equals(EndID)){
-
-                    End = dbnodes.get(j);
-                }
-            }
-
-            Edge e = new Edge(ID,Start,End);
-
-
-            EdgesGood.add(e);
-        }
-
-        Map CuurMap = new Map(dbnodes, EdgesGood);
-
-
-
-        CuurMap.BuildMap();
-
-
-        for (int i =0; i<CuurMap.getMap().size();i++){
-
-            System.out.println((i+1)+ " : "+CuurMap.getMap().get(i).getLongName());
-
-            for (int j =0; j<CuurMap.getMap().get(i).getNeighbors().size();j++){
-
-                System.out.println( "      =====> "+CuurMap.getMap().get(i).getNeighbors().get(j).getLongName());
-            }
-        }
-
-        SearchEngine Engine = new SearchEngine(CuurMap.getMap());
-
-        Vector<Node> SearchLocations = Engine.SearchPath(destination);
-
-
-
-        //KIOSK LOCATION
-        Node MinNode = CuurMap.getMap().get(0);
-        Double MinDistance=1000000.0;
-
-        for(int i =0; i<SearchLocations.size();i++ ){
-            if(MinDistance  > CuurMap.TotalDistance(CuurMap.AStar(CuurMap.getMap().get(0),SearchLocations.get(i)))){
-                MinDistance = CuurMap.TotalDistance(CuurMap.AStar(CuurMap.getMap().get(0),SearchLocations.get(i)));
-                MinNode = SearchLocations.get(i);
-            }
-        }
-
-
-
-
-        Vector<Node> Path =CuurMap.AStar(CuurMap.getMap().get(0),MinNode);
-        testDrawDirections(Path);
-        Data.data.path = Path;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -320,4 +260,5 @@ public class NavigationPageController implements Initializable{
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
     }
+
 }

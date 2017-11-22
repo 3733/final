@@ -6,64 +6,61 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 //Talal and willis
 public abstract class ServiceRequest {
 
     protected Node destination;
     protected String description;
     protected int serviceID;
-    protected String serviceTime;
+    protected String serviceTime;                    //time request is sent out
+    protected String acceptTime;                     //time request is accepted
+    protected String finishTime;                     //time request is completed
     protected int serviceEmployeeID;
-    public String typeOfRequest;
+    protected String typeOfRequest;
+    protected String completionStatus;
 
-    public ServiceRequest(Node destination, String description, int serviceID, String serviceTime, int serviceEmployeeID, String typeOfRequest) {
+
+    public ServiceRequest(Node destination, String description, int serviceID, String serviceTime, String acceptTime,
+                          String finishTime, int serviceEmployeeID, String typeOfRequest, String completionStatus) {
         this.destination = destination;
         this.description = description;
         this.serviceID = serviceID;
         this.serviceTime = serviceTime;
+        this.acceptTime = acceptTime;
+        this.finishTime = finishTime;
         this.serviceEmployeeID = serviceEmployeeID;
         this.typeOfRequest = typeOfRequest;
-    }
-
-    public StringProperty getRequestType()
-    {
-        return new SimpleStringProperty(this.typeOfRequest);
-    }
-
-    public StringProperty getStatus()
-    {
-        String swag = "Okay";
-        return new SimpleStringProperty(swag);
+        this.completionStatus = completionStatus;
     }
 
 
-
-
-    public void setServiceEmployeeID(int a) {
-        return;
-    }
     public Node getDestination() {
         return this.destination;
     }
     public String getDescription() {
         return this.description;
     }
-
     public int getServiceID() {
         return this.serviceID;
     }
     public String getServiceTime() {
         return this.serviceTime;
     }
-    public int getServiceEmployeeID() {
-        return this.serviceEmployeeID;
-    }
+    public String getAcceptTime() { return acceptTime; }
+    public String getFinishTime() { return finishTime; }
+    public int getServiceEmployeeIDs() { return this.serviceEmployeeID; }
     public String getType() {
         return this.typeOfRequest;
     }
+    public String getStatus() { return this.completionStatus; }
 
-
-
+    public void setAcceptTime(String acceptTime) { this.acceptTime = acceptTime; }
+    public void setFinishTime(String finishTime) { this.finishTime = finishTime; }
+    public void acceptRequest() {this.completionStatus = "accepted"; }
+    public void finishRequest() {this.completionStatus = "finished"; }
 
 
 }

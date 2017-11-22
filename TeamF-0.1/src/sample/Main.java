@@ -2,12 +2,15 @@ package sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.util.Vector;
@@ -15,6 +18,7 @@ import java.util.Vector;
 public class Main extends Application {
 
     private  static String destination;
+    private  static Staff loggedInGuy;
 
     private static Stage stage;
     private static Scene start;
@@ -149,6 +153,7 @@ public class Main extends Application {
         stage.setScene(map);
         stage.centerOnScreen();
         if(getDestination().length() > 0){
+            startMap();
             navigationPageController.findPath(getDestination());
         }
     }
@@ -199,14 +204,85 @@ public class Main extends Application {
     }
 
 
+
+    public static void setLoggedInGuy(Staff user){
+        loggedInGuy = user;
+    }
+
+    public static Staff getLoggedInGuy(){
+        return loggedInGuy;
+    }
     public static void main(String[] args) throws IOException{
 
-        //NavigationPageController controller = new NavigationPageController();
-
         //testEmbeddedDB db = new testEmbeddedDB();
+        startMap();
+        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
+        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
+        testEmbeddedDB.addStaff(Gary);
+        testEmbeddedDB.addStaff(Eirin);
+
+
 
 
         //controller.drawDirections(Vec);
         launch(args);
+    }
+
+    public static void startMap(){
+
+        Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
+
+        Vector <Edge> EdgesBad = testEmbeddedDB.getAllEdges();
+
+        Vector <Edge> EdgesGood = new Vector<>();
+
+
+        for(int i =0;i<EdgesBad.size();i++){
+
+            String ID;
+            String StID;
+            String EndID;
+            Node Start = null;
+            Node End = null;
+
+            ID = EdgesBad.get(i).getEdgeID();
+            StID = EdgesBad.get(i).getStart().getNodeID();
+            EndID = EdgesBad.get(i).getEnd().getNodeID();
+
+            for(int j = 0; j< dbnodes.size();j++){
+
+                if(dbnodes.get(j).getNodeID().equals(StID)){
+                    Start = dbnodes.get(j);
+
+                }else if(dbnodes.get(j).getNodeID().equals(EndID)){
+
+                    End = dbnodes.get(j);
+                }
+            }
+
+            Edge e = new Edge(ID,Start,End);
+
+
+            EdgesGood.add(e);
+        }
+
+        Map CurMap = new Map(dbnodes, EdgesGood);
+
+        CurMap.BuildMap();
+
+
+        for (int i =0; i<CurMap.getNodes().size();i++){
+
+            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
+
+            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
+
+                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
+            }
+        }
+
+        navigationPageController.setMap(CurMap);
+        //Default kiosk location is the Center for International Medecine
+        navigationPageController.setKiosk(CurMap.getNodes().get(0));
     }
 }

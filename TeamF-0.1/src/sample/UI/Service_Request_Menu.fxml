@@ -124,12 +124,12 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Accept">
+                              <JFXButton buttonType="RAISED" onAction="#acceptRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Accept">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <JFXButton fx:id="deleteButt" buttonType="RAISED" onAction="#deleterequest" style="-fx-background-color: #ffffff;" text="Decline">
+                              <JFXButton fx:id="deleteButt" buttonType="RAISED" onAction="#deleteRequest" style="-fx-background-color: #ffffff;" text="Decline">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -148,8 +148,8 @@
                   <JFXTabPane layoutX="-2.0" prefHeight="786.0" prefWidth="966.0">
                      <tabs>
                         <Tab fx:id="foodPane" onSelectionChanged="#updateFood" style="-fx-text-fill: #8e8e8e;" text="Food Request">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="524.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="524.0">
                                  <children>
                                     <VBox prefHeight="750.0" prefWidth="842.0">
                                        <children>
@@ -226,10 +226,10 @@
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
                                                 <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                  <items>
-                                                    <MenuItem mnemonicParsing="false" onAction="#foodThisLocation" text="This Location" />
-                                                    <MenuItem mnemonicParsing="false" onAction="#foodChooseLocation" text="Choose Location" />
-                                                  </items>
+                                                   <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#foodThisLocation" text="This Location" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#foodChooseLocation" text="Choose Location" />
+                                                   </items>
                                                    <HBox.margin>
                                                       <Insets right="40.0" />
                                                    </HBox.margin>
@@ -251,7 +251,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                          </content>
+                           </content>
                         </Tab>
                         <Tab fx:id="assistancePane" onSelectionChanged="#updateAssistance" style="-fx-text-fill: #8e8e8e;" text="Assistance Request">
                            <content>
