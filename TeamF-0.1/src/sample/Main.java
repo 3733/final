@@ -216,10 +216,6 @@ public class Main extends Application {
 
         //testEmbeddedDB db = new testEmbeddedDB();
         startMap();
-        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
-        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
-        testEmbeddedDB.addStaff(Gary);
-        testEmbeddedDB.addStaff(Eirin);
 
 
 
