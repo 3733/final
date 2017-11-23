@@ -38,6 +38,10 @@ public class NavigationPageController implements Initializable{
     private JFXListView directionSteps;
     @FXML
     private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
+    @FXML
+    private Label floorLabel;
+    @FXML
+    private JFXButton downFloor, upFloor;
 
 
 

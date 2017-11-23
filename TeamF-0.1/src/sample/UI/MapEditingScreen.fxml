@@ -32,7 +32,7 @@
       </MenuBar>
       <AnchorPane prefHeight="746.0" prefWidth="1338.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="771.0" prefWidth="228.0">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="771.0" prefWidth="228.0" style="-fx-background-color: #f4f4f4;">
                <children>
                   <VBox prefHeight="779.0" prefWidth="228.0">
                      <children>
@@ -168,6 +168,29 @@
                         <Image url="@Icons/01_thefirstfloor.png" />
                      </image>
                   </ImageView>
+                  <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
+                     <children>
+                        <JFXButton fx:id="downFloor" contentDisplay="CENTER" ripplerFill="#e8e8e8">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/white-arrow-png-24.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label fx:id="floorLabel" alignment="CENTER" prefHeight="18.0" prefWidth="114.0" />
+                        <JFXButton fx:id="upFloor" contentDisplay="CENTER" ripplerFill="#e8e8e8">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/White_arrow_up.svg.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>

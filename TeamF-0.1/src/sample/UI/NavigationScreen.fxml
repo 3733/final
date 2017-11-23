@@ -37,7 +37,7 @@
         </MenuBar>
         <AnchorPane prefHeight="793.0" prefWidth="1328.0">
             <children>
-                <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0">
+                <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;">
                     <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                             <children>
@@ -160,7 +160,7 @@
                                 </HBox>
                                 <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
                                     <children>
-                                        <JFXButton buttonType="RAISED" onAction="#go" style="-fx-background-color: #ffffff;" text="Go">
+                                        <JFXButton buttonType="RAISED" onAction="#go" style="-fx-background-color: #1a479a;" text="Go" textFill="WHITE">
                                             <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                             </font></JFXButton>
@@ -192,7 +192,7 @@
                                                 <Insets left="15.0" right="10.0" />
                                             </HBox.margin>
                                         </JFXTextField>
-                                        <JFXButton fx:id="sendButton" buttonType="RAISED" onAction="#sendMsg" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #ffffff;" text="Send" visible="false">
+                                        <JFXButton fx:id="sendButton" buttonType="RAISED" onAction="#sendMsg" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE" visible="false">
                                             <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                             </font>
@@ -220,15 +220,15 @@
                                 <Image url="@Icons/01_thefirstfloor.png" />
                             </image>
                         </ImageView>
-                        <JFXTextField fx:id="destination" layoutX="136.0" layoutY="37.0" prefHeight="26.0" prefWidth="838.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                        <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" prefHeight="26.0" prefWidth="678.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                             <font>
                                 <Font name="Montserrat Regular" size="12.0" />
                             </font></JFXTextField>
-                        <JFXButton layoutX="974.0" layoutY="35.0" onAction="#go" prefHeight="30.0" prefWidth="50.0" style="-fx-background-color: #ffffff;">
+                        <JFXButton contentDisplay="CENTER" layoutX="974.0" layoutY="35.0" onAction="#go" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
                             <graphic>
                                 <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@Icons/BTgrBoMGc.png" />
+                                        <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -291,6 +291,29 @@
                         </Tab>
                      </tabs>
                   </JFXTabPane>
+                  <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
+                     <children>
+                        <JFXButton contentDisplay="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/white-arrow-png-24.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label fx:id="floorLabel" alignment="CENTER" prefHeight="18.0" prefWidth="114.0" />
+                        <JFXButton contentDisplay="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/White_arrow_up.svg.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                     </children>
                 </AnchorPane>
             </children>

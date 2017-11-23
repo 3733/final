@@ -93,7 +93,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="34.0" prefWidth="228.0">
                            <children>
-                              <JFXButton fx:id="refresh" buttonType="RAISED" onAction="#refreshTable" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Refresh">
+                              <JFXButton fx:id="refresh" buttonType="RAISED" onAction="#refreshTable" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Refresh" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font>
@@ -237,7 +237,7 @@
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
                                                 </SplitMenuButton>
-                                                <JFXButton buttonType="RAISED" onAction="#foodSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
+                                                <JFXButton buttonType="RAISED" onAction="#foodSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
@@ -328,7 +328,7 @@
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
                                                 </SplitMenuButton>
-                                                <JFXButton buttonType="RAISED" onAction="#assistanceSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
+                                                <JFXButton buttonType="RAISED" onAction="#assistanceSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
@@ -429,7 +429,7 @@
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
                                                 </SplitMenuButton>
-                                                <JFXButton buttonType="RAISED" onAction="#transportSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
+                                                <JFXButton buttonType="RAISED" onAction="#transportSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
@@ -520,7 +520,7 @@
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
                                                 </SplitMenuButton>
-                                                <JFXButton buttonType="RAISED" onAction="#cleanSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
+                                                <JFXButton buttonType="RAISED" onAction="#cleanSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
@@ -608,7 +608,7 @@
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
                                                 </SplitMenuButton>
-                                                <JFXButton buttonType="RAISED" onAction="#securitySendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
+                                                <JFXButton buttonType="RAISED" onAction="#securitySendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>
@@ -681,7 +681,7 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <JFXButton fx:id="itSendRequest" buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
+                                                <JFXButton fx:id="itSendRequest" buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
                                                    </HBox.margin>

@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +10,10 @@ public class AdminPageController {
 
     @FXML
     private SplitMenuButton algoMenu;
+    @FXML
+    private JFXButton upFloor, downFloor;
+    @FXML
+    private Label floorLabel;
 
     @FXML
     public void logout(){
