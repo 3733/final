@@ -158,7 +158,7 @@
                               <Insets top="25.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="65.0" prefWidth="228.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="228.0">
                            <children>
                               <JFXButton buttonType="RAISED" style="-fx-background-color: #1a479a;" text="Go" textFill="WHITE">
                                  <font>
@@ -168,6 +168,20 @@
                            <VBox.margin>
                               <Insets top="25.0" />
                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="228.0">
+                           <children>
+                              <SplitMenuButton fx:id="algoMenu1" mnemonicParsing="false" text="Choose Floor">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Ground" />
+                                    <MenuItem mnemonicParsing="false" text="Lower One" />
+                                    <MenuItem mnemonicParsing="false" text="Lower Two" />
+                                    <MenuItem mnemonicParsing="false" text="First" />
+                                    <MenuItem mnemonicParsing="false" text="Second" />
+                                    <MenuItem mnemonicParsing="false" text="Third" />
+                                 </items>
+                              </SplitMenuButton>
+                           </children>
                         </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>

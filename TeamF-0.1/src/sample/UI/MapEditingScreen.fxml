@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -127,6 +129,20 @@
                               </HBox>
                            </children>
                         </AnchorPane>
+                        <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="228.0">
+                           <children>
+                              <SplitMenuButton fx:id="algoMenu1" mnemonicParsing="false" text="Choose Floor">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Ground" />
+                                    <MenuItem mnemonicParsing="false" text="Lower One" />
+                                    <MenuItem mnemonicParsing="false" text="Lower Two" />
+                                    <MenuItem mnemonicParsing="false" text="First" />
+                                    <MenuItem mnemonicParsing="false" text="Second" />
+                                    <MenuItem mnemonicParsing="false" text="Third" />
+                                 </items>
+                              </SplitMenuButton>
+                           </children>
+                        </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="228.0">

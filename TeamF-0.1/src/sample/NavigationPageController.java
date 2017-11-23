@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -11,15 +12,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.*;
+import java.util.List;
 
 public class NavigationPageController implements Initializable{
 
@@ -42,6 +42,8 @@ public class NavigationPageController implements Initializable{
     private Label floorLabel;
     @FXML
     private JFXButton downFloor, upFloor;
+    @FXML
+    private JFXListView searchList;
 
 
 
@@ -68,7 +70,7 @@ public class NavigationPageController implements Initializable{
 
     // Contains the desired user destination
     @FXML
-    private TextField destination;
+    public static JFXTextField destination;
 
     // Contains stairs option
     @FXML
@@ -81,6 +83,8 @@ public class NavigationPageController implements Initializable{
     // Contains the Invalid email error message
     @FXML
     private static Label invalidEmailText;
+
+
 
 
     private Main mainController;
@@ -239,6 +243,7 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
             //popluating list view -- three
             ObservableList<String> threeItems =FXCollections.observableArrayList (
                     "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
@@ -309,5 +314,33 @@ public class NavigationPageController implements Initializable{
             pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
+    }
+
+    public void autoComplete(){
+        searchList.setVisible(true);
+        SortedSet<String> entries = new TreeSet<String>();
+        Collections.addAll(entries, "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
+                "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
+                "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C", "Bridge to Children's",
+                "Brigham Health", "Carrie M. Hall Conference Center", "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room",
+                "Ear, Nose, & Throat", "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
+                "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
+                "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
+                "Weiner Center for Preoperative Evaluation", "Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain", "Bretholtz Center for Patients and Families", "CART Waiting",
+                "Connor's Center Security Desk", "CPE Classroom", "International Patient Center", "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room",
+                "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle", "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office",
+                "Wound Care Center Ambulatory Treatment Room", "Zinner Breakout Room", "Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR", "Interpreter Services",
+                "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite", "Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
+                "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
+                "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers", "Infusion", "Neuro Testing", "Outpatient Plebotomy");
+        AutoCompleteTextField auto = new AutoCompleteTextField(entries);
+        auto.setPopupHidden(true);
+        SimpleListProperty filteredEntries = new SimpleListProperty(auto.getFilteredEntries());
+        searchList.itemsProperty().bind(filteredEntries);
+    }
+
+    public void autoClose(){
+        searchList.setVisible(false);
     }
 }
