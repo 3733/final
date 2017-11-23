@@ -94,7 +94,6 @@ public class NavigationPageController implements Initializable{
 
     public void setKiosk(Node k){
         this.Kiosk = k;
-
     }
 
     public void setSearch(String s){
@@ -260,5 +259,4 @@ public class NavigationPageController implements Initializable{
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
     }
-
 }

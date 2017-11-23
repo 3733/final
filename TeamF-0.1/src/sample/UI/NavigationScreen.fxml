@@ -6,11 +6,13 @@
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -231,6 +233,24 @@
                                 </ImageView>
                             </graphic>
                         </JFXButton>
+                  <JFXTabPane layoutX="885.0" layoutY="470.0" prefHeight="219.0" prefWidth="174.0" side="LEFT">
+                     <tabs>
+                        <Tab style="-fx-rotate: 90;" text="3">
+                           <content>
+                              <AnchorPane fx:id="threeAnchor" prefHeight="230.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <JFXListView fx:id="threeList" layoutX="39.0" layoutY="3.0" prefHeight="219.0" prefWidth="194.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab style="-fx-rotate: 90;" text="2" />
+                        <Tab style="-fx-rotate: 90;" text="1" />
+                        <Tab style="-fx-rotate: 90;" text="L2" />
+                        <Tab style="-fx-rotate: 90;" text="L1" />
+                        <Tab style="-fx-rotate: 90;" text="G" />
+                     </tabs>
+                  </JFXTabPane>
                     </children>
                 </AnchorPane>
             </children>
