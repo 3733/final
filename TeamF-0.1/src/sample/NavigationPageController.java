@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
@@ -34,6 +36,9 @@ public class NavigationPageController implements Initializable{
     private JFXButton sendButton;
     @FXML
     private JFXListView directionSteps;
+    @FXML
+    private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
+
 
 
     //to login from navigation screen
@@ -131,9 +136,11 @@ public class NavigationPageController implements Initializable{
     }
     @FXML
     public void go() throws IOException,InterruptedException{
+        email.setVisible(true);
+        sendButton.setVisible(true);
+        directionSteps.setVisible(true);
+        sendLabel.setVisible(true);
         findPath(destination.getText());
-
-
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -228,6 +235,46 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            //popluating list view -- three
+            ObservableList<String> threeItems =FXCollections.observableArrayList (
+                    "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
+                    "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                    "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
+                    "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
+            threeList.setItems(threeItems);
+
+            //populating list view -- second
+            ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
+                    "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
+                    "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
+                    "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
+                    "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
+                    "Weiner Center for Preoperative Evaluation");
+            twoList.setItems(twoItems);
+
+            //populating list view -- first
+            ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
+                    "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
+                    "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
+                    "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
+                    "Zinner Breakout Room");
+            oneList.setItems(oneItems);
+
+            //populating list view -- lower two
+            ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
+                    "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
+            lowerTwoList.setItems(lowerTwoItems);
+
+            //populating list view -- lower one
+            ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
+                    "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
+                    "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
+            lowerOneList.setItems(lowerOneItems);
+
+            //populating list -- ground
+            ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
+            groundList.setItems(groundItems);
+
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();

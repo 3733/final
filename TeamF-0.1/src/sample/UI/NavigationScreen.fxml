@@ -233,22 +233,62 @@
                                 </ImageView>
                             </graphic>
                         </JFXButton>
-                  <JFXTabPane layoutX="885.0" layoutY="470.0" prefHeight="219.0" prefWidth="174.0" side="LEFT">
+                  <JFXTabPane layoutX="767.0" layoutY="517.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
                      <tabs>
                         <Tab style="-fx-rotate: 90;" text="3">
                            <content>
-                              <AnchorPane fx:id="threeAnchor" prefHeight="230.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
                                  <children>
-                                    <JFXListView fx:id="threeList" layoutX="39.0" layoutY="3.0" prefHeight="219.0" prefWidth="194.0" />
+                                    <JFXListView fx:id="threeList" prefHeight="215.0" prefWidth="298.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab style="-fx-rotate: 90;" text="2" />
-                        <Tab style="-fx-rotate: 90;" text="1" />
-                        <Tab style="-fx-rotate: 90;" text="L2" />
-                        <Tab style="-fx-rotate: 90;" text="L1" />
-                        <Tab style="-fx-rotate: 90;" text="G" />
+                        <Tab style="-fx-rotate: 90;" text="2">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <JFXListView fx:id="twoList" prefHeight="215.0" prefWidth="301.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab style="-fx-rotate: 90;" text="1">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <JFXListView fx:id="oneList" prefHeight="215.0" prefWidth="297.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab style="-fx-rotate: 90;" text="L2">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <JFXListView fx:id="lowerTwoList" prefHeight="215.0" prefWidth="297.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab style="-fx-rotate: 90;" text="L1">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <JFXListView fx:id="lowerOneList" prefHeight="215.0" prefWidth="298.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab style="-fx-rotate: 90;" text="G">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <JFXListView fx:id="groundList" prefHeight="215.0" prefWidth="296.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                      </tabs>
                   </JFXTabPane>
                     </children>
