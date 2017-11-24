@@ -1,12 +1,17 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MapEditPageController {
+public class MapEditPageController implements Initializable{
     @FXML
     private Button backButton;
+    @FXML
+    private ScrollPane scrollMap;
 
     private Main mainController;
 
@@ -35,4 +40,10 @@ public class MapEditPageController {
     public void logout(){Main.startScreen();}
     @FXML
     public void back(){Main.adminScreen();}
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+    }
 }

@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,6 +45,8 @@ public class NavigationPageController implements Initializable{
     private JFXButton downFloor, upFloor;
     @FXML
     private JFXListView searchList;
+    @FXML
+    private ScrollPane scrollMap;
 
 
 
@@ -243,6 +246,9 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
+            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
             //popluating list view -- three
             ObservableList<String> threeItems =FXCollections.observableArrayList (

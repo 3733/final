@@ -3,10 +3,14 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import sample.Main;
 
-public class AdminPageController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class AdminPageController implements Initializable{
 
     @FXML
     private SplitMenuButton algoMenu;
@@ -14,6 +18,8 @@ public class AdminPageController {
     private JFXButton upFloor, downFloor;
     @FXML
     private Label floorLabel;
+    @FXML
+    private ScrollPane scrollMap;
 
     @FXML
     public void logout(){
@@ -43,4 +49,9 @@ public class AdminPageController {
     @FXML
     public void setAlgorithm(){}
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+    }
 }

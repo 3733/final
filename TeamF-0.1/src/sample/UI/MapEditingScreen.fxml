@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -179,11 +180,15 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="771.0" prefWidth="1158.0">
                <children>
-                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/01_thefirstfloor.png" />
-                     </image>
-                  </ImageView>
+                  <ScrollPane fx:id="scrollMap" prefHeight="777.0" prefWidth="1154.0">
+                     <content>
+                        <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/01_thefirstfloor.png" />
+                           </image>
+                        </ImageView>
+                     </content>
+                  </ScrollPane>
                   <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
                      <children>
                         <JFXButton fx:id="downFloor" contentDisplay="CENTER" ripplerFill="#e8e8e8">
