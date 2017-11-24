@@ -18,7 +18,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import sample.AutoCompleteTextField?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -221,7 +220,7 @@
                                 <Image url="@Icons/01_thefirstfloor.png" />
                             </image>
                         </ImageView>
-                        <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyPressed="#autoComplete" prefHeight="26.0" prefWidth="678.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                        <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyTyped="#autoComplete" onMouseClicked="#autoClose" onMouseExited="#autoClose" prefHeight="26.0" prefWidth="678.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                             <font>
                                 <Font name="Montserrat Regular" size="12.0" />
                             </font></JFXTextField>
