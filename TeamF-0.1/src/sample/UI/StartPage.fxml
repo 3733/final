@@ -26,7 +26,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" prefHeight="65.0" prefWidth="600.0">
          <children>
-            <JFXTextField fx:id="searchBox" prefHeight="26.0" prefWidth="398.0">
+            <JFXTextField fx:id="searchBox" onAction="#search" prefHeight="26.0" prefWidth="398.0">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>

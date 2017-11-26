@@ -167,6 +167,11 @@
                                         <Insets top="25.0" />
                                     </VBox.margin>
                                 </HBox>
+                        <Label fx:id="eta" alignment="CENTER" prefHeight="18.0" prefWidth="252.0" text="ETA: ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
                                 <HBox alignment="CENTER" prefHeight="29.0" prefWidth="242.0">
                                     <children>
                                         <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email" visible="false">

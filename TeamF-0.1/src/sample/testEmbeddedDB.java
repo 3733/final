@@ -610,6 +610,90 @@ public class testEmbeddedDB {
         }
     }
 
+    public static void updateStaffFName(long staffID, String fName){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE STAFF set FIRSTNAME = '" + fName + "' where EMPLOYEEID = " + staffID);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error : " + e.getMessage());
+        }
+
+    }
+
+    public static void updateStaffLName(long staffID, String lName){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE STAFF set LASTNAME = '" + lName + "' where EMPLOYEEID = " + staffID);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error : " + e.getMessage());
+        }
+
+    }
+
+    public static void updateStaffEType(long staffID, String type){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE STAFF set EMPLOYEETYPE = '" + type + "' where EMPLOYEEID = " + staffID);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error : " + e.getMessage());
+        }
+
+    }
+
+    public static void updateStaffEmail(long staffID, String eMail){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE STAFF set EMPLOYEEEMAIL = '" + eMail + "' where EMPLOYEEID = " + staffID);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error : " + e.getMessage());
+        }
+
+    }
+
+    public static void updatePassword(long staffID, String password){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE STAFF set PASSWORD = '" + password + "' where EMPLOYEEID = " + staffID);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error : " + e.getMessage());
+        }
+
+    }
+
+    public static void updateUsername(long staffID, String username){
+        final String url = "jdbc:derby:Skynet";
+
+        try{
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE STAFF set USERNAME = '" + username + "' where EMPLOYEEID = " + staffID);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error : " + e.getMessage());
+        }
+
+    }
+
     public static void removeStaff(long staffID){
         final String url = "jdbc:derby:Skynet";
 
@@ -864,6 +948,7 @@ public class testEmbeddedDB {
 
     public static void fillNodesTable(){
         CSVLoader l;
+
         final String url = "jdbc:derby:Skynet";
 
         try{

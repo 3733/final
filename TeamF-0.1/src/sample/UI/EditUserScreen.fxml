@@ -32,9 +32,9 @@
       </MenuBar>
       <AnchorPane prefHeight="793.0" prefWidth="1328.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="174.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="786.0" prefWidth="197.0">
                      <children>
                         <AnchorPane prefHeight="107.0" prefWidth="200.0">
                            <children>
@@ -70,7 +70,7 @@
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton ripplerFill="#8e8e8e" text="Edit User">
+                                    <JFXButton onAction="#editUserButton" ripplerFill="#8e8e8e" text="Edit User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
@@ -78,7 +78,7 @@
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton ripplerFill="#8e8e8e" text="Add User">
+                                    <JFXButton onAction="#addUserButton" ripplerFill="#8e8e8e" text="Add User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
@@ -86,7 +86,7 @@
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton ripplerFill="#8e8e8e" text="Remove User">
+                                    <JFXButton onAction="#removeUserButton" ripplerFill="#8e8e8e" text="Remove User">
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font></JFXButton>
@@ -101,15 +101,15 @@
                   </VBox>
                </children>
             </JFXDrawer>
-            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+            <AnchorPane layoutX="226.0" layoutY="-2.0" prefHeight="786.0" prefWidth="1114.0">
                <children>
-                  <JFXTreeTableView prefHeight="788.0" prefWidth="1106.0">
+                  <JFXTreeTableView fx:id="tableView" layoutX="1.0" layoutY="2.0" prefHeight="781.0" prefWidth="1111.0">
                      <columns>
-                        <TreeTableColumn prefWidth="248.79998779296875" text="Last Name" />
-                        <TreeTableColumn prefWidth="214.39999389648438" text="First Name" />
-                        <TreeTableColumn prefWidth="149.60003662109375" text="ID" />
-                        <TreeTableColumn prefWidth="164.0" text="Password" />
-                        <TreeTableColumn prefWidth="328.80010986328125" text="Position" />
+                        <TreeTableColumn prefWidth="240.0" text="Last Name" />
+                        <TreeTableColumn prefWidth="240.0" text="First Name" />
+                        <TreeTableColumn prefWidth="173.33343505859375" text="ID" />
+                        <TreeTableColumn prefWidth="227.466552734375" text="Position" />
+                        <TreeTableColumn prefWidth="249.8668212890625" text="Email" />
                      </columns>
                   </JFXTreeTableView>
                </children>

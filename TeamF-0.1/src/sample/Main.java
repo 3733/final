@@ -33,6 +33,7 @@ public class Main extends Application {
     private static Scene edgeEdit;
     private static Scene editUsers;
     private static Scene genError;
+    private static Scene editUserWin;
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -45,6 +46,7 @@ public class Main extends Application {
     public static EditEdgesController editEdgesController = new EditEdgesController();
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
+    public static EditUserWindowController editUserWindowController = new EditUserWindowController();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -109,6 +111,12 @@ public class Main extends Application {
         genErrorController.setMainController(this);
         genError = new Scene(Error);
 
+        FXMLLoader editUserWinLoader = new FXMLLoader(getClass().getResource("UI/EditUserWindow.fxml"));
+        Parent userWin = editUserWinLoader.load();
+        editUserWindowController = editUserWinLoader.getController();
+        editUserWindowController.setMainController(this);
+        editUserWin = new Scene(userWin);
+
         stage = primaryStage;
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
@@ -130,6 +138,8 @@ public class Main extends Application {
         editUsers.getStylesheets().add("sample/UI/style.css");
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
+        editUserWin.getStylesheets().add("sample/UI/style.css");
+
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
@@ -200,6 +210,11 @@ public class Main extends Application {
 
     public static void genErrorScreen(){
         stage.setScene(genError);
+        stage.centerOnScreen();
+    }
+
+    public static void editUserWindow(){
+        stage.setScene(editUserWin);
         stage.centerOnScreen();
     }
 

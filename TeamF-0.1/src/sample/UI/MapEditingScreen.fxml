@@ -155,6 +155,24 @@
                                     </JFXButton>
                                  </children>
                               </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
+                                 <children>
+                                    <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" text="Import CSV">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="14.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
+                                 <children>
+                                    <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" text="Export CSV">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="14.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>

@@ -52,26 +52,26 @@ public class EditNodesController {
                 longNameField.getText(), shortNameField.getText(), "F");
     }
     public void editNodeButton(){
-       if(!nodeIDField.getText().equals(null) && testEmbeddedDB.getNode(nodeIDField.getText())!=null) {
-           if (!xCoordField.getText().equals(null)) {
+       if(!nodeIDField.getText().trim().equals(null) && testEmbeddedDB.getNode(nodeIDField.getText().trim())!=null) {
+           if (!xCoordField.getText().trim().equals(null)) {
                 testEmbeddedDB.updateNodeXCoord(nodeIDField.getText(), getxCoord());
            }
-           if (!yCoordField.getText().equals(null)) {
+           if (!yCoordField.getText().trim().equals(null)) {
                testEmbeddedDB.updateNodeYCoord(nodeIDField.getText(), getyCoord());
            }
-           if (!floorField.getText().equals(null)) {
+           if (!floorField.getText().trim().equals(null)) {
                testEmbeddedDB.updateNodeFloor(nodeIDField.getText(), floorField.getText());
            }
-           if (!buildingField.getText().equals(null)) {
+           if (!buildingField.getText().trim().equals(null)) {
                testEmbeddedDB.updateNodeBuilding(nodeIDField.getText(), buildingField.getText());
            }
-           if (!nodeTypeField.getText().equals(null)) {
+           if (!nodeTypeField.getText().trim().equals(null)) {
                testEmbeddedDB.updateNodeType(nodeIDField.getText(), nodeTypeField.getText());
            }
-           if (!longNameField.getText().equals(null)) {
+           if (!longNameField.getText().trim().equals(null)) {
                testEmbeddedDB.updateNodeLongName(nodeIDField.getText(), longNameField.getText());
            }
-           if (!shortNameField.getText().equals(null)) {
+           if (!shortNameField.getText().trim().equals(null)) {
                testEmbeddedDB.updateNodeShortName(nodeIDField.getText(), shortNameField.getText());
            }
        }

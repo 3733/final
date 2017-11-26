@@ -71,7 +71,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="username" GridPane.columnIndex="1">
+                  <JFXTextField fx:id="username" onAction="#login" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets bottom="15.0" />
                      </GridPane.margin>
@@ -79,7 +79,7 @@
                         <Font name="Montserrat Regular" size="12.0" />
                      </font>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <JFXPasswordField fx:id="password" onAction="#login" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="Montserrat Regular" size="12.0" />
                      </font></JFXPasswordField>
