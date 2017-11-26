@@ -57,5 +57,9 @@
     -fx-background-color: #f4f4f4;
 }
 
+.slider .track {
+    -fx-control-inner-background: #1a479a;
+}
+
 
 

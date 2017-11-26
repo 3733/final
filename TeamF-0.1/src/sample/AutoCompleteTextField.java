@@ -96,7 +96,7 @@ public class AutoCompleteTextField extends TextField {
     public SortedSet<String> getEntries() {
         return entries;
     }
-    
+
     private void populatePopup(List<String> searchResult, String text) {
         List<CustomMenuItem> menuItems = new LinkedList<>();
         int count = Math.min(searchResult.size(), getMaxEntries());
