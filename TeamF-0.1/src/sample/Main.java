@@ -204,14 +204,14 @@ public class Main extends Application {
     }
 
 
-
     public static void setLoggedInGuy(Staff user){
         loggedInGuy = user;
     }
-
     public static Staff getLoggedInGuy(){
         return loggedInGuy;
     }
+
+
     public static void main(String[] args) throws IOException{
 
         //testEmbeddedDB db = new testEmbeddedDB();

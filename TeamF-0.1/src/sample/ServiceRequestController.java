@@ -27,6 +27,7 @@ import java.util.Properties;
 
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import sample.testEmbeddedDB;
 
 //import javax.xml.ws.Service;   <--doesn't work on Talal's computer
@@ -417,8 +418,8 @@ public class ServiceRequestController implements Initializable{
     @FXML
     private JFXButton deletebutt;
 
-
-    private javafx.scene.image.ImageView map;
+    @FXML
+    private ImageView icon;
 
     public void acceptRequest() throws InvalidEmailException, IOException {
         ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
@@ -434,16 +435,45 @@ public class ServiceRequestController implements Initializable{
         testEmbeddedDB.addAssignment(requestSelected.getServiceID(), getLoggedInGuy().getEmployeeID(),
                 requestSelected.getAcceptTime(), requestSelected.getStatus());
 
-        for(int i = 0; i < requestObserve.size(); i++){             //looks for the selected service in the table
+        for(int i = 0; i < requestObserve.size(); i++)             //looks for the selected service in the table
             if(requestSelected.serviceID == (requestObserve.get(i)).serviceID)
                 requestObserve.set(i, requestSelected);
-        }
+
         refreshTable();
 
-        //emailing the service request to the employee
-        //map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-        //EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
-        //emailService.sendEmail(requestSelected.getType(), "tjaber15@gmail.com");
+        String serviceInformation = "Service type: " + requestSelected.getType() + "<br>";
+        serviceInformation += "Time created: " + requestSelected.getServiceTime() + "<br>";
+        serviceInformation += "Service Location: " + requestSelected.getDestination().getLongName() + "<br>";
+        serviceInformation += "Time accepted: " + requestSelected.getAcceptTime() + "<br>";
+
+        if(removeWhiteSpace(requestSelected.getType()).equals("food")) {
+            serviceInformation += "Time to be served: " + ((FoodRequest) requestSelected).getServingTime() + "<br>";
+            serviceInformation += "Patient name: " + ((FoodRequest) requestSelected).getPatientName() + "<br>";
+            serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder() + "<br>";
+        }
+
+        if(removeWhiteSpace(requestSelected.getType()).equals("transport")) {
+            serviceInformation += "Patient name: " + ((TransportRequest) requestSelected).getPatientName() + "<br>";
+            serviceInformation += "Method of transportation: " + ((TransportRequest) requestSelected).getTypeOfTransport() + "<br>";
+        }
+
+        if(removeWhiteSpace(requestSelected.getType()).equals("assistance"))
+            serviceInformation += "Urgency level: " + ((AssistanceRequest) requestSelected).getUrgency() + "<br>";
+
+        if(removeWhiteSpace(requestSelected.getType()).equals("cleaning"))
+            serviceInformation += "Urgency level: " + ((CleaningRequest) requestSelected).getUrgency() + "<br>";
+
+        if(removeWhiteSpace(requestSelected.getType()).equals("security"))
+            serviceInformation += "Urgency level: " + ((SecurityRequest) requestSelected).getUrgency() + "<br>";
+
+        if(removeWhiteSpace(requestSelected.getType()).equals("it"))
+            serviceInformation += "Urgency level: " + ((ItRequest) requestSelected).getUrgency() + "<br>";
+
+        serviceInformation += "Service Description: " + requestSelected.getDescription() + "<br>";
+
+      //emailing the service request to the employee
+        EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", icon);
+        emailService.sendRequestEmail(serviceInformation, "tjaber15@gmail.com");
 
     }
 
@@ -478,9 +508,9 @@ public class ServiceRequestController implements Initializable{
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
-      for (i = counter; i < arrayOfRequestsFromDatabase.size();i++) {
+      for (i = counter; i < arrayOfRequestsFromDatabase.size();i++)
           requestObserve.add(arrayOfRequestsFromDatabase.get(i));
-      }
+
 
 /*
         //using local data from array
