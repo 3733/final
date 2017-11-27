@@ -26,7 +26,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1198.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ServiceRequestController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1784.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ServiceRequestController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
@@ -38,7 +38,7 @@
       </MenuBar>
       <AnchorPane prefHeight="793.0" prefWidth="1328.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="1044.0" prefWidth="228.0">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -122,7 +122,7 @@
                               </TableView>
                            </children>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="228.0">
                            <children>
                               <JFXButton buttonType="RAISED" onAction="#acceptRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Accept">
                                  <HBox.margin>
@@ -145,7 +145,7 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="786.0" prefWidth="966.0">
                <children>
-                  <JFXTabPane layoutX="-2.0" prefHeight="786.0" prefWidth="966.0">
+                  <JFXTabPane layoutX="-2.0" prefHeight="1044.0" prefWidth="1551.0">
                      <tabs>
                         <Tab fx:id="foodPane" onSelectionChanged="#updateFood" style="-fx-text-fill: #8e8e8e;" text="Food Request">
                            <content>

@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1795.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
     <children>
         <MenuBar prefHeight="35.0" prefWidth="1000.0">
             <menus>
@@ -36,11 +36,11 @@
                     </graphic></Menu>
             </menus>
         </MenuBar>
-        <AnchorPane prefHeight="793.0" prefWidth="1328.0">
+        <AnchorPane prefHeight="1050.0" prefWidth="1831.0">
             <children>
-                <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;">
+                <JFXDrawer defaultDrawerSize="50.0" prefHeight="1050.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;">
                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox prefHeight="1043.0" prefWidth="242.0">
                             <children>
                                 <AnchorPane prefHeight="107.0" prefWidth="200.0">
                                     <children>
@@ -205,7 +205,7 @@
                                         <Insets />
                                     </VBox.margin>
                                 </HBox>
-                                <JFXListView prefHeight="318.0" prefWidth="242.0" visible="false">
+                                <JFXListView fx:id="directionSteps" prefHeight="318.0" prefWidth="242.0" visible="false">
                                     <VBox.margin>
                                         <Insets top="25.0" />
                                     </VBox.margin>
@@ -214,11 +214,11 @@
                         </VBox>
                     </children>
                 </JFXDrawer>
-                <AnchorPane layoutX="242.0" layoutY="2.0" prefHeight="777.0" prefWidth="1142.0">
+                <AnchorPane fx:id="mainPane" layoutX="242.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1046.0" prefWidth="1555.0">
                     <children>
-                  <ScrollPane fx:id="scrollMap" prefHeight="778.0" prefWidth="1142.0">
+                  <ScrollPane fx:id="scrollMap" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1046.0" prefWidth="1554.0">
                      <content>
-                              <ImageView fx:id="map" fitHeight="777.0" fitWidth="1154.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="map" fitHeight="1047.0" fitWidth="1686.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
                                       <Image url="@Icons/01_thefirstfloor.png" />
                                   </image>
@@ -238,7 +238,7 @@
                                 </ImageView>
                             </graphic>
                         </JFXButton>
-                  <JFXTabPane layoutX="767.0" layoutY="517.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
+                  <JFXTabPane layoutX="1050.0" layoutY="700.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
                      <tabs>
                         <Tab style="-fx-rotate: 90;" text="3">
                            <content>

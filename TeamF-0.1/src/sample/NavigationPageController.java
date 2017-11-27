@@ -28,6 +28,7 @@ import java.util.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
+import javafx.scene.layout.AnchorPane;
 
 
 public class NavigationPageController implements Initializable{
@@ -57,7 +58,8 @@ public class NavigationPageController implements Initializable{
     private ScrollPane scrollMap;
     @FXML
     private JFXSlider zoom;
-
+    @FXML
+    private AnchorPane mainPane;
 
 
     //to login from navigation screen
@@ -143,11 +145,11 @@ public class NavigationPageController implements Initializable{
     }
     @FXML
     public void go() throws IOException,InterruptedException{
-        email.setVisible(true);
-        sendButton.setVisible(true);
+        findPath(destination.getText());
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
-        findPath(destination.getText());
+        email.setVisible(true);
+        sendButton.setVisible(true);
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -243,6 +245,9 @@ public class NavigationPageController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
 
+            mainPane.getChildren().add(map);
+            map.fitHeightProperty().bind(mainPane.heightProperty());
+            map.fitWidthProperty().bind(mainPane.widthProperty());
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             zoom();
