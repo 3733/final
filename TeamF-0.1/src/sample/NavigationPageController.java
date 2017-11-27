@@ -572,6 +572,5 @@ public class NavigationPageController implements Initializable{
                 break;
             default: break;
         }
-
     }
 }

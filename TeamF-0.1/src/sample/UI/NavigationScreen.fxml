@@ -298,7 +298,7 @@
                         </JFXTabPane>
                         <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
                             <children>
-                                <JFXButton fx:id="downButton" contentDisplay="CENTER" onAction="#floorDown">
+                                <JFXButton fx:id="downButton" contentDisplay="CENTER" onAction="#floorDown" text="Button">
                                     <graphic>
                                         <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -322,7 +322,7 @@
                                 </JFXButton>
                             </children>
                         </HBox>
-                        <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" prefHeight="141.0" prefWidth="678.0" visible="false" />
+                        <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" prefHeight="142.0" prefWidth="538.0" visible="false" />
                     </children>
                 </AnchorPane>
             </children>
