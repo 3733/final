@@ -2,15 +2,17 @@
 
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -127,21 +129,41 @@
                                        </children>
                                     </VBox>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="15.0" />
+                                 </padding>
                               </HBox>
+                              <SplitMenuButton fx:id="quickFloor" layoutX="54.0" layoutY="184.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="110.0" text="Quick Floor">
+                                 <items>
+                                    <RadioMenuItem fx:id="groundSet" mnemonicParsing="false" text="Ground">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="floor" />
+                                       </toggleGroup>
+                                    </RadioMenuItem>
+                                    <RadioMenuItem fx:id="lowerOneSet" mnemonicParsing="false" text="Lower One" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="lowerTwoSet" mnemonicParsing="false" text="Lower Two" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="oneSet" mnemonicParsing="false" text="One" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="twoSet" mnemonicParsing="false" text="Two" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="threeSet" mnemonicParsing="false" text="Three" toggleGroup="$floor" />
+                                 </items>
+                              </SplitMenuButton>
                            </children>
                         </AnchorPane>
                         <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="228.0">
                            <children>
-                              <SplitMenuButton fx:id="algoMenu1" mnemonicParsing="false" text="Choose Floor">
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="Ground" />
-                                    <MenuItem mnemonicParsing="false" text="Lower One" />
-                                    <MenuItem mnemonicParsing="false" text="Lower Two" />
-                                    <MenuItem mnemonicParsing="false" text="First" />
-                                    <MenuItem mnemonicParsing="false" text="Second" />
-                                    <MenuItem mnemonicParsing="false" text="Third" />
-                                 </items>
-                              </SplitMenuButton>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <JFXCheckBox text="Display All Nodes" />
+                                    <JFXCheckBox text="Display All Edges">
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </JFXCheckBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets top="30.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
                         </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -173,6 +195,9 @@
                                  </children>
                               </HBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
                         </VBox>
                      </children>
                   </VBox>
