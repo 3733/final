@@ -244,14 +244,9 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-
-            mainPane.getChildren().add(map);
-            map.fitHeightProperty().bind(mainPane.heightProperty());
-            map.fitWidthProperty().bind(mainPane.widthProperty());
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             zoom();
-
             //popluating list view -- three
             ObservableList<String> threeItems =FXCollections.observableArrayList (
                     "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",

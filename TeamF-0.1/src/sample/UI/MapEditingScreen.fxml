@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1784.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
@@ -33,9 +33,9 @@
             </Menu>
          </menus>
       </MenuBar>
-      <AnchorPane prefHeight="1049.0" prefWidth="1799.0">
+      <AnchorPane prefHeight="746.0" prefWidth="1338.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="1043.0" prefWidth="228.0" style="-fx-background-color: #f4f4f4;">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="771.0" prefWidth="228.0" style="-fx-background-color: #f4f4f4;">
                <children>
                   <VBox prefHeight="779.0" prefWidth="228.0">
                      <children>
@@ -180,9 +180,9 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="771.0" prefWidth="1158.0">
                <children>
-                  <ScrollPane fx:id="scrollMap" prefHeight="1046.0" prefWidth="1554.0">
+                  <ScrollPane fx:id="scrollMap" prefHeight="777.0" prefWidth="1154.0">
                      <content>
-                        <ImageView fx:id="map" fitHeight="1046.0" fitWidth="1669.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/01_thefirstfloor.png" />
                            </image>

@@ -43,7 +43,7 @@
                                     <JFXBadge />
                                     <ImageView fx:id="icon" fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../../newUI/src/views/Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                                          <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
                                        </image>
                                        <HBox.margin>
                                           <Insets left="15.0" top="10.0" />
