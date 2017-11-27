@@ -59,8 +59,8 @@ public class AdminPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         zoom();
-        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
 
     }

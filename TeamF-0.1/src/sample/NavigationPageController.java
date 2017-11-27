@@ -3,12 +3,15 @@ package sample;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
@@ -240,8 +243,8 @@ public class NavigationPageController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
 
-            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             zoom();
 
             //popluating list view -- three
