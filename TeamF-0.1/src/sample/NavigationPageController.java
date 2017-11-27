@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -9,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -21,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -29,6 +33,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 
 public class NavigationPageController implements Initializable{
@@ -253,20 +258,6 @@ public class NavigationPageController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
 
-            //says if up and down are enabled
-            if(currentFloor.equals("Ground Floor")){
-                upButton.setDisable(false);
-                downButton.setDisable(true);
-            }
-            if(currentFloor.equals("Lower Level One") || currentFloor.equals("Lower Level Two") || currentFloor.equals("First Floor") || currentFloor.equals("Second Floor")){
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-            }
-            if(currentFloor.equals("Third Floor")){
-                upButton.setDisable(true);
-                downButton.setDisable(false);
-            }
-
             //disables the bars and starts up the zoom function
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -482,69 +473,105 @@ public class NavigationPageController implements Initializable{
 
     //switches images based on floors
     public void floorUp() throws FileNotFoundException{
-        if(currentFloor.equals("Ground Floor")){
-            currentFloor = "Lower Level One";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-            tabPane.getSelectionModel().select(floorLowerOne);
-        }
-        if(currentFloor.equals("Lower Level One")){
-            currentFloor = "Lower Level Two";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-            tabPane.getSelectionModel().select(floorLowerTwo);
-        }
-        if(currentFloor.equals("Lower Level Two")){
-            currentFloor = "First Floor";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-            tabPane.getSelectionModel().select(floorOne);
-        }
-        if(currentFloor.equals("First Floor")){
-            currentFloor = "Second Floor";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-            tabPane.getSelectionModel().select(floorTwo);
-        }
-        if(currentFloor.equals("Second Floor")){
-            currentFloor = "Third Floor";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
-            tabPane.getSelectionModel().select(floorThree);
+        switch (currentFloor){
+            case "Ground Floor":
+                currentFloor = "Lower Level One";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
+                tabPane.getSelectionModel().select(floorLowerOne);
+                System.out.println(currentFloor);
+                break;
+            case "Lower Level One":
+                currentFloor = "Lower Level Two";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
+                tabPane.getSelectionModel().select(floorLowerTwo);
+                System.out.println(currentFloor);
+                break;
+            case "Lower Level Two":
+                currentFloor = "First Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+                tabPane.getSelectionModel().select(floorOne);
+                System.out.println(currentFloor);
+                break;
+            case "First Floor":
+                currentFloor = "Second Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
+                tabPane.getSelectionModel().select(floorTwo);
+                System.out.println(currentFloor);
+                break;
+            case "Second Floor":
+                currentFloor = "Third Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(true);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
+                tabPane.getSelectionModel().select(floorThree);
+                System.out.println(currentFloor);
+                break;
+            default: break;
         }
     }
 
     public void floorDown() throws FileNotFoundException{
-        if(currentFloor.equals("Lower Level One")){
-            currentFloor = "Ground Floor";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
-            tabPane.getSelectionModel().select(floorGround);
+        switch (currentFloor){
+            case "Lower Level One":
+                currentFloor = "Ground Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(true);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
+                tabPane.getSelectionModel().select(floorGround);
+                System.out.println(currentFloor);
+                break;
+            case "Lower Level Two":
+                currentFloor = "Lower Level One";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
+                tabPane.getSelectionModel().select(floorLowerOne);
+                System.out.println(currentFloor);
+                break;
+            case "First Floor":
+                currentFloor = "Lower Level Two";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
+                tabPane.getSelectionModel().select(floorLowerTwo);
+                System.out.println(currentFloor);
+                break;
+            case "Second Floor":
+                currentFloor = "First Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+                tabPane.getSelectionModel().select(floorOne);
+                System.out.println(currentFloor);
+                break;
+            case "Third Floor":
+                currentFloor = "Second Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
+                tabPane.getSelectionModel().select(floorTwo);
+                System.out.println(currentFloor);
+                break;
+            default: break;
         }
-        if(currentFloor.equals("Lower Level Two")){
-            currentFloor = "Lower Level One";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-            tabPane.getSelectionModel().select(floorLowerOne);
-        }
-        if(currentFloor.equals("First Floor")){
-            currentFloor = "Lower Level Two";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-            tabPane.getSelectionModel().select(floorLowerTwo);
-        }
-        if(currentFloor.equals("Second Floor")){
-            currentFloor = "First Floor";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-            tabPane.getSelectionModel().select(floorOne);
-        }
-        if(currentFloor.equals("Third Floor")){
-            currentFloor = "Second Floor";
-            floorLabel.setText(currentFloor);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-            tabPane.getSelectionModel().select(floorTwo);
-        }
-    }
 
+    }
 }
