@@ -60,6 +60,14 @@ public class NavigationPageController implements Initializable{
     private JFXSlider zoom;
     @FXML
     private AnchorPane mainPane;
+    @FXML
+    private JFXButton upButton;
+    @FXML
+    private JFXButton downButton;
+    @FXML
+    private JFXTabPane tabPane;
+    @FXML private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
+    String currentFloor = "First Floor";
 
 
     //to login from navigation screen
@@ -244,9 +252,26 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
+            //says if up and down are enabled
+            if(currentFloor.equals("Ground Floor")){
+                upButton.setDisable(false);
+                downButton.setDisable(true);
+            }
+            if(currentFloor.equals("Lower Level One") || currentFloor.equals("Lower Level Two") || currentFloor.equals("First Floor") || currentFloor.equals("Second Floor")){
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+            }
+            if(currentFloor.equals("Third Floor")){
+                upButton.setDisable(true);
+                downButton.setDisable(false);
+            }
+
+            //disables the bars and starts up the zoom function
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             zoom();
+
             //popluating list view -- three
             ObservableList<String> threeItems =FXCollections.observableArrayList (
                     "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
@@ -288,6 +313,8 @@ public class NavigationPageController implements Initializable{
             groundList.setItems(groundItems);
 
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+            floorLabel.setText("First Floor");
+            tabPane.getSelectionModel().select(floorOne);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -449,6 +476,75 @@ public class NavigationPageController implements Initializable{
         return new Point2D(
                 viewport.getMinX() + xProportion * viewport.getWidth(),
                 viewport.getMinY() + yProportion * viewport.getHeight());
+    }
+
+
+
+    //switches images based on floors
+    public void floorUp() throws FileNotFoundException{
+        if(currentFloor.equals("Ground Floor")){
+            currentFloor = "Lower Level One";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
+            tabPane.getSelectionModel().select(floorLowerOne);
+        }
+        if(currentFloor.equals("Lower Level One")){
+            currentFloor = "Lower Level Two";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
+            tabPane.getSelectionModel().select(floorLowerTwo);
+        }
+        if(currentFloor.equals("Lower Level Two")){
+            currentFloor = "First Floor";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+            tabPane.getSelectionModel().select(floorOne);
+        }
+        if(currentFloor.equals("First Floor")){
+            currentFloor = "Second Floor";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
+            tabPane.getSelectionModel().select(floorTwo);
+        }
+        if(currentFloor.equals("Second Floor")){
+            currentFloor = "Third Floor";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
+            tabPane.getSelectionModel().select(floorThree);
+        }
+    }
+
+    public void floorDown() throws FileNotFoundException{
+        if(currentFloor.equals("Lower Level One")){
+            currentFloor = "Ground Floor";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
+            tabPane.getSelectionModel().select(floorGround);
+        }
+        if(currentFloor.equals("Lower Level Two")){
+            currentFloor = "Lower Level One";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
+            tabPane.getSelectionModel().select(floorLowerOne);
+        }
+        if(currentFloor.equals("First Floor")){
+            currentFloor = "Lower Level Two";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
+            tabPane.getSelectionModel().select(floorLowerTwo);
+        }
+        if(currentFloor.equals("Second Floor")){
+            currentFloor = "First Floor";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+            tabPane.getSelectionModel().select(floorOne);
+        }
+        if(currentFloor.equals("Third Floor")){
+            currentFloor = "Second Floor";
+            floorLabel.setText(currentFloor);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
+            tabPane.getSelectionModel().select(floorTwo);
+        }
     }
 
 }
