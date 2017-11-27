@@ -283,6 +283,9 @@ public class NavigationPageController implements Initializable{
                 ogFloor.add(i);
             }
         }
+        if(ogFloor.size()>0){
+            paths.add(ogFloor);
+        }
         return paths;
     }
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
@@ -291,6 +294,16 @@ public class NavigationPageController implements Initializable{
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         System.out.println("Reached the multifloor path drawing function");
         Vector<Vector<Node>> paths = seperator(path);
+        /*
+        for (Vector<Node> i: paths) {
+            for (Node j: i){
+                System.out.println(j.getLongName());
+            }
+
+        }*/
+        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
+        //paths.add(path);
+
         for(Vector<Node> floor: paths){
             switch(floor.elementAt(0).getFloor()){
                 case "L2":
