@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,10 @@ import javax.swing.*;
 public class EditUserWindowController {
     private Main mainController;
 
+    @FXML
+    private JFXButton addButton;
+    @FXML
+    private  JFXButton editButton;
     @FXML
     private JFXTextField lNameBox;
     @FXML
@@ -32,17 +37,6 @@ public class EditUserWindowController {
 
     @FXML
     public void back(){
-        Main.editUsersScreen();
-    }
-
-    public long getID(){
-        return Long.parseLong(idBox.getText());
-    }
-
-    public void addUserButton(){
-        Staff addMe = new Staff(lNameBox.getText(), fNameBox.getText(), getID(),
-                posBox.getText(), emailBox.getText(), usernameBox.getText(), pwBox.getText());
-        testEmbeddedDB.addStaff(addMe);
         lNameBox.clear();
         fNameBox.clear();
         idBox.clear();
@@ -50,9 +44,49 @@ public class EditUserWindowController {
         emailBox.clear();
         usernameBox.clear();
         pwBox.clear();
+        idBox.setDisable(false);
+        addButton.setDisable(false);
+        addButton.setVisible(true);
+        editButton.setDisable(false);
+        editButton.setVisible(true);
+
+        Main.editUsersScreen();
+    }
+
+    public long getID(){
+        return Long.parseLong(idBox.getText());
+    }
+
+    public void addingUsers(){
+        editButton.setDisable(true);
+        editButton.setVisible(false);
+    }
+
+    public void editingUsers(){
+        addButton.setDisable(true);
+        addButton.setVisible(false);
+    }
+
+    public void fillFields(Staff staff){
+        lNameBox.setText(staff.getLastName().trim());
+        fNameBox.setText(staff.getFirstName().trim());
+        idBox.setText(Long.toString(staff.getEmployeeID()));
+        idBox.setDisable(true);
+        posBox.setText(staff.getEmployeeType().trim());
+        emailBox.setText(staff.getEmployeeEmail().trim());
+        usernameBox.setText(staff.getUsername().trim());
+        pwBox.setText(staff.getPassword().trim());
+    }
+
+    public void addUserButton(){
+        Staff addMe = new Staff(lNameBox.getText(), fNameBox.getText(), getID(),
+                posBox.getText(), emailBox.getText(), usernameBox.getText(), pwBox.getText());
+        testEmbeddedDB.addStaff(addMe);
+        back();
     }
 
     public void editUserButton(){
+        idBox.setDisable(false);
         if(!idBox.getText().trim().equals(null) && testEmbeddedDB.getStaff(getID())!=null) {
             if (!lNameBox.getText().trim().equals(null)) {
                 testEmbeddedDB.updateStaffLName(getID(), lNameBox.getText());
@@ -72,26 +106,10 @@ public class EditUserWindowController {
             if (!pwBox.getText().trim().equals(null)) {
                 testEmbeddedDB.updatePassword(getID(), pwBox.getText());
             }
-            lNameBox.clear();
-            fNameBox.clear();
-            idBox.clear();
-            posBox.clear();
-            emailBox.clear();
-            usernameBox.clear();
-            pwBox.clear();
+            back();
         }
 
     }
 
-    public void removeUserButton(){
-        testEmbeddedDB.removeStaff(Long.parseLong(idBox.getText()));
-        lNameBox.clear();
-        fNameBox.clear();
-        idBox.clear();
-        posBox.clear();
-        emailBox.clear();
-        usernameBox.clear();
-        pwBox.clear();
-    }
 
 }

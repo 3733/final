@@ -740,7 +740,6 @@ public class testEmbeddedDB {
     }
 
     public static LinkedList<Staff> getAllStaff(){
-        //ArrayList<Node> allNodes = new ArrayList<Node>();
         LinkedList<Staff> allStaff = new  LinkedList<Staff>();
         try{
             Staff p;

@@ -58,7 +58,7 @@
                   <Font name="Montserrat Regular" size="14.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="edgeIDField" GridPane.columnIndex="1">
+            <JFXTextField fx:id="idBox" GridPane.columnIndex="1">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
@@ -89,22 +89,17 @@
             <Insets right="45.0" />
          </padding>
       </GridPane>
-      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="334.0" onAction="#addUserButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add User">
+      <JFXButton fx:id="addButton" buttonType="RAISED" layoutX="119.0" layoutY="334.0" onAction="#addUserButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add User">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="194.0" layoutY="334.0" onAction="#editUserButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit User">
+      <JFXButton fx:id="editButton" buttonType="RAISED" layoutX="120.0" layoutY="334.0" onAction="#editUserButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit User">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
       <JFXButton buttonType="RAISED" layoutX="471.0" layoutY="335.0" onAction="#back" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
-         <font>
-            <Font name="Montserrat Regular" size="12.0" />
-         </font>
-      </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="300.0" layoutY="335.0" onAction="#removeUserButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Remove User">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>

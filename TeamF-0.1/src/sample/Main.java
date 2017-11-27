@@ -206,6 +206,8 @@ public class Main extends Application {
     public static void editUsersScreen(){
         stage.setScene(editUsers);
         stage.centerOnScreen();
+        editUsersController.disableButtons();
+        editUsersController.refreshTable();
     }
 
     public static void genErrorScreen(){
@@ -216,6 +218,14 @@ public class Main extends Application {
     public static void editUserWindow(){
         stage.setScene(editUserWin);
         stage.centerOnScreen();
+        editUserWindowController.addingUsers();
+    }
+
+    public static void editUserWindowEdit(Staff staff){
+        stage.setScene(editUserWin);
+        stage.centerOnScreen();
+        editUserWindowController.fillFields(staff);
+        editUserWindowController.editingUsers();
     }
 
 

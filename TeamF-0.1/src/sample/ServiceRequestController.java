@@ -410,6 +410,7 @@ public class ServiceRequestController implements Initializable{
         requests.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getType().replace(" ", "")));   //sets service name in column
         status.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getStatus().replace(" ", "")));   //sets service status in column
         counter = 0;
+        refreshTable();
     }
 
     private int counter;
