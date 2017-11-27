@@ -267,45 +267,64 @@ public class NavigationPageController implements Initializable{
         return out;
     }
 
+    public Vector<Vector<Node>> seperator(Vector<Node> path){
+        Vector<Vector<Node>> paths = new Vector<Vector<Node>>();// make one path per floor
+        //Vector<String> floors = new Vector<String>();
+        Vector<Node> ogFloor = new Vector<Node>();//create the path for the current floor
+        String floor = path.elementAt(0).getFloor();
+        //floors.add(path.elementAt(0).getFloor());
+        for (Node i : path) {
+            //if the node is an elevator then we will switch floors
+            if(i.getNodeType().equals("ELEV") || i.getNodeType().equals("STAI")){
+                ogFloor.add(i);
+                paths.add(ogFloor);
+                ogFloor.clear();
+            }else{
+                ogFloor.add(i);
+            }
+        }
+        return paths;
+    }
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         System.out.println("Reached the multifloor path drawing function");
-        String floor = path.get(0).getFloor();
-        System.out.println(floor);
-        String floor1 = "1";
-        if(floor.contains("1")){
-            floor = "01";
+        Vector<Vector<Node>> paths = seperator(path);
+        for(Vector<Node> floor: paths){
+            switch(floor.elementAt(0).getFloor()){
+                case "L2":
+                    BufferedImage lowerLevel2Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel2_blank.png"));
+                    Data.data.L2Floor = testDrawDirections(floor, lowerLevel2Floor);
+                    break;
+                case "L1":
+                    BufferedImage lowerLevel1Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel1_blank.png"));
+                    Data.data.L1Floor = testDrawDirections(floor, lowerLevel1Floor);
+                    break;
+                case "0G":
+                    BufferedImage groundFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thegroundfloor_blank.png"));
+                    Data.data.GFloor = testDrawDirections(floor, groundFloor);
+                    break;
+                case "1":
+                case "01":
+                    System.out.println("Reached case statement");
+                    BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/01_thefirstfloor_blank.png"));
+                    Data.data.firstFloor = testDrawDirections(floor, firstFloor);
+                    break;
+                case "2":
+                case "02":
+                    BufferedImage secondFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thesecondfloor_blank.png"));
+                    Data.data.secondFloor = testDrawDirections(floor, secondFloor);
+                    break;
+                case "3":
+                case "03":
+                    BufferedImage thirdFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thethirdfloor_blank.png"));
+                    Data.data.thirdFloor = testDrawDirections(floor, thirdFloor);
+                    break;
+            }
         }
-        System.out.println(floor);
-        switch(floor){
-            case "L2":
-                BufferedImage lowerLevel2Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel2_blank.png"));
-                Data.data.L2Floor = testDrawDirections(path, lowerLevel2Floor);
-                break;
-            case "L1":
-                BufferedImage lowerLevel1Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel1_blank.png"));
-                Data.data.L1Floor = testDrawDirections(path, lowerLevel1Floor);
-                break;
-            case "0G":
-                BufferedImage groundFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thegroundfloor_blank.png"));
-                Data.data.GFloor = testDrawDirections(path, groundFloor);
-                break;
-            case "01":
-                System.out.println("Reached case statement");
-                BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/01_thefirstfloor_blank.png"));
-                Data.data.firstFloor = testDrawDirections(path, firstFloor);
-                break;
-            case "02":
-                BufferedImage secondFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thesecondfloor_blank.png"));
-                Data.data.secondFloor = testDrawDirections(path, secondFloor);
-                break;
-            case "03":
-                BufferedImage thirdFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thethirdfloor_blank.png"));
-                Data.data.thirdFloor = testDrawDirections(path, thirdFloor);
-                break;
-        }
+        //String floor = path.get(0).getFloor();
+
     }
 
     // Purpose: Draw a path of nodes on the map
