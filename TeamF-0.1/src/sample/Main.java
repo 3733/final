@@ -135,7 +135,8 @@ public class Main extends Application {
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
-
+        Data.data.XWindow = stage.getX();
+        Data.data.YWindow = stage.getY();
         destination = "";
     }
 
@@ -152,6 +153,8 @@ public class Main extends Application {
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
         stage.centerOnScreen();
+        Data.data.XWindow = stage.getX();
+        Data.data.YWindow = stage.getY();
         if(getDestination().length() > 0){
             startMap();
             navigationPageController.findPath(getDestination());
@@ -214,12 +217,15 @@ public class Main extends Application {
     }
     public static void main(String[] args) throws IOException{
 
-        //testEmbeddedDB db = new testEmbeddedDB();
+        testEmbeddedDB db = new testEmbeddedDB();
+        //testEmbeddedDB.dropNodes();
+        //testEmbeddedDB.dropTables();
+        //testEmbeddedDB.createTable();
         startMap();
-        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
-        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
-        testEmbeddedDB.addStaff(Gary);
-        testEmbeddedDB.addStaff(Eirin);
+        //Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
+        //Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
+        //testEmbeddedDB.addStaff(Gary);
+        //testEmbeddedDB.addStaff(Eirin);
 
 
 
@@ -228,7 +234,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void startMap(){
+    public static void startMap() throws IOException{
 
         Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
 
@@ -246,6 +252,7 @@ public class Main extends Application {
             Node End = null;
 
             ID = EdgesBad.get(i).getEdgeID();
+            System.out.println(ID);
             StID = EdgesBad.get(i).getStart().getNodeID();
             EndID = EdgesBad.get(i).getEnd().getNodeID();
 

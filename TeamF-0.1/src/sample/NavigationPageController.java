@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
@@ -13,6 +14,8 @@ import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -22,6 +25,20 @@ import java.util.Vector;
 public class NavigationPageController implements Initializable{
 
     //new components
+    @FXML
+    private JFXButton Floor3Button;
+    @FXML
+    private JFXButton Floor2Button;
+    @FXML
+    private JFXButton Floor1Button;
+    @FXML
+    private JFXButton Gbutton;
+    @FXML
+    private JFXButton L1button;
+    @FXML
+    private JFXButton L2button;
+    @FXML
+    private JFXComboBox floorBox;
     @FXML
     private JFXHamburger hamburger;
     @FXML
@@ -45,6 +62,16 @@ public class NavigationPageController implements Initializable{
     @FXML
     public void help(){Main.genErrorScreen();}
 
+    @FXML
+    public void mapClick() {
+        System.out.println(MouseInfo.getPointerInfo().getLocation());
+        double x = MouseInfo.getPointerInfo().getLocation().x - Data.data.XWindow - 267;
+        double y = MouseInfo.getPointerInfo().getLocation().y - Data.data.YWindow - 67;
+
+        System.out.println("This is x:" + x + " This is y: " + y);
+        System.out.println("This is stored x:" + Data.data.XWindow + " This is stored y: " + Data.data.YWindow);
+
+    }
     // Contains the user zoom setting
     @FXML
     private Slider zoom;
@@ -87,8 +114,15 @@ public class NavigationPageController implements Initializable{
     private Node Kiosk;
 
 
-    public void setMap(Map m){
+    public void setMap(Map m) throws IOException{
         this.CurMap = m;
+        Data.data.firstFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png"));
+        Data.data.secondFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png"));
+        Data.data.thirdFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png"));
+        Data.data.GFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png"));
+        Data.data.L1Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png"));
+        Data.data.L2Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png"));
+
         //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
     }
 
@@ -96,6 +130,42 @@ public class NavigationPageController implements Initializable{
         this.Kiosk = k;
 
     }
+
+    @FXML
+    public void changeFloor() {
+
+    }
+
+    @FXML
+    public void changeFloorL1() {
+        map.setImage(Data.data.L1Floor);
+    }
+
+    @FXML
+    public void changeFloorL2() {
+        map.setImage(Data.data.L2Floor);
+    }
+
+    @FXML
+    public void changeFloor1() {
+        map.setImage(Data.data.firstFloor);
+    }
+
+    @FXML
+    public void changeFloor2() {
+        map.setImage(Data.data.secondFloor);
+    }
+
+    @FXML
+    public void changeFloor3() {
+        map.setImage(Data.data.thirdFloor);
+    }
+
+    @FXML
+    public void changeFloorG() {
+        map.setImage(Data.data.GFloor);
+    }
+
 
     public void setSearch(String s){
         this.destination.setText(s);
@@ -126,15 +196,13 @@ public class NavigationPageController implements Initializable{
         System.out.println(et-st+"<===ALGO");
 
         st = System.currentTimeMillis();
-        testDrawDirections(path);
+        MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
         System.out.println(et-st+"<===DR");
     }
     @FXML
     public void go() throws IOException,InterruptedException{
         findPath(destination.getText());
-
-
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -199,11 +267,51 @@ public class NavigationPageController implements Initializable{
         return out;
     }
 
-    // Purpose: Draw a path on the map
+    // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
-    public void testDrawDirections(Vector<Node> path) throws IOException {
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
-        Graphics2D pathImage = firstFloor.createGraphics();
+    public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
+        // Possible floors (in order): L2, L1, 0G, 01, 02, 03
+        System.out.println("Reached the multifloor path drawing function");
+        String floor = path.get(0).getFloor();
+        System.out.println(floor);
+        String floor1 = "1";
+        if(floor.contains("1")){
+            floor = "01";
+        }
+        System.out.println(floor);
+        switch(floor){
+            case "L2":
+                BufferedImage lowerLevel2Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel2_blank.png"));
+                Data.data.L2Floor = testDrawDirections(path, lowerLevel2Floor);
+                break;
+            case "L1":
+                BufferedImage lowerLevel1Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel1_blank.png"));
+                Data.data.L1Floor = testDrawDirections(path, lowerLevel1Floor);
+                break;
+            case "0G":
+                BufferedImage groundFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thegroundfloor_blank.png"));
+                Data.data.GFloor = testDrawDirections(path, groundFloor);
+                break;
+            case "01":
+                System.out.println("Reached case statement");
+                BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/01_thefirstfloor_blank.png"));
+                Data.data.firstFloor = testDrawDirections(path, firstFloor);
+                break;
+            case "02":
+                BufferedImage secondFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thesecondfloor_blank.png"));
+                Data.data.secondFloor = testDrawDirections(path, secondFloor);
+                break;
+            case "03":
+                BufferedImage thirdFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thethirdfloor_blank.png"));
+                Data.data.thirdFloor = testDrawDirections(path, thirdFloor);
+                break;
+        }
+    }
+
+    // Purpose: Draw a path of nodes on the map
+    @FXML
+    public Image testDrawDirections(Vector<Node> path, BufferedImage floorImage) throws IOException {
+        Graphics2D pathImage = floorImage.createGraphics();
         int length = path.size();
         String nameDest = path.get(length-1).getShortName();
         String nameDept = path.get(0).getShortName();
@@ -221,8 +329,9 @@ public class NavigationPageController implements Initializable{
                 pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(),node2.getxCoordinate() ,node2.getyCoordinate());
             }
         }
-        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
+        map.setImage(SwingFXUtils.toFXImage(floorImage,null));
         System.out.println("Image set on map");
+        return SwingFXUtils.toFXImage(floorImage,null);
     }
 
 
@@ -235,6 +344,8 @@ public class NavigationPageController implements Initializable{
         }
     }
 
+    //Purpose: This draws all the nodes and edges currently in the database
+    //Used for debugging and admin
     @FXML
     public void drawAll() throws IOException{
         BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));

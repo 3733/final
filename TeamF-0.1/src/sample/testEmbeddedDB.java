@@ -26,15 +26,15 @@ public class testEmbeddedDB {
             final String url = "jdbc:derby:Skynet";
             Connection con = DriverManager.getConnection(url);
 
-            //testEmbeddedDB.dropTables();
+            testEmbeddedDB.dropTables();
 
-            //testEmbeddedDB.createTable();
+            testEmbeddedDB.createTable();
 
-            //testEmbeddedDB.fillNodesTable();
+            testEmbeddedDB.fillNodesTable();
 
-            //testEmbeddedDB.createPrimKey();
+            testEmbeddedDB.createPrimKey();
 
-            //testEmbeddedDB.fillEdgesTable();
+            testEmbeddedDB.fillEdgesTable();
 /*
             Node test = new Node("dickbutt", 4, 4,
                     4, "test", "test", "test",
@@ -375,7 +375,7 @@ public class testEmbeddedDB {
                 String nodeID = r.getString("nodeID");
                 int xcord = r.getInt("xcoord");
                 int ycoord = r.getInt("ycoord");
-                int floor = Integer.parseInt(Character.toString(r.getString("floor").charAt(0)));
+                String floor = r.getString("floor");
                 String building = r.getString("building");
                 String nodetype = r.getString("nodeType");
                 String longname = r.getString("longname");
@@ -783,7 +783,7 @@ public class testEmbeddedDB {
                 String ID = r.getString("nodeID");
                 int xcord = r.getInt("xcoord");
                 int ycoord = r.getInt("ycoord");
-                int floor = Integer.parseInt(Character.toString(r.getString("floor").charAt(0)));
+                String floor = r.getString("floor");
                 String building = r.getString("building");
                 String nodetype = r.getString("nodeType");
                 String longname = r.getString("longname");
@@ -841,7 +841,7 @@ public class testEmbeddedDB {
                     "building CHAR(15), " +
                     "nodeType CHAR(4), " +
                     "longName CHAR(60), " +
-                    "shortName CHAR(20), " +
+                    "shortName CHAR(60), " +
                     "teamAssigned CHAR(6)," +
                     "PRIMARY KEY (nodeID)" +
                     ")");
@@ -869,8 +869,16 @@ public class testEmbeddedDB {
         try{
             Connection c = DriverManager.getConnection(url);
             l = new CSVLoader(c);
-            l.loadCSV("TeamF-0.1/src/sample/Data/newNodes.csv", "NODES", true);
-
+            l.loadCSV("TeamF-0.1/src/sample/Data/MapFNodes.csv", "NODES", true);
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapAnodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapBnodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapCnodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapDnodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapENodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapGNodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapHnodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapInodes.csv");
+            loadNodesFile("TeamF-0.1/src/sample/Data/MapWnodes.csv");
             c.close();
 
         } catch (BatchUpdateException e){
@@ -887,7 +895,28 @@ public class testEmbeddedDB {
                 count++;
             }
 
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+    }
 
+    public static void fillEdgesTable(){
+        CSVLoader l;
+        final String url = "jdbc:derby:Skynet";
+        try{
+            Connection c = DriverManager.getConnection(url);
+            l = new CSVLoader(c);
+            l.loadCSV("TeamF-0.1/src/sample/Data/MapFEdges.csv", "EDGES", true);
+            c.close();
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapAedges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapBedges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapCedges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapDedges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapEEdges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapGEdges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapHedges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapIedges.csv");
+            loadEdgesFile("TeamF-0.1/src/sample/Data/MapWedges.csv");
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
         }
@@ -896,23 +925,32 @@ public class testEmbeddedDB {
 
     }
 
-    public static void fillEdgesTable(){
+    public static void loadEdgesFile(String fileName){
         CSVLoader l;
         final String url = "jdbc:derby:Skynet";
-
         try{
             Connection c = DriverManager.getConnection(url);
             l = new CSVLoader(c);
-            l.loadCSV("TeamF-0.1/src/sample/Data/newEdges.csv", "EDGES", true);
-
+            System.out.println("Loading Edges file: " + fileName);
+            l.loadCSV(fileName, "EDGES", false);
             c.close();
-
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
         }
+    }
 
-
-
+    public static void loadNodesFile(String fileName){
+        CSVLoader l;
+        final String url = "jdbc:derby:Skynet";
+        try{
+            Connection c = DriverManager.getConnection(url);
+            l = new CSVLoader(c);
+            System.out.println("Loading node file: " + fileName);
+            l.loadCSV(fileName, "NODES", false);
+            c.close();
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
     }
 
     public static void writeToCSV(){

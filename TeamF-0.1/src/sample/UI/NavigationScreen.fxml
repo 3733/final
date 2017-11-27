@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
@@ -18,8 +25,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
     <children>
         <MenuBar prefHeight="35.0" prefWidth="1000.0">
             <menus>
@@ -169,7 +177,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="29.0" prefWidth="242.0">
                                     <children>
-                                        <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email" visible="false">
+                                        <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email">
                                             <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                             </font>
@@ -182,7 +190,7 @@
                                     </VBox.margin></HBox>
                                 <HBox prefHeight="34.0" prefWidth="228.0">
                                     <children>
-                                        <JFXTextField fx:id="email" unFocusColor="#8e8e8e" visible="false">
+                                        <JFXTextField fx:id="email" unFocusColor="#8e8e8e">
                                             <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                             </font>
@@ -190,7 +198,7 @@
                                                 <Insets left="15.0" right="10.0" />
                                             </HBox.margin>
                                         </JFXTextField>
-                                        <JFXButton fx:id="sendButton" buttonType="RAISED" onAction="#sendMsg" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #ffffff;" text="Send" visible="false">
+                                        <JFXButton fx:id="sendButton" buttonType="RAISED" onAction="#sendMsg" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #ffffff;" text="Send">
                                             <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                             </font>
@@ -202,6 +210,21 @@
                                         <Insets />
                                     </VBox.margin>
                                 </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXComboBox fx:id="floorBox" onAction="#changeFloor" promptText="Floor" visibleRowCount="5" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton fx:id="L2Button" onAction="#changeFloorL2" text="L2" />
+                              <JFXButton fx:id="L1Button" onAction="#changeFloorL1" text="L1" />
+                              <JFXButton fx:id="Gbutton" onAction="#changeFloorG" text="G" />
+                              <JFXButton fx:id="Floor1Button" onAction="#changeFloor1" text="1" />
+                              <JFXButton fx:id="Floor2Button" onAction="#changeFloor2" text="2" />
+                               <JFXButton fx:id="Floor3Button" onAction="#changeFloor3" text="3" />
+                           </children>
+                        </HBox>
                                 <JFXListView prefHeight="318.0" prefWidth="242.0" visible="false">
                                     <VBox.margin>
                                         <Insets top="25.0" />
@@ -213,7 +236,7 @@
                 </JFXDrawer>
                 <AnchorPane layoutX="242.0" layoutY="2.0" prefHeight="777.0" prefWidth="1142.0">
                     <children>
-                        <ImageView fx:id="map" fitHeight="777.0" fitWidth="1154.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="map" fitHeight="777.0" fitWidth="1154.0" layoutX="15.0" onMouseClicked="#mapClick" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@Icons/01_thefirstfloor.png" />
                             </image>
