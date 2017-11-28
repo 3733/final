@@ -78,27 +78,19 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <AnchorPane prefHeight="153.0" prefWidth="228.0">
                            <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <HBox prefHeight="86.0" prefWidth="200.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Label text="X Coord">
+                                          <Label text="Start Node">
                                              <VBox.margin>
                                                 <Insets left="25.0" top="40.0" />
                                              </VBox.margin>
                                              <padding>
                                                 <Insets top="10.0" />
                                              </padding>
-                                             <font>
-                                                <Font name="Montserrat Regular" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Y Coord">
-                                             <VBox.margin>
-                                                <Insets left="25.0" top="60.0" />
-                                             </VBox.margin>
                                              <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                              </font>
@@ -115,17 +107,6 @@
                                                 <Font name="Montserrat Regular" size="12.0" />
                                              </font>
                                           </JFXTextField>
-                                          <JFXTextField styleClass="null">
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                             <padding>
-                                                <Insets top="65.0" />
-                                             </padding>
-                                             <font>
-                                                <Font name="Montserrat Regular" size="12.0" />
-                                             </font>
-                                          </JFXTextField>
                                        </children>
                                     </VBox>
                                  </children>
@@ -133,69 +114,91 @@
                                     <Insets bottom="15.0" />
                                  </padding>
                               </HBox>
-                              <SplitMenuButton fx:id="quickFloor" layoutX="54.0" layoutY="184.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="110.0" text="Quick Floor">
-                                 <items>
-                                    <RadioMenuItem fx:id="groundSet" mnemonicParsing="false" text="Ground">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="floor" />
-                                       </toggleGroup>
-                                    </RadioMenuItem>
-                                    <RadioMenuItem fx:id="lowerOneSet" mnemonicParsing="false" text="Lower One" toggleGroup="$floor" />
-                                    <RadioMenuItem fx:id="lowerTwoSet" mnemonicParsing="false" text="Lower Two" toggleGroup="$floor" />
-                                    <RadioMenuItem fx:id="oneSet" mnemonicParsing="false" text="One" toggleGroup="$floor" />
-                                    <RadioMenuItem fx:id="twoSet" mnemonicParsing="false" text="Two" toggleGroup="$floor" />
-                                    <RadioMenuItem fx:id="threeSet" mnemonicParsing="false" text="Three" toggleGroup="$floor" />
-                                 </items>
-                              </SplitMenuButton>
+                              <JFXButton buttonType="RAISED" layoutX="55.0" layoutY="100.0" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Set Default Start" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                              </JFXButton>
                            </children>
                         </AnchorPane>
+                        <HBox alignment="CENTER" prefHeight="90.0" prefWidth="228.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <JFXCheckBox checkedColor="#1a479a" text="Display All Edges">
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXCheckBox>
+                                    <JFXCheckBox checkedColor="#1a479a" text="Display All Nodes">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXCheckBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="228.0">
                            <children>
-                              <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
-                                 <items>
-                                    <RadioMenuItem mnemonicParsing="false" text="A*">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="pathOpt" />
-                                       </toggleGroup>
-                                    </RadioMenuItem>
-                                    <RadioMenuItem mnemonicParsing="false" text="Breadth First">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="pathOpt1" />
-                                       </toggleGroup>
-                                    </RadioMenuItem>
-                                    <RadioMenuItem mnemonicParsing="false" text="Depth First">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="pathOpt11" />
-                                       </toggleGroup>
-                                    </RadioMenuItem>
-                                    <RadioMenuItem mnemonicParsing="false" text="Dijkstra">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="pathOpt111" />
-                                       </toggleGroup>
-                                    </RadioMenuItem>
-                                 </items>
-                              </SplitMenuButton>
+                              <VBox alignment="CENTER" prefHeight="72.0" prefWidth="219.0">
+                                 <children>
+                                    <SplitMenuButton fx:id="quickFloor" mnemonicParsing="false" prefHeight="0.0" prefWidth="110.0" text="Quick Floor">
+                                       <items>
+                                          <RadioMenuItem fx:id="groundSet" mnemonicParsing="false" text="Ground">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="floor" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem fx:id="lowerOneSet" mnemonicParsing="false" text="Lower One" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="lowerTwoSet" mnemonicParsing="false" text="Lower Two" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="oneSet" mnemonicParsing="false" text="One" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="twoSet" mnemonicParsing="false" text="Two" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="threeSet" mnemonicParsing="false" text="Three" toggleGroup="$floor" />
+                                       </items>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </SplitMenuButton>
+                                    <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
+                                       <items>
+                                          <RadioMenuItem mnemonicParsing="false" text="A*">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem mnemonicParsing="false" text="Breadth First">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt1" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem mnemonicParsing="false" text="Depth First">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt11" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem mnemonicParsing="false" text="Dijkstra">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt111" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                       </items>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </SplitMenuButton>
+                                 </children>
+                              </VBox>
                            </children>
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="228.0">
-                           <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <JFXCheckBox text="Display All Nodes" />
-                                    <JFXCheckBox text="Display All Edges">
-                                       <VBox.margin>
-                                          <Insets top="15.0" />
-                                       </VBox.margin>
-                                    </JFXCheckBox>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets top="30.0" />
-                                 </HBox.margin>
-                              </VBox>
-                           </children>
                         </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
@@ -236,7 +239,7 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="771.0" prefWidth="1158.0">
                <children>
-                  <ScrollPane fx:id="scrollMap" prefHeight="778.0" prefWidth="1158.0">
+                  <ScrollPane fx:id="scrollMap" prefHeight="778.0" prefWidth="1165.0">
                      <content>
                         <ImageView fx:id="map" fitHeight="899.0" fitWidth="1316.0" pickOnBounds="true" preserveRatio="true">
                            <image>

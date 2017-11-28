@@ -138,11 +138,7 @@ public class NavigationPageController implements Initializable{
         this.destination.setText(s);
     }
 
-    @FXML
-    public void dragMap(){
-        //map.setX();
-        //map.setY();
-    }
+
     // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
 
     public void findPath(String in) throws IOException {
@@ -156,6 +152,10 @@ public class NavigationPageController implements Initializable{
         testDrawDirections(path);
         et = System.currentTimeMillis();
         System.out.println(et-st+"<===DR");
+        directionSteps.setVisible(true);
+        sendLabel.setVisible(true);
+        email.setVisible(true);
+        sendButton.setVisible(true);
     }
     @FXML
     public void go() throws IOException,InterruptedException{
@@ -173,7 +173,6 @@ public class NavigationPageController implements Initializable{
 
         System.out.println(destination.getText());
         findPath(destination.getText());
-
 
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);

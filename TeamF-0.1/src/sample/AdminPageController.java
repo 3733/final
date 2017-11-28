@@ -1,22 +1,30 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import java.util.Vector;
 
 
 public class AdminPageController implements Initializable{
@@ -25,6 +33,8 @@ public class AdminPageController implements Initializable{
     private SplitMenuButton algoMenu;
     @FXML
     private JFXButton upFloor, downFloor;
+    @FXML
+    private JFXTextField destination;
     @FXML
     private Label floorLabel;
     @FXML
@@ -39,6 +49,10 @@ public class AdminPageController implements Initializable{
     private SplitMenuButton quickFloor;
     @FXML
     private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
+    private Vector<Node> path = new Vector<Node>();
+    private Map CurMap;
+
+    private Node Kiosk;
 
     @FXML
     public void logout(){
@@ -49,8 +63,18 @@ public class AdminPageController implements Initializable{
     public void edit(){
         Main.mapEditScreen();
     }
+
     @FXML
     public void serviceRequest() {Main.serviceScreen();}
+
+    public void setMap(Map m){
+        this.CurMap = m;
+        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
+    }
+
+    public void setKiosk(Node k){
+        this.Kiosk = k;
+    }
 
     private Main mainController;
 
@@ -357,4 +381,63 @@ public class AdminPageController implements Initializable{
                 viewport.getMinX() + xProportion * viewport.getWidth(),
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
+
+    public void findPath(String in) throws IOException {
+        //Returns
+        long st = System.currentTimeMillis();
+        this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
+        long et = System.currentTimeMillis();
+        System.out.println(et-st+"<===ALGO");
+
+        st = System.currentTimeMillis();
+        testDrawDirections(path);
+        et = System.currentTimeMillis();
+        System.out.println(et-st+"<===DR");
+    }
+    @FXML
+    public void go() throws IOException,InterruptedException{
+
+
+        for (int i =0; i<CurMap.getNodes().size();i++){
+
+            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
+
+            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
+
+                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
+            }
+        }
+
+        System.out.println(destination.getText());
+        findPath(destination.getText());
+
+    }
+    // Purpose: Draw a path on the map
+    @FXML
+    public void testDrawDirections(Vector<Node> path) throws IOException {
+        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
+        Graphics2D pathImage = firstFloor.createGraphics();
+        int length = path.size();
+        String nameDest = path.get(length-1).getShortName();
+        String nameDept = path.get(0).getShortName();
+
+        Data.data.currentMap = "path" + nameDept + "-" + nameDest;
+        // Setting up the proper color settings
+        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
+        // Iterate through all the path nodes to draw the path
+        for(int i = 0; i < length ; i++) {
+            Node node = path.get(i);
+            if(i + 1 < length){
+                Node node2 = path.get(i+1);
+                // Lines are drawn offset,
+                pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
+                pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(),node2.getxCoordinate() ,node2.getyCoordinate());
+            }
+        }
+        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
+        System.out.println("Image set on map");
+    }
+
+
+
 }
