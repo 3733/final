@@ -187,7 +187,7 @@ public class ServiceAcceptController implements Initializable{
                     (req.getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
                     (req.getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
                     (req.getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
-                
+
                 Date date = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
                 req.setFinishTime(ft.format(date));
