@@ -16,6 +16,8 @@ public class AdminPageController {
     }
     @FXML
     public void serviceRequest() {Main.serviceScreen();}
+    @FXML
+    public void acceptRequest() {Main.acceptScreen();}
 
     private Main mainController;
 

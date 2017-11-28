@@ -33,7 +33,7 @@
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <JFXButton onAction="#backToAdmin" ripplerFill="#8e8e8e" text="Back" />
+                  <JFXButton onAction="#backToAdmin" ripplerFill="#8e8e8e" text="Back to Admin Screen" />
                </graphic></Menu>
          </menus>
       </MenuBar>
@@ -123,22 +123,14 @@
                               </TableView>
                            </children>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="40.0" prefWidth="228.0">
                            <children>
-                              <JFXButton buttonType="RAISED" onAction="#acceptRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Accept">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </JFXButton>
-                              <JFXButton fx:id="deleteButt" buttonType="RAISED" onAction="#deleteRequest" style="-fx-background-color: #ffffff;" text="Delete">
+                              <JFXButton buttonType="RAISED" onAction="#toServiceAccept" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" text="Service Accept Menu" translateX="-12.0">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
                               </JFXButton>
                            </children>
-                           <VBox.margin>
-                              <Insets top="15.0" />
-                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>
@@ -375,10 +367,6 @@
                                                          <font>
                                                             <Font name="Montserrat Regular" size="12.0" />
                                                          </font></Label>
-                                                      <JFXTextField fx:id="transportType" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                         <font>
-                                                            <Font name="Montserrat Regular" size="12.0" />
-                                                         </font></JFXTextField>
                                                       <Label text="Patient Name" GridPane.rowIndex="2">
                                                          <font>
                                                             <Font name="Montserrat Regular" size="12.0" />
@@ -389,6 +377,7 @@
                                                             <Font name="Montserrat Regular" size="12.0" />
                                                          </font></JFXTextField>
                                                       <JFXTimePicker fx:id="transportTime" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <ChoiceBox fx:id="transportMenu" prefHeight="26.0" prefWidth="182.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets left="25.0" />

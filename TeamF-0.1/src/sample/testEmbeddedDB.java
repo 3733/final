@@ -579,11 +579,11 @@ public class testEmbeddedDB {
 
             eee.execute("INSERT into SERVICEREQUESTS (DESTINATION, DESCRIPTION, SERVICEID, " +
                     "SERVICETIME, SERVICEEMPLOYEEID, TYPEOFREQUEST, ARRIVAL, PATIENTNAME, COMPLETIONSTATUS, " +
-                    "ACCEPTTIME , FINISHTIME) " +
-                    "VALUES ('" + t.destination.getNodeID() + "', '" + t.description + "', " + t.serviceEmployeeID +
+                    "ACCEPTTIME , FINISHTIME, TYPEOFTRANSPORT) " +
+                    "VALUES ('" + t.destination.getNodeID() + "', '" + t.description + "', " + t.serviceID +
                     ", '" + t.getServiceTime() + "'," + t.serviceEmployeeID + ",'" + t.typeOfRequest + "'," +
                     t.getArrival() + ", '" + t.getPatientName() + "', '" + t.completionStatus +
-                    "', '" + t.acceptTime + "', '" + t.finishTime + "')");
+                    "', '" + t.acceptTime + "', '" + t.finishTime + "', '" + t.getTypeOfTransport() + "')");
 
             eee.close();
 
