@@ -1016,10 +1016,10 @@ public class testEmbeddedDB {
             Statement s = c.createStatement();
             ResultSet r = s.executeQuery("SELECT * FROM NODES WHERE NODETYPE = 'DEPT'");
 
-            while(r.next()) {
+            /*while(r.next()) {
                 String name = r.getString("nodeID");
                 System.out.println("nodeID: " + name);
-            }
+            }*/
 
             w.writeAll(r, true);
 

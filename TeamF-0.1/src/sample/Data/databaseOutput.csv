@@ -1,1 +1,8 @@
 NODEID,XCOORD,YCOORD,FLOOR,BUILDING,NODETYPE,LONGNAME,SHORTNAME,TEAMASSIGNED
+FDEPT00101               ,1614,829,1   ,Tower          ,DEPT,Center for International Medecine                           ,CIM                 ,F     
+FDEPT00201               ,1766,1024,1   ,Tower          ,DEPT,International Patient Center                                ,IPC                 ,F     
+FDEPT00301               ,1787,1144,1   ,Tower          ,DEPT,Sharf Admitting Center                                      ,SAC                 ,F     
+FDEPT00401               ,1527,1114,1   ,Tower          ,DEPT,Bretholz Center for Patients and Families                   ,BCPF                ,F     
+FDEPT00501               ,1480,1065,1   ,Tower          ,DEPT,Waiting Area 1                                              ,WA1                 ,F     
+FDEPT00601               ,1843,1244,1   ,Tower          ,DEPT,Obstretics Admitting                                        ,OBA                 ,F     
+FDEPT00701               ,2127,1288,1   ,Tower          ,DEPT,Emergency Room                                              ,ER                  ,F     

@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
@@ -230,7 +230,7 @@
                               </HBox>
                               <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" text="Import CSV">
+                                    <JFXButton buttonType="RAISED" onAction="#importCSV" ripplerFill="#8e8e8e" text="Import CSV">
                                        <font>
                                           <Font name="Montserrat Regular" size="14.0" />
                                        </font>
@@ -239,7 +239,7 @@
                               </HBox>
                               <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" text="Export CSV">
+                                    <JFXButton buttonType="RAISED" onAction="#exportCSV" ripplerFill="#8e8e8e" text="Export CSV">
                                        <font>
                                           <Font name="Montserrat Regular" size="14.0" />
                                        </font>
