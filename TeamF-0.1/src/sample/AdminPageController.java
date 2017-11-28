@@ -35,6 +35,10 @@ public class AdminPageController implements Initializable{
     private JFXButton upButton, downButton;
     @FXML
     private String currentFloor = "First Floor";
+    @FXML
+    private SplitMenuButton quickFloor;
+    @FXML
+    private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
 
     @FXML
     public void logout(){
@@ -72,6 +76,86 @@ public class AdminPageController implements Initializable{
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
             floorLabel.setText("First Floor");
+
+            //setting menu item actions
+            groundSet.setOnAction(event -> {
+                currentFloor = "Ground Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(true);
+                try {
+                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(currentFloor);
+            });
+
+            lowerOneSet.setOnAction(event -> {
+                currentFloor = "Lower Level One";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                try {
+                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(currentFloor);
+            });
+
+            lowerTwoSet.setOnAction(event -> {
+                currentFloor = "Lower Level Two";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                try {
+                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(currentFloor);
+            });
+
+            oneSet.setOnAction(event -> {
+                currentFloor = "First Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                try {
+                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(currentFloor);
+            });
+
+            twoSet.setOnAction(event -> {
+                currentFloor = "Second Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(false);
+                downButton.setDisable(false);
+                try {
+                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(currentFloor);
+            });
+
+            threeSet.setOnAction(event -> {
+                currentFloor = "Third Floor";
+                floorLabel.setText(currentFloor);
+                upButton.setDisable(true);
+                downButton.setDisable(false);
+                try {
+                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(currentFloor);
+            });
+
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }

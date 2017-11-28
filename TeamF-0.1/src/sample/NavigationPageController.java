@@ -20,6 +20,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
@@ -94,7 +95,7 @@ public class NavigationPageController implements Initializable{
 
     // Contains the desired user destination
     @FXML
-    public static JFXTextField destination;
+    private JFXTextField destination;
 
     // Contains stairs option
     @FXML
@@ -158,7 +159,22 @@ public class NavigationPageController implements Initializable{
     }
     @FXML
     public void go() throws IOException,InterruptedException{
+
+
+        for (int i =0; i<CurMap.getNodes().size();i++){
+
+            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
+
+            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
+
+                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
+            }
+        }
+
+        System.out.println(destination.getText());
         findPath(destination.getText());
+
+
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
         email.setVisible(true);

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditUsersController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditUsersController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
@@ -103,13 +103,13 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
                <children>
-                  <JFXTreeTableView prefHeight="788.0" prefWidth="1106.0">
+                  <JFXTreeTableView prefHeight="770.0" prefWidth="1151.0">
                      <columns>
-                        <TreeTableColumn prefWidth="248.79998779296875" text="Last Name" />
-                        <TreeTableColumn prefWidth="214.39999389648438" text="First Name" />
-                        <TreeTableColumn prefWidth="149.60003662109375" text="ID" />
-                        <TreeTableColumn prefWidth="164.0" text="Password" />
-                        <TreeTableColumn prefWidth="328.80010986328125" text="Position" />
+                        <TreeTableColumn prefWidth="224.7999267578125" text="Last Name" />
+                        <TreeTableColumn prefWidth="297.6001281738281" text="First Name" />
+                        <TreeTableColumn prefWidth="131.20001220703125" text="ID" />
+                        <TreeTableColumn prefWidth="228.00006103515625" text="Password" />
+                        <TreeTableColumn prefWidth="266.39995117187505" text="Position" />
                      </columns>
                   </JFXTreeTableView>
                </children>
