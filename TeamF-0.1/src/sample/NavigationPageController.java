@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
@@ -9,13 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
@@ -202,15 +198,43 @@ public class NavigationPageController implements Initializable{
     }
     @FXML
     public void go() throws IOException,InterruptedException{
+        clear();
         findPath(destination.getText());
     }
 
     // Method to clear the path on the map when the user presses clear map
     @FXML
     public void clear() throws FileNotFoundException{
-        map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+        Data.data.firstFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png"));
+        Data.data.secondFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png"));
+        Data.data.thirdFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png"));
+        Data.data.GFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png"));
+        Data.data.L1Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png"));
+        Data.data.L2Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png"));
+        map.setImage(selectMap(Data.data.currentMap));
     }
 
+    // this function returns the proper image based on the current image string
+    public Image selectMap(String currentMap) {
+        System.out.println(currentMap);
+        if (currentMap != null) {
+            if (currentMap.equals("L2")) {
+                return Data.data.L2Floor;
+            } else if (currentMap.equals("L1")) {
+                return Data.data.L1Floor;
+            } else if (currentMap.equals("0G") || currentMap.equals("G")) {
+                return Data.data.GFloor;
+            } else if (currentMap.equals("01") || currentMap.equals("1")) {
+                return Data.data.firstFloor;
+            } else if (currentMap.equals("02") || currentMap.equals("2")) {
+                return Data.data.secondFloor;
+            } else if (currentMap.equals("03") || currentMap.equals("3")) {
+                return Data.data.thirdFloor;
+            }
+        }
+            System.out.println("ERROR: INVALID FLOOR ID");
+            return Data.data.firstFloor;
+    }
     //sets invalid email label when necessary for errorhandling
     @FXML
     public static void setInvalidEmail(){
@@ -222,7 +246,6 @@ public class NavigationPageController implements Initializable{
     public void sendMsg() throws Exception{
         //Vector<Node> msgVec = new Vector<Node>(10);
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
-        //go();
         emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
     }
 
@@ -267,13 +290,13 @@ public class NavigationPageController implements Initializable{
         return out;
     }
 
-    public Vector<Vector<Node>> seperator(Vector<Node> path){
+    public Vector<Vector<Node>> separator(Vector<Node> path){
         Vector<Vector<Node>> paths = new Vector<Vector<Node>>();// make one path per floor
         Vector<Node> ogFloor = new Vector<Node>();//create the path for the current floor
-        String floor = path.elementAt(0).getFloor();
+        //String floor = path.elementAt(0).getFloor();
         for (Node i : path) {
             //if the node is an elevator then we will switch floors
-            if(i.getNodeType().equals("ELEV") || i.getNodeType().equals("STAI")){
+            if((ogFloor.size() > 0) &&(i.getNodeType().equals("ELEV") || i.getNodeType().equals("STAI"))){
                 ogFloor.add(i);
                 paths.add(ogFloor);
                 ogFloor.clear();
@@ -286,12 +309,53 @@ public class NavigationPageController implements Initializable{
         }
         return paths;
     }
+    public Vector<Vector<Node>> separator2(Vector<Node> path){
+        Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
+        for(int i = 0; i <6; i++){
+            paths.add(new Vector<Node>());
+        }
+        String prev = path.get(0).getFloor().replaceAll("\\s+","");
+        Node blank = new Node("BLANK", -1,-1,"BL", "BLANK","BLANKTYPE","BLANK","BLANK", 'Z');
+        int prevElt = 0;
+        for(Node i: path){
+            String pathFloor = i.getFloor().replaceAll("\\s+","");
+            if(!(pathFloor.equals(prev))){
+                paths.elementAt(prevElt).add(blank);
+                prev = pathFloor;
+            }
+            if(pathFloor.equals("L2")){
+                paths.elementAt(0).add(i);
+                prevElt = 0;
+            } else if (pathFloor.equals("L1")) {
+                prevElt = 1;
+                paths.elementAt(1).add(i);
+            } else if (pathFloor.equals("0G") || pathFloor.equals("G")){
+                prevElt = 2;
+                paths.elementAt(2).add(i);
+            } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
+                prevElt = 3;
+                paths.elementAt(3).add(i);
+            } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
+                prevElt = 4;
+                paths.elementAt(4).add(i);
+            } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
+                prevElt = 5;
+                paths.elementAt(5).add(i);
+            }
+        }
+        return paths;
+    }
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
+        for(Node i: path){
+            System.out.println(i.getLongName()+ "\t"+i.getNodeType());
+        }
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        System.out.println("Reached the multifloor path drawing function");
-        Vector<Vector<Node>> paths = seperator(path);
+        //System.out.println("Reached the multifloor path drawing function");
+        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
+        Vector<Vector<Node>> paths = separator2(path);
+        //System.out.println("Size of the vector of paths " + paths.size());
         /*
         for (Vector<Node> i: paths) {
             for (Node j: i){
@@ -303,35 +367,22 @@ public class NavigationPageController implements Initializable{
         //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
-            switch(floorPath.elementAt(0).getFloor()){
-                case "L2":
-                    BufferedImage lowerLevel2Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel2_blank.png"));
-                    Data.data.L2Floor = testDrawDirections(floorPath, lowerLevel2Floor);
-                    break;
-                case "L1":
-                    BufferedImage lowerLevel1Floor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thelowerlevel1_blank.png"));
-                    Data.data.L1Floor = testDrawDirections(floorPath, lowerLevel1Floor);
-                    break;
-                case "0G":
-                    BufferedImage groundFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/00_thegroundfloor_blank.png"));
-                    Data.data.GFloor = testDrawDirections(floorPath, groundFloor);
-                    break;
-                case "1":
-                case "01":
-                    System.out.println("Reached case statement");
-                    BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/01_thefirstfloor_blank.png"));
-                    Data.data.firstFloor = testDrawDirections(floorPath, firstFloor);
-                    break;
-                case "2":
-                case "02":
-                    BufferedImage secondFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thesecondfloor_blank.png"));
-                    Data.data.secondFloor = testDrawDirections(floorPath, secondFloor);
-                    break;
-                case "3":
-                case "03":
-                    BufferedImage thirdFloor = ImageIO.read(getClass().getResource("/sample/Map_Pictures/02_thethirdfloor_blank.png"));
-                    Data.data.thirdFloor = testDrawDirections(floorPath, thirdFloor);
-                    break;
+            if (floorPath.size() > 0) {
+                //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
+                String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
+                if (pathFloor.equals("L2")) {
+                    Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
+                } else if (pathFloor.equals("L1")) {
+                    Data.data.L1Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L1Floor, null));
+                } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
+                    Data.data.GFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.GFloor, null));
+                } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
+                    Data.data.firstFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.firstFloor, null));
+                } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
+                    Data.data.secondFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.secondFloor, null));
+                } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
+                    Data.data.thirdFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.thirdFloor, null));
+                }
             }
         }
         //String floor = path.get(0).getFloor();
@@ -346,21 +397,26 @@ public class NavigationPageController implements Initializable{
         String nameDest = path.get(length-1).getShortName();
         String nameDept = path.get(0).getShortName();
 
-        Data.data.currentMap = "path" + nameDept + "-" + nameDest;
+        //Data.data.emailMapFloor1 = "path" + nameDept + "-" + nameDest;
+
         // Setting up the proper color settings
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         // Iterate through all the path nodes to draw the path
         for(int i = 0; i < length ; i++) {
             Node node = path.get(i);
+            //System.out.println("This is node: " + node.getNodeID());
             if(i + 1 < length){
                 Node node2 = path.get(i+1);
+                //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                 // Lines are drawn offset,
-                pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
-                pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(),node2.getxCoordinate() ,node2.getyCoordinate());
-            }
+                if(!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
+                    pathImage.setColor(new java.awt.Color(0, 0, 0)); // This color is black
+                    pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(), node2.getxCoordinate(), node2.getyCoordinate());
+                }
+                }
         }
         map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        System.out.println("Image set on map");
+        //System.out.println("Image set on map");
         return SwingFXUtils.toFXImage(floorImage,null);
     }
 

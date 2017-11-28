@@ -155,8 +155,9 @@ public class Main extends Application {
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
+        startMap();
         if(getDestination().length() > 0){
-            startMap();
+
             navigationPageController.findPath(getDestination());
         }
     }
@@ -217,7 +218,7 @@ public class Main extends Application {
     }
     public static void main(String[] args) throws IOException{
 
-        testEmbeddedDB db = new testEmbeddedDB();
+        //testEmbeddedDB db = new testEmbeddedDB();
         //testEmbeddedDB.dropNodes();
         //testEmbeddedDB.dropTables();
         //testEmbeddedDB.createTable();
