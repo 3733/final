@@ -5,6 +5,7 @@ Drawer Size: 228 x 786
 Small Icon: 85 x 97
 Rippler Fill: #e8e8e8
 Main Pages should be 1550 x 810
+Error Screens: 600 x 178
 
 COLORS
  #f4f4f4
