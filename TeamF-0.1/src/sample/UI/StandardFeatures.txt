@@ -1,8 +1,14 @@
 Close Button: 16 x 16
-Pop Up Size: 250 X 500
-Main Screen Size: 1000 x 2000
-Menu Bar Size: (width of screen) x 35
-Drawer Size: 200 x 1000
+Pop Up Size: 250 X 500/ 400 x 60
+Menu Bar Size: (width of screen) x 15
+Drawer Size: 228 x 786
 Small Icon: 85 x 97
 Rippler Fill: #e8e8e8
-Main Pages should be 1386 x 810
+Main Pages should be 1550 x 810
+Error Screens: 600 x 178
+
+COLORS
+ #f4f4f4
+ #1a479a
+ #ffffff
+ #000000

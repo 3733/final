@@ -162,8 +162,8 @@ public class Main extends Application {
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
         stage.centerOnScreen();
+        startMap();
         if(getDestination().length() > 0){
-            startMap();
             navigationPageController.findPath(getDestination());
         }
     }
@@ -239,7 +239,7 @@ public class Main extends Application {
     }
     public static void main(String[] args) throws IOException{
 
-        //testEmbeddedDB db = new testEmbeddedDB();
+        testEmbeddedDB db = new testEmbeddedDB();
         startMap();
 
 
@@ -303,7 +303,9 @@ public class Main extends Application {
         }
 
         navigationPageController.setMap(CurMap);
+        adminPageController.setMap(CurMap);
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
+        adminPageController.setKiosk(CurMap.getNodes().get(0));
     }
 }

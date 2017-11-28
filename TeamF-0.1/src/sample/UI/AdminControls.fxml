@@ -10,6 +10,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -35,7 +38,7 @@
       </MenuBar>
       <AnchorPane prefHeight="793.0" prefWidth="1328.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0" styleClass=".drawer">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0" style="-fx-background-color: #f4f4f4;">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -62,7 +65,7 @@
                                                 <Insets left="25.0" />
                                              </VBox.margin>
                                           </JFXButton>
-                                          <JFXButton contentDisplay="CENTER" ripplerFill="#8e8e8e" text="Help">
+                                          <JFXButton contentDisplay="CENTER" onAction="#help" ripplerFill="#8e8e8e" text="Help">
                                              <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                              </font>
@@ -156,9 +159,9 @@
                               <Insets top="25.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="65.0" prefWidth="228.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="228.0">
                            <children>
-                              <JFXButton buttonType="RAISED" style="-fx-background-color: #ffffff;" text="Go">
+                              <JFXButton buttonType="RAISED" onAction="#go" style="-fx-background-color: #1a479a;" text="Go" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font></JFXButton>
@@ -166,6 +169,27 @@
                            <VBox.margin>
                               <Insets top="25.0" />
                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="228.0">
+                           <children>
+                              <SplitMenuButton fx:id="quickFloor" mnemonicParsing="false" text="Quick Floor">
+                                 <items>
+                                    <RadioMenuItem fx:id="groundSet" mnemonicParsing="false" text="Ground">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="floor" />
+                                       </toggleGroup>
+                                    </RadioMenuItem>
+                                    <RadioMenuItem fx:id="lowerOneSet" mnemonicParsing="false" text="Lower One" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="lowerTwoSet" mnemonicParsing="false" text="Lower Two" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="oneSet" mnemonicParsing="false" text="First" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="twoSet" mnemonicParsing="false" text="Second" toggleGroup="$floor" />
+                                    <RadioMenuItem fx:id="threeSet" mnemonicParsing="false" text="Third" toggleGroup="$floor" />
+                                 </items>
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                              </SplitMenuButton>
+                           </children>
                         </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
@@ -182,7 +206,7 @@
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
                                  <VBox.margin>
-                                    <Insets left="30.0" />
+                                    <Insets left="25.0" />
                                  </VBox.margin>
                               </JFXButton>
                               <JFXButton contentDisplay="CENTER" onAction="#edit" prefHeight="23.0" prefWidth="156.0" ripplerFill="#8e8e8e" text="Edit Map">
@@ -209,20 +233,51 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
                <children>
-                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/01_thefirstfloor.png" />
-                     </image>
-                  </ImageView>
-                  <JFXTextField layoutX="136.0" layoutY="37.0" prefHeight="26.0" prefWidth="838.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                  <ScrollPane fx:id="scrollMap" prefHeight="778.0" prefWidth="1170.0">
+                     <content>
+                        <ImageView fx:id="map" fitHeight="901.0" fitWidth="1466.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/01_thefirstfloor.png" />
+                           </image>
+                        </ImageView>
+                     </content>
+                  </ScrollPane>
+                  <JFXTextField fx:id="destination" layoutX="297.0" layoutY="36.0" onAction="#go" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                      <font>
                         <Font name="Montserrat Regular" size="12.0" />
-                     </font></JFXTextField>
-                  <JFXButton layoutX="974.0" layoutY="35.0" prefHeight="26.0" prefWidth="56.0" style="-fx-background-color: #ffffff;">
+                     </font>
+                  </JFXTextField>
+                  <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
+                     <children>
+                        <JFXButton fx:id="downButton" contentDisplay="CENTER" onAction="#floorDown">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/white-arrow-png-24.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label fx:id="floorLabel" alignment="CENTER" prefHeight="18.0" prefWidth="114.0" textFill="WHITE">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font></Label>
+                        <JFXButton fx:id="upButton" contentDisplay="CENTER" onAction="#floorUp">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/White_arrow_up.svg.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" onAction="#go" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
                      <graphic>
-                        <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Icons/BTgrBoMGc.png" />
+                              <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
                            </image>
                         </ImageView>
                      </graphic>
