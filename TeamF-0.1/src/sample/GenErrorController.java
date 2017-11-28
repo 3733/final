@@ -12,6 +12,5 @@ public class GenErrorController {
     }
 
     @FXML
-    public void back(){
-        Main.startScreen();}
+    public void back(){ Main.startScreen();}
 }

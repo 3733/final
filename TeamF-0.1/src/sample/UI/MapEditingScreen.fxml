@@ -2,12 +2,17 @@
 
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -32,7 +37,7 @@
       </MenuBar>
       <AnchorPane prefHeight="746.0" prefWidth="1338.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="771.0" prefWidth="228.0">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="771.0" prefWidth="228.0" style="-fx-background-color: #f4f4f4;">
                <children>
                   <VBox prefHeight="779.0" prefWidth="228.0">
                      <children>
@@ -73,27 +78,19 @@
                               </HBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                        <AnchorPane prefHeight="153.0" prefWidth="228.0">
                            <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
+                              <HBox prefHeight="86.0" prefWidth="200.0">
                                  <children>
                                     <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <Label text="X Coord">
+                                          <Label text="Start Node">
                                              <VBox.margin>
                                                 <Insets left="25.0" top="40.0" />
                                              </VBox.margin>
                                              <padding>
                                                 <Insets top="10.0" />
                                              </padding>
-                                             <font>
-                                                <Font name="Montserrat Regular" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Y Coord">
-                                             <VBox.margin>
-                                                <Insets left="25.0" top="60.0" />
-                                             </VBox.margin>
                                              <font>
                                                 <Font name="Montserrat Regular" size="12.0" />
                                              </font>
@@ -110,23 +107,99 @@
                                                 <Font name="Montserrat Regular" size="12.0" />
                                              </font>
                                           </JFXTextField>
-                                          <JFXTextField styleClass="null">
-                                             <VBox.margin>
-                                                <Insets />
-                                             </VBox.margin>
-                                             <padding>
-                                                <Insets top="65.0" />
-                                             </padding>
-                                             <font>
-                                                <Font name="Montserrat Regular" size="12.0" />
-                                             </font>
-                                          </JFXTextField>
                                        </children>
                                     </VBox>
                                  </children>
+                                 <padding>
+                                    <Insets bottom="15.0" />
+                                 </padding>
                               </HBox>
+                              <JFXButton buttonType="RAISED" layoutX="55.0" layoutY="100.0" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Set Default Start" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                              </JFXButton>
                            </children>
                         </AnchorPane>
+                        <HBox alignment="CENTER" prefHeight="90.0" prefWidth="228.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <JFXCheckBox checkedColor="#1a479a" text="Display All Edges">
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXCheckBox>
+                                    <JFXCheckBox checkedColor="#1a479a" text="Display All Nodes">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXCheckBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="72.0" prefWidth="228.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="72.0" prefWidth="219.0">
+                                 <children>
+                                    <SplitMenuButton fx:id="quickFloor" mnemonicParsing="false" prefHeight="0.0" prefWidth="110.0" text="Quick Floor">
+                                       <items>
+                                          <RadioMenuItem fx:id="groundSet" mnemonicParsing="false" text="Ground">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="floor" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem fx:id="lowerOneSet" mnemonicParsing="false" text="Lower One" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="lowerTwoSet" mnemonicParsing="false" text="Lower Two" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="oneSet" mnemonicParsing="false" text="One" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="twoSet" mnemonicParsing="false" text="Two" toggleGroup="$floor" />
+                                          <RadioMenuItem fx:id="threeSet" mnemonicParsing="false" text="Three" toggleGroup="$floor" />
+                                       </items>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </SplitMenuButton>
+                                    <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
+                                       <items>
+                                          <RadioMenuItem mnemonicParsing="false" text="A*">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem mnemonicParsing="false" text="Breadth First">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt1" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem mnemonicParsing="false" text="Depth First">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt11" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                          <RadioMenuItem mnemonicParsing="false" text="Dijkstra">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="pathOpt111" />
+                                             </toggleGroup>
+                                          </RadioMenuItem>
+                                       </items>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </SplitMenuButton>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <HBox alignment="TOP_CENTER" prefHeight="26.0" prefWidth="228.0">
@@ -174,6 +247,9 @@
                                  </children>
                               </HBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
                         </VBox>
                      </children>
                   </VBox>
@@ -181,11 +257,41 @@
             </JFXDrawer>
             <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="771.0" prefWidth="1158.0">
                <children>
-                  <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/01_thefirstfloor.png" />
-                     </image>
-                  </ImageView>
+                  <ScrollPane fx:id="scrollMap" prefHeight="778.0" prefWidth="1165.0">
+                     <content>
+                        <ImageView fx:id="map" fitHeight="899.0" fitWidth="1316.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/01_thefirstfloor.png" />
+                           </image>
+                        </ImageView>
+                     </content>
+                  </ScrollPane>
+                  <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
+                     <children>
+                        <JFXButton fx:id="downButton" contentDisplay="CENTER" onAction="#floorDown" ripplerFill="#e8e8e8">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/white-arrow-png-24.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label fx:id="floorLabel" alignment="CENTER" prefHeight="18.0" prefWidth="114.0" textFill="WHITE">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font></Label>
+                        <JFXButton fx:id="upButton" contentDisplay="CENTER" onAction="#floorUp" ripplerFill="#e8e8e8">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/White_arrow_up.svg.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>

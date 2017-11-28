@@ -45,7 +45,7 @@ public class StartPageController {
 
     @FXML
     public void help(){
-        //Main.itErrorScreen();
+        Main.genErrorScreen();
     }
 
     @FXML
