@@ -1,25 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="817.0" prefWidth="1337.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditUsersController">
    <children>
-      <TableView editable="true" layoutX="34.0" layoutY="44.0" prefHeight="526.0" prefWidth="956.0">
-        <columns>
-          <TableColumn fx:id="lastNameCol" prefWidth="127.0" text="Last Name" />
-          <TableColumn fx:id="firstNameCol" minWidth="0.0" prefWidth="126.0" text="First Name"/>
-            <TableColumn fx:id="idNumCol" prefWidth="125.0" text="ID#" />
-            <TableColumn fx:id="usernameCol" minWidth="0.0" prefWidth="192.0" text="Username" />
-            <TableColumn fx:id="passwordCol" prefWidth="192.0" text="Password" />
-            <TableColumn fx:id="positionCol" prefWidth="192.0" text="Position" />
-        </columns>
-      </TableView>
-      <Button layoutX="231.0" layoutY="609.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Add User" />
-      <Button layoutX="418.0" layoutY="609.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Remove User" />
-      <Button layoutX="601.0" layoutY="609.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Edit User" />
-      <Button layoutX="880.0" layoutY="700.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="109.0" text="Exit" />
+      <MenuBar prefHeight="35.0" prefWidth="1000.0">
+         <menus>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <JFXButton onAction="#back" ripplerFill="#8e8e8e" text="Back">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
+                  </JFXButton>
+               </graphic>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="793.0" prefWidth="1328.0">
+         <children>
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <AnchorPane prefHeight="107.0" prefWidth="200.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <JFXBadge />
+                                    <ImageView fx:id="icon" fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXBadge prefHeight="25.0" prefWidth="25.0" />
+                                          <JFXBadge prefHeight="25.0" prefWidth="25.0">
+                                             <children>
+                                                <JFXButton onAction="#help" text="Help">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font></JFXButton>
+                                             </children>
+                                          </JFXBadge>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="228.0">
+                                 <children>
+                                    <JFXButton ripplerFill="#8e8e8e" text="Edit User">
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton ripplerFill="#8e8e8e" text="Add User">
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton ripplerFill="#8e8e8e" text="Remove User">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font></JFXButton>
+                                 </children>
+                                 <padding>
+                                    <Insets top="20.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </JFXDrawer>
+            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+               <children>
+                  <JFXTreeTableView prefHeight="788.0" prefWidth="1106.0">
+                     <columns>
+                        <TreeTableColumn prefWidth="248.79998779296875" text="Last Name" />
+                        <TreeTableColumn prefWidth="214.39999389648438" text="First Name" />
+                        <TreeTableColumn prefWidth="149.60003662109375" text="ID" />
+                        <TreeTableColumn prefWidth="164.0" text="Password" />
+                        <TreeTableColumn prefWidth="328.80010986328125" text="Position" />
+                     </columns>
+                  </JFXTreeTableView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</VBox>

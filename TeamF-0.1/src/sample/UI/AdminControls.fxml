@@ -1,57 +1,295 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="768.0" maxWidth="1024.0" minHeight="768.0" minWidth="1024.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AdminPageController">
    <children>
-      <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="768.0" prefWidth="770.0">
-         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1088.0" prefWidth="1600.0">
+      <MenuBar prefHeight="35.0" prefWidth="1000.0">
+         <menus>
+            <Menu mnemonicParsing="false">
+               <graphic>
+                  <JFXButton onAction="#back" ripplerFill="#8e8e8e" text="Back">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
+                  </JFXButton>
+               </graphic>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <AnchorPane prefHeight="793.0" prefWidth="1328.0">
+         <children>
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0" style="-fx-background-color: #f4f4f4;">
                <children>
-                  <ImageView fitHeight="1088.0" fitWidth="1600.0">
-                     <image>
-                        <Image url="@Icons/01_thefirstfloor.png" />
-                     </image>
-                  </ImageView>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <AnchorPane prefHeight="107.0" prefWidth="200.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fx:id="icon" fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets left="15.0" top="10.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXBadge prefHeight="25.0" prefWidth="25.0" />
+                                          <JFXButton contentDisplay="CENTER" onAction="#logout" ripplerFill="#8c8c8c" text="Log Out">
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="25.0" />
+                                             </VBox.margin>
+                                          </JFXButton>
+                                          <JFXButton contentDisplay="CENTER" ripplerFill="#8e8e8e" text="Help">
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="25.0" />
+                                             </VBox.margin>
+                                          </JFXButton>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXRadioButton text="Start">
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets top="10.0" />
+                                             </padding>
+                                             <VBox.margin>
+                                                <Insets top="40.0" />
+                                             </VBox.margin>
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="points" />
+                                             </toggleGroup>
+                                          </JFXRadioButton>
+                                          <JFXRadioButton text="End" toggleGroup="$points">
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets top="60.0" />
+                                             </VBox.margin>
+                                          </JFXRadioButton>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXTextField prefHeight="20.0" prefWidth="71.0">
+                                             <VBox.margin>
+                                                <Insets top="30.0" />
+                                             </VBox.margin>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                          </JFXTextField>
+                                          <JFXTextField>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
+                                             <padding>
+                                                <Insets top="65.0" />
+                                             </padding>
+                                             <font>
+                                                <Font name="Montserrat Regular" size="12.0" />
+                                             </font>
+                                          </JFXTextField>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                        <HBox prefHeight="38.0" prefWidth="200.0">
+                           <children>
+                              <JFXCheckBox text="Stairs">
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                              </JFXCheckBox>
+                              <JFXCheckBox text="Elevator">
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                              </JFXCheckBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="228.0">
+                           <children>
+                              <JFXButton buttonType="RAISED" style="-fx-background-color: #1a479a;" text="Go" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font></JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER" prefHeight="86.0" prefWidth="228.0">
+                           <children>
+                              <SplitMenuButton fx:id="algoMenu1" mnemonicParsing="false" text="Choose Floor">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Ground" />
+                                    <MenuItem mnemonicParsing="false" text="Lower One" />
+                                    <MenuItem mnemonicParsing="false" text="Lower Two" />
+                                    <MenuItem mnemonicParsing="false" text="First" />
+                                    <MenuItem mnemonicParsing="false" text="Second" />
+                                    <MenuItem mnemonicParsing="false" text="Third" />
+                                 </items>
+                              </SplitMenuButton>
+                           </children>
+                        </HBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
+                                 <children>
+                                    <Label alignment="TOP_CENTER" text="Settings">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="16.0" />
+                                       </font></Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="72.0" prefWidth="228.0">
+                                 <children>
+                                    <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
+                                       <items>
+                                          <MenuItem mnemonicParsing="false" text="A*" />
+                                          <MenuItem mnemonicParsing="false" text="Breadth First" />
+                                          <MenuItem mnemonicParsing="false" text="Depth First" />
+                                          <MenuItem mnemonicParsing="false" text="Dijkstra" />
+                                       </items>
+                                    </SplitMenuButton>
+                                 </children>
+                              </HBox>
+                              <JFXButton contentDisplay="CENTER" onAction="#serviceRequest" ripplerFill="#8e8e8e" text="Make A Service Request">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="25.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                              <JFXButton contentDisplay="CENTER" onAction="#edit" prefHeight="23.0" prefWidth="156.0" ripplerFill="#8e8e8e" text="Edit Map">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="30.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                              <JFXButton contentDisplay="CENTER" onAction="#editUsers" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" text="Edit Users">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="30.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </JFXDrawer>
+            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+               <children>
+                  <ScrollPane fx:id="scrollMap" prefHeight="777.0" prefWidth="1154.0">
+                     <content>
+                        <ImageView fx:id="map" fitHeight="785.0" fitWidth="1176.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/01_thefirstfloor.png" />
+                           </image>
+                        </ImageView>
+                     </content>
+                  </ScrollPane>
+                  <JFXTextField layoutX="297.0" layoutY="36.0" prefHeight="26.0" prefWidth="678.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
+                  </JFXTextField>
+                  <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
+                     <children>
+                        <JFXButton fx:id="downButton" contentDisplay="CENTER" onAction="#floorDown">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/white-arrow-png-24.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label fx:id="floorLabel" alignment="CENTER" prefHeight="18.0" prefWidth="114.0" textFill="WHITE">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font></Label>
+                        <JFXButton fx:id="upButton" contentDisplay="CENTER" onAction="#floorUp">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icons/White_arrow_up.svg.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="974.0" layoutY="36.0" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
                </children>
             </AnchorPane>
-         </content></ScrollPane>
-      <Slider layoutX="614.0" layoutY="20.0" showTickLabels="true" showTickMarks="true" />
-      <Button layoutX="769.0" layoutY="422.0" mnemonicParsing="false" onAction="#addUser" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #baced5;" text="Add Users" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button layoutX="769.0" layoutY="307.0" mnemonicParsing="false" onAction="#edit" prefHeight="114.0" prefWidth="254.0" text="Edit Map" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button layoutX="769.0" layoutY="1.0" mnemonicParsing="false" onAction="#logout" prefHeight="67.0" prefWidth="254.0" text="Log Out" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button layoutX="769.0" layoutY="652.0" mnemonicParsing="false" onAction="#settings" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #baced5;" text="Settings" underline="true">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Button>
-      <Button layoutX="769.0" layoutY="537.0" mnemonicParsing="false" onAction="#removeUser" prefHeight="114.0" prefWidth="254.0" text="Remove Users" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
-      <Button layoutX="769.0" layoutY="192.0" mnemonicParsing="false" onAction="#serviceRequest" prefHeight="114.0" prefWidth="254.0" style="-fx-background-color: #baced5;" text="Service Requests" underline="true">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</VBox>

@@ -1,37 +1,60 @@
 package sample;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import sample.Main;
+
+import java.util.LinkedList;
 
 public class LoginPageController {
     @FXML
-    private TextField username;
+    private JFXTextField username;
 
     @FXML
-    private TextField password;
+    private JFXPasswordField password;
 
     @FXML
     private Label invalidLoginText;
 
-    @FXML
-    public void cancel(){
-        Main.startScreen();
+    private Main mainController;
+
+    public void setMainController(Main main){
+        this.mainController = main;
     }
 
     @FXML
+    public void help(){Main.genErrorScreen();}
+
+
+    @FXML
     public void login(){
-        System.out.print(username.getText());
-        System.out.print(password.getText());
-        if(username.getText().equals("admin") && password.getText().equals("admin")){
+        System.out.println(username.getText());
+        System.out.println(password.getText());
+        if(checkUser(username.getText(), password.getText())){
             Main.adminScreen();
         }else {
             invalidLoginText.setVisible(true);
         }
+        username.clear();
+        password.clear();
     }
+
+    private boolean checkUser(String name, String pass){
+
+        LinkedList<Staff> everyone = testEmbeddedDB.getAllStaff();
+        for(Staff person : everyone){
+            if(person.getUsername().trim().equals(name) && person.getPassword().trim().equals(pass)){
+                Main.setLoggedInGuy(person);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @FXML
-    public void sendMsg(){
-
-    }
+    public void back(){Main.startScreen();}
 
 }

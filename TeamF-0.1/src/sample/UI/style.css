@@ -1,0 +1,65 @@
+
+.root{
+    -fx-background-color: #f4f4f4;
+    -fx-font-size: 12px;
+    -fx-font-family: Montserrat-Regular;
+    -fx-focus-color: #e8e8e8;
+    -fx-accent: #e8e8e8;
+
+}
+.jfx-drawer{
+    -fx-background-color: #e8e8e8;
+}
+
+.hamburger{
+    -fx-border-color: #8e8e8e;
+}
+
+.text-field-search {
+    -fx-background-color: #a9a9a9 , white , white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+
+.jfx-tab-pane .headers-region
+{
+    -fx-background-color: #1a479a;
+}
+
+.jfx-tab-pane .tab-header-background
+{
+    -fx-background-color: #1a479a;
+}
+
+.jfx-tab-pane .tab-header-area .jfx-rippler
+{
+    -jfx-rippler-fill: #e8e8e8;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #e8e8e8;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #8e8e8e;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #f4f4f4;
+}
+
+.menu:focused {
+    -fx-background-color: #f4f4f4;
+}
+.menu-item:focused {
+    -fx-background-color: #f4f4f4;
+}
+
+.slider .track {
+    -fx-control-inner-background: #1a479a;
+}
+
+
+

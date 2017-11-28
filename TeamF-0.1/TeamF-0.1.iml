@@ -9,12 +9,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="resouces" level="project" />
-    <orderEntry type="library" name="resouces2" level="project" />
-    <orderEntry type="library" name="project" level="project" />
-    <orderEntry type="library" name="resouces1" level="project" />
+    <orderEntry type="library" name="jfoenix" level="project" />
+    <orderEntry type="library" name="activation" level="application" />
+    <orderEntry type="library" name="common-lang3" level="application" />
     <orderEntry type="library" name="derby" level="application" />
+    <orderEntry type="library" name="jdk1.8" level="application" />
     <orderEntry type="library" name="mail" level="application" />
     <orderEntry type="library" name="opencsv-4.0" level="application" />
-    <orderEntry type="library" name="common-lang3" level="application" />
   </component>
 </module>
