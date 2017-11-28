@@ -39,7 +39,7 @@
       </Label>
       <ImageView fitHeight="101.0" fitWidth="126.0" layoutX="450.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Icons/97ae591756f3dc69db88c09fd097319a-sad-face-emoji-emoticon-by-vexels.png" />
+            <Image url="@Icons/sad.png" />
          </image>
       </ImageView>
    </children>
