@@ -19,5 +19,6 @@
     <orderEntry type="library" name="opencsv-4.0" level="application" />
     <orderEntry type="library" name="scenebuilder-kit-9.0.1" level="application" />
     <orderEntry type="library" name="com.jfoenix:jfoenix:1.10.0" level="application" />
+    <orderEntry type="library" name="jfoenix" level="application" />
   </component>
 </module>
