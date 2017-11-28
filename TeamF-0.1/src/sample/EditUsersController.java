@@ -56,7 +56,7 @@ public class EditUsersController implements Initializable{
         Object[] options = {"Yes",
                 "No"};
         int n = JOptionPane.showOptionDialog(frame,
-                "Are you sure you want to remove \nthis user?",
+                "Are you sure you want to remove this user?",
                 "Remove User",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
