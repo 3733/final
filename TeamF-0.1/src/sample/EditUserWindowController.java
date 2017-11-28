@@ -35,6 +35,7 @@ public class EditUserWindowController {
         this.mainController = main;
     }
 
+    //When going back, clears the text fields
     @FXML
     public void back(){
         lNameBox.clear();
@@ -57,16 +58,19 @@ public class EditUserWindowController {
         return Long.parseLong(idBox.getText());
     }
 
+    //If adding users, disables the edit users button
     public void addingUsers(){
         editButton.setDisable(true);
         editButton.setVisible(false);
     }
 
+    //If editing users, disables the add users button
     public void editingUsers(){
         addButton.setDisable(true);
         addButton.setVisible(false);
     }
 
+    //Fills the Text Fields when editing a user
     public void fillFields(Staff staff){
         lNameBox.setText(staff.getLastName().trim());
         fNameBox.setText(staff.getFirstName().trim());
@@ -78,6 +82,7 @@ public class EditUserWindowController {
         pwBox.setText(staff.getPassword().trim());
     }
 
+    //Adds a user based on information in the text fields
     public void addUserButton(){
         Staff addMe = new Staff(lNameBox.getText(), fNameBox.getText(), getID(),
                 posBox.getText(), emailBox.getText(), usernameBox.getText(), pwBox.getText());
@@ -85,6 +90,7 @@ public class EditUserWindowController {
         back();
     }
 
+    //Edits a user based on information in the text fields
     public void editUserButton(){
         idBox.setDisable(false);
         if(!idBox.getText().trim().equals(null) && testEmbeddedDB.getStaff(getID())!=null) {
