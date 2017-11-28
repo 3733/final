@@ -51,12 +51,13 @@ public class EditUsersController implements Initializable{
         Main.editUserWindowEdit(selectedRows.get(0));
     }
 
+    //Creates a JOptionPane to make sure the admin wants to remove a user
     public void removeUserButton(){
         JFrame frame = new JFrame();
         Object[] options = {"Yes",
                 "No"};
         int n = JOptionPane.showOptionDialog(frame,
-                "Are you sure you want to remove \nthis user?",
+                "Are you sure you want to remove this user?",
                 "Remove User",
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -95,6 +96,7 @@ public class EditUsersController implements Initializable{
 
     private int counter;
 
+    //Initializes the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lastName.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getLastName()).trim()));
@@ -105,20 +107,23 @@ public class EditUsersController implements Initializable{
         refreshTable();
     }
 
+    //Disables the Edit Users and Remove Users buttons until a user is selected
     @FXML
     public void disableButtons(){
         editUserButt.setDisable(true);
         remButton.setDisable(true);
     }
 
+    //Enables the Edit Users and Remove Users buttons when a user is selected
     @FXML
     public void enableButtons(){
-        if(tableView.getSelectionModel().getSelectedIndex() > 0){
+        if(tableView.getSelectionModel().getSelectedIndex() >= 0){
             editUserButt.setDisable(false);
             remButton.setDisable(false);
         }
     }
 
+    //Refreshes the Table. Called whenever the scene is loaded.
     @FXML
     public void refreshTable() {
         //using data from database
@@ -139,6 +144,7 @@ public class EditUsersController implements Initializable{
         tableView.setItems(staffObserve);
     }
 
+    //Removes a selected user
     public void deleteStaff()
     {
         ObservableList<Staff> selectedRows, allrequests;
