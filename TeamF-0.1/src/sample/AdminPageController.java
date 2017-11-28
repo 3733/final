@@ -66,6 +66,8 @@ public class AdminPageController implements Initializable{
 
     @FXML
     public void serviceRequest() {Main.serviceScreen();}
+    @FXML
+    public void acceptRequest() {Main.acceptScreen();}
 
     public void setMap(Map m){
         this.CurMap = m;
