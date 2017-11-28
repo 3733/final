@@ -155,7 +155,8 @@ public class Main extends Application {
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
-
+        Data.data.XWindow = stage.getX();
+        Data.data.YWindow = stage.getY();
         destination = "";
     }
 
@@ -172,8 +173,11 @@ public class Main extends Application {
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
         stage.centerOnScreen();
+        Data.data.XWindow = stage.getX();
+        Data.data.YWindow = stage.getY();
         startMap();
         if(getDestination().length() > 0){
+
             navigationPageController.findPath(getDestination());
         }
     }
@@ -255,6 +259,9 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException{
 
         //testEmbeddedDB db = new testEmbeddedDB();
+        //testEmbeddedDB.dropNodes();
+        //testEmbeddedDB.dropTables();
+        //testEmbeddedDB.createTable();
         startMap();
         Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
@@ -288,7 +295,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void startMap(){
+    public static void startMap() throws IOException{
 
         Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
 

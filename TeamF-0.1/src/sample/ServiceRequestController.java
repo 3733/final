@@ -74,7 +74,7 @@ public class ServiceRequestController implements Initializable {
     }
 
     public static int ID = 0;   //service ID counter
-    Node n1 = new Node("FDEPT00101", 1614, 829, 1, "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
+    Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");      //for formatting the time functions
     ArrayList<ServiceRequest> requestList = new ArrayList<ServiceRequest>();  //list to hold local service requests
 
