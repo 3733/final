@@ -163,6 +163,7 @@ public class Main extends Application {
     }
 
     public static void loginScreen(){
+        //SingletonTTS.getInstance().say("Hey Sexy?");
         stage.setScene(login);
         stage.centerOnScreen();
     }

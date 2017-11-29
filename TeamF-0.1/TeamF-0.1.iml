@@ -12,13 +12,10 @@
     <orderEntry type="library" name="activation" level="application" />
     <orderEntry type="library" name="common-lang3" level="application" />
     <orderEntry type="library" name="derby" level="application" />
-    <orderEntry type="library" name="derbyclient" level="application" />
-    <orderEntry type="library" name="derbynet" level="application" />
-    <orderEntry type="library" name="derbytools" level="application" />
     <orderEntry type="library" name="opencsv-4.0" level="application" />
-    <orderEntry type="library" name="scenebuilder-kit-9.0.1" level="application" />
     <orderEntry type="library" name="jfoenix" level="application" />
-    <orderEntry type="library" name="javax.mail:javax.mail-api:1.6.0" level="application" />
     <orderEntry type="library" name="mail" level="application" />
+    <orderEntry type="library" name="javax.mail" level="application" />
+    <orderEntry type="library" name="cmu_us_kal" level="application" />
   </component>
 </module>

@@ -225,14 +225,14 @@
                     <children>
                         <ScrollPane fx:id="scrollMap" prefHeight="778.0" prefWidth="1145.0">
                             <content>
-                                <ImageView fx:id="map" fitHeight="890.0" fitWidth="1256.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="map" fitHeight="890.0" fitWidth="1256.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@Icons/01_thefirstfloor.png" />
                                     </image>
                                 </ImageView>
                             </content>
                         </ScrollPane>
-                        <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                        <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                             <font>
                                 <Font name="Montserrat Regular" size="12.0" />
                             </font></JFXTextField>
@@ -303,7 +303,7 @@
                                 </Tab>
                             </tabs>
                         </JFXTabPane>
-                        <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" prefHeight="142.0" prefWidth="538.0" visible="false" />
+                        <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
                         <HBox alignment="CENTER" layoutX="915.0" layoutY="36.0" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #1a479a;" visible="false">
                             <children>
                                 <JFXCheckBox checkedColor="#1a479a" text="Speak" textFill="WHITE" unCheckedColor="#1a479a">
