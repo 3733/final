@@ -203,18 +203,11 @@ public class NavigationPageController implements Initializable{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
-        setListView();
+
     }
 
     public void setListView (){
-        ObservableList<String> populateSteps = FXCollections.observableArrayList();
-        //edit later
-        String directions = "Start at shap <br> go to bath <br>";
-        String[] directionParts = directions.split("<br>");
-        for (int i = 0; i < directionParts.length; i++) {
-            populateSteps.add(directionParts[i]);
-        }
-        directionSteps.setItems(populateSteps);
+
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -364,6 +357,17 @@ public class NavigationPageController implements Initializable{
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        ObservableList<String> populateSteps = FXCollections.observableArrayList();
+        //edit later
+        String directions = directions(path);
+        String[] directionParts = directions.split("<br>");
+        for (int i = 0; i < directionParts.length; i++) {
+            populateSteps.add(directionParts[i]);
+        }
+        populateSteps.add("You have arrived at your destination.");
+        directionSteps.setItems(populateSteps);
+
         for(Node i: path){
             System.out.println(i.getLongName()+ "\t"+i.getNodeType());
         }
