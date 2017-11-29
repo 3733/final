@@ -201,16 +201,34 @@ public class NavigationPageController implements Initializable{
 
         Node StartNode = SearchEngine.SearchPath(Start,CurMap,Kiosk);
         System.out.println(StartNode.getLongName()+"<=====START");
-        long st = System.currentTimeMillis();
-        this.path = CurMap.AStar(StartNode,EndNode);
-        Data.data.path = this.path;
+
+        switch (currentAlgo){
+            case 1:
+                this.path = CurMap.AStar(StartNode,EndNode);
+                System.out.println(currentAlgo+"<==ALGO USED");
+                break;
+            case 2:
+                this.path = CurMap.BFSearch(StartNode,EndNode);
+                System.out.println(currentAlgo+"<==ALGO USED");
+                break;
+            case 3:
+                this.path = CurMap.DFSearch(StartNode,EndNode);
+                System.out.println(currentAlgo+"<==ALGO USED");
+                break;
+            case 4:
+                this.path = CurMap.Dijkstras(StartNode,EndNode);
+                System.out.println(currentAlgo+"<==ALGO USED");
+                break;
+        }
+
         long et = System.currentTimeMillis();
         System.out.println(et-st+"<===ALGO");
 
         st = System.currentTimeMillis();
         MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
-        System.out.println(et-st+"<===DR");
+
+
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
         email.setVisible(true);
@@ -555,7 +573,7 @@ public class NavigationPageController implements Initializable{
             //populating list -- ground
             ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
             groundList.setItems(groundItems);
-
+            end.setSelected(true);
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));   
             tabPane.getSelectionModel().select(floorOne);
             stairs.setSelected(true);
@@ -790,6 +808,14 @@ public class NavigationPageController implements Initializable{
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
+
+    private int currentAlgo =1;
+
+    public void setCurrentAlgo(int current){
+        this.currentAlgo =  current;
+        //System.out.println(this.currentAlgo+ "<=======sdfsdfgbsghxbgfgsh");
+    }
+
     @FXML
     private JFXRadioButton start, end;
     @FXML
@@ -806,12 +832,14 @@ public class NavigationPageController implements Initializable{
     @FXML
     public void settingFields() throws IOException, InterruptedException {
         if (points.getSelectedToggle() == start) {
-
-            startLabel.setText(SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk).getLongName());
+            String destinationText = destination.getText();
+            startLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
+            System.out.println(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
         }
         else{
-
-            endLabel.setText(SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk).getLongName());
+            String destinationText = destination.getText();
+            endLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
+            System.out.println(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
         }
         go();
     }

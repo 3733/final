@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <children>
       <MenuBar prefHeight="35.0" prefWidth="1000.0">
          <menus>
@@ -154,22 +154,22 @@
                                  <children>
                                     <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
                                        <items>
-                                          <RadioMenuItem mnemonicParsing="false" text="A*">
+                                          <RadioMenuItem fx:id="chooseAStar" mnemonicParsing="false" text="A*">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="pathOpt" />
                                              </toggleGroup>
                                           </RadioMenuItem>
-                                          <RadioMenuItem mnemonicParsing="false" text="Breadth First">
+                                          <RadioMenuItem fx:id="chooseBreadth" mnemonicParsing="false" text="Breadth First">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="pathOpt1" />
                                              </toggleGroup>
                                           </RadioMenuItem>
-                                          <RadioMenuItem mnemonicParsing="false" text="Depth First">
+                                          <RadioMenuItem fx:id="chooseDepth" mnemonicParsing="false" text="Depth First">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="pathOpt11" />
                                              </toggleGroup>
                                           </RadioMenuItem>
-                                          <RadioMenuItem mnemonicParsing="false" text="Dijkstra">
+                                          <RadioMenuItem fx:id="chooseDijk" mnemonicParsing="false" text="Dijkstra">
                                              <toggleGroup>
                                                 <ToggleGroup fx:id="pathOpt111" />
                                              </toggleGroup>

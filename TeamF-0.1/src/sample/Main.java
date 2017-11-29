@@ -291,7 +291,7 @@ public class Main extends Application {
         testEmbeddedDB.addStaff(Parm);
         testEmbeddedDB.addStaff(Steph);
         testEmbeddedDB.addStaff(Nik);
-        testEmbeddedDB.addStaff(Andrew);*/
+        testEmbeddedDB.addStaff(Andrew);//*/
 
 
 
@@ -341,7 +341,7 @@ public class Main extends Application {
 
         CurMap.BuildMap();
 
-
+/*
         for (int i =0; i<CurMap.getNodes().size();i++){
 
             System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
@@ -351,7 +351,7 @@ public class Main extends Application {
                 System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
             }
         }
-
+*/
         navigationPageController.setMap(CurMap);
         adminPageController.setMap(CurMap);
         //Default kiosk location is the Center for International Medecine

@@ -5,6 +5,9 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.WeakEventHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -42,6 +45,9 @@ public class MapEditPageController implements Initializable{
     private Tab floorOne;
     @FXML
     private JFXTabPane tabPane;
+    private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
+    @FXML
+    private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk;
 
 
     private Main mainController;
