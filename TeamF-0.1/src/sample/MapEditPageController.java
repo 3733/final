@@ -3,6 +3,9 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.WeakEventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -34,6 +37,8 @@ public class MapEditPageController implements Initializable{
     private SplitMenuButton quickFloor;
     @FXML
     private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
+    @FXML
+    private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk;
 
 
     private Main mainController;
@@ -149,6 +154,44 @@ public class MapEditPageController implements Initializable{
                     e.printStackTrace();
                 }
                 System.out.println(currentFloor);
+            });
+
+
+            chooseAStar.setOnAction(new EventHandler<ActionEvent>(){
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(1);
+                    Main.adminPageController.setCurrentAlgo(1);
+                    System.out.println(1);
+                    System.out.println(Main.navigationPageController);
+                }
+            });
+            chooseBreadth.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(2);
+                    Main.adminPageController.setCurrentAlgo(2);
+                    System.out.println(2);
+                    System.out.println(Main.navigationPageController);
+                }
+            });
+            chooseDepth.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(3);
+                    Main.adminPageController.setCurrentAlgo(3);
+                    System.out.println(3);
+                    System.out.println(Main.navigationPageController);
+                }
+            });
+            chooseDijk.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(4);
+                    Main.adminPageController.setCurrentAlgo(4);
+                    System.out.println(4);
+                    System.out.println(Main.navigationPageController);
+                }
             });
 
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));

@@ -1,6 +1,7 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -400,15 +401,7 @@ public class AdminPageController implements Initializable{
     public void go() throws IOException,InterruptedException{
 
 
-        for (int i =0; i<CurMap.getNodes().size();i++){
 
-            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
-
-            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
-
-                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
-            }
-        }
 
         System.out.println(destination.getText());
         findPath(destination.getText());
@@ -438,6 +431,60 @@ public class AdminPageController implements Initializable{
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
         System.out.println("Image set on map");
+    }
+
+    private int currentAlgo =1;
+
+    public void setCurrentAlgo(int current){
+        this.currentAlgo =  current;
+        //System.out.println(this.currentAlgo+ "<=======sdfsdfgbsghxbgfgsh");
+    }
+
+    @FXML
+    private JFXRadioButton start, end;
+    @FXML
+    private JFXTextField startField, endField;
+    @FXML
+    private ToggleGroup points;
+    @FXML
+    private String defaultStart;
+
+    @FXML
+    private Label startLabel, endLabel;
+
+    //setting start and end nodes
+    @FXML
+    public void settingFields() throws IOException, InterruptedException {
+        if (points.getSelectedToggle() == start) {
+
+            startLabel.setText(SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk).getLongName());
+        }
+        else{
+
+            endLabel.setText(SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk).getLongName());
+        }
+        go();
+    }
+
+    @FXML
+    public void settingSearch(){
+        if (points.getSelectedToggle() == start) {
+
+            destination.setText(startLabel.getText());
+
+        }
+        else{
+            destination.setText(endLabel.getText());
+        }
+    }
+
+    @FXML
+    public void setStart(String t){
+        startLabel.setText(t);
+    }
+
+    public Node getKiosk(){
+        return this.Kiosk;
     }
 
 
