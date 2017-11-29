@@ -4,6 +4,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -12,6 +14,7 @@
 <?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -108,6 +111,9 @@
                                              </font>
                                           </JFXTextField>
                                        </children>
+                                       <HBox.margin>
+                                          <Insets top="10.0" />
+                                       </HBox.margin>
                                     </VBox>
                                  </children>
                                  <padding>
@@ -121,9 +127,9 @@
                               </JFXButton>
                            </children>
                         </AnchorPane>
-                        <HBox alignment="CENTER" prefHeight="90.0" prefWidth="228.0">
+                        <HBox alignment="CENTER" prefHeight="74.0" prefWidth="228.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox prefHeight="81.0" prefWidth="130.0">
                                  <children>
                                     <JFXCheckBox checkedColor="#1a479a" text="Display All Edges">
                                        <VBox.margin>
@@ -144,28 +150,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="72.0" prefWidth="228.0">
                            <children>
-                              <VBox alignment="CENTER" prefHeight="72.0" prefWidth="219.0">
+                              <VBox alignment="CENTER" prefHeight="54.0" prefWidth="219.0">
                                  <children>
-                                    <SplitMenuButton fx:id="quickFloor" mnemonicParsing="false" prefHeight="0.0" prefWidth="110.0" text="Quick Floor">
-                                       <items>
-                                          <RadioMenuItem fx:id="groundSet" mnemonicParsing="false" text="Ground">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="floor" />
-                                             </toggleGroup>
-                                          </RadioMenuItem>
-                                          <RadioMenuItem fx:id="lowerOneSet" mnemonicParsing="false" text="Lower One" toggleGroup="$floor" />
-                                          <RadioMenuItem fx:id="lowerTwoSet" mnemonicParsing="false" text="Lower Two" toggleGroup="$floor" />
-                                          <RadioMenuItem fx:id="oneSet" mnemonicParsing="false" text="One" toggleGroup="$floor" />
-                                          <RadioMenuItem fx:id="twoSet" mnemonicParsing="false" text="Two" toggleGroup="$floor" />
-                                          <RadioMenuItem fx:id="threeSet" mnemonicParsing="false" text="Three" toggleGroup="$floor" />
-                                       </items>
-                                       <VBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                    </SplitMenuButton>
                                     <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
                                        <items>
                                           <RadioMenuItem mnemonicParsing="false" text="A*">
@@ -266,34 +252,66 @@
                         </ImageView>
                      </content>
                   </ScrollPane>
-                  <HBox alignment="CENTER" layoutX="46.0" layoutY="36.0" prefHeight="26.0" prefWidth="200.0" style="-fx-background-color: #1a479a;">
-                     <children>
-                        <JFXButton fx:id="downButton" contentDisplay="CENTER" onAction="#floorDown" ripplerFill="#e8e8e8">
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icons/white-arrow-png-24.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <Label fx:id="floorLabel" alignment="CENTER" prefHeight="18.0" prefWidth="114.0" textFill="WHITE">
-                           <font>
-                              <Font name="Montserrat Regular" size="12.0" />
-                           </font></Label>
-                        <JFXButton fx:id="upButton" contentDisplay="CENTER" onAction="#floorUp" ripplerFill="#e8e8e8">
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icons/White_arrow_up.svg.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                     </children>
-                  </HBox>
                </children>
             </AnchorPane>
+            <JFXTabPane fx:id="tabPane" layoutX="950.0" layoutY="500.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
+               <tabs>
+                  <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXListView fx:id="threeList" prefHeight="215.0" prefWidth="298.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXListView fx:id="twoList" prefHeight="215.0" prefWidth="301.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="floorOne" onSelectionChanged="#changeFloor1" style="-fx-rotate: 90;" text="1">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXListView fx:id="oneList" prefHeight="215.0" prefWidth="297.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="floorGround" onSelectionChanged="#changeFloorG" style="-fx-rotate: 90;" text="G">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXListView fx:id="groundList" prefHeight="215.0" prefWidth="296.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="floorLowerOne" onSelectionChanged="#changeFloorL1" style="-fx-rotate: 90;" text="L1">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXListView fx:id="lowerOneList" prefHeight="215.0" prefWidth="298.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXListView fx:id="lowerTwoList" prefHeight="215.0" prefWidth="297.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </JFXTabPane>
          </children>
       </AnchorPane>
    </children>

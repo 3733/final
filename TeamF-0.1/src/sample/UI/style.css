@@ -61,5 +61,8 @@
     -fx-control-inner-background: #1a479a;
 }
 
+.check-box:selected .box{
+    -fx-border-color: #1a479a;
+}
 
 

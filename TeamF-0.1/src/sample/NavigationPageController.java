@@ -201,10 +201,6 @@ public class NavigationPageController implements Initializable{
         MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
         System.out.println(et-st+"<===DR");
-        directionSteps.setVisible(true);
-        sendLabel.setVisible(true);
-        email.setVisible(true);
-        sendButton.setVisible(true);
     }
 
     @FXML
@@ -219,6 +215,11 @@ public class NavigationPageController implements Initializable{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
+
+    }
+
+    public void setListView (){
+
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -286,8 +287,8 @@ public class NavigationPageController implements Initializable{
         }
         a = in.get(0);
         b = in.get(1);
-        out = out.concat("Start at " + a.getLongName()+"<br>");
-        out = out.concat("Go towards " + b.getLongName()+"<br>");
+        out = out.concat("Start at " + a.getLongName().trim()+"<br>");
+        out = out.concat("Go towards " + b.getLongName().trim()+"<br>");
 
         for(int i = 2; i < in.size(); i++){
             a = in.get(i-2);
@@ -307,7 +308,7 @@ public class NavigationPageController implements Initializable{
                 turn = "sharply left";
             }
 
-            out = out.concat("When you arrive at " + b.getLongName() + " go " + turn + " towards " + c.getLongName() + "<br>");
+            out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
         }
         return out;
     }
@@ -351,6 +352,18 @@ public class NavigationPageController implements Initializable{
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
+        ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        ObservableList<String> populateSteps = FXCollections.observableArrayList();
+        //edit later
+        String directions = directions(path);
+        String[] directionParts = directions.split("<br>");
+        for (int i = 0; i < directionParts.length; i++) {
+            populateSteps.add(directionParts[i]);
+        }
+        populateSteps.add("You have arrived at your destination.");
+        directionSteps.setItems(populateSteps);
+
         for(Node i: path){
             System.out.println(i.getLongName()+ "\t"+i.getNodeType());
         }
@@ -531,6 +544,8 @@ public class NavigationPageController implements Initializable{
 
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));   
             tabPane.getSelectionModel().select(floorOne);
+            stairs.setSelected(true);
+            elevator.setSelected(true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -718,107 +733,4 @@ public class NavigationPageController implements Initializable{
     }
 
 
-
-    //switches images based on floors
-    public void floorUp() throws FileNotFoundException{
-        switch (currentFloor){
-            case "Ground Floor":
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                tabPane.getSelectionModel().select(floorLowerOne);
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level One":
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                tabPane.getSelectionModel().select(floorLowerTwo);
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level Two":
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                tabPane.getSelectionModel().select(floorOne);
-                System.out.println(currentFloor);
-                break;
-            case "First Floor":
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                tabPane.getSelectionModel().select(floorTwo);
-                System.out.println(currentFloor);
-                break;
-            case "Second Floor":
-                currentFloor = "Third Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(true);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
-                tabPane.getSelectionModel().select(floorThree);
-                System.out.println(currentFloor);
-                break;
-            default: break;
-        }
-    }
-
-    public void floorDown() throws FileNotFoundException{
-        switch (currentFloor){
-            case "Lower Level One":
-                currentFloor = "Ground Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(true);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
-                tabPane.getSelectionModel().select(floorGround);
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level Two":
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                tabPane.getSelectionModel().select(floorLowerOne);
-                System.out.println(currentFloor);
-                break;
-            case "First Floor":
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                tabPane.getSelectionModel().select(floorLowerTwo);
-                System.out.println(currentFloor);
-                break;
-            case "Second Floor":
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                tabPane.getSelectionModel().select(floorOne);
-                System.out.println(currentFloor);
-                break;
-            case "Third Floor":
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                tabPane.getSelectionModel().select(floorTwo);
-                System.out.println(currentFloor);
-                break;
-            default: break;
-        }
-    }
 }

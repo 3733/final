@@ -1,8 +1,12 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -33,7 +37,11 @@ public class MapEditPageController implements Initializable{
     @FXML
     private SplitMenuButton quickFloor;
     @FXML
-    private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
+    private JFXListView threeList, twoList, oneList, groundList, lowerTwoList, lowerOneList;
+    @FXML
+    private Tab floorOne;
+    @FXML
+    private JFXTabPane tabPane;
 
 
     private Main mainController;
@@ -51,6 +59,36 @@ public class MapEditPageController implements Initializable{
     @FXML
     public void editEdges(){
         Main.edgeEditScreen();
+    }
+
+    @FXML
+    public void changeFloorL1() {
+        map.setImage(Data.data.L1Floor);
+    }
+
+    @FXML
+    public void changeFloorL2() {
+        map.setImage(Data.data.L2Floor);
+    }
+
+    @FXML
+    public void changeFloor1() {
+        map.setImage(Data.data.firstFloor);
+    }
+
+    @FXML
+    public void changeFloor2() {
+        map.setImage(Data.data.secondFloor);
+    }
+
+    @FXML
+    public void changeFloor3() {
+        map.setImage(Data.data.thirdFloor);
+    }
+
+    @FXML
+    public void changeFloorG() {
+        map.setImage(Data.data.GFloor);
     }
 
     @FXML
@@ -72,87 +110,47 @@ public class MapEditPageController implements Initializable{
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-            //setting menu item actions
-            groundSet.setOnAction(event -> {
-                currentFloor = "Ground Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(true);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
+            //popluating list view -- three
+            ObservableList<String> threeItems = FXCollections.observableArrayList (
+                    "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
+                    "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                    "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
+                    "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
+            threeList.setItems(threeItems);
 
-            lowerOneSet.setOnAction(event -> {
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
+            //populating list view -- second
+            ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
+                    "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
+                    "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
+                    "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
+                    "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
+                    "Weiner Center for Preoperative Evaluation");
+            twoList.setItems(twoItems);
 
-            lowerTwoSet.setOnAction(event -> {
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
+            //populating list view -- first
+            ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
+                    "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
+                    "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
+                    "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
+                    "Zinner Breakout Room");
+            oneList.setItems(oneItems);
 
-            oneSet.setOnAction(event -> {
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
+            //populating list view -- lower two
+            ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
+                    "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
+            lowerTwoList.setItems(lowerTwoItems);
 
-            twoSet.setOnAction(event -> {
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
+            //populating list view -- lower one
+            ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
+                    "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
+                    "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
+            lowerOneList.setItems(lowerOneItems);
 
-            threeSet.setOnAction(event -> {
-                currentFloor = "Third Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(true);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
-
+            //populating list -- ground
+            ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
+            groundList.setItems(groundItems);
+            tabPane.getSelectionModel().select(floorOne);
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-            floorLabel.setText("First Floor");
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -353,14 +351,6 @@ public class MapEditPageController implements Initializable{
                 break;
             default: break;
         }
-    }
-
-    public void importCSV(){
-        testEmbeddedDB.fillNodesTable();
-    }
-
-    public void exportCSV(){
-        testEmbeddedDB.writeToCSV();
     }
 
 }
