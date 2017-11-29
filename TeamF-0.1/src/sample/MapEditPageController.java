@@ -355,4 +355,12 @@ public class MapEditPageController implements Initializable{
         }
     }
 
+    public void importCSV(){
+        testEmbeddedDB.fillNodesTable();
+    }
+
+    public void exportCSV(){
+        testEmbeddedDB.writeToCSV();
+    }
+
 }
