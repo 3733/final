@@ -291,6 +291,7 @@ public class Main extends Application {
         testEmbeddedDB.addStaff(Andrew);*/
 
 
+
         //controller.drawDirections(Vec);
         launch(args);
     }
