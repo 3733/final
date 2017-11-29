@@ -477,7 +477,7 @@ public class NavigationPageController implements Initializable{
             ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
             groundList.setItems(groundItems);
 
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));   
             tabPane.getSelectionModel().select(floorOne);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
