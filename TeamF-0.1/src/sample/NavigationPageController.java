@@ -131,7 +131,7 @@ public class NavigationPageController implements Initializable{
         Data.data.GFloor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png"));
         Data.data.L1Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png"));
         Data.data.L2Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png"));
-
+        Data.data.currentMap = "1";
         //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
     }
 
@@ -147,31 +147,37 @@ public class NavigationPageController implements Initializable{
     @FXML
     public void changeFloorL1() {
         map.setImage(Data.data.L1Floor);
+        Data.data.currentMap = "L1";
     }
 
     @FXML
     public void changeFloorL2() {
         map.setImage(Data.data.L2Floor);
+        Data.data.currentMap = "L2";
     }
 
     @FXML
     public void changeFloor1() {
         map.setImage(Data.data.firstFloor);
+        Data.data.currentMap = "1";
     }
 
     @FXML
     public void changeFloor2() {
         map.setImage(Data.data.secondFloor);
+        Data.data.currentMap = "2";
     }
 
     @FXML
     public void changeFloor3() {
         map.setImage(Data.data.thirdFloor);
+        Data.data.currentMap = "3";
     }
 
     @FXML
     public void changeFloorG() {
         map.setImage(Data.data.GFloor);
+        Data.data.currentMap = "G";
     }
 
 
@@ -179,13 +185,13 @@ public class NavigationPageController implements Initializable{
         this.destination.setText(s);
     }
 
-
     // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
 
     public void findPath(String in) throws IOException {
         //Returns
         long st = System.currentTimeMillis();
         this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
+        Data.data.path = this.path;
         long et = System.currentTimeMillis();
         System.out.println(et-st+"<===ALGO");
 
@@ -198,11 +204,14 @@ public class NavigationPageController implements Initializable{
         email.setVisible(true);
         sendButton.setVisible(true);
     }
+
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
+        for(int i = 0; i < Data.data.floorList.size() ; i++){
+            Data.data.floorList.set(i,false);
+        }
         findPath(destination.getText());
-
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
         email.setVisible(true);
@@ -219,6 +228,9 @@ public class NavigationPageController implements Initializable{
         Data.data.L1Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png"));
         Data.data.L2Floor = new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png"));
         map.setImage(selectMap(Data.data.currentMap));
+        for(int i = 0; i < Data.data.floorList.size() ; i++){
+            Data.data.floorList.set(i,false);
+        }
     }
 
     // this function returns the proper image based on the current image string
@@ -298,25 +310,6 @@ public class NavigationPageController implements Initializable{
     }
 
     public Vector<Vector<Node>> separator(Vector<Node> path){
-        Vector<Vector<Node>> paths = new Vector<Vector<Node>>();// make one path per floor
-        Vector<Node> ogFloor = new Vector<Node>();//create the path for the current floor
-        //String floor = path.elementAt(0).getFloor();
-        for (Node i : path) {
-            //if the node is an elevator then we will switch floors
-            if((ogFloor.size() > 0) &&(i.getNodeType().equals("ELEV") || i.getNodeType().equals("STAI"))){
-                ogFloor.add(i);
-                paths.add(ogFloor);
-                ogFloor.clear();
-            }else{
-                ogFloor.add(i);
-            }
-        }
-        if(ogFloor.size()>0){
-            paths.add(ogFloor);
-        }
-        return paths;
-    }
-    public Vector<Vector<Node>> separator2(Vector<Node> path){
         Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
         for(int i = 0; i <6; i++){
             paths.add(new Vector<Node>());
@@ -361,7 +354,7 @@ public class NavigationPageController implements Initializable{
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         //System.out.println("Reached the multifloor path drawing function");
         //System.out.println("This is the first node floor: " + path.get(0).getFloor());
-        Vector<Vector<Node>> paths = separator2(path);
+        Vector<Vector<Node>> paths = separator(path);
         //System.out.println("Size of the vector of paths " + paths.size());
         /*
         for (Vector<Node> i: paths) {
@@ -375,20 +368,33 @@ public class NavigationPageController implements Initializable{
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
+                System.out.println(Data.data.floorList);
                 //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
+                    Data.data.currentMap = "L2";
+                    Data.data.floorList.set(0,true);
                 } else if (pathFloor.equals("L1")) {
                     Data.data.L1Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L1Floor, null));
+                    Data.data.currentMap = "L1";
+                    Data.data.floorList.set(1,true);
                 } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
                     Data.data.GFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.GFloor, null));
+                    Data.data.currentMap = "G";
+                    Data.data.floorList.set(2,true);
                 } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
                     Data.data.firstFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.firstFloor, null));
+                    Data.data.currentMap = "1";
+                    Data.data.floorList.set(3,true);
                 } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
                     Data.data.secondFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.secondFloor, null));
+                    Data.data.currentMap = "2";
+                    Data.data.floorList.set(4,true);
                 } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
                     Data.data.thirdFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.thirdFloor, null));
+                    Data.data.currentMap = "3";
+                    Data.data.floorList.set(5,true);
                 }
             }
         }
@@ -431,7 +437,6 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-
             //disables the bars and starts up the zoom function
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

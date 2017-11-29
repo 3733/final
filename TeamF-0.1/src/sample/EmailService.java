@@ -28,12 +28,14 @@ public class EmailService implements Data {
     //Testing component, has a testable message to be used in junit
     String status;
     ImageView map;
-
+    private Vector<Node> path = new Vector<Node>();
+    String imageName = "";
     public EmailService(String userName, String passWord, ImageView map) {
         this.userName = userName;
         this.passWord = passWord;
         this.status = "Setting up email services...";
         this.map = map;
+        this.path = Data.data.path;
     }
 
     // HTML Email format, copy and paste as necessary
@@ -350,10 +352,45 @@ public class EmailService implements Data {
         return email;
     }
 
+    // Purpose: Get the proper image depending on the index: L2 - 0 ... 3rd - 5
+    private javafx.scene.image.Image getImage(int i) {
+        switch (i){
+            case 0:
+                //System.out.println("Returned L2");
+                return Data.data.L2Floor;
+            case 1:
+                //System.out.println("Returned L1");
+                return Data.data.L1Floor;
+            case 2:
+                //System.out.println("Returned G");
+                return Data.data.GFloor;
+            case 3:
+                //System.out.println("Returned 1");
+                return Data.data.firstFloor;
+            case 4:
+                //System.out.println("Returned 2");
+                return Data.data.secondFloor;
+            case 5:
+                //System.out.println("Returned 3");
+                return Data.data.thirdFloor;
+        }
+        return Data.data.firstFloor;
+    }
     // Purpose: Sending an email through google's SMTP Server
     // Parameters: String Directions, String receiver (email address)
-    public void sendEmail(String directions, String receiver) throws InvalidEmailException, IOException {
-        ImageIO.write(SwingFXUtils.fromFXImage(map.getImage(),null), "PNG", new File(Data.data.currentMap+".png"));
+    public void sendEmail(String directions, String receiver) throws InvalidEmailException, IOException, MessagingException {
+        if(path.size() > 0 ) {
+            String startID = Data.data.path.get(0).getNodeID();
+            String stopID = Data.data.path.get(path.size() - 1).getNodeID();
+            this.imageName = startID + "_" + stopID;
+            for(int i = 0; i < Data.data.floorList.size() ; i++){
+                if(Data.data.floorList.get(i)) {
+                    String savedImageName = this.imageName + "-" + i + ".png";
+                    ImageIO.write(SwingFXUtils.fromFXImage(getImage(i), null), "PNG", new File(savedImageName.replaceAll("\\s+","")));
+                    System.out.println("Image generated: " + savedImageName.replaceAll("\\s+",""));
+                }
+            }
+        }
         System.out.println(status);
         // Check to see if a valid email address was entered
         if (receiver.length() < 4 || !(receiver.contains("@"))) {
@@ -377,35 +414,41 @@ public class EmailService implements Data {
     }
 
     // Building the message with the approperiate content and image
-    private static Message buildMessage(javax.mail.Session session, String directions, String receiver) throws MessagingException, IOException {
+    private Message buildMessage(javax.mail.Session session, String directions, String receiver) throws MessagingException, IOException {
         // Composing the message
         SMTPMessage msg = new SMTPMessage(session);
         MimeMultipart content = new MimeMultipart();
         MimeBodyPart mainBody = new MimeBodyPart();
         MimeBodyPart image = new MimeBodyPart();
-        MimeBodyPart fileAttach = new MimeBodyPart();
 
         mainBody.setContent(formatEmail(directions), "text/html; charset=utf-8"); // Enter
 
-        String filePath = Data.data.currentMap + ".png";
-        DataSource mapFile = new FileDataSource(filePath);
-        image.setDataHandler(new DataHandler(mapFile));
-        image.setHeader("Content-ID", "<image>");
+        String filePath = this.imageName.replaceAll("\\s+","");
 
-        fileAttach.setDataHandler(new DataHandler(mapFile));
-        fileAttach.setFileName(new File(filePath).getName());
+        for(int i = 0; i < Data.data.floorList.size();i++){
+            if(Data.data.floorList.get(i)) {
+                MimeBodyPart fileAttach = new MimeBodyPart();
+                String fileImageName = filePath + "-" + i + ".png";
+                DataSource mapFile = new FileDataSource(fileImageName);
+                image.setDataHandler(new DataHandler(mapFile));
+                image.setHeader("Content-ID", "<image>");
+                //System.out.println(fileImageName.replaceAll("\\s+",""));
+                fileAttach.setDataHandler(new DataHandler(mapFile));
+                fileAttach.setFileName(new File(fileImageName).getName());
+                content.addBodyPart(fileAttach);
+            }
+        }
 
         content.addBodyPart(mainBody);
         content.addBodyPart(image);
-        content.addBodyPart(fileAttach);
         msg.setContent(content);
         msg.setFrom(new InternetAddress("teamFCS3733@gmail.com")); // From
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver)); // Target email addresses
         msg.setSubject("Your Directions for Brigham & Women's Hospital");
-        return  msg;
+        return msg;
     }
 
-    // Building the Session with the approperiate settings for connection
+    // Building the Session with the appropriate settings for connection
     public static Session buildSession(String userName, String passWord) {
         // Email server properties
         Properties props = new Properties();
@@ -676,7 +719,7 @@ public class EmailService implements Data {
         }
     }
 
-    // Building the message with the approperiate content and image
+    // Building the message with the appropriate content and image
     private static Message buildRequestMessage(javax.mail.Session session, String directions, String receiver) throws MessagingException, IOException {
         // Composing the message
         SMTPMessage msg = new SMTPMessage(session);
