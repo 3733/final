@@ -70,6 +70,8 @@ public class Main extends Application {
         navigationPageController = navLoader.getController();
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
+        startMap();
+        navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
         Parent Admin = adminLoader.load();
@@ -178,8 +180,8 @@ public class Main extends Application {
         Data.data.YWindow = stage.getY();
         startMap();
         if(getDestination().length() > 0){
-
-            navigationPageController.findPath(getDestination());
+            navigationPageController.setSearch(getDestination());
+            navigationPageController.settingFields();
         }
     }
 

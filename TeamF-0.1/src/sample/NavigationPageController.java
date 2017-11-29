@@ -36,6 +36,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 
@@ -74,6 +76,8 @@ public class NavigationPageController implements Initializable{
     private JFXButton downButton;
     @FXML
     private JFXTabPane tabPane;
+    @FXML
+    private VBox labelBox;
     @FXML private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
     String currentFloor = "First Floor";
 
@@ -189,10 +193,16 @@ public class NavigationPageController implements Initializable{
 
     // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
 
-    public void findPath(String in) throws IOException {
+    public void findPath(String Start, String End) throws IOException {
         //Returns
+        Node EndNode = SearchEngine.SearchPath(End,CurMap,Kiosk);
+        System.out.println(EndNode.getLongName()+"<=====END");
+
+
+        Node StartNode = SearchEngine.SearchPath(Start,CurMap,Kiosk);
+        System.out.println(StartNode.getLongName()+"<=====START");
         long st = System.currentTimeMillis();
-        this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
+        this.path = CurMap.AStar(StartNode,EndNode);
         Data.data.path = this.path;
         long et = System.currentTimeMillis();
         System.out.println(et-st+"<===ALGO");
@@ -201,6 +211,10 @@ public class NavigationPageController implements Initializable{
         MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
         System.out.println(et-st+"<===DR");
+        directionSteps.setVisible(true);
+        sendLabel.setVisible(true);
+        email.setVisible(true);
+        sendButton.setVisible(true);
     }
 
     @FXML
@@ -209,7 +223,7 @@ public class NavigationPageController implements Initializable{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
-        findPath(destination.getText());
+        findPath(startLabel.getText(),endLabel.getText());
         searchList.setVisible(false);
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
@@ -776,5 +790,50 @@ public class NavigationPageController implements Initializable{
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
+    @FXML
+    private JFXRadioButton start, end;
+    @FXML
+    private JFXTextField startField, endField;
+    @FXML
+    private ToggleGroup points;
+    @FXML
+    private String defaultStart;
 
+    @FXML
+    private Label startLabel, endLabel;
+
+    //setting start and end nodes
+    @FXML
+    public void settingFields() throws IOException, InterruptedException {
+        if (points.getSelectedToggle() == start) {
+
+            startLabel.setText(SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk).getLongName());
+        }
+        else{
+
+            endLabel.setText(SearchEngine.SearchPath(destination.getText(),CurMap,Kiosk).getLongName());
+        }
+        go();
+    }
+
+    @FXML
+    public void settingSearch(){
+        if (points.getSelectedToggle() == start) {
+
+            destination.setText(startLabel.getText());
+
+        }
+        else{
+            destination.setText(endLabel.getText());
+        }
+    }
+
+    @FXML
+    public void setStart(String t){
+        startLabel.setText(t);
+    }
+
+    public Node getKiosk(){
+        return this.Kiosk;
+    }
 }
