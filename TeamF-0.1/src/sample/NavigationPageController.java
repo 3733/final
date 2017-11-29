@@ -193,10 +193,6 @@ public class NavigationPageController implements Initializable{
         MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
         System.out.println(et-st+"<===DR");
-        directionSteps.setVisible(true);
-        sendLabel.setVisible(true);
-        email.setVisible(true);
-        sendButton.setVisible(true);
     }
     @FXML
     public void go() throws IOException,InterruptedException{
@@ -207,6 +203,18 @@ public class NavigationPageController implements Initializable{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
+        setListView();
+    }
+
+    public void setListView (){
+        ObservableList<String> populateSteps = FXCollections.observableArrayList();
+        //edit later
+        String directions = "Start at shap <br> go to bath <br>";
+        String[] directionParts = directions.split("<br>");
+        for (int i = 0; i < directionParts.length; i++) {
+            populateSteps.add(directionParts[i]);
+        }
+        directionSteps.setItems(populateSteps);
     }
 
     // Method to clear the path on the map when the user presses clear map
@@ -355,6 +363,7 @@ public class NavigationPageController implements Initializable{
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
+        ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         for(Node i: path){
             System.out.println(i.getLongName()+ "\t"+i.getNodeType());
         }
@@ -479,6 +488,8 @@ public class NavigationPageController implements Initializable{
 
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));   
             tabPane.getSelectionModel().select(floorOne);
+            stairs.setSelected(true);
+            elevator.setSelected(true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
