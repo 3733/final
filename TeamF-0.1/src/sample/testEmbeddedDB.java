@@ -26,13 +26,13 @@ public class testEmbeddedDB {
             final String url = "jdbc:derby:Skynet";
             Connection con = DriverManager.getConnection(url);
 
-            testEmbeddedDB.dropTables();
+            //testEmbeddedDB.dropTables();
 
             testEmbeddedDB.createTable();
 
             testEmbeddedDB.fillNodesTable();
 
-            testEmbeddedDB.createPrimKey();
+            //testEmbeddedDB.createPrimKey();
 
             testEmbeddedDB.fillEdgesTable();
 /*
@@ -104,11 +104,11 @@ public class testEmbeddedDB {
 
             //testEmbeddedDB.dropStaffTable();
 
-            //testEmbeddedDB.createServiceRequestTable();
+            testEmbeddedDB.createServiceRequestTable();
 
-            //testEmbeddedDB.createStaffTable();
+            testEmbeddedDB.createStaffTable();
 
-            //testEmbeddedDB.createAssignmentsTable();
+            testEmbeddedDB.createAssignmentsTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
