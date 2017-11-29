@@ -546,6 +546,50 @@ public class NavigationPageController implements Initializable{
             tabPane.getSelectionModel().select(floorOne);
             stairs.setSelected(true);
             elevator.setSelected(true);
+
+            threeList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println(newValue);
+                    destination.setText(newValue);
+                }
+            });
+            twoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println(newValue);
+                    destination.setText(newValue);
+                }
+            });
+            oneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println(newValue);
+                    destination.setText(newValue);
+                }
+            });
+            lowerOneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println(newValue);
+                    destination.setText(newValue);
+                }
+            });
+            lowerTwoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println(newValue);
+                    destination.setText(newValue);
+                }
+            });
+            groundList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    System.out.println(newValue);
+                    destination.setText(newValue);
+                }
+            });
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

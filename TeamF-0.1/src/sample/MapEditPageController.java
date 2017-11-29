@@ -67,6 +67,17 @@ public class MapEditPageController implements Initializable{
     }
 
     @FXML
+    public void importCSV(){
+        testEmbeddedDB.fillEdgesTable();
+        testEmbeddedDB.fillNodesTable();
+    }
+
+    @FXML
+    public void exportCSV(){
+        testEmbeddedDB.writeToCSV();
+    }
+
+    @FXML
     public void changeFloorL2() {
         map.setImage(Data.data.L2Floor);
     }
@@ -258,99 +269,6 @@ public class MapEditPageController implements Initializable{
         return new Point2D(
                 viewport.getMinX() + xProportion * viewport.getWidth(),
                 viewport.getMinY() + yProportion * viewport.getHeight());
-    }
-
-    //switches images based on floors
-    public void floorUp() throws FileNotFoundException {
-        switch (currentFloor){
-            case "Ground Floor":
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level One":
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level Two":
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "First Floor":
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Second Floor":
-                currentFloor = "Third Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(true);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            default: break;
-        }
-    }
-
-    public void floorDown() throws FileNotFoundException{
-        switch (currentFloor){
-            case "Lower Level One":
-                currentFloor = "Ground Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(true);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level Two":
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                System.out.println(currentFloor);
-                break;
-            case "First Floor":
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Second Floor":
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Third Floor":
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            default: break;
-        }
     }
 
 }
