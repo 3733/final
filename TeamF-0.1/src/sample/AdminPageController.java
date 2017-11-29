@@ -387,7 +387,7 @@ public class AdminPageController implements Initializable{
     public void findPath(String in) throws IOException {
         //Returns
         long st = System.currentTimeMillis();
-        this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
+        //this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
         long et = System.currentTimeMillis();
         System.out.println(et-st+"<===ALGO");
 

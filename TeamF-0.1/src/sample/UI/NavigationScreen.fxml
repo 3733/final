@@ -14,6 +14,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -82,9 +83,9 @@
                                     <children>
                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                             <children>
-                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                <VBox prefHeight="145.0" prefWidth="114.0">
                                                     <children>
-                                                        <JFXRadioButton fx:id="start" styleClass=".jfx-radio-button" text="Start">
+                                                        <JFXRadioButton fx:id="start" onAction="#settingSearch" styleClass=".jfx-radio-button" text="Start" toggleGroup="$points">
                                                             <font>
                                                                 <Font name="Montserrat Regular" size="12.0" />
                                                             </font>
@@ -94,8 +95,11 @@
                                                             <VBox.margin>
                                                                 <Insets bottom="15.0" top="40.0" />
                                                             </VBox.margin>
+                                                            <toggleGroup>
+                                                                <ToggleGroup fx:id="points" />
+                                                            </toggleGroup>
                                                         </JFXRadioButton>
-                                                        <JFXRadioButton fx:id="end" styleClass=".jfx-radio-button" text="End">
+                                                        <JFXRadioButton fx:id="end" onAction="#settingSearch" styleClass=".jfx-radio-button" text="End" toggleGroup="$points">
                                                             <font>
                                                                 <Font name="Montserrat Regular" size="12.0" />
                                                             </font>
@@ -104,30 +108,29 @@
                                                             </VBox.margin>
                                                         </JFXRadioButton>
                                                     </children>
+                                       <HBox.margin>
+                                          <Insets right="15.0" />
+                                       </HBox.margin>
                                                 </VBox>
-                                                <VBox prefHeight="200.0" prefWidth="100.0">
-                                                    <children>
-                                                        <JFXTextField fx:id="startField" prefHeight="20.0" prefWidth="71.0" styleClass="null">
-                                                            <VBox.margin>
-                                                                <Insets top="30.0" />
-                                                            </VBox.margin>
-                                                            <font>
-                                                                <Font name="Montserrat Regular" size="12.0" />
-                                                            </font>
-                                                        </JFXTextField>
-                                                        <JFXTextField styleClass="null">
-                                                            <VBox.margin>
-                                                                <Insets />
-                                                            </VBox.margin>
-                                                            <padding>
-                                                                <Insets top="65.0" />
-                                                            </padding>
-                                                            <font>
-                                                                <Font name="Montserrat Regular" size="12.0" />
-                                                            </font>
-                                                        </JFXTextField>
-                                                    </children>
+                                                <VBox prefHeight="145.0" prefWidth="252.0">
+                                       <children>
+                                          <Label fx:id="startLabel" alignment="BOTTOM_CENTER" prefHeight="63.0" prefWidth="134.0" underline="true" />
+                                          <Label fx:id="endLabel" alignment="BOTTOM_CENTER" prefHeight="66.0" prefWidth="160.0" underline="true">
+                                             <VBox.margin>
+                                                <Insets top="20.0" />
+                                             </VBox.margin></Label>
+                                       </children>
                                                 </VBox>
+                                    <VBox fx:id="labelBox" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <Label fx:id="startLabel1" alignment="BOTTOM_LEFT" prefHeight="63.0" prefWidth="100.0" underline="true" />
+                                          <Label fx:id="endLabel1" alignment="BOTTOM_LEFT" prefHeight="66.0" prefWidth="100.0" underline="true">
+                                             <VBox.margin>
+                                                <Insets top="15.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                             </children>
                                         </HBox>
                                     </children>
@@ -233,7 +236,7 @@
                             <font>
                                 <Font name="Montserrat Regular" size="12.0" />
                             </font></JFXTextField>
-                        <JFXButton fx:id="search" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" onAction="#go" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                        <JFXButton fx:id="search" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
                             <graphic>
                                 <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
