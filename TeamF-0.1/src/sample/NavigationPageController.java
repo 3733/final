@@ -77,6 +77,9 @@ public class NavigationPageController implements Initializable{
     String currentFloor = "First Floor";
 
 
+
+
+
     //to login from navigation screen
     @FXML
     public void login(){
@@ -317,6 +320,11 @@ public class NavigationPageController implements Initializable{
             clickSelected();
         } catch (IOException e) {
             e.printStackTrace();
+
+        } try {
+            drawAll();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -383,6 +391,12 @@ public class NavigationPageController implements Initializable{
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
 
+
+        System.out.println("old Width:" + width);
+        System.out.println("old Height:" + height);
+
+
+
         map.setPreserveRatio(true);
         reset(map, width, height);
 
@@ -414,10 +428,20 @@ public class NavigationPageController implements Initializable{
 
             );
 
+
+
+
             Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
+
+
+            //System.out.println("ZoomX :" + e.getX()+ " ZoomY :" +e.getY() + " Scale : " + scale);
 
             double newWidth = viewport.getWidth() * scale;
             double newHeight = viewport.getHeight() * scale;
+
+            System.out.println("This is current scale:" + scale);
+            System.out.println("new Width:" + newWidth);
+            System.out.println("new Height:" + newHeight);
 
             // To keep the visual point under the mouse from moving
             double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
@@ -433,6 +457,7 @@ public class NavigationPageController implements Initializable{
                 reset(map, width, height);
             }
 
+
         });
 
         map.setPreserveRatio(true);
@@ -443,46 +468,75 @@ public class NavigationPageController implements Initializable{
 
     @FXML
     public void clickSelected()throws IOException {
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
-        Graphics2D pathImage = firstFloor.createGraphics();
-        pathImage.setStroke(new BasicStroke(10));
-
 
         map.setOnMouseClicked((javafx.scene.input.MouseEvent e) -> {
+            if (e.getClickCount() == 1) {
+                BufferedImage firstFloor = null;
+                try {
+                    firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                Graphics2D nodeImage = firstFloor.createGraphics();
 
+                nodeImage.setStroke(new BasicStroke(10));
 
-            double newX = e.getSceneX();
-            double newY = e.getSceneY();
+                System.out.println("This is ImageView height " + map.getFitHeight());
+                System.out.println("This is ImageView width " + map.getFitWidth());
 
-            Node node = mousePoition(newX,newY);
+            double newX = (e.getSceneX()-244)* 4.37;
+            double newY = (e.getSceneY()-36) * 4.37;
 
-            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+            //System.out.println("Node x:"+newX + " Node y:" +newY);
+            //System.out.println("This is our scale " + Data.data.scale);
+            Node node = mousePoition(newX ,newY);
 
-            setSearch(node.getLongName());
+           nodeImage.setColor( new java.awt.Color(236,4,4)); // This color is black
+           nodeImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+
+           //System.out.println("This is the node x: " + node.getxCoordinate() + " This is the node y: " + node.getyCoordinate());
+
+          nodeImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+          nodeImage.setColor( new java.awt.Color(0,4,230)); // This color is blue
+          nodeImage.drawOval((int)newX  - 10,(int)newY  - 10,15,15);
+
+           //System.out.println("This is the node x: " + node.getxCoordinate() + " This is the node y: " + node.getyCoordinate());
+
+           setSearch(node.getLongName());
+           map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
+           System.out.println("IMAGE SET");
+
+            }
+
 
 
         });
-        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
+
+
 
 
     }
+
+    //Calculate the mouse actual x and y coordinates with the database node
     public Node mousePoition(double x, double y) {
         double newMouseX = x;
         double newMouseY = y;
 
         Node GoodOne = null;
-        double MinDist = 1000000000;
-        for (int i = 0; i < CurMap.getNodes().size(); i++) {
-            double dist = CurMap.MouseNodeDist(newMouseX, newMouseY, CurMap.getNodes().get(i));
-            if (MinDist > dist) {
+        double MinDist = 100000000.0;
+        double dist;
+        for (Node i: CurMap.getNodes()) {
+            dist = CurMap.MouseNodeDist(newMouseX,newMouseY,i);
+            if(dist < MinDist)
+            {
                 MinDist = dist;
-                GoodOne = CurMap.getNodes().get(i);
+                GoodOne = i;
             }
         }
         return GoodOne;
     }
+
+
     // reset to the top left:
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));

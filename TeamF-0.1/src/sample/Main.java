@@ -134,6 +134,7 @@ public class Main extends Application {
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
+
         stage.show();
 
         destination = "";
