@@ -586,7 +586,9 @@ public class NavigationPageController implements Initializable{
                     filteredEntries.addAll(searchResult);
                 }
                 searchList.setItems(filteredEntries);
+
             }
+
         });
 
         searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
