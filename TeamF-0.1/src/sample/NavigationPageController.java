@@ -272,8 +272,8 @@ public class NavigationPageController implements Initializable{
         }
         a = in.get(0);
         b = in.get(1);
-        out = out.concat("Start at " + a.getLongName()+"<br>");
-        out = out.concat("Go towards " + b.getLongName()+"<br>");
+        out = out.concat("Start at " + a.getLongName().trim()+"<br>");
+        out = out.concat("Go towards " + b.getLongName().trim()+"<br>");
 
         for(int i = 2; i < in.size(); i++){
             a = in.get(i-2);
@@ -293,7 +293,7 @@ public class NavigationPageController implements Initializable{
                 turn = "sharply left";
             }
 
-            out = out.concat("When you arrive at " + b.getLongName() + " go " + turn + " towards " + c.getLongName() + "<br>");
+            out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
         }
         return out;
     }
