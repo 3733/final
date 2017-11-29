@@ -168,6 +168,46 @@ public class MapEditPageController implements Initializable{
             groundList.setItems(groundItems);
             tabPane.getSelectionModel().select(floorOne);
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+
+            chooseAStar.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(1);
+                    Main.adminPageController.setCurrentAlgo(1);
+                    System.out.println(1);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+
+            chooseBreadth.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(2);
+                    Main.adminPageController.setCurrentAlgo(2);
+                    System.out.println(2);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+
+            chooseDepth.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(3);
+                    Main.adminPageController.setCurrentAlgo(3);
+                    System.out.println(3);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+
+            chooseDijk.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(4);
+                    Main.adminPageController.setCurrentAlgo(4);
+                    System.out.println(4);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }

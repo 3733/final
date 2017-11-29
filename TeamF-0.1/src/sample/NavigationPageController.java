@@ -122,6 +122,10 @@ public class NavigationPageController implements Initializable{
         mainController = in;
     }
 
+    public int getCurrentAlgo(){
+        return this.currentAlgo;
+    }
+
     private Vector<Node> path = new Vector<Node>();
 
     private Map CurMap;

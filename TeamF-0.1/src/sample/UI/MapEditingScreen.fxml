@@ -159,21 +159,9 @@
                                                 <ToggleGroup fx:id="pathOpt" />
                                              </toggleGroup>
                                           </RadioMenuItem>
-                                          <RadioMenuItem fx:id="chooseBreadth" mnemonicParsing="false" text="Breadth First">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="pathOpt1" />
-                                             </toggleGroup>
-                                          </RadioMenuItem>
-                                          <RadioMenuItem fx:id="chooseDepth" mnemonicParsing="false" text="Depth First">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="pathOpt11" />
-                                             </toggleGroup>
-                                          </RadioMenuItem>
-                                          <RadioMenuItem fx:id="chooseDijk" mnemonicParsing="false" text="Dijkstra">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="pathOpt111" />
-                                             </toggleGroup>
-                                          </RadioMenuItem>
+                                          <RadioMenuItem fx:id="chooseBreadth" mnemonicParsing="false" text="Breadth First" toggleGroup="$pathOpt" />
+                                          <RadioMenuItem fx:id="chooseDepth" mnemonicParsing="false" text="Depth First" toggleGroup="$pathOpt" />
+                                          <RadioMenuItem fx:id="chooseDijk" mnemonicParsing="false" text="Dijkstra" toggleGroup="$pathOpt" />
                                        </items>
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
