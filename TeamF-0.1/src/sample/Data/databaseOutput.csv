@@ -1,8 +1,52 @@
 NODEID,XCOORD,YCOORD,FLOOR,BUILDING,NODETYPE,LONGNAME,SHORTNAME,TEAMASSIGNED
-FDEPT00101               ,1614,829,1   ,Tower          ,DEPT,Center for International Medecine                           ,CIM                 ,F     
-FDEPT00201               ,1766,1024,1   ,Tower          ,DEPT,International Patient Center                                ,IPC                 ,F     
-FDEPT00301               ,1787,1144,1   ,Tower          ,DEPT,Sharf Admitting Center                                      ,SAC                 ,F     
-FDEPT00401               ,1527,1114,1   ,Tower          ,DEPT,Bretholz Center for Patients and Families                   ,BCPF                ,F     
-FDEPT00501               ,1480,1065,1   ,Tower          ,DEPT,Waiting Area 1                                              ,WA1                 ,F     
-FDEPT00601               ,1843,1244,1   ,Tower          ,DEPT,Obstretics Admitting                                        ,OBA                 ,F     
-FDEPT00701               ,2127,1288,1   ,Tower          ,DEPT,Emergency Room                                              ,ER                  ,F     
+ADEPT0020G               ,1552,2843,G   ,BTM            ,DEPT,Infusion Waiting Area                                       ,Infusion Waiting Area                                       ,Team A
+ADEPT00101               ,1401,2628,1   ,BTM            ,DEPT,Neuroscience Waiting Room                                   ,Neuro Waiting Room                                          ,Team A
+ADEPT00102               ,1395,2674,2   ,BTM            ,DEPT,Orthopedics and Rhemutalogy                                 ,Orthopedics and Rhemutalogy                                 ,Team A
+ADEPT00301               ,986,2852,1   ,BTM            ,DEPT,CART Waiting                                                ,CART Waiting                                                ,Team A
+ADEPT0010G               ,1530,2495,G   ,BTM            ,DEPT,Neuro Testing Waiting Area                                  ,Neuro Wating Area                                           ,Team A
+ADEPT00201               ,1720,2847,1   ,BTM            ,DEPT,MS Waiting                                                  ,MS Waiting                                                  ,Team A
+BDEPT00102               ,2263,786,2   ,45 Francis     ,DEPT,Comprehensive Breast Heath Level 2                          ,DEPT B0102                                                  ,Team B
+BDEPT00202               ,2166,1039,2   ,45 Francis     ,DEPT,Oral Medicine and Denstistry Level 2                        ,DEPT B0202                                                  ,Team B
+BDEPT00302               ,2389,753,2   ,45 Francis     ,DEPT,Lee Bell Breast Center Level 2                              ,DEPT B0302                                                  ,Team B
+BDEPT00402               ,2439,903,2   ,45 Francis     ,DEPT,Jet Center for Primary Care Level 2                         ,DEPT B0402                                                  ,Team B
+BDEPT00502               ,2623,1018,2   ,45 Francis     ,DEPT,Ear Nose & Throat Level 2                                   ,DEPT B0502                                                  ,Team B
+BDEPT00602               ,2781,1305,2   ,45 Francis     ,DEPT,Medical Surgical Specialties Level 2                        ,DEPT B0602                                                  ,Team B
+BDEPT00702               ,2950,775,2   ,45 Francis     ,DEPT,Plastic Surgery Level 2                                     ,DPET B0702                                                  ,Team B
+BDEPT00802               ,3155,878,2   ,45 Francis     ,DEPT,Outpatient Pharamacy Level 2                                ,DEPT B0802                                                  ,Team B
+BDEPT00902               ,3258,877,2   ,45 Francis     ,DEPT,Weiner Center for Pre-operational Evaluation Level 2        ,DEPT B0902                                                  ,Team B
+CDEPT002L1               ,1980,845,L1  ,Tower          ,DEPT,Day Surgery Family Waiting Floor L1                         ,Department C002L1                                           ,Team C
+CDEPT003L1               ,1845,845,L1  ,Tower          ,DEPT,Day Surgery Family Waiting Exit Floor L1                    ,Department C003L1                                           ,Team C
+CDEPT004L1               ,2310,1043,L1  ,45 Francis     ,DEPT,Medical Records Film Library Floor L1                       ,Department C004L1                                           ,Team C
+DDEPT00102               ,4330,700,2   ,15 Francis     ,DEPT,Chest Diseases Floor 2                                      ,Chest Diseases                                              ,Team D
+DDEPT00202               ,4240,730,2   ,15 Francis     ,DEPT,Thoracic Surgery Clinic Floor 2                             ,Thoracic Surgery Clinic                                     ,Team D
+DDEPT00302               ,3900,640,2   ,15 Francis     ,DEPT,Brigham Health Floor 2                                      ,Brigham Health                                              ,Team D
+DDEPT00402               ,3425,870,2   ,15 Francis     ,DEPT,Waiting Room Floor 2                                        ,Waiting Room                                                ,Team D
+EDEPT00101               ,2335,860,1   ,45 Francis     ,DEPT,Waiting Room 1 Floor 1                                      ,Wait 1                                                      ,Team E
+EDEPT00201               ,3100,890,1   ,45 Francis     ,DEPT,Wound and Ambulatory 1                                      ,WCCAT 1                                                     ,Team E
+EDEPT00301               ,3200,880,1   ,45 Francis     ,DEPT,Ocupational Health Floor 1                                  ,Ocupational 1                                               ,Team E
+EDEPT00401               ,2790,1380,1   ,45 Francis     ,DEPT,Rehabilitation Services Floor 1                             ,Rehab 1                                                     ,Team E
+GDEPT01901               ,1567,2116,1   ,Shapiro        ,DEPT,Zinner Breakout Room Node 19 Floor 1                        ,Zinner Breakout Room                                        ,Team G
+GDEPT00702               ,1341,1778,2   ,Shapiro        ,DEPT,Waiting room? Node 7 Floor 2                                ,Waiting Area Shapiro Floor 2                                ,Team G
+GDEPT02402               ,1578,1932,2   ,Shapiro        ,DEPT,Watkins A Node 24 Floor 2 Floor 2                           ,Watkins A                                                   ,Team G
+GDEPT03502               ,1580,2166,2   ,Shapiro        ,DEPT,Watkins B Node 35 Floor 2                                   ,Watkins B                                                   ,Team G
+GDEPT00403               ,1580,2142,3   ,Shapiro        ,DEPT,Brigham Circle Medical Associates Node 4 Floor 3            ,Brigham Circle Medical Associates                           ,Team G
+GDEPT01403               ,1580,1904,3   ,Shapiro        ,DEPT,Watkins Clinic C Node 14 Floor 3                            ,Watkins Clinic C                                            ,Team G
+HDEPT00102               ,2055,1330,2   ,Tower          ,DEPT,Endoscopy                                                   ,Endoscopy                                                   ,Team H
+HDEPT00103               ,1725,900,3   ,Tower          ,DEPT,Dialysis Waiting Room                                       ,Dialysis WR                                                 ,Team H
+HDEPT00203               ,1690,830,3   ,Tower          ,DEPT,MICU 3B/C Waiting Room                                      ,MICU 3B/C WR                                                ,Team H
+IDEPT00103               ,2323,1328,3   ,45 Francis     ,DEPT,Center for Infertility and Reproductive Surgery             ,D1                                                          ,Team I
+IDEPT00203               ,2448,1328,3   ,45 Francis     ,DEPT,Gynecology Oncology MIGS                                    ,D2                                                          ,Team I
+IDEPT00303               ,2730,1315,3   ,45 Francis     ,DEPT,General Surgical Specialties Suite A                        ,D3                                                          ,Team I
+IDEPT00403               ,2738,1227,3   ,45 Francis     ,DEPT,General Surgical Specialties Suite B                        ,D4                                                          ,Team I
+IDEPT00503               ,2868,1075,3   ,45 Francis     ,DEPT,Urology                                                     ,D5                                                          ,Team I
+IDEPT00603               ,2333,764,3   ,45 Francis     ,DEPT,Maternal Fetal Practice                                     ,D6                                                          ,Team I
+IDEPT00703               ,2400,764,3   ,45 Francis     ,DEPT,Obstetrics                                                  ,D7                                                          ,Team I
+IDEPT00803               ,2492,887,3   ,45 Francis     ,DEPT,Fetal Med & Genetics                                        ,D8                                                          ,Team I
+IDEPT00903               ,2631,851,3   ,45 Francis     ,DEPT,Gynecology                                                  ,D9                                                          ,Team I
+FDEPT00101               ,1617,825,1   ,Tower          ,DEPT,Center for International Medicine                           ,CIM                                                         ,Team F
+FSERV00401               ,1721,970,1   ,Tower          ,DEPT,Spiritual Care Office                                       ,SCO                                                         ,Team F
+FDEPT00301               ,1721,931,1   ,Tower          ,DEPT,Multifaith Chapel                                           ,Chapel                                                      ,Team F
+FDEPT00201               ,1610,1120,1   ,Tower          ,DEPT,Bretholtz Center for Patients and Families                  ,Bretholtz WR                                                ,Team F
+FDEPT00401               ,1794,1146,1   ,Tower          ,DEPT,Sharf Admitting Center                                      ,Sharf Center                                                ,Team F
+FDEPT00501               ,2128,1300,1   ,Tower          ,DEPT,Emergency Department                                        ,Emergency                                                   ,Team F
+FDEPT00601               ,1780,1029,1   ,Tower          ,DEPT,International Patient Center                                ,IPC                                                         ,Team F

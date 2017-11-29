@@ -221,12 +221,8 @@ public class NavigationPageController implements Initializable{
                 break;
         }
 
-        long et = System.currentTimeMillis();
-        System.out.println(et-st+"<===ALGO");
-
-        st = System.currentTimeMillis();
         MultiFloorPathDrawing(path);
-        et = System.currentTimeMillis();
+
 
 
         directionSteps.setVisible(true);
