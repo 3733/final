@@ -261,10 +261,10 @@ public class Main extends Application {
     }
     public static void main(String[] args) throws IOException{
 
-        //testEmbeddedDB db = new testEmbeddedDB();
-        //testEmbeddedDB.dropNodes();
-        //testEmbeddedDB.dropTables();
-        //testEmbeddedDB.createTable();
+        testEmbeddedDB db = new testEmbeddedDB();
+        testEmbeddedDB.dropNodes();
+        testEmbeddedDB.dropTables();
+        testEmbeddedDB.createTable();
         startMap();
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");

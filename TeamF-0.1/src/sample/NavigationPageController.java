@@ -230,7 +230,10 @@ public class NavigationPageController implements Initializable{
                 break;
         }
 
-        MultiFloorPathDrawing(path);
+
+
+
+        MultiFloorPathDrawing(this.path);
 
 
 
@@ -810,7 +813,7 @@ public class NavigationPageController implements Initializable{
     }
 
 
-    private int currentAlgo =2;
+    private int currentAlgo =3;
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
