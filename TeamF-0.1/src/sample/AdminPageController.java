@@ -297,12 +297,12 @@ public class AdminPageController implements Initializable{
         long st = System.currentTimeMillis();
         //this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
         long et = System.currentTimeMillis();
-        System.out.println(et-st+"<===ALGO");
+
 
         st = System.currentTimeMillis();
         MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
-        System.out.println(et-st+"<===DR");
+
     }
     @FXML
     public void go() throws IOException,InterruptedException{
@@ -438,20 +438,13 @@ public class AdminPageController implements Initializable{
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
         for(Node i: path){
-            System.out.println(i.getLongName()+ "\t"+i.getNodeType());
+
         }
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        //System.out.println("Reached the multifloor path drawing function");
-        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
-        Vector<Vector<Node>> paths = separator2(path);
-        //System.out.println("Size of the vector of paths " + paths.size());
-        /*
-        for (Vector<Node> i: paths) {
-            for (Node j: i){
-                System.out.println(j.getLongName());
-            }
 
-        }*/
+        Vector<Vector<Node>> paths = separator2(path);
+
+       
         //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
         //paths.add(path);
 
