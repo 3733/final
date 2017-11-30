@@ -209,19 +209,23 @@ public class NavigationPageController implements Initializable{
 
         switch (currentAlgo){
             case 1:
-                this.path = CurMap.AStar(StartNode,EndNode);
+                PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
+                this.path = pathFinder1.executeStrategy(StartNode,EndNode, CurMap);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 2:
-                this.path = CurMap.BFSearch(StartNode,EndNode);
+                PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
+                this.path = pathFinder2.executeStrategy(StartNode,EndNode, CurMap);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 3:
-                this.path = CurMap.DFSearch(StartNode,EndNode);
+                PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
+                this.path = pathFinder3.executeStrategy(StartNode,EndNode, CurMap);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 4:
-                this.path = CurMap.Dijkstras(StartNode,EndNode);
+                PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
+                this.path = pathFinder4.executeStrategy(StartNode,EndNode, CurMap);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
         }
@@ -806,11 +810,10 @@ public class NavigationPageController implements Initializable{
     }
 
 
-    private int currentAlgo =1;
+    private int currentAlgo =2;
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
-        //System.out.println(this.currentAlgo+ "<=======sdfsdfgbsghxbgfgsh");
     }
 
     @FXML
@@ -838,7 +841,7 @@ public class NavigationPageController implements Initializable{
             endLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
             System.out.println(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
         }
-        go();
+        //go();
     }
 
     @FXML

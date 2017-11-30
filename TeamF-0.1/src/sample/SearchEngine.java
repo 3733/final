@@ -28,13 +28,14 @@ public class SearchEngine {
     public static Node SearchPath(String search, Map map, Node kiosk){
 
 
-        search = search.toLowerCase();
+
 
 
         Vector<Node> r = new Vector<>();
 
 
         if ( search !=  ""){
+            search = search.toLowerCase();
             for(int i = 0; i<map.getNodes().size();i++){
                 if ((map.getNodes().get(i).getLongName().toLowerCase().contains(search.toLowerCase()))){
                     r.add(map.getNodes().get(i));
@@ -67,9 +68,11 @@ public class SearchEngine {
 
         Node MinNode = kiosk;
         Double MinDistance=1000000.0;
+        PathAlgorithm pathFinder = new PathAlgorithm(new Dijkstras());
+
 
         for(int i =0; i<r.size();i++ ){
-            Double CurDist = map.TotalDistance(map.Dijkstras(kiosk,r.get(i)));
+            Double CurDist = map.TotalDistance(pathFinder.executeStrategy(kiosk,r.get(i),map));
             if(MinDistance  > CurDist){
                 MinDistance =CurDist;
                 MinNode = r.get(i);
