@@ -561,26 +561,12 @@ public class NavigationPageController implements Initializable{
         populateSteps.add("You have arrived at your destination.");
         directionSteps.setItems(populateSteps);
 
-      
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        //System.out.println("Reached the multifloor path drawing function");
-        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
         Vector<Vector<Node>> paths = separator(path);
-        //System.out.println("Size of the vector of paths " + paths.size());
-        /*
-        for (Vector<Node> i: paths) {
-            for (Node j: i){
-                System.out.println(j.getLongName());
-            }
-
-        }*/
-        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
-                System.out.println(Data.data.floorList);
-                //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
+
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
@@ -628,10 +614,8 @@ public class NavigationPageController implements Initializable{
         // Iterate through all the path nodes to draw the path
         for(int i = 0; i < length ; i++) {
             Node node = path.get(i);
-            //System.out.println("This is node: " + node.getNodeID());
             if(i + 1 < length){
                 Node node2 = path.get(i+1);
-                //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                 // Lines are drawn offset,
                 if(!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
                     pathImage.setColor(new java.awt.Color(0, 0, 0)); // This color is black
@@ -640,7 +624,6 @@ public class NavigationPageController implements Initializable{
                 }
         }
         map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        //System.out.println("Image set on map");
         return SwingFXUtils.toFXImage(floorImage,null);
     }
 
@@ -658,9 +641,7 @@ public class NavigationPageController implements Initializable{
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         for(int i = 0; i < edgeLength; i++ ) {
             Node nodeStart = edges.get(i).getStart();
-            System.out.println("Start: " + nodeStart.getShortName());
             Node nodeEnd = edges.get(i).getEnd();
-            System.out.println("Stop: " + nodeEnd.getShortName());
             pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
             pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
         }
@@ -708,7 +689,6 @@ public class NavigationPageController implements Initializable{
         searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
                 destination.setText(newValue);
                 searchList.setVisible(false);
             }
