@@ -398,7 +398,7 @@ public class testEmbeddedDB {
 
     }
 
-    public static Vector<Edge> getAllEdges(){
+    public static Vector<Edge> getAllEdges(Vector<Node> n){
         //ArrayList<Node> allNodes = new ArrayList<Node>();
         Vector<Edge> allEdges = new Vector<Edge>();
         try{
@@ -414,8 +414,8 @@ public class testEmbeddedDB {
                 String start = r.getString("startnode");
                 String end = r.getString("endnode");
 
-                Node startNode = testEmbeddedDB.getNode(start);
-                Node endNode = testEmbeddedDB.getNode(end);
+                //Node startNode = testEmbeddedDB.getNode(start);
+                //Node endNode = testEmbeddedDB.getNode(end);
 
                 e = new Edge(edgeID, startNode, endNode);
 
@@ -850,6 +850,17 @@ public class testEmbeddedDB {
         } catch (Exception e){
             System.out.println("editCompletionStatus error: " + e.getMessage());
         }
+    }
+
+    public static Map dbBuildMap(){
+
+        Vector nodes = getAllNodes();
+
+        Vector
+
+        Map CurMap = new Map(nodes, edges);
+
+        return CurMap;
     }
 
     public static Node getNode(String nodeID){
