@@ -59,26 +59,26 @@ public class DFSearch implements PathFinder {
 
         //an empty set to maintain visited nodes
         HashMap<Node, Boolean> checked = new HashMap();
-
-        HashMap<Node, Node> edgeTo = new HashMap();
+        // A hash map to keep the path
+        HashMap<Node, Node> cameFrom = new HashMap();
         Node s = Start;
-        dfs(s,checked,edgeTo);
+        Recurcion(s,checked,cameFrom);
         if (!hasPathTo(End, checked)) {
             return null;
         } else {
-            return reconstructPath(edgeTo, End);
+            return reconstructPath(cameFrom, End);
         }
     }
 
-    private void dfs(Node v,HashMap<Node, Boolean> marked, HashMap<Node, Node> edgeTo) {
+    private void Recurcion(Node v,HashMap<Node, Boolean> marked, HashMap<Node, Node> cameFrom) {
         marked.put(v, true);
         Iterator var2 = v.getNeighbors().iterator();
 
         while(var2.hasNext()) {
             Node w = (Node)var2.next();
             if (!marked.containsKey(w)) {
-                edgeTo.put(w, v);
-                dfs(w,marked,edgeTo);
+                cameFrom.put(w, v);
+                Recurcion(w,marked,cameFrom);
             }
         }
 

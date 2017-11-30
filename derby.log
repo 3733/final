@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Nov 30 12:09:26 EST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-0de7-8ae2-000009a96848 
+Thu Nov 30 12:17:53 EST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-0def-44fa-000009a96988 
 on database directory /home/nikolaos/Desktop/SoftEng/Project/iteration2/Skynet with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/home/nikolaos/Desktop/SoftEng/jdk1.8.0_151/db/lib/derby.jar
 java.vendor=Oracle Corporation
