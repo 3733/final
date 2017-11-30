@@ -31,6 +31,10 @@ public class DFSearch implements PathFinder {
         return Path;
     }
 
+    //Checks if there is a path
+    private boolean hasPathTo(Node v,HashMap<Node, Boolean> marked) {
+        return marked.containsKey(v) && ((Boolean)marked.get(v)).booleanValue();
+    }
 
     /**
      * This is the A* algorithm to find the most efficient path
@@ -49,68 +53,17 @@ public class DFSearch implements PathFinder {
 
 
 
-        /*System.out.println("DFSearch");
+        System.out.println("DFSearch");
 
 
-        //a FIFO open_set
-        Vector<Node> openSet = new Vector<>();
+
         //an empty set to maintain visited nodes
-        Vector<Node> closedSet = new Vector<>();
-        //a dictionary to maintain meta information (used for path formation)
-        HashMap<Node,Node> cameFrom = new HashMap<>();
+        HashMap<Node, Boolean> checked = new HashMap();
 
-        openSet.add(Start);
-        closedSet.add(Start);
-        cameFrom.put(null,Start);
-
-
-
-
-
-        while(openSet.size()>0) {
-
-            //Node Current = openSet.remove(0);
-            Node Current = openSet.get(0);
-
-            if (Current.equals(End)) {
-                return reconstructPath(cameFrom, Current);
-
-            }
-
-
-            for (int i = 0; i < Current.getNeighbors().size(); i++) {
-
-                if (closedSet.contains(Current.getNeighbors().get(i))) {
-
-                    continue;
-                }
-
-
-                if (!closedSet.contains(Current.getNeighbors().get(i))) {
-
-
-
-                    cameFrom.put(Current.getNeighbors().get(i),Current);
-
-                    openSet.add(Current.getNeighbors().get(i));
-                }else{
-
-                    closedSet.add(Current);
-                    openSet.remove(0);
-                }
-            }
-
-        }
-
-
-        return null;*/
-
-
-        HashMap<Node, Boolean> marked = new HashMap();
         HashMap<Node, Node> edgeTo = new HashMap();
         Node s = Start;
-        dfs(s,marked,edgeTo);
-        if (!hasPathTo(End, marked)) {
+        dfs(s,checked,edgeTo);
+        if (!hasPathTo(End, checked)) {
             return null;
         } else {
             return reconstructPath(edgeTo, End);
@@ -131,9 +84,7 @@ public class DFSearch implements PathFinder {
 
     }
 
-    private boolean hasPathTo(Node v,HashMap<Node, Boolean> marked) {
-        return marked.containsKey(v) && ((Boolean)marked.get(v)).booleanValue();
-    }
+
 
 
 }

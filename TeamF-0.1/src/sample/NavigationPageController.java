@@ -813,7 +813,7 @@ public class NavigationPageController implements Initializable{
     }
 
 
-    private int currentAlgo =3;
+    private int currentAlgo =1;
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
@@ -844,7 +844,7 @@ public class NavigationPageController implements Initializable{
             endLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
             System.out.println(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
         }
-        //go();
+        go();
     }
 
     @FXML
