@@ -260,12 +260,20 @@ public class Main extends Application {
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
+        long st = System.currentTimeMillis();
+
+        startMap();
+        //launch(args);
+
+        long et = System.currentTimeMillis();
+        double timer = (double) (et-st)/1000;
+        System.out.println("Main " + timer+"<===TIMER");
 
 //        testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
-        startMap();
+        //startMap();
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
@@ -296,16 +304,24 @@ public class Main extends Application {
 
 
         //controller.drawDirections(Vec);
-        launch(args);
+        //launch(args);
     }
 
     public static void startMap() throws IOException{
-
+        System.out.println("get edges and nodes");
+        long st = System.currentTimeMillis();
         Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
 
         Vector <Edge> EdgesBad = testEmbeddedDB.getAllEdges();
 
+        long et = System.currentTimeMillis();
+        double timer = (double) (et-st)/1000;
+        System.out.println(timer+"<===TIMER");
+
         Vector <Edge> EdgesGood = new Vector<>();
+
+        System.out.println("bad to good");
+        st = System.currentTimeMillis();
 
 
         for(int i =0;i<EdgesBad.size();i++){
@@ -337,25 +353,33 @@ public class Main extends Application {
             EdgesGood.add(e);
         }
 
+        et = System.currentTimeMillis();
+        timer = (double) (et-st)/1000;
+        System.out.println(timer+"<===TIMER");
+
         Map CurMap = new Map(dbnodes, EdgesGood);
+
+        System.out.println("map build");
+        st = System.currentTimeMillis();
 
         CurMap.BuildMap();
 
-/*
-        for (int i =0; i<CurMap.getNodes().size();i++){
+        et = System.currentTimeMillis();
+        timer = (double) (et-st)/1000;
+        System.out.println(timer+"<===TIMER");
 
-            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
+        System.out.println("setters");
+        st = System.currentTimeMillis();
 
-            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
-
-                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
-            }
-        }
-*/
         navigationPageController.setMap(CurMap);
         adminPageController.setMap(CurMap);
+        et = System.currentTimeMillis();
+        timer = (double) (et-st)/1000;
+        System.out.println(timer+"<===TIMER");
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
         adminPageController.setKiosk(CurMap.getNodes().get(0));
+
+
     }
 }

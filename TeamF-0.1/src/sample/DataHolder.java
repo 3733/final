@@ -28,6 +28,7 @@ public class DataHolder {
     public javafx.scene.image.Image L1Floor;
     public javafx.scene.image.Image L2Floor;
 
+
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;
