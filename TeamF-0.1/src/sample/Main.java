@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Vector;
 
-public class Main extends Application {
+public class Main extends Application implements Data{
 
     private  static String destination;
     private  static Staff loggedInGuy;
@@ -178,7 +178,7 @@ public class Main extends Application {
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
-        startMap();
+        //startMap();
         if(getDestination().length() > 0){
             navigationPageController.setSearch(getDestination());
             navigationPageController.settingFields();
@@ -263,7 +263,7 @@ public class Main extends Application {
         long st = System.currentTimeMillis();
 
         startMap();
-        //launch(args);
+        launch(args);
 
         long et = System.currentTimeMillis();
         double timer = (double) (et-st)/1000;
@@ -319,7 +319,7 @@ public class Main extends Application {
         System.out.println(timer+"<===TIMER");
 
         Vector <Edge> EdgesGood = new Vector<>();
-
+//-------------------------------------------------------------------------
         System.out.println("bad to good");
         st = System.currentTimeMillis();
 
@@ -358,7 +358,7 @@ public class Main extends Application {
         System.out.println(timer+"<===TIMER");
 
         Map CurMap = new Map(dbnodes, EdgesGood);
-
+//-------------------------------------------------------------------------
         System.out.println("map build");
         st = System.currentTimeMillis();
 
@@ -367,19 +367,25 @@ public class Main extends Application {
         et = System.currentTimeMillis();
         timer = (double) (et-st)/1000;
         System.out.println(timer+"<===TIMER");
-
+//-------------------------------------------------------------------------
         System.out.println("setters");
         st = System.currentTimeMillis();
 
         navigationPageController.setMap(CurMap);
         adminPageController.setMap(CurMap);
+
         et = System.currentTimeMillis();
         timer = (double) (et-st)/1000;
         System.out.println(timer+"<===TIMER");
+
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
         adminPageController.setKiosk(CurMap.getNodes().get(0));
 
 
+    }
+
+    public static void DataStart() throws IOException {
+        //data.map = startMap();
     }
 }

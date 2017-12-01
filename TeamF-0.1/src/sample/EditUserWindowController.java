@@ -84,8 +84,8 @@ public class EditUserWindowController {
 
     //Adds a user based on information in the text fields
     public void addUserButton(){
-        Staff addMe = new Staff(lNameBox.getText(), fNameBox.getText(), getID(),
-                posBox.getText(), emailBox.getText(), usernameBox.getText(), pwBox.getText());
+        Staff addMe = new Staff(fNameBox.getText(), lNameBox.getText(), getID(),
+                usernameBox.getText(), pwBox.getText(), posBox.getText(), emailBox.getText());
         testEmbeddedDB.addStaff(addMe);
         back();
     }
