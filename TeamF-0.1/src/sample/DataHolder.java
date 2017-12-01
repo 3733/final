@@ -29,6 +29,9 @@ public class DataHolder {
     public javafx.scene.image.Image L2Floor;
 
 
+    //List of all Nodes and Edges, a Map
+    public Map graph;
+
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;

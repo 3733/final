@@ -128,21 +128,14 @@ public class NavigationPageController implements Initializable{
 
     private Vector<Node> path = new Vector<Node>();
 
-    private Map CurMap;
+    //private Map CurMap;
 
     private Node Kiosk;
 
     private String filePath = "/sample/UI/Icons/";
 
     public void setMap(Map m) throws IOException{
-        this.CurMap = m;
-        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
-        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
-        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
-        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
-        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
-        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
-        Data.data.currentMap = "1";
+        //this.CurMap = m;
         //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
     }
 
@@ -200,32 +193,32 @@ public class NavigationPageController implements Initializable{
 
     public void findPath(String Start, String End) throws IOException {
         //Returns
-        Node EndNode = SearchEngine.SearchPath(End,CurMap,Kiosk);
+        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,Kiosk);
         System.out.println(EndNode.getLongName()+"<=====END");
 
 
-        Node StartNode = SearchEngine.SearchPath(Start,CurMap,Kiosk);
+        Node StartNode = SearchEngine.SearchPath(Start,Data.data.graph,Kiosk);
         System.out.println(StartNode.getLongName()+"<=====START");
 
         switch (currentAlgo){
             case 1:
                 PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
-                this.path = pathFinder1.executeStrategy(StartNode,EndNode, CurMap);
+                this.path = pathFinder1.executeStrategy(StartNode,EndNode, Data.data.graph);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 2:
                 PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
-                this.path = pathFinder2.executeStrategy(StartNode,EndNode, CurMap);
+                this.path = pathFinder2.executeStrategy(StartNode,EndNode, Data.data.graph);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 3:
                 PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
-                this.path = pathFinder3.executeStrategy(StartNode,EndNode, CurMap);
+                this.path = pathFinder3.executeStrategy(StartNode,EndNode, Data.data.graph);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 4:
                 PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
-                this.path = pathFinder4.executeStrategy(StartNode,EndNode, CurMap);
+                this.path = pathFinder4.executeStrategy(StartNode,EndNode, Data.data.graph);
                 System.out.println(currentAlgo+"<==ALGO USED");
                 break;
         }
@@ -836,13 +829,13 @@ public class NavigationPageController implements Initializable{
     public void settingFields() throws IOException, InterruptedException {
         if (points.getSelectedToggle() == start) {
             String destinationText = destination.getText();
-            startLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
-            System.out.println(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
+            startLabel.setText(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
+            System.out.println(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
         }
         else{
             String destinationText = destination.getText();
-            endLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
-            System.out.println(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
+            System.out.println(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
         }
         go();
     }

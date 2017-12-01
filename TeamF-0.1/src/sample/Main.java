@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -19,6 +20,7 @@ public class Main extends Application implements Data{
 
     private  static String destination;
     private  static Staff loggedInGuy;
+    private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
     private static Scene start;
@@ -52,7 +54,7 @@ public class Main extends Application implements Data{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
+        this.DataStart();
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -70,7 +72,8 @@ public class Main extends Application implements Data{
         navigationPageController = navLoader.getController();
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
-        startMap();
+        //startMap();
+        navigationPageController.setKiosk(data.graph.getNodes().get(0));
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
@@ -262,7 +265,7 @@ public class Main extends Application implements Data{
     public static void main(String[] args) throws IOException{
         long st = System.currentTimeMillis();
 
-        startMap();
+        //startMap();
         launch(args);
 
         long et = System.currentTimeMillis();
@@ -307,7 +310,7 @@ public class Main extends Application implements Data{
         //launch(args);
     }
 
-    public static void startMap() throws IOException{
+    public static Map startMap() throws IOException{
         System.out.println("get edges and nodes");
         long st = System.currentTimeMillis();
         Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
@@ -368,7 +371,9 @@ public class Main extends Application implements Data{
         timer = (double) (et-st)/1000;
         System.out.println(timer+"<===TIMER");
 //-------------------------------------------------------------------------
-        System.out.println("setters");
+        return CurMap;
+
+        /*System.out.println("setters");
         st = System.currentTimeMillis();
 
         navigationPageController.setMap(CurMap);
@@ -380,12 +385,19 @@ public class Main extends Application implements Data{
 
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
-        adminPageController.setKiosk(CurMap.getNodes().get(0));
+        adminPageController.setKiosk(CurMap.getNodes().get(0));*/
 
 
     }
 
-    public static void DataStart() throws IOException {
-        //data.map = startMap();
+    public void DataStart() throws IOException {
+        data.graph = startMap();
+        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
+        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
+        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
+        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
+        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
+        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
+        Data.data.currentMap = "1";
     }
 }
