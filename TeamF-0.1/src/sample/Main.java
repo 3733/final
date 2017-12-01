@@ -373,6 +373,7 @@ public class Main extends Application implements Data{
         adminPageController.setKiosk(CurMap.getNodes().get(0));*/
 
 
+        return CurMap;
     }
 
     public void DataStart() throws IOException {
