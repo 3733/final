@@ -79,7 +79,6 @@ public class AdminPageController implements Initializable{
 
     public void setMap(Map m){
         this.CurMap = m;
-        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
     }
 
     public void setKiosk(Node k){
@@ -297,12 +296,10 @@ public class AdminPageController implements Initializable{
         long st = System.currentTimeMillis();
         //this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
         long et = System.currentTimeMillis();
-        System.out.println(et-st+"<===ALGO");
 
         st = System.currentTimeMillis();
         MultiFloorPathDrawing(path);
         et = System.currentTimeMillis();
-        System.out.println(et-st+"<===DR");
     }
     @FXML
     public void go() throws IOException,InterruptedException{
@@ -324,7 +321,6 @@ public class AdminPageController implements Initializable{
 
     // this function returns the proper image based on the current image string
     public Image selectMap(String currentMap) {
-        System.out.println(currentMap);
         if (currentMap != null) {
             if (currentMap.equals("L2")) {
                 return Data.data.L2Floor;
@@ -340,7 +336,6 @@ public class AdminPageController implements Initializable{
                 return Data.data.thirdFloor;
             }
         }
-        System.out.println("ERROR: INVALID FLOOR ID");
         return Data.data.firstFloor;
     }
 
@@ -438,26 +433,12 @@ public class AdminPageController implements Initializable{
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
         for(Node i: path){
-            System.out.println(i.getLongName()+ "\t"+i.getNodeType());
         }
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        //System.out.println("Reached the multifloor path drawing function");
-        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
         Vector<Vector<Node>> paths = separator2(path);
-        //System.out.println("Size of the vector of paths " + paths.size());
-        /*
-        for (Vector<Node> i: paths) {
-            for (Node j: i){
-                System.out.println(j.getLongName());
-            }
-
-        }*/
-        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
-                //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
@@ -503,7 +484,6 @@ public class AdminPageController implements Initializable{
             }
         }
         map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        //System.out.println("Image set on map");
         return SwingFXUtils.toFXImage(floorImage,null);
     }
 
@@ -520,9 +500,7 @@ public class AdminPageController implements Initializable{
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         for(int i = 0; i < edgeLength; i++ ) {
             Node nodeStart = edges.get(i).getStart();
-            System.out.println("Start: " + nodeStart.getShortName());
             Node nodeEnd = edges.get(i).getEnd();
-            System.out.println("Stop: " + nodeEnd.getShortName());
             pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
             pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
         }
@@ -539,7 +517,6 @@ public class AdminPageController implements Initializable{
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
-        //System.out.println(this.currentAlgo+ "<=======sdfsdfgbsghxbgfgsh");
     }
 
     @FXML
