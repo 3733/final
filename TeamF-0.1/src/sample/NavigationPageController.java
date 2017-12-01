@@ -96,7 +96,7 @@ public class NavigationPageController implements Initializable{
     @FXML
     private Label startLabel, endLabel;
     @FXML
-    private Canvas
+    private Canvas mapCanvas;
 
 
     //other components

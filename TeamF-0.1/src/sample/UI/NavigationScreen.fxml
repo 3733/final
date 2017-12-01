@@ -221,7 +221,7 @@
                               <Image url="@Icons/01_thefirstfloor.png" />
                            </image>
                         </ImageView>
-                        <Canvas height="841.0" width="1266.0" />
+                        <Canvas fx:id="mapCanvas" height="841.0" width="1266.0" />
                      </children>
                   </StackPane>
                </content>
