@@ -33,6 +33,7 @@ public class LoginPageController {
         System.out.println(username.getText());
         System.out.println(password.getText());
         if(checkUser(username.getText(), password.getText())){
+            invalidLoginText.setVisible(false);
             Main.adminScreen();
         }else {
             invalidLoginText.setVisible(true);
