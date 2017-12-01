@@ -157,6 +157,7 @@ public class NavigationPageController implements Initializable{
                 "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
         lowerOneList.setItems(lowerOneItems);
 
+        //time - 0
         //adding all possible entries
         allEntries = FXCollections.observableArrayList("Restroom; S elevator; 1st floor", "Restroom; BTM conference center; 3rd floor",
                 "Elevator S G", "Infusion Waiting Area", "BTM Security Desk", "Clinical Trials", "Schlagler Innovation Lobby",
@@ -205,7 +206,10 @@ public class NavigationPageController implements Initializable{
         ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
         groundList.setItems(groundItems);
         end.setSelected(true);
+
+        //time - 0.506
         map.setImage(new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png")));
+
         tabPane.getSelectionModel().select(floorOne);
         stairs.setSelected(true);
         elevator.setSelected(true);
@@ -216,6 +220,7 @@ public class NavigationPageController implements Initializable{
                 destination.setText(newValue);
             }
         });
+
         twoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -299,15 +304,16 @@ public class NavigationPageController implements Initializable{
     //setting start and end nodes
     @FXML
     public void settingFields() throws IOException, InterruptedException {
+        String destinationText = destination.getText();
         if (points.getSelectedToggle() == start) {
-            String destinationText = destination.getText();
             startLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
         }
         else{
-            String destinationText = destination.getText();
             endLabel.setText(SearchEngine.SearchPath(destinationText,CurMap,Kiosk).getLongName().trim());
+            if(!destinationText.equals("")) {
+                go();
+            }
         }
-        go();
     }
 
     //sets invalid email label when necessary for errorhandling
@@ -683,7 +689,6 @@ public class NavigationPageController implements Initializable{
                 searchList.setItems(filteredEntries);
 
             }
-
         });
 
         searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -721,7 +726,7 @@ public class NavigationPageController implements Initializable{
         });
 
         map.setOnScroll(e -> {
-            double delta = e.getDeltaY();
+            double delta = -e.getDeltaY();
             Rectangle2D viewport = map.getViewport();
 
             double scale = clamp(Math.pow(1.01, delta),
