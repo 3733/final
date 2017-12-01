@@ -234,6 +234,7 @@ public class NavigationPageController implements Initializable{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
+
     }
 
     @FXML
@@ -243,6 +244,7 @@ public class NavigationPageController implements Initializable{
             Data.data.floorList.set(i,false);
         }
         findPath(startLabel.getText(),endLabel.getText());
+
         searchList.setVisible(false);
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
@@ -448,7 +450,6 @@ public class NavigationPageController implements Initializable{
             }
         }
         //String floor = path.get(0).getFloor();
-
     }
 
     // Purpose: Draw a path of nodes on the map
