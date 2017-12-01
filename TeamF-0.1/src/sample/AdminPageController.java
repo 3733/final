@@ -509,7 +509,7 @@ public class AdminPageController implements Initializable{
 
     //Purpose: This draws all the nodes and edges currently in the database
     //Used for debugging and admin
-    @FXML
+    /*@FXML
     public void drawAll() throws IOException{
         BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
         Graphics2D pathImage = firstFloor.createGraphics();
@@ -533,7 +533,7 @@ public class AdminPageController implements Initializable{
             pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-    }
+    }*/
 
     private int currentAlgo =1;
 

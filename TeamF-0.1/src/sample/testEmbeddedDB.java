@@ -4,6 +4,7 @@ import com.opencsv.CSVWriter;
 
 import java.io.FileWriter;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -398,11 +399,10 @@ public class testEmbeddedDB {
 
     }
 
-    public static Vector<Edge> getAllEdges(Vector<Node> n){
+    public static Vector<Edge> getAllEdges(HashMap<String, Node> n){
         //ArrayList<Node> allNodes = new ArrayList<Node>();
         Vector<Edge> allEdges = new Vector<Edge>();
         try{
-            Edge e;
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
@@ -417,7 +417,7 @@ public class testEmbeddedDB {
                 Node startNode;
                 Node endNode;
 
-                e = new Edge(edgeID, startNode, endNode);
+                Edge e = new Edge(edgeID, n.get(start), n.get(end));
 
                 allEdges.add(e);
                 //System.out.println("nodeID: " + name);
@@ -854,11 +854,19 @@ public class testEmbeddedDB {
 
     public static Map dbBuildMap(){
 
-        Vector nodes = getAllNodes();
+        Vector<Node> nodes = getAllNodes();
 
-        Vector edges = getAllEdges(nodes);
+        HashMap<String, Node> nodeMap = new HashMap<>();
+
+        for(Node n : nodes){
+            nodeMap.put(n.getNodeID(), n);
+        }
+
+        Vector edges = getAllEdges(nodeMap);
 
         Map CurMap = new Map(nodes, edges);
+
+        CurMap.BuildMap();
 
         return CurMap;
     }

@@ -65,12 +65,18 @@ public class Main extends Application {
         loginPageController.setMainController(this);
         login = new Scene(LogIn);
 
+        Map CurMap = startMap();
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
         navigationPageController = navLoader.getController();
         navigationPageController.setMainController(this);
+        navigationPageController.setMap(CurMap);
+        adminPageController.setMap(CurMap);
+        //Default kiosk location is the Center for International Medecine
+        navigationPageController.setKiosk(CurMap.getNodes().get(0));
+        adminPageController.setKiosk(CurMap.getNodes().get(0));
         map = new Scene(Nav);
-        startMap();
+        //startMap();
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
@@ -178,7 +184,7 @@ public class Main extends Application {
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
-        startMap();
+        //startMap();
         if(getDestination().length() > 0){
             navigationPageController.setSearch(getDestination());
             navigationPageController.settingFields();
@@ -265,7 +271,8 @@ public class Main extends Application {
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
-        startMap();
+        //startMap();
+        testEmbeddedDB.dbBuildMap();
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
@@ -299,9 +306,11 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void startMap() throws IOException{
+    public static Map startMap() throws IOException{
 
-        Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
+        Map CurMap = testEmbeddedDB.dbBuildMap();
+
+        /*Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
 
         Vector <Edge> EdgesBad = testEmbeddedDB.getAllEdges();
 
@@ -339,9 +348,9 @@ public class Main extends Application {
 
         Map CurMap = new Map(dbnodes, EdgesGood);
 
-        CurMap.BuildMap();
+        CurMap.BuildMap();*/
 
-/*
+
         for (int i =0; i<CurMap.getNodes().size();i++){
 
             System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
@@ -351,11 +360,13 @@ public class Main extends Application {
                 System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
             }
         }
-*/
+
         navigationPageController.setMap(CurMap);
         adminPageController.setMap(CurMap);
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
         adminPageController.setKiosk(CurMap.getNodes().get(0));
+
+        return CurMap;
     }
 }
