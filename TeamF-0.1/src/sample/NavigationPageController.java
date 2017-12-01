@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -23,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Line;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -45,6 +48,12 @@ public class NavigationPageController implements Initializable{
     //FXML UI Components
     @FXML
     private JFXListView directionSteps;
+
+    @FXML
+    private AnchorPane anchor;
+
+    @FXML
+    private javafx.scene.canvas.Canvas pathCanvas;
 
     @FXML
     private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
@@ -126,10 +135,22 @@ public class NavigationPageController implements Initializable{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Data.data.gc = pathCanvas.getGraphicsContext2D();
+        String filePath = "/sample/UI/Icons/";
+        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
+        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
+        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
+        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
+        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
+        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
+
+        map.setImage(Data.data.firstFloor);
+
         //disables the bars and starts up the zoom function
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
+
 
         // Populating the lists on the bottom left of the UI
         // Third Floor
@@ -220,7 +241,6 @@ public class NavigationPageController implements Initializable{
 
         end.setSelected(true);
         map.setImage(new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png")));
-        tabPane.getSelectionModel().select(floorOne);
         stairs.setSelected(true);
         elevator.setSelected(true);
 
@@ -334,12 +354,6 @@ public class NavigationPageController implements Initializable{
 
     public void setMap(Map m) throws IOException{
         this.CurMap = m;
-        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
-        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
-        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
-        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
-        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
-        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
         Data.data.currentMap = "1";
     }
 
@@ -347,37 +361,71 @@ public class NavigationPageController implements Initializable{
     // Change Floor Methods
     @FXML
     public void changeFloorL1() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
+        //tabPane.getSelectionModel().select(floorLowerOne);
+        testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
     }
 
     @FXML
     public void changeFloorL2() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
+        //tabPane.getSelectionModel().select(floorLowerTwo);
+        testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
     }
 
     @FXML
     public void changeFloor1() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.firstFloor);
+        //tabPane.getSelectionModel().select(floorOne);
+        testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
     }
 
     @FXML
     public void changeFloor2() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        if(Data.data.gc != null){
+             Data.data.gc.clearRect(0, 0, x, y);
+        }
         map.setImage(Data.data.secondFloor);
+        //tabPane.getSelectionModel().select(floorTwo);
+        testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
     }
 
     @FXML
     public void changeFloor3() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        if(Data.data.gc != null) {
+            Data.data.gc.clearRect(0, 0, x, y);
+        }
+        //tabPane.getSelectionModel().select(floorThree);
         map.setImage(Data.data.thirdFloor);
+        testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
     }
 
     @FXML
     public void changeFloorG() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,1000,1000);
         map.setImage(Data.data.GFloor);
+        //tabPane.getSelectionModel().select(floorGround);
+        testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
     }
 
@@ -400,7 +448,7 @@ public class NavigationPageController implements Initializable{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Finding Functions
 
-    public void findPath(String Start, String End) throws IOException {
+    public void findPath(String Start, String End) throws IOException, InterruptedException {
         //Returns
         Node EndNode = SearchEngine.SearchPath(End,CurMap,Kiosk);
         System.out.println(EndNode.getLongName()+"<=====END");
@@ -437,8 +485,6 @@ public class NavigationPageController implements Initializable{
 
         MultiFloorPathDrawing(this.path);
 
-
-
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
         email.setVisible(true);
@@ -450,9 +496,6 @@ public class NavigationPageController implements Initializable{
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
-        for(int i = 0; i < Data.data.floorList.size() ; i++){
-            Data.data.floorList.set(i,false);
-        }
         findPath(startLabel.getText(),endLabel.getText());
         searchList.setVisible(false);
         directionSteps.setVisible(true);
@@ -538,7 +581,7 @@ public class NavigationPageController implements Initializable{
     }
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
-    public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
+    public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         ObservableList<String> populateSteps = FXCollections.observableArrayList();
@@ -562,7 +605,6 @@ public class NavigationPageController implements Initializable{
             for (Node j: i){
                 System.out.println(j.getLongName());
             }
-
         }*/
         //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
         //paths.add(path);
@@ -573,29 +615,17 @@ public class NavigationPageController implements Initializable{
                 //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
-                    Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
-                    Data.data.currentMap = "L2";
-                    Data.data.floorList.set(0,true);
+                    Data.data.pathL2 = floorPath;
                 } else if (pathFloor.equals("L1")) {
-                    Data.data.L1Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L1Floor, null));
-                    Data.data.currentMap = "L1";
-                    Data.data.floorList.set(1,true);
+                    Data.data.pathL1 = floorPath;
                 } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
-                    Data.data.GFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.GFloor, null));
-                    Data.data.currentMap = "G";
-                    Data.data.floorList.set(2,true);
+                    Data.data.pathG = floorPath;
                 } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
-                    Data.data.firstFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.firstFloor, null));
-                    Data.data.currentMap = "1";
-                    Data.data.floorList.set(3,true);
+                    Data.data.pathFirst = floorPath;
                 } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
-                    Data.data.secondFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.secondFloor, null));
-                    Data.data.currentMap = "2";
-                    Data.data.floorList.set(4,true);
+                    Data.data.pathSecond = floorPath;
                 } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
-                    Data.data.thirdFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.thirdFloor, null));
-                    Data.data.currentMap = "3";
-                    Data.data.floorList.set(5,true);
+                    Data.data.pathThird = floorPath;
                 }
             }
         }
@@ -604,33 +634,30 @@ public class NavigationPageController implements Initializable{
 
     // Purpose: Draw a path of nodes on the map
     @FXML
-    public Image testDrawDirections(Vector<Node> path, BufferedImage floorImage) throws IOException {
-        Graphics2D pathImage = floorImage.createGraphics();
-        int length = path.size();
-        String nameDest = path.get(length-1).getShortName();
-        String nameDept = path.get(0).getShortName();
-
-        // Setting up the proper color settings
-        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
-        // Iterate through all the path nodes to draw the path
-        for(int i = 0; i < length ; i++) {
-            Node node = path.get(i);
-            //System.out.println("This is node: " + node.getNodeID());
-            if(i + 1 < length){
-                Node node2 = path.get(i+1);
-                //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
-                // Lines are drawn offset,
-                if(!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                    pathImage.setColor(new java.awt.Color(0, 0, 0)); // This color is black
-                    pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(), node2.getxCoordinate(), node2.getyCoordinate());
+    public void testDrawDirections(Vector<Node> path) {
+        if(path != null) {
+            int length = path.size();
+            String nameDest = path.get(length - 1).getShortName();
+            String nameDept = path.get(0).getShortName();
+            // Setting up the proper color settings
+            Data.data.gc.setLineWidth(2);
+            Data.data.gc.setStroke(javafx.scene.paint.Color.BLACK);
+            Data.data.gc.stroke();
+            // Iterate through all the path nodes to draw the path
+            for (int i = 0; i < length; i++) {
+                Node node = path.get(i);
+                //System.out.println("This is node: " + node.getNodeID());
+                if (i + 1 < length) {
+                    Node node2 = path.get(i + 1);
+                    //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
+                    // Lines are drawn offset,
+                    if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
+                        Data.data.gc.strokeLine(node.getxCoordinate() / 4.4 + 2, node.getyCoordinate() / 4.4 + 2, node2.getxCoordinate() / 4.4 + 2, node2.getyCoordinate() / 4.4 + 2);
+                    }
                 }
             }
         }
-        map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        //System.out.println("Image set on map");
-        return SwingFXUtils.toFXImage(floorImage,null);
     }
-
 
     //Purpose: This draws all the nodes and edges currently in the database
     //Used for debugging and admin
@@ -774,36 +801,10 @@ public class NavigationPageController implements Initializable{
     // Purpose: Method to clear the path on the map when the user presses clear map
     @FXML
     public void clear() throws FileNotFoundException{
-        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
-        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
-        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
-        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
-        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
-        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
-        map.setImage(selectMap(Data.data.currentMap));
+        Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
-    }
-
-    // Purpose: This function returns the proper image based on the current image string
-    public Image selectMap(String currentMap) {
-        if (currentMap != null) {
-            if (currentMap.equals("L2")) {
-                return Data.data.L2Floor;
-            } else if (currentMap.equals("L1")) {
-                return Data.data.L1Floor;
-            } else if (currentMap.equals("0G") || currentMap.equals("G")) {
-                return Data.data.GFloor;
-            } else if (currentMap.equals("01") || currentMap.equals("1")) {
-                return Data.data.firstFloor;
-            } else if (currentMap.equals("02") || currentMap.equals("2")) {
-                return Data.data.secondFloor;
-            } else if (currentMap.equals("03") || currentMap.equals("3")) {
-                return Data.data.thirdFloor;
-            }
-        }
-        return Data.data.firstFloor;
     }
 
     // Purpose: Send an email when user clicks send email button
