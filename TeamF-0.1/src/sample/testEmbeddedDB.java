@@ -414,8 +414,8 @@ public class testEmbeddedDB {
                 String start = r.getString("startnode");
                 String end = r.getString("endnode");
 
-                //Node startNode = testEmbeddedDB.getNode(start);
-                //Node endNode = testEmbeddedDB.getNode(end);
+                Node startNode;
+                Node endNode;
 
                 e = new Edge(edgeID, startNode, endNode);
 
@@ -856,7 +856,7 @@ public class testEmbeddedDB {
 
         Vector nodes = getAllNodes();
 
-        Vector
+        Vector edges = getAllEdges(nodes);
 
         Map CurMap = new Map(nodes, edges);
 
