@@ -95,6 +95,8 @@ public class NavigationPageController implements Initializable{
     private String defaultStart;
     @FXML
     private Label startLabel, endLabel;
+    @FXML
+    private Canvas
 
 
     //other components
@@ -120,6 +122,10 @@ public class NavigationPageController implements Initializable{
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
+
+        //binding items to grow with sizes
+        map.fitWidthProperty();
+
 
         //popluating list view -- three
         ObservableList<String> threeItems =FXCollections.observableArrayList (
@@ -181,7 +187,7 @@ public class NavigationPageController implements Initializable{
                 "Carrie M. Hall Conference Center Floor 2", "Pat's Place Floor 2", "15 Lobby Entrance Floor 2", "Ambulance Parking Exit Floor 1",
                 "Waiting Room 1 Floor 1", "Connor's Center Security Desk Floor 1", "Restroom G1 Floor 1", "Exit 2 Floor 1", "Asthma Research Floor 1",
                 "Wound and Ambulatory 1", "Ocupational Health Floor 1", "Restroom F1 Floor 1", "Restroom H1 Floor 1", "Ambulatory X-Ray Floor 1",
-                "Rehabilitation Services Floor 1", "Staircase H2 Floor 1", "Lower Pike Hallway Exit Lobby", "Lobby Shattuck Street",
+                "Rehabilitation Services Floor 1", "Staircase H2 Floor 1", "Lobby Shattuck Street",
                 "Shattuck Street Lobby 1", "Shattuck Street Lobby Exit", "Shattuck Street Lobby 2", "Lobby Vending Machine", "Shattuck Street Lobby 3",
                 "Shattuck Street Lobby ATM", "Tower Lobby Entrance 1", "Tower Elevator Entrance", "Tower Staff Entrance",
                 "Center for International Medicine", "Spiritual Care Office", "Tower Medical Cashier", "Multifaith Chapel",
@@ -372,8 +378,10 @@ public class NavigationPageController implements Initializable{
 
     //functions to open screens
     @FXML
-    public void login(){
+    public void login() throws IOException{
         Main.loginScreen();
+        clearFields();
+        clear();
     }
 
     @FXML
@@ -381,8 +389,10 @@ public class NavigationPageController implements Initializable{
 
     // Button to return to the welcome screen
     @FXML
-    public void back(){
+    public void back() throws IOException{
         Main.startScreen();
+        clearFields();
+        clear();
     }
 
 
@@ -420,6 +430,17 @@ public class NavigationPageController implements Initializable{
         sendButton.setVisible(true);
     }
 
+
+    @FXML
+    public void clearFields(){
+        double width = map.getImage().getWidth();
+        double height = map.getImage().getHeight();
+        endLabel.setText("");
+        startLabel.setText("Lower Pike Hallway Exit Lobby");
+        destination.setText("");
+        directionSteps.getItems().clear();
+        reset(map, width, height);
+    }
 
     @FXML
     public void go() throws IOException,InterruptedException{

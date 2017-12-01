@@ -9,6 +9,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
@@ -18,6 +19,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -212,11 +214,16 @@
          <children>
             <ScrollPane fx:id="scrollMap" prefHeight="810.0" prefWidth="1146.0">
                <content>
-                  <ImageView fx:id="map" fitHeight="841.0" fitWidth="1266.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/01_thefirstfloor.png" />
-                     </image>
-                  </ImageView>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="map" fitHeight="841.0" fitWidth="1266.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/01_thefirstfloor.png" />
+                           </image>
+                        </ImageView>
+                        <Canvas height="841.0" width="1266.0" />
+                     </children>
+                  </StackPane>
                </content>
             </ScrollPane>
             <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
