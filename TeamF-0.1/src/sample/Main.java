@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -301,10 +302,12 @@ public class Main extends Application {
 
     public static void startMap() throws IOException{
 
+        double startTime = System.currentTimeMillis();
         Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
 
         Vector <Edge> EdgesBad = testEmbeddedDB.getAllEdges();
-
+        double stopTime4 = System.currentTimeMillis();
+        System.out.println("Time to get all nodes and edges: " + (stopTime4 - startTime));
         Vector <Edge> EdgesGood = new Vector<>();
 
 
@@ -339,9 +342,14 @@ public class Main extends Application {
 
         Map CurMap = new Map(dbnodes, EdgesGood);
 
+        double stopTime3 = System.currentTimeMillis();
+        System.out.println("Time for for loops: " + (stopTime3 - stopTime4));
         CurMap.BuildMap();
 
-/*
+        double stopTime = System.currentTimeMillis();
+        System.out.println("Time to build map: " + (stopTime3 - startTime));
+        System.out.println("Time CurMap.BuildMap(): " + (stopTime - stopTime3));
+        /*
         for (int i =0; i<CurMap.getNodes().size();i++){
 
             System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
@@ -352,10 +360,13 @@ public class Main extends Application {
             }
         }
 */
+        double startTime2 = System.currentTimeMillis();
         navigationPageController.setMap(CurMap);
         adminPageController.setMap(CurMap);
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
         adminPageController.setKiosk(CurMap.getNodes().get(0));
+        double stopTime2 = System.currentTimeMillis();
+        System.out.println("Time to set maps: " + (stopTime2 - startTime2));
     }
 }

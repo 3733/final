@@ -1,7 +1,10 @@
 package sample;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 
+import java.awt.image.VolatileImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +24,22 @@ public class DataHolder {
     public Vector<Node> path;
 
     // The javafx images on each of the maps
-    public javafx.scene.image.Image firstFloor;
-    public javafx.scene.image.Image secondFloor;
-    public javafx.scene.image.Image thirdFloor;
-    public javafx.scene.image.Image GFloor;
-    public javafx.scene.image.Image L1Floor;
-    public javafx.scene.image.Image L2Floor;
+    public static javafx.scene.image.Image firstFloor;
+    public static javafx.scene.image.Image secondFloor;
+    public static javafx.scene.image.Image thirdFloor;
+    public static javafx.scene.image.Image GFloor;
+    public static javafx.scene.image.Image L1Floor;
+    public static javafx.scene.image.Image L2Floor;
 
+    // Store the path for each floor
+    public Vector<Node> pathFirst;
+    public Vector<Node> pathSecond;
+    public Vector<Node> pathThird;
+    public Vector<Node> pathL2;
+    public Vector<Node> pathL1;
+    public Vector<Node> pathG;
+
+    public javafx.scene.canvas.GraphicsContext gc;
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;
