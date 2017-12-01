@@ -1,10 +1,10 @@
 package sample;
 
-import com.sun.speech.freetts.VoiceManager;
+//import com.sun.speech.freetts.VoiceManager;
 
-public class SingletonTTS implements Voice{
+//public class SingletonTTS implements Voice{
 
-    private static SingletonTTS INSTANCE;
+    /*private static SingletonTTS INSTANCE;
     private static String name = "kevin16";
     private com.sun.speech.freetts.Voice voice = VoiceManager.getInstance().getVoice(this.name);
 
@@ -39,5 +39,5 @@ public class SingletonTTS implements Voice{
 // Voice voice = new Voice("kevin16");
     // String sayme = "I suck because I just don't work.";
     // voice.say(sayme);
-
-}
+*/
+//}

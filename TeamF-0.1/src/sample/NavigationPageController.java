@@ -43,6 +43,9 @@ import javafx.util.Duration;
 
 public class NavigationPageController implements Initializable{
 
+    long time1;
+    long time2;
+
     //new components
     @FXML
     private JFXHamburger hamburger;
@@ -223,7 +226,9 @@ public class NavigationPageController implements Initializable{
                 break;
         }
 
+        time2 = System.currentTimeMillis();
 
+        System.out.println("thing words are here " + (time2 - time1));
 
 
         MultiFloorPathDrawing(this.path);
@@ -828,6 +833,7 @@ public class NavigationPageController implements Initializable{
     //setting start and end nodes
     @FXML
     public void settingFields() throws IOException, InterruptedException {
+        time1 = System.currentTimeMillis();
         if (points.getSelectedToggle() == start) {
             String destinationText = destination.getText();
             startLabel.setText(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
@@ -838,6 +844,8 @@ public class NavigationPageController implements Initializable{
             endLabel.setText(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
             System.out.println(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
         }
+
+
         go();
     }
 

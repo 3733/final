@@ -1,6 +1,6 @@
 package sample;
 
-import com.sun.speech.freetts.VoiceManager;
+//import com.sun.speech.freetts.VoiceManager;
 
 // This is used to make sure that the singleton always implements the correct functionality.
 // The singleton uses the logic here in the singleton class.
