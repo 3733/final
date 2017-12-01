@@ -136,21 +136,12 @@ public class NavigationPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Data.data.gc = pathCanvas.getGraphicsContext2D();
-        String filePath = "/sample/UI/Icons/";
-        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
-        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
-        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
-        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
-        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
-        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
-
         map.setImage(Data.data.firstFloor);
 
         //disables the bars and starts up the zoom function
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
-
 
         // Populating the lists on the bottom left of the UI
         // Third Floor
@@ -238,9 +229,8 @@ public class NavigationPageController implements Initializable{
                 "Gynecology");
         searchList.setItems(allEntries);
 
-
         end.setSelected(true);
-        map.setImage(new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png")));
+        map.setImage(Data.data.firstFloor);
         stairs.setSelected(true);
         elevator.setSelected(true);
 
@@ -365,7 +355,6 @@ public class NavigationPageController implements Initializable{
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
-        //tabPane.getSelectionModel().select(floorLowerOne);
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
     }
@@ -376,7 +365,6 @@ public class NavigationPageController implements Initializable{
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
-        //tabPane.getSelectionModel().select(floorLowerTwo);
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
     }
@@ -387,7 +375,6 @@ public class NavigationPageController implements Initializable{
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.firstFloor);
-        //tabPane.getSelectionModel().select(floorOne);
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
     }
@@ -400,7 +387,6 @@ public class NavigationPageController implements Initializable{
              Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.secondFloor);
-        //tabPane.getSelectionModel().select(floorTwo);
         testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
     }
@@ -412,7 +398,6 @@ public class NavigationPageController implements Initializable{
         if(Data.data.gc != null) {
             Data.data.gc.clearRect(0, 0, x, y);
         }
-        //tabPane.getSelectionModel().select(floorThree);
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
@@ -424,7 +409,6 @@ public class NavigationPageController implements Initializable{
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,1000,1000);
         map.setImage(Data.data.GFloor);
-        //tabPane.getSelectionModel().select(floorGround);
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
     }
@@ -599,15 +583,6 @@ public class NavigationPageController implements Initializable{
         //System.out.println("Reached the multifloor path drawing function");
         //System.out.println("This is the first node floor: " + path.get(0).getFloor());
         Vector<Vector<Node>> paths = separator(path);
-        //System.out.println("Size of the vector of paths " + paths.size());
-        /*
-        for (Vector<Node> i: paths) {
-            for (Node j: i){
-                System.out.println(j.getLongName());
-            }
-        }*/
-        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
@@ -629,9 +604,27 @@ public class NavigationPageController implements Initializable{
                 }
             }
         }
+        setMap(Data.data.currentMap);
+
         //String floor = path.get(0).getFloor();
     }
 
+    public void setMap(String map) {
+        map.replaceAll("\\s+","");
+        if(map.equals("L2")) {
+            changeFloorL2();
+        } else if(map.equals("L1")) {
+            changeFloorL1();
+        }else if(map.equals("G")) {
+            changeFloorG();
+        } else if(map.equals("01") || map.equals("1")) {
+            changeFloor1();
+        } else if(map.equals("02") || map.equals("2")) {
+            changeFloor2();
+        } else if(map.equals("03") || map.equals("3")){
+            changeFloor3();
+        }
+    }
     // Purpose: Draw a path of nodes on the map
     @FXML
     public void testDrawDirections(Vector<Node> path) {
@@ -802,6 +795,13 @@ public class NavigationPageController implements Initializable{
     @FXML
     public void clear() throws FileNotFoundException{
         Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
+        Data.data.pathThird = null;
+        Data.data.pathSecond = null;
+        Data.data.pathFirst = null;
+        Data.data.pathL1 = null;
+        Data.data.pathL2 = null;
+        Data.data.pathG = null;
+
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }

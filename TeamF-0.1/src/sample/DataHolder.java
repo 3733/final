@@ -1,6 +1,7 @@
 package sample;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 
@@ -24,12 +25,12 @@ public class DataHolder {
     public Vector<Node> path;
 
     // The javafx images on each of the maps
-    public static javafx.scene.image.Image firstFloor;
-    public static javafx.scene.image.Image secondFloor;
-    public static javafx.scene.image.Image thirdFloor;
-    public static javafx.scene.image.Image GFloor;
-    public static javafx.scene.image.Image L1Floor;
-    public static javafx.scene.image.Image L2Floor;
+    public javafx.scene.image.Image firstFloor;
+    public javafx.scene.image.Image secondFloor;
+    public javafx.scene.image.Image thirdFloor;
+    public javafx.scene.image.Image GFloor;
+    public javafx.scene.image.Image L1Floor;
+    public javafx.scene.image.Image L2Floor;
 
     // Store the path for each floor
     public Vector<Node> pathFirst;
@@ -43,4 +44,15 @@ public class DataHolder {
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;
+
+    public DataHolder() {
+        String filePath = "/sample/UI/Icons/";
+        this.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
+        this.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
+        this.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
+        this.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
+        this.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
+        this.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
+    }
+
 }
