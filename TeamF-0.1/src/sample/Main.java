@@ -14,9 +14,11 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
-public class Main extends Application implements Data{
+public class Main extends Application implements Data
+{
 
     private  static String destination;
     private  static Staff loggedInGuy;
@@ -38,7 +40,6 @@ public class Main extends Application implements Data{
     private static Scene genError;
     private static Scene editUserWin;
 
-
     public static StartPageController  startPageController = new StartPageController();
     public static LoginPageController loginPageController = new LoginPageController();
     public static NavigationPageController navigationPageController = new NavigationPageController();
@@ -51,6 +52,17 @@ public class Main extends Application implements Data{
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
+
+    // The memento pattern needs these objects to be created in Main
+    // This is where the states are being set and stored. When a window is initilized, set here.
+    public static Originator originator = new Originator();
+    // This is the memento saved states array getup. This is only for the start page because that is where the application time-outs to.
+    public static ArrayList<Originator.MementoWindow> savedStates = new ArrayList<Originator.MementoWindow>();
+    //    originator.set(start); // For the memento
+
+    // This is for the memento pattern. It is the auto-logout timer that goes to the startpage.
+    public static final long minutestoTimeout = 1 * 60 * 1000; // in milliseconds
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -157,6 +169,7 @@ public class Main extends Application implements Data{
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
+
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
@@ -164,6 +177,9 @@ public class Main extends Application implements Data{
         Data.data.YWindow = stage.getY();
         destination = "";
     }
+
+
+
 
     public static void loginScreen(){
         //SingletonTTS.getInstance().say("Hey Sexy?");
@@ -263,6 +279,12 @@ public class Main extends Application implements Data{
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
+
+        // For memento - Andrew S
+        originator.set(start);
+        // This is the state to revert to.
+        savedStates.add(originator.saveToMemento());
+
         long st = System.currentTimeMillis();
 
         //startMap();
