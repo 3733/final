@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
@@ -24,5 +25,7 @@
             <Font size="24.0" />
          </font>
       </Label>
+      <Label layoutX="203.0" layoutY="82.0" text="Please describe your problem below:" />
+      <JFXTextArea layoutX="69.0" layoutY="145.0" />
    </children>
 </AnchorPane>
