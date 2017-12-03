@@ -430,6 +430,8 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void help(){Main.genErrorScreen();}
 
+
+    // We need to do the auto-logout here.
     // Button to return to the welcome screen
     @FXML
     public void back(){

@@ -444,7 +444,7 @@ public class AdminPageController implements Initializable{
 
         Vector<Vector<Node>> paths = separator2(path);
 
-       
+
         //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
         //paths.add(path);
 

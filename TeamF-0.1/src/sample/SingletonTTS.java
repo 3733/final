@@ -4,8 +4,8 @@ import com.sun.speech.freetts.VoiceManager;
 
 public class SingletonTTS implements Voice{
 
-    private static SingletonTTS INSTANCE;
-    private static String name = "kevin16";
+    private volatile static SingletonTTS INSTANCE;
+    private static final String name = "kevin16";
     private com.sun.speech.freetts.Voice voice = VoiceManager.getInstance().getVoice(this.name);
 
     private SingletonTTS() {}
