@@ -39,7 +39,8 @@ public class MapEditPageController implements Initializable{
     private JFXTabPane tabPane;
     @FXML
     private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk;
-
+    @FXML
+    private JFXButton editNodeBtn, editEdgeBtn;
 
     //other variables
     private Main mainController;
@@ -179,12 +180,12 @@ public class MapEditPageController implements Initializable{
     //functions to open pages
     @FXML
     public void editNodes(){
-        Main.nodeEditScreen();
+        Main.nodeEditScreen(editNodeBtn);
     }
 
     @FXML
     public void editEdges(){
-        Main.edgeEditScreen();
+        Main.edgeEditScreen(editEdgeBtn);
     }
 
     @FXML

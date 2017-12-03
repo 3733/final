@@ -98,7 +98,8 @@ public class NavigationPageController implements Initializable, Data{
     private StackPane stackPane;
     @FXML
     private AnchorPane mainAnchor;
-
+    @FXML
+    private JFXButton loginButton;
 
     //other components
     private Main mainController;
@@ -376,7 +377,7 @@ public class NavigationPageController implements Initializable, Data{
     //functions to open screens
     @FXML
     public void login() throws IOException{
-        Main.loginScreen();
+        Main.loginScreen(loginButton);
         clearFields();
         clear();
     }

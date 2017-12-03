@@ -44,7 +44,7 @@
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <JFXBadge prefHeight="25.0" prefWidth="25.0" />
-                                    <JFXButton contentDisplay="CENTER" onAction="#login" ripplerFill="#8c8c8c" text="Log In">
+                                    <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" ripplerFill="#8c8c8c" text="Log In">
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
@@ -59,6 +59,11 @@
                                        <VBox.margin>
                                           <Insets left="25.0" />
                                        </VBox.margin>
+                                    </JFXButton>
+                                    <JFXButton fx:id="loginButton" contentDisplay="CENTER" layoutX="35.0" layoutY="36.0" onAction="#login" ripplerFill="#8c8c8c" text="Log In">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
                                     </JFXButton>
                                  </children>
                               </VBox>

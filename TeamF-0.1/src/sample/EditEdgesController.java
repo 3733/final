@@ -23,6 +23,8 @@ public class EditEdgesController {
     private JFXButton editEdgebtn;
     @FXML
     private JFXButton removeEdgebtn;
+    @FXML
+    private JFXButton close;
 
     private Main mainController;
 
@@ -32,6 +34,10 @@ public class EditEdgesController {
 
     public void addEdgeButton(){
         testEmbeddedDB.addEdges(edgeIDField.getText(), startNodeField.getText(), endNodeField.getText());
+        edgeIDField.clear();
+        startNodeField.clear();
+        endNodeField.clear();
+        Main.closePopUp(addEdgebtn);
     }
     public void editEdgeButton(){
         if(!edgeIDField.getText().equals(null) && testEmbeddedDB.getEdge(edgeIDField.getText())!=null) {
@@ -41,13 +47,22 @@ public class EditEdgesController {
             if (!endNodeField.getText().equals(null)) {
                 testEmbeddedDB.updateEdgeEnd(edgeIDField.getText(), endNodeField.getText());
             }
+            edgeIDField.clear();
+            startNodeField.clear();
+            endNodeField.clear();
+            Main.closePopUp(editEdgebtn);
         }
     }
     public void removeEdgeButton(){
         testEmbeddedDB.removeEdge(edgeIDField.getText());
+        edgeIDField.clear();
+        startNodeField.clear();
+        endNodeField.clear();
+        Main.closePopUp(removeEdgebtn);
     }
 
     public void openMapEditing() {
         Main.mapEditScreen();
+        Main.closePopUp(close);
     }
 }
