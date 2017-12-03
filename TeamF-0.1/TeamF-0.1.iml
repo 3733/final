@@ -15,11 +15,6 @@
     <orderEntry type="library" name="jfoenix" level="application" />
     <orderEntry type="library" name="mail" level="application" />
     <orderEntry type="library" name="javax.mail" level="application" />
-    <orderEntry type="library" name="MapIteration2v6" level="project" />
-    <orderEntry type="library" name="jfoenix-1.10.0" level="project" />
-    <orderEntry type="library" name="activation" level="project" />
-    <orderEntry type="library" name="cmu_us_kal" level="project" />
-    <orderEntry type="library" name="en_us" level="project" />
-    <orderEntry type="library" name="freetts" level="project" />
+    <orderEntry type="library" name="cmu_us_kal" level="application" />
   </component>
 </module>
