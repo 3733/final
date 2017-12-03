@@ -270,7 +270,7 @@
                <content>
                   <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Canvas height="812.0" width="1115.0" />
+                        <Canvas fx:id="pathCanvas" height="812.0" width="1115.0" />
                         <ImageView fx:id="map" fitHeight="841.0" fitWidth="1246.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/01_thefirstfloor.png" />

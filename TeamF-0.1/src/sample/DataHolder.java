@@ -1,6 +1,6 @@
 package sample;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+//mport com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
