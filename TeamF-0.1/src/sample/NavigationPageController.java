@@ -31,13 +31,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
 
 public class NavigationPageController implements Initializable, Data{
@@ -98,6 +92,10 @@ public class NavigationPageController implements Initializable, Data{
     private StackPane stackPane;
     @FXML
     private AnchorPane mainAnchor;
+    @FXML
+    private VBox adminBox;
+    @FXML
+    private JFXButton loginButton;
 
 
     //other components
@@ -255,6 +253,22 @@ public class NavigationPageController implements Initializable, Data{
             }
         });
 
+
+
+        //switching admin privs
+        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
+            System.out.println("called");
+            if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
+                adminBox.setVisible(true);
+                loginButton.setText("Log Out");
+            }
+            else{
+                adminBox.setVisible(false);
+                loginButton.setText("Log In");
+            }
+        });
+
+
     }
 
 
@@ -281,6 +295,14 @@ public class NavigationPageController implements Initializable, Data{
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
+    }
+
+    public VBox getAdminBox(){
+        return this.adminBox;
+    }
+
+    public JFXButton getLoginButton() {
+        return this.loginButton;
     }
 
     @FXML
@@ -450,12 +472,25 @@ public class NavigationPageController implements Initializable, Data{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
-        findPath(startLabel.getText(),endLabel.getText());
+
+        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
+            System.out.println("called");
+            if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
+                sendLabel.setVisible(false);
+                email.setVisible(false);
+                sendButton.setVisible(false);
+            }
+            else{
+                sendLabel.setVisible(true);
+                email.setVisible(true);
+                sendButton.setVisible(true);
+            }
+        });
+
         searchList.setVisible(false);
         directionSteps.setVisible(true);
-        sendLabel.setVisible(true);
-        email.setVisible(true);
-        sendButton.setVisible(true);
+        findPath(startLabel.getText(),endLabel.getText());
+
 
     }
 
@@ -477,6 +512,18 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
+    public void adminSetUp(){
+        loginButton.setText("Log Out");
+        loginButton.setOnAction((event) -> {
+            logout();
+        });
+        adminBox.setVisible(true);
+    }
+
+    @FXML
+    public void logout(){
+        Main.startScreen();
+    }
 
     // this function returns the proper image based on the current image string
     public Image selectMap(String currentMap) {
@@ -827,4 +874,20 @@ public class NavigationPageController implements Initializable, Data{
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
+    //  EDIT LATER
+    @FXML
+    public void edit(){
+        Main.mapEditScreen();
+    }
+
+    @FXML
+    public void serviceRequest() {Main.serviceScreen();}
+    @FXML
+    public void acceptRequest() {Main.acceptScreen();}
+
+    @FXML
+    public void editUsers(){Main.editUsersScreen();}
+
+    @FXML
+    public void setAlgorithm(){}
 }

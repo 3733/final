@@ -4,10 +4,12 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import sample.Main;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class LoginPageController {
@@ -22,6 +24,8 @@ public class LoginPageController {
 
     private Main mainController;
 
+    private NavigationPageController navController;
+
     public void setMainController(Main main){
         this.mainController = main;
     }
@@ -31,12 +35,14 @@ public class LoginPageController {
 
 
     @FXML
-    public void login(){
+    public void login() throws IOException, InterruptedException{
         System.out.println(username.getText());
         System.out.println(password.getText());
+
         if(checkUser(username.getText(), password.getText())){
-            invalidLoginText.setVisible(false);
-            Main.adminScreen();
+            AuthenticationInfo newUser = new AuthenticationInfo(username.getText(),AuthenticationInfo.Privilege.ADMIN);
+            SettingSingleton.getSettingSingleton().setAuthProperty(newUser);
+            Main.mapScreen();
         }else {
             invalidLoginText.setVisible(true);
             PauseTransition visiblePause = new PauseTransition(
