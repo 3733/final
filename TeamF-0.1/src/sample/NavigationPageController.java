@@ -123,9 +123,9 @@ public class NavigationPageController implements Initializable, Data{
         zoom();
 
         //popluating list view -- three
-        ObservableList<String> threeItems =FXCollections.observableArrayList (
+        ObservableList<String> threeItems = FXCollections.observableArrayList(
                 "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
-                "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                "Clinical Trials", "Conference Center", "Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
                 "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
                 "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
         threeList.setItems(threeItems);
@@ -162,7 +162,7 @@ public class NavigationPageController implements Initializable, Data{
         //adding all possible entries
         allEntries = FXCollections.observableArrayList("Restroom; S elevator; 1st floor", "Restroom; BTM conference center; 3rd floor",
                 "Elevator S G", "Infusion Waiting Area", "BTM Security Desk", "Clinical Trials", "Schlagler Innovation Lobby",
-                "Elevator S 01", "Neuroscience Waiting Room", "Orthopedics and Rhemutalogy","CART Waiting", "Elevator S; Floor 3",
+                "Elevator S 01", "Neuroscience Waiting Room", "Orthopedics and Rhemutalogy", "CART Waiting", "Elevator S; Floor 3",
                 "Elevator S 02", "MRI/CT Scan Imaging", "Fenwood Road", "BTM Security Desk", "Elevator S L2", "Neuro Testing Waiting Area",
                 "Hallway to Elevator", "Innovation Hub", "Parking Garage L2", "MS Waiting", "Conference Room 1 Level 2",
                 "Comprehensive Breast Heath Level 2", "Oral Medicine and Denstistry Level 2", "Lee Bell Breast Center Level 2",
@@ -254,21 +254,26 @@ public class NavigationPageController implements Initializable, Data{
         });
 
 
-
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             System.out.println("called");
-            if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
+            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
                 adminBox.setVisible(true);
                 loginButton.setText("Log Out");
-            }
-            else{
+            } else {
                 adminBox.setVisible(false);
                 loginButton.setText("Log In");
             }
         });
 
-
+        //switching admin privs
+        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
+            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
+                loginButton.setOnAction((event) -> {
+                    logout();
+                });
+            }
+        });
     }
 
 
@@ -352,12 +357,6 @@ public class NavigationPageController implements Initializable, Data{
         //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
     }
 
-
-    @FXML
-    public void changeFloor() {
-
-    }
-
     @FXML
     public void changeFloorL1() {
         map.setImage(Data.data.L1Floor);
@@ -390,6 +389,7 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void changeFloorG() {
+        //tabPane.getSelectionModel().clearSelection();
         map.setImage(Data.data.GFloor);
         Data.data.currentMap = "G";
     }
@@ -510,6 +510,7 @@ public class NavigationPageController implements Initializable, Data{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
+        directionSteps.getItems().clear();
     }
 
     public void adminSetUp(){

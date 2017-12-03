@@ -8,7 +8,7 @@ import javafx.beans.value.ObservableValue;
 
 public class SettingSingleton {
 
-    private static SettingSingleton settingSingleton;
+    private volatile static SettingSingleton settingSingleton;
 
     private Property<AuthenticationInfo> authProperty = new SimpleObjectProperty<>();
 
@@ -30,5 +30,19 @@ public class SettingSingleton {
 
     public void setAuthProperty(AuthenticationInfo authProperty) {
         this.authProperty.setValue(authProperty);
+    }
+
+    public static SettingSingleton getInstance() {
+        // Double Checked Locking: google this on wikipedia
+        if (settingSingleton == null) { // Single check
+            synchronized (SingletonTTS.class)
+            {
+                if(settingSingleton == null) // double check
+                {
+                    settingSingleton = new SettingSingleton();
+                }
+            }
+        }
+        return settingSingleton;
     }
 }
