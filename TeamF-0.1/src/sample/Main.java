@@ -166,6 +166,8 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
+        helpRequest.getStylesheets().add("sample/UI/style.css");
+        
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
