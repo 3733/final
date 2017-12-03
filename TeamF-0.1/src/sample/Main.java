@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.util.Observable;
 import java.util.Vector;
 
 public class Main extends Application implements Data{
@@ -265,6 +267,13 @@ public class Main extends Application implements Data{
     public static void main(String[] args) throws IOException{
         long st = System.currentTimeMillis();
 
+        //testEmbeddedDB db = new testEmbeddedDB();
+        /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
+
+        for(String s : o){
+            System.out.println(s + " trim?");
+        }*/
+
         //startMap();
         launch(args);
 
@@ -272,12 +281,13 @@ public class Main extends Application implements Data{
         double timer = (double) (et-st)/1000;
         System.out.println("Main " + timer+"<===TIMER");
 
-//        testEmbeddedDB db = new testEmbeddedDB();
-//        testEmbeddedDB.dropNodes();
-//        testEmbeddedDB.dropTables();
-//        testEmbeddedDB.createTable();
-        //startMap();
-        testEmbeddedDB.dbBuildMap();
+
+
+
+        //UNCOMMENT THIS LINE
+        //testEmbeddedDB.dbBuildMap();
+
+
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");

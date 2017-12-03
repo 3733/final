@@ -1,6 +1,8 @@
 package sample;
 
 import com.opencsv.CSVWriter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.FileWriter;
 import java.sql.*;
@@ -927,9 +929,9 @@ public class testEmbeddedDB {
         return n;
     }
 
-    public static void createTable(){
+    public static void createTable() {
 
-        try{
+        try {
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
@@ -958,8 +960,8 @@ public class testEmbeddedDB {
             c.close();
 
             System.out.println("done");
-        } catch (Exception e){
-            System.out.println("ERROR: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("createTable ERROR: " + e.getMessage());
         }
 
     }
@@ -999,7 +1001,7 @@ public class testEmbeddedDB {
             }
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("fillNodesTable error: " + e.getMessage());
         }
     }
 
@@ -1038,7 +1040,7 @@ public class testEmbeddedDB {
             l.loadCSV(fileName, "EDGES", false);
             c.close();
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("fillEdgesTable error: " + e.getMessage());
         }
     }
 
@@ -1052,7 +1054,7 @@ public class testEmbeddedDB {
             l.loadCSV(fileName, "NODES", false);
             c.close();
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("loadNodesFile error: " + e.getMessage());
         }
     }
 
@@ -1150,7 +1152,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("updateXCord error: " + e.getMessage());
         }
 
     }
@@ -1168,7 +1170,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("updateYCord error: " + e.getMessage());
         }
 
     }
@@ -1186,7 +1188,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("updateFloor error: " + e.getMessage());
         }
 
     }
@@ -1204,7 +1206,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println(" updateNodeBuilding error: " + e.getMessage());
         }
 
     }
@@ -1222,7 +1224,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("updateNodeType error: " + e.getMessage());
         }
 
     }
@@ -1240,7 +1242,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("updateNodeLongName error: " + e.getMessage());
         }
 
     }
@@ -1258,7 +1260,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("upadateNodeShortname error: " + e.getMessage());
         }
 
     }
@@ -1272,7 +1274,7 @@ public class testEmbeddedDB {
             s.execute("UPDATE EDGES set STARTNODE = '" + start + "' where EDGEID = '" + edgeID+"'");
             c.close();
         } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
+            System.out.println("updateEdgeStart error : " + e.getMessage());
         }
 
     }
@@ -1286,7 +1288,7 @@ public class testEmbeddedDB {
             s.execute("UPDATE EDGES set ENDNODE = '" + end + "' where EDGEID = '" + edgeID+"'");
             c.close();
         } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
+            System.out.println("updateEdgeEnd error : " + e.getMessage());
         }
 
     }
@@ -1304,7 +1306,7 @@ public class testEmbeddedDB {
 
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("removeNode error: " + e.getMessage());
         }
     }
 
@@ -1320,7 +1322,34 @@ public class testEmbeddedDB {
             c.close();
 
         } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
+            System.out.println("removeEdge error: " + e.getMessage());
         }
+    }
+
+    public static ObservableList getAllLongNames(){
+        ObservableList names = FXCollections.observableArrayList();
+
+        try{
+
+            String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT LONGNAME FROM NODES");
+
+            while(r.next()){
+                String lname = r.getString("longname");
+                names.add(lname.trim());
+            }
+
+
+
+
+        } catch (Exception e){
+            System.out.println("getAllLongNames error: " + e.getMessage());
+        }
+
+        return names;
     }
 }
