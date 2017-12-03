@@ -252,6 +252,11 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
+    public static void setHelpScreenServiceRequestScreen(){
+        stage.setScene(helpRequest);
+        stage.centerOnScreen();
+    }
+
     public static void editUserWindow(){
         stage.setScene(editUserWin);
         stage.centerOnScreen();
