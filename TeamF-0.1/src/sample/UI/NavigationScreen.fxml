@@ -352,7 +352,7 @@
                   </Tab>
                </tabs>
             </JFXTabPane>
-            <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
+check            <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
             <HBox alignment="CENTER" layoutX="915.0" layoutY="36.0" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #1a479a;" visible="false">
                <children>
                   <JFXCheckBox checkedColor="#1a479a" text="Speak" textFill="WHITE" unCheckedColor="#1a479a">
