@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -28,21 +27,20 @@
                </graphic>
             </Menu>
          </menus></MenuBar>
-      <Label layoutX="196.0" layoutY="71.0" prefHeight="53.0" prefWidth="195.0" text="Need Help?">
+      <Label layoutX="222.0" layoutY="74.0" text="Uh Oh!">
          <font>
             <Font name="Montserrat Regular" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="110.0" layoutY="141.0" prefHeight="20.0" prefWidth="366.0" text="For further help and information with resolving your issue" wrapText="true">
+      <Label layoutX="147.0" layoutY="139.0" prefHeight="20.0" prefWidth="263.0" text="Looks like you've encountered an error!" wrapText="true">
          <font>
             <Font name="Montserrat Regular" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="199.0" layoutY="161.0" prefHeight="20.0" prefWidth="189.0" text="Please click the button below" wrapText="true">
-         <font>
-            <Font name="Montserrat Regular" size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="231.0" layoutY="240.0" mnemonicParsing="false" text="Send a Service Request" />
+      <ImageView fitHeight="101.0" fitWidth="126.0" layoutX="450.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Icons/sad.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
