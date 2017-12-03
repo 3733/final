@@ -25,7 +25,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
    <right>
-      <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
+      <JFXDrawer defaultDrawerSize="50.0" direction="RIGHT" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -210,18 +210,18 @@
       </JFXDrawer>
    </right>
    <center>
-      <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="mainAnchor" prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <ScrollPane fx:id="scrollMap" prefHeight="810.0" prefWidth="1146.0">
+            <ScrollPane fx:id="scrollMap" nodeOrientation="LEFT_TO_RIGHT" prefHeight="842.0" prefWidth="1138.0">
                <content>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="map" fitHeight="841.0" fitWidth="1266.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true">
+                        <Canvas height="812.0" width="1115.0" />
+                        <ImageView fx:id="map" fitHeight="841.0" fitWidth="1246.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/01_thefirstfloor.png" />
                            </image>
                         </ImageView>
-                        <Canvas fx:id="mapCanvas" height="841.0" width="1266.0" />
                      </children>
                   </StackPane>
                </content>

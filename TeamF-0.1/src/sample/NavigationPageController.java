@@ -35,8 +35,7 @@ import java.util.regex.Pattern;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -96,7 +95,9 @@ public class NavigationPageController implements Initializable{
     @FXML
     private Label startLabel, endLabel;
     @FXML
-    private Canvas mapCanvas;
+    private StackPane stackPane;
+    @FXML
+    private AnchorPane mainAnchor;
 
 
     //other components
@@ -122,10 +123,6 @@ public class NavigationPageController implements Initializable{
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
-
-        //binding items to grow with sizes
-        map.fitWidthProperty();
-
 
         //popluating list view -- three
         ObservableList<String> threeItems =FXCollections.observableArrayList (
