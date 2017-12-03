@@ -857,7 +857,8 @@ public class NavigationPageController implements Initializable, Data{
     public void reverseButton_Clicked(){
         String start =startLabel.getText();
         String end = endLabel.getText();
-        if( !(start == null || start.equals("") || end == null ||end.equals("")) ){
+        if( !(start == null || start.equals("") || end == null ||end.equals("")) )
+        {
             startLabel.setText(end);
             endLabel.setText(start);
             try {
