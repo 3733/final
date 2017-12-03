@@ -87,7 +87,7 @@
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton onAction="#addUserButton" ripplerFill="#8e8e8e" text="Add User">
+                                    <JFXButton fx:id="addButton" onAction="#addUserButton" ripplerFill="#8e8e8e" text="Add User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>

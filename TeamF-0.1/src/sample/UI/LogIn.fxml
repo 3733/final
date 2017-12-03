@@ -14,7 +14,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginPageController">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="12.0" onAction="#back" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
+      <JFXButton fx:id="close" buttonType="RAISED" layoutX="12.0" onAction="#back" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
          <VBox.margin>
             <Insets left="15.0" top="15.0" />
          </VBox.margin>
@@ -83,7 +83,7 @@
                      </font></JFXPasswordField>
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
-                        <JFXButton buttonType="RAISED" contentDisplay="CENTER" onAction="#login" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Log In" textFill="WHITE">
+                        <JFXButton fx:id="loginButton" buttonType="RAISED" contentDisplay="CENTER" onAction="#login" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Log In" textFill="WHITE">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>
@@ -92,7 +92,7 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="56.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <JFXButton buttonType="RAISED" contentDisplay="CENTER" onAction="#back" style="-fx-background-color: #1a479a;" text="Cancel" textFill="WHITE">
+                        <JFXButton fx:id="close" buttonType="RAISED" contentDisplay="CENTER" onAction="#back" style="-fx-background-color: #1a479a;" text="Cancel" textFill="WHITE">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>

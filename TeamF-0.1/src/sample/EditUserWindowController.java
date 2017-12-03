@@ -17,6 +17,8 @@ public class EditUserWindowController {
     @FXML
     private  JFXButton editButton;
     @FXML
+    private  JFXButton close;
+    @FXML
     private JFXTextField lNameBox;
     @FXML
     private JFXTextField fNameBox;
@@ -37,7 +39,7 @@ public class EditUserWindowController {
 
     //When going back, clears the text fields
     @FXML
-    public void back(){
+    public void back(JFXButton btn2){
         lNameBox.clear();
         fNameBox.clear();
         idBox.clear();
@@ -52,6 +54,11 @@ public class EditUserWindowController {
         editButton.setVisible(true);
 
         Main.editUsersScreen();
+        Main.closePopUp(btn2);
+    }
+
+    public void closeBtn(){
+        back(close);
     }
 
     public long getID(){
@@ -87,7 +94,7 @@ public class EditUserWindowController {
         Staff addMe = new Staff(fNameBox.getText(), lNameBox.getText(), getID(),
                 usernameBox.getText(), pwBox.getText(), posBox.getText(), emailBox.getText());
         testEmbeddedDB.addStaff(addMe);
-        back();
+        back(addButton);
     }
 
     //Edits a user based on information in the text fields
@@ -112,7 +119,7 @@ public class EditUserWindowController {
             if (!pwBox.getText().trim().equals(null)) {
                 testEmbeddedDB.updatePassword(getID(), pwBox.getText());
             }
-            back();
+            back(editButton);
         }
 
     }

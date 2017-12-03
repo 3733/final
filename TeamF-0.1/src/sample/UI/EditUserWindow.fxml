@@ -18,7 +18,7 @@
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <JFXButton onAction="#back" prefHeight="26.0" prefWidth="49.0" ripplerFill="#8e8e8e" text="Back" />
+                  <JFXButton fx:id="close" onAction="#closeBtn" prefHeight="26.0" prefWidth="49.0" ripplerFill="#8e8e8e" text="Back" />
                </graphic>
             </Menu>
          </menus>
@@ -99,7 +99,7 @@
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="471.0" layoutY="335.0" onAction="#back" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
+      <JFXButton fx:id="close" buttonType="RAISED" layoutX="471.0" layoutY="335.0" onAction="#closeBtn" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
