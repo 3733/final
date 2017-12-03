@@ -35,17 +35,14 @@ import java.util.regex.Pattern;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 
-public class NavigationPageController implements Initializable{
+public class NavigationPageController implements Initializable, Data{
 
-    //new components
-    @FXML
-    private JFXHamburger hamburger;
+    //fxml components
     @FXML
     private JFXDrawer drawer;
     @FXML
@@ -59,72 +56,52 @@ public class NavigationPageController implements Initializable{
     @FXML
     private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
     @FXML
-    private Label floorLabel;
-    @FXML
-    private JFXButton downFloor, upFloor;
-    @FXML
     private JFXListView searchList;
     @FXML
     private ScrollPane scrollMap;
     @FXML
-    private JFXSlider zoom;
-    @FXML
     private AnchorPane mainPane;
-    @FXML
-    private JFXButton upButton;
-    @FXML
-    private JFXButton downButton;
     @FXML
     private JFXTabPane tabPane;
     @FXML
     private VBox labelBox;
-    @FXML private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
-    String currentFloor = "First Floor";
-
-
-    //to login from navigation screen
     @FXML
-    public void login(){
-        Main.loginScreen();
-    }
-
-    @FXML
-    public void help(){Main.genErrorScreen();}
-
-    // Contains the user email entry
+    private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
     @FXML
     private JFXTextField email;
-
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
     private javafx.scene.image.ImageView map;
-
     // Contains the desired user destination
     @FXML
     private JFXTextField destination;
-
     // Contains stairs option
     @FXML
     private JFXCheckBox stairs;
-
     // Contains the elevator option
     @FXML
     private JFXCheckBox elevator;
-
     // Contains the Invalid email error message
     @FXML
     private static Label invalidEmailText;
+    @FXML
+    private JFXRadioButton start, end;
+    @FXML
+    private JFXTextField startField, endField;
+    @FXML
+    private ToggleGroup points;
+    @FXML
+    private String defaultStart;
+    @FXML
+    private Label startLabel, endLabel;
+    @FXML
+    private StackPane stackPane;
+    @FXML
+    private AnchorPane mainAnchor;
 
 
+    //other components
     private Main mainController;
-
-    public void setMainController(Main in){
-        mainController = in;
-    }
-
-    public int getCurrentAlgo(){
-        return this.currentAlgo;
-    }
 
     private Vector<Node> path = new Vector<Node>();
 
@@ -134,14 +111,225 @@ public class NavigationPageController implements Initializable{
 
     private String filePath = "/sample/UI/Icons/";
 
-    public void setMap(Map m) throws IOException{
-        //this.CurMap = m;
-        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
+    ObservableList<String> allEntries;
+
+    private int currentAlgo = 1;
+
+
+    //initialization
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        //disables the bars and starts up the zoom function
+        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        zoom();
+
+        //popluating list view -- three
+        ObservableList<String> threeItems =FXCollections.observableArrayList (
+                "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
+                "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
+                "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
+        threeList.setItems(threeItems);
+
+        //populating list view -- second
+        ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
+                "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
+                "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
+                "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
+                "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
+                "Weiner Center for Preoperative Evaluation");
+        twoList.setItems(twoItems);
+
+        //populating list view -- first
+        ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
+                "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
+                "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
+                "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
+                "Zinner Breakout Room");
+        oneList.setItems(oneItems);
+
+        //populating list view -- lower two
+        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
+                "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
+        lowerTwoList.setItems(lowerTwoItems);
+
+        //populating list view -- lower one
+        ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
+                "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
+                "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
+        lowerOneList.setItems(lowerOneItems);
+
+        //time - 0
+        //adding all possible entries
+        allEntries = FXCollections.observableArrayList("Restroom; S elevator; 1st floor", "Restroom; BTM conference center; 3rd floor",
+                "Elevator S G", "Infusion Waiting Area", "BTM Security Desk", "Clinical Trials", "Schlagler Innovation Lobby",
+                "Elevator S 01", "Neuroscience Waiting Room", "Orthopedics and Rhemutalogy","CART Waiting", "Elevator S; Floor 3",
+                "Elevator S 02", "MRI/CT Scan Imaging", "Fenwood Road", "BTM Security Desk", "Elevator S L2", "Neuro Testing Waiting Area",
+                "Hallway to Elevator", "Innovation Hub", "Parking Garage L2", "MS Waiting", "Conference Room 1 Level 2",
+                "Comprehensive Breast Heath Level 2", "Oral Medicine and Denstistry Level 2", "Lee Bell Breast Center Level 2",
+                "Jet Center for Primary Care Level 2", "Ear Nose & Throat Level 2", "Medical Surgical Specialties Level 2",
+                "Plastic Surgery Level 2", "Outpatient Pharamacy Level 2", "Weiner Center for Pre-operational Evaluation Level 2",
+                "Information Desk 1 Level 2", "Key icon Level 2", "Vascular Diagnostic Lab Level 2", "Outpatient Speciman Collection Level 2",
+                "Restroom 1 Level 2", "Restroom 2 Level 2", "Restroom 3 Level 2", "Restroom 4 Level 2", "Restroom 5 Level 2", "Cafe 1 Level 2",
+                "Patient Financial Services Level 2", "Anesthesia Conf Floor L1", "Medical Records Conference Room Floor L1", "Abrams Conference Room",
+                "Day Surgery Family Waiting Floor L1", "Day Surgery Family Waiting Exit Floor L1", "Medical Records Film Library Floor L1",
+                "Outpatient Fluoroscopy Floor L1", "Radiation Oncology T/X Suite Floor L2", "Pre-Op PACU Floor L1", "Radiation Oncology Floor L2",
+                "Nuclear Medicine Floor L1", "Ultrasound Floor L1", "CSIR MRI Floor L1", "Restroom L Elevator Floor L1", "Restroom K Elevator Floor L2",
+                "Restroom M Elevator Floor L1", "Restroom L Elevator Floor L2", "Restroom K Elevator Floor L1", "Restroom H Elevator Floor L1",
+                "Vending Machine 1 L1", "Volunteers Floor L1", "Interpreter Services Floor L2", "Elevator A Floor 2", "Elevator B Floor 2",
+                "Elevator C Floor 2", "Elevator D Floor 2", "Restroom B elevator Floor 2", "Restroom C elevator Floor 2", "Restroom C-D elevator Floor 2",
+                "Restroom D elevator Floor 2", "15 Francis Security Desk Floor 2", "Security Desk Thorn Floor 2", "Chest Diseases Floor 2",
+                "Thoracic Surgery Clinic Floor 2", "Brigham Health Floor 2", "Waiting Room Floor 2", "MRI Associates Floor 2",
+                "Carrie M. Hall Conference Center Floor 2", "Pat's Place Floor 2", "15 Lobby Entrance Floor 2", "Ambulance Parking Exit Floor 1",
+                "Waiting Room 1 Floor 1", "Connor's Center Security Desk Floor 1", "Restroom G1 Floor 1", "Exit 2 Floor 1", "Asthma Research Floor 1",
+                "Wound and Ambulatory 1", "Ocupational Health Floor 1", "Restroom F1 Floor 1", "Restroom H1 Floor 1", "Ambulatory X-Ray Floor 1",
+                "Rehabilitation Services Floor 1", "Staircase H2 Floor 1", "Lobby Shattuck Street",
+                "Shattuck Street Lobby 1", "Shattuck Street Lobby Exit", "Shattuck Street Lobby 2", "Lobby Vending Machine", "Shattuck Street Lobby 3",
+                "Shattuck Street Lobby ATM", "Tower Lobby Entrance 1", "Tower Elevator Entrance", "Tower Staff Entrance",
+                "Center for International Medicine", "Spiritual Care Office", "Tower Medical Cashier", "Multifaith Chapel",
+                "Bretholtz Center for Patients and Families", "Kessler Library", "Sharf Admitting Center", "Hallway Lobby Entrance", "Obstetrics Admitting",
+                "Lobby Escalator", "Emergency Department", "Lobby Entrance Hallway", "75 Francis Valet Drop-off", "75 Lobby", "75 Lobby Information Desk",
+                "75 Lobby Valet Cashier", "Au Bon Pain", "Bathroom 75 Lobby", "Emergency Department Entrance", "International Patient Center", "Emergency Hallway",
+                "Shapiro Board Room Node 20 Floor 1", "Zinner Breakout Room Node 19 Floor 1", "Elevator N Node 26 Floor 1", "Elevator Q Node 18 Floor 1",
+                "Francis Street Exit Node 1 Floor 1", "Bathroom Node 12 Floor 1", "Random Room Node 35 Floor 1", "ATM Node 23 Floor 1", "Waiting room? Node 7 Floor 2",
+                "Watkins A Node 24 Floor 2 Floor 2", "Watkins B Node 35 Floor 2", "Elevator N Node 25 Floor 2", "Elevator Q Node 31a Floor 2", "Info Node 19 Floor 2",
+                "Restroom Node 6 Floor 2", "Restroom Node 31 Floor 2", "Brigham Circle Medical Associates Node 4 Floor 3", "Watkins Clinic C Node 14 Floor 3",
+                "Elevator N Node 15 Floor 3", "Elevator Q Node 5 Floor 3", "Restroom Node 12 Floor 3", "The Porch Node 16 Floor 3", "Elevator Q Node 7 Floor L1",
+                "Fenwood Road Exit Node 1 Floor L1", "Elevator Q Node 6 Floor L2", "Cardiovascular Imaging Center Floor L2", "Cardiac Stress Test Lab Floor L2",
+                "CVRR Floor L2", "Restroom Node 4 Floor L2", "Garden Cafe", "Vending Machine Floor 2?", "Bathroom 1 Tower Floor 2", "Gift Shop Tower Floor 2",
+                "Stairwell 2 Tower Floor 2", "Escalator 1 Floor 2", "Endoscopy", "Stairwell 1 Floor 3", "Reproductive Endocrine Labs", "Dialysis Waiting Room",
+                "Nursing Room", "Bathroom 1 Tower Floor 3", "MICU 3B/C Waiting Room", "Bathroom 2 Tower Floor 3", "Restroom 1 - Family", "Restroom 2", "Restroom 3",
+                "Restroom 4 - M wheelchair", "Restroom 5 - F wheelchair", "Center for Infertility and Reproductive Surgery", "Gynecology Oncology MIGS",
+                "General Surgical Specialties Suite A", "General Surgical Specialties Suite B", "Urology", "Maternal Fetal Practice", "Obstetrics", "Fetal Med & Genetics",
+                "Gynecology");
+        searchList.setItems(allEntries);
+
+        //populating list -- ground
+        ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
+        groundList.setItems(groundItems);
+        end.setSelected(true);
+
+        //time - 0.506
+        map.setImage(new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png")));
+
+        tabPane.getSelectionModel().select(floorOne);
+        stairs.setSelected(true);
+        elevator.setSelected(true);
+
+        threeList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.setText(newValue);
+            }
+        });
+
+        twoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.setText(newValue);
+            }
+        });
+        oneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.setText(newValue);
+            }
+        });
+        lowerOneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.setText(newValue);
+            }
+        });
+        lowerTwoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.setText(newValue);
+            }
+        });
+        groundList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.setText(newValue);
+            }
+        });
+
+    }
+
+
+    //setters and getters
+    public void setMainController(Main in){
+        mainController = in;
+    }
+
+    public int getCurrentAlgo(){
+        return this.currentAlgo;
     }
 
     public void setKiosk(Node k){
         this.Kiosk = k;
     }
+
+    public void setSearch(String s){
+        this.destination.setText(s);
+    }
+
+    public void autoClose(){
+        searchList.setVisible(false);
+    }
+
+    public void setCurrentAlgo(int current){
+        this.currentAlgo =  current;
+    }
+
+    @FXML
+    public void settingSearch(){
+        if (points.getSelectedToggle() == start) {
+
+            destination.setText(startLabel.getText());
+
+        }
+        else{
+            destination.setText(endLabel.getText());
+        }
+    }
+
+    @FXML
+    public void setStart(String t){
+        startLabel.setText(t);
+    }
+
+    public Node getKiosk(){
+        return this.Kiosk;
+    }
+
+    //setting start and end nodes
+    @FXML
+    public void settingFields() throws IOException, InterruptedException {
+        String destinationText = destination.getText();
+        if (points.getSelectedToggle() == start) {
+            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+        }
+        else{
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+            if(!destinationText.equals("")) {
+                go();
+            }
+        }
+    }
+
+    //sets invalid email label when necessary for errorhandling
+    @FXML
+    public static void setInvalidEmail(){
+        invalidEmailText.setVisible(true);
+    }
+
+    public void setMap(Map m) throws IOException{
+        //this.CurMap = m;
+        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
+    }
+
 
     @FXML
     public void changeFloor() {
@@ -185,45 +373,53 @@ public class NavigationPageController implements Initializable{
     }
 
 
-    public void setSearch(String s){
-        this.destination.setText(s);
+    //functions to open screens
+    @FXML
+    public void login() throws IOException{
+        Main.loginScreen();
+        clearFields();
+        clear();
     }
 
+    @FXML
+    public void help(){Main.genErrorScreen();}
+
+    // Button to return to the welcome screen
+    @FXML
+    public void back() throws IOException{
+        Main.startScreen();
+        clearFields();
+        clear();
+    }
+
+
+    //path finding functions
     // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
 
     public void findPath(String Start, String End) throws IOException {
         //Returns
         Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,Kiosk);
-        System.out.println(EndNode.getLongName()+"<=====END");
-
 
         Node StartNode = SearchEngine.SearchPath(Start,Data.data.graph,Kiosk);
-        System.out.println(StartNode.getLongName()+"<=====START");
 
         switch (currentAlgo){
             case 1:
                 PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
                 this.path = pathFinder1.executeStrategy(StartNode,EndNode, Data.data.graph);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 2:
                 PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
                 this.path = pathFinder2.executeStrategy(StartNode,EndNode, Data.data.graph);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 3:
                 PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
                 this.path = pathFinder3.executeStrategy(StartNode,EndNode, Data.data.graph);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 4:
                 PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
                 this.path = pathFinder4.executeStrategy(StartNode,EndNode, Data.data.graph);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
         }
-
-
 
 
         MultiFloorPathDrawing(this.path);
@@ -234,7 +430,18 @@ public class NavigationPageController implements Initializable{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
+    }
 
+
+    @FXML
+    public void clearFields(){
+        double width = map.getImage().getWidth();
+        double height = map.getImage().getHeight();
+        endLabel.setText("");
+        startLabel.setText("Lower Pike Hallway Exit Lobby");
+        destination.setText("");
+        directionSteps.getItems().clear();
+        reset(map, width, height);
     }
 
     @FXML
@@ -244,7 +451,6 @@ public class NavigationPageController implements Initializable{
             Data.data.floorList.set(i,false);
         }
         findPath(startLabel.getText(),endLabel.getText());
-
         searchList.setVisible(false);
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
@@ -253,10 +459,9 @@ public class NavigationPageController implements Initializable{
 
     }
 
-    public void setListView (){
+    public void setListView (){}
 
-    }
-
+    //other functions
     // Method to clear the path on the map when the user presses clear map
     @FXML
     public void clear() throws FileNotFoundException{
@@ -272,9 +477,9 @@ public class NavigationPageController implements Initializable{
         }
     }
 
+
     // this function returns the proper image based on the current image string
     public Image selectMap(String currentMap) {
-        System.out.println(currentMap);
         if (currentMap != null) {
             if (currentMap.equals("L2")) {
                 return Data.data.L2Floor;
@@ -290,13 +495,7 @@ public class NavigationPageController implements Initializable{
                 return Data.data.thirdFloor;
             }
         }
-            System.out.println("ERROR: INVALID FLOOR ID");
             return Data.data.firstFloor;
-    }
-    //sets invalid email label when necessary for errorhandling
-    @FXML
-    public static void setInvalidEmail(){
-        invalidEmailText.setVisible(true);
     }
 
     // User clicks send email button
@@ -305,12 +504,6 @@ public class NavigationPageController implements Initializable{
         //Vector<Node> msgVec = new Vector<Node>(10);
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
         emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
-    }
-
-    // Button to return to the welcome screen
-    @FXML
-    public void back(){
-        Main.startScreen();
     }
 
     // Purpose: Print out directions for a path of nodes
@@ -399,28 +592,11 @@ public class NavigationPageController implements Initializable{
         populateSteps.add("You have arrived at your destination.");
         directionSteps.setItems(populateSteps);
 
-        for(Node i: path){
-            System.out.println(i.getLongName()+ "\t"+i.getNodeType());
-        }
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        //System.out.println("Reached the multifloor path drawing function");
-        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
         Vector<Vector<Node>> paths = separator(path);
-        //System.out.println("Size of the vector of paths " + paths.size());
-        /*
-        for (Vector<Node> i: paths) {
-            for (Node j: i){
-                System.out.println(j.getLongName());
-            }
-
-        }*/
-        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
-                System.out.println(Data.data.floorList);
-                //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
@@ -467,10 +643,8 @@ public class NavigationPageController implements Initializable{
         // Iterate through all the path nodes to draw the path
         for(int i = 0; i < length ; i++) {
             Node node = path.get(i);
-            //System.out.println("This is node: " + node.getNodeID());
             if(i + 1 < length){
                 Node node2 = path.get(i+1);
-                //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                 // Lines are drawn offset,
                 if(!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
                     pathImage.setColor(new java.awt.Color(0, 0, 0)); // This color is black
@@ -479,153 +653,10 @@ public class NavigationPageController implements Initializable{
                 }
         }
         map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        //System.out.println("Image set on map");
         return SwingFXUtils.toFXImage(floorImage,null);
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        //disables the bars and starts up the zoom function
-        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        zoom();
-
-        //popluating list view -- three
-        ObservableList<String> threeItems =FXCollections.observableArrayList (
-                "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
-                "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
-                "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
-                "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
-        threeList.setItems(threeItems);
-
-        //populating list view -- second
-        ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
-                "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
-                "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
-                "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
-                "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
-                "Weiner Center for Preoperative Evaluation");
-        twoList.setItems(twoItems);
-
-        //populating list view -- first
-        ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
-                "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
-                "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
-                "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
-                "Zinner Breakout Room");
-        oneList.setItems(oneItems);
-
-        //populating list view -- lower two
-        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
-                "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
-        lowerTwoList.setItems(lowerTwoItems);
-
-        //populating list view -- lower one
-        ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
-                "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
-                "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
-        lowerOneList.setItems(lowerOneItems);
-
-        //adding all possible entries
-        allEntries = FXCollections.observableArrayList("Restroom; S elevator; 1st floor", "Restroom; BTM conference center; 3rd floor",
-                "Elevator S G", "Infusion Waiting Area", "BTM Security Desk", "Clinical Trials", "Schlagler Innovation Lobby",
-                "Elevator S 01", "Neuroscience Waiting Room", "Orthopedics and Rhemutalogy","CART Waiting", "Elevator S; Floor 3",
-                "Elevator S 02", "MRI/CT Scan Imaging", "Fenwood Road", "BTM Security Desk", "Elevator S L2", "Neuro Testing Waiting Area",
-                "Hallway to Elevator", "Innovation Hub", "Parking Garage L2", "MS Waiting", "Conference Room 1 Level 2",
-                "Comprehensive Breast Heath Level 2", "Oral Medicine and Denstistry Level 2", "Lee Bell Breast Center Level 2",
-                "Jet Center for Primary Care Level 2", "Ear Nose & Throat Level 2", "Medical Surgical Specialties Level 2",
-                "Plastic Surgery Level 2", "Outpatient Pharamacy Level 2", "Weiner Center for Pre-operational Evaluation Level 2",
-                "Information Desk 1 Level 2", "Key icon Level 2", "Vascular Diagnostic Lab Level 2", "Outpatient Speciman Collection Level 2",
-                "Restroom 1 Level 2", "Restroom 2 Level 2", "Restroom 3 Level 2", "Restroom 4 Level 2", "Restroom 5 Level 2", "Cafe 1 Level 2",
-                "Patient Financial Services Level 2", "Anesthesia Conf Floor L1", "Medical Records Conference Room Floor L1", "Abrams Conference Room",
-                "Day Surgery Family Waiting Floor L1", "Day Surgery Family Waiting Exit Floor L1", "Medical Records Film Library Floor L1",
-                "Outpatient Fluoroscopy Floor L1", "Radiation Oncology T/X Suite Floor L2", "Pre-Op PACU Floor L1", "Radiation Oncology Floor L2",
-                "Nuclear Medicine Floor L1", "Ultrasound Floor L1", "CSIR MRI Floor L1", "Restroom L Elevator Floor L1", "Restroom K Elevator Floor L2",
-                "Restroom M Elevator Floor L1", "Restroom L Elevator Floor L2", "Restroom K Elevator Floor L1", "Restroom H Elevator Floor L1",
-                "Vending Machine 1 L1", "Volunteers Floor L1", "Interpreter Services Floor L2", "Elevator A Floor 2", "Elevator B Floor 2",
-                "Elevator C Floor 2", "Elevator D Floor 2", "Restroom B elevator Floor 2", "Restroom C elevator Floor 2", "Restroom C-D elevator Floor 2",
-                "Restroom D elevator Floor 2", "15 Francis Security Desk Floor 2", "Security Desk Thorn Floor 2", "Chest Diseases Floor 2",
-                "Thoracic Surgery Clinic Floor 2", "Brigham Health Floor 2", "Waiting Room Floor 2", "MRI Associates Floor 2",
-                "Carrie M. Hall Conference Center Floor 2", "Pat's Place Floor 2", "15 Lobby Entrance Floor 2", "Ambulance Parking Exit Floor 1",
-                "Waiting Room 1 Floor 1", "Connor's Center Security Desk Floor 1", "Restroom G1 Floor 1", "Exit 2 Floor 1", "Asthma Research Floor 1",
-                "Wound and Ambulatory 1", "Ocupational Health Floor 1", "Restroom F1 Floor 1", "Restroom H1 Floor 1", "Ambulatory X-Ray Floor 1",
-                "Rehabilitation Services Floor 1", "Staircase H2 Floor 1", "Lower Pike Hallway Exit Lobby", "Lobby Shattuck Street",
-                "Shattuck Street Lobby 1", "Shattuck Street Lobby Exit", "Shattuck Street Lobby 2", "Lobby Vending Machine", "Shattuck Street Lobby 3",
-                "Shattuck Street Lobby ATM", "Tower Lobby Entrance 1", "Tower Elevator Entrance", "Tower Staff Entrance",
-                "Center for International Medicine", "Spiritual Care Office", "Tower Medical Cashier", "Multifaith Chapel",
-                "Bretholtz Center for Patients and Families", "Kessler Library", "Sharf Admitting Center", "Hallway Lobby Entrance", "Obstetrics Admitting",
-                "Lobby Escalator", "Emergency Department", "Lobby Entrance Hallway", "75 Francis Valet Drop-off", "75 Lobby", "75 Lobby Information Desk",
-                "75 Lobby Valet Cashier", "Au Bon Pain", "Bathroom 75 Lobby", "Emergency Department Entrance", "International Patient Center", "Emergency Hallway",
-                "Shapiro Board Room Node 20 Floor 1", "Zinner Breakout Room Node 19 Floor 1", "Elevator N Node 26 Floor 1", "Elevator Q Node 18 Floor 1",
-                "Francis Street Exit Node 1 Floor 1", "Bathroom Node 12 Floor 1", "Random Room Node 35 Floor 1", "ATM Node 23 Floor 1", "Waiting room? Node 7 Floor 2",
-                "Watkins A Node 24 Floor 2 Floor 2", "Watkins B Node 35 Floor 2", "Elevator N Node 25 Floor 2", "Elevator Q Node 31a Floor 2", "Info Node 19 Floor 2",
-                "Restroom Node 6 Floor 2", "Restroom Node 31 Floor 2", "Brigham Circle Medical Associates Node 4 Floor 3", "Watkins Clinic C Node 14 Floor 3",
-                "Elevator N Node 15 Floor 3", "Elevator Q Node 5 Floor 3", "Restroom Node 12 Floor 3", "The Porch Node 16 Floor 3", "Elevator Q Node 7 Floor L1",
-                "Fenwood Road Exit Node 1 Floor L1", "Elevator Q Node 6 Floor L2", "Cardiovascular Imaging Center Floor L2", "Cardiac Stress Test Lab Floor L2",
-                "CVRR Floor L2", "Restroom Node 4 Floor L2", "Garden Cafe", "Vending Machine Floor 2?", "Bathroom 1 Tower Floor 2", "Gift Shop Tower Floor 2",
-                "Stairwell 2 Tower Floor 2", "Escalator 1 Floor 2", "Endoscopy", "Stairwell 1 Floor 3", "Reproductive Endocrine Labs", "Dialysis Waiting Room",
-                "Nursing Room", "Bathroom 1 Tower Floor 3", "MICU 3B/C Waiting Room", "Bathroom 2 Tower Floor 3", "Restroom 1 - Family", "Restroom 2", "Restroom 3",
-                "Restroom 4 - M wheelchair", "Restroom 5 - F wheelchair", "Center for Infertility and Reproductive Surgery", "Gynecology Oncology MIGS",
-                "General Surgical Specialties Suite A", "General Surgical Specialties Suite B", "Urology", "Maternal Fetal Practice", "Obstetrics", "Fetal Med & Genetics",
-                "Gynecology");
-        searchList.setItems(allEntries);
-
-        //populating list -- ground
-        ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
-        groundList.setItems(groundItems);
-        end.setSelected(true);
-        map.setImage(new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png")));
-        tabPane.getSelectionModel().select(floorOne);
-        stairs.setSelected(true);
-        elevator.setSelected(true);
-
-        threeList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                destination.setText(newValue);
-            }
-        });
-        twoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                destination.setText(newValue);
-            }
-        });
-        oneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                destination.setText(newValue);
-            }
-        });
-        lowerOneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                destination.setText(newValue);
-            }
-        });
-        lowerTwoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                destination.setText(newValue);
-            }
-        });
-        groundList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
-                destination.setText(newValue);
-            }
-        });
-
-    }
-
-    //Purpose: This draws all the nodes and edges currently in the database
+    /*//Purpose: This draws all the nodes and edges currently in the database
     //Used for debugging and admin
     /*@FXML
     public void drawAll() throws IOException{
@@ -638,9 +669,7 @@ public class NavigationPageController implements Initializable{
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         for(int i = 0; i < edgeLength; i++ ) {
             Node nodeStart = edges.get(i).getStart();
-            System.out.println("Start: " + nodeStart.getShortName());
             Node nodeEnd = edges.get(i).getEnd();
-            System.out.println("Stop: " + nodeEnd.getShortName());
             pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
             pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
         }
@@ -653,7 +682,6 @@ public class NavigationPageController implements Initializable{
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
     }*/
 
-    ObservableList<String> allEntries;
     @FXML
     public void autoComplete(){
         searchList.setVisible(true);
@@ -683,23 +711,16 @@ public class NavigationPageController implements Initializable{
                 searchList.setItems(filteredEntries);
 
             }
-
         });
 
         searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
                 destination.setText(newValue);
                 searchList.setVisible(false);
             }
         });
 
-    }
-
-
-    public void autoClose(){
-        searchList.setVisible(false);
     }
 
     @FXML
@@ -727,7 +748,7 @@ public class NavigationPageController implements Initializable{
         });
 
         map.setOnScroll(e -> {
-            double delta = e.getDeltaY();
+            double delta = -e.getDeltaY();
             Rectangle2D viewport = map.getViewport();
 
             double scale = clamp(Math.pow(1.01, delta),
@@ -806,59 +827,4 @@ public class NavigationPageController implements Initializable{
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
-
-    private int currentAlgo =1;
-
-    public void setCurrentAlgo(int current){
-        this.currentAlgo =  current;
-    }
-
-    @FXML
-    private JFXRadioButton start, end;
-    @FXML
-    private JFXTextField startField, endField;
-    @FXML
-    private ToggleGroup points;
-    @FXML
-    private String defaultStart;
-
-    @FXML
-    private Label startLabel, endLabel;
-
-    //setting start and end nodes
-    @FXML
-    public void settingFields() throws IOException, InterruptedException {
-        if (points.getSelectedToggle() == start) {
-            String destinationText = destination.getText();
-            startLabel.setText(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
-            System.out.println(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
-        }
-        else{
-            String destinationText = destination.getText();
-            endLabel.setText(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
-            System.out.println(SearchEngine.SearchPath(destinationText,Data.data.graph,Kiosk).getLongName().trim());
-        }
-        go();
-    }
-
-    @FXML
-    public void settingSearch(){
-        if (points.getSelectedToggle() == start) {
-
-            destination.setText(startLabel.getText());
-
-        }
-        else{
-            destination.setText(endLabel.getText());
-        }
-    }
-
-    @FXML
-    public void setStart(String t){
-        startLabel.setText(t);
-    }
-
-    public Node getKiosk(){
-        return this.Kiosk;
-    }
 }
