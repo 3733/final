@@ -1,6 +1,9 @@
 package sample;
 
-//import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -32,6 +35,15 @@ public class DataHolder {
     //List of all Nodes and Edges, a Map
     public Map graph;
 
+    // Store the path for each floor
+    public Vector<Node> pathFirst;
+    public Vector<Node> pathSecond;
+    public Vector<Node> pathThird;
+    public Vector<Node> pathL2;
+    public Vector<Node> pathL1;
+    public Vector<Node> pathG;
+
+    public javafx.scene.canvas.GraphicsContext gc;
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;

@@ -30,6 +30,8 @@ public class EditUsersController implements Initializable{
     private JFXButton editUserButt;
     @FXML
     private  JFXButton remButton;
+    @FXML
+    private JFXButton addButton;
 
     public void setMainController(Main main){
         this.mainController = main;
@@ -41,7 +43,7 @@ public class EditUsersController implements Initializable{
     public void help(){Main.genErrorScreen();}
 
     public void addUserButton(){
-        Main.editUserWindow();
+        Main.editUserWindow(addButton);
     }
 
     public void editUserButton(){
@@ -49,7 +51,7 @@ public class EditUsersController implements Initializable{
         //this gives us the rows that were selected
         selectedRows = tableView.getSelectionModel().getSelectedItems();
 
-        Main.editUserWindowEdit(selectedRows.get(0));
+        Main.editUserWindowEdit(selectedRows.get(0), editUserButt);
     }
 
     //Creates a JOptionPane to make sure the admin wants to remove a user

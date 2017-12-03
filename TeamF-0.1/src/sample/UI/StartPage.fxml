@@ -51,7 +51,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="106.0" prefWidth="600.0">
          <children>
-            <JFXButton buttonType="RAISED" onAction="#login" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Log In" textFill="WHITE">
+            <JFXButton fx:id="loginButton" buttonType="RAISED" onAction="#login" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Log In" textFill="WHITE">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>

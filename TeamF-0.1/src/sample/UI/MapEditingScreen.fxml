@@ -245,7 +245,7 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                            <children>
-                              <JFXButton onAction="#editNodes" ripplerFill="#8e8e8e" text="Edit Nodes">
+                              <JFXButton fx:id="editNodeBtn" onAction="#editNodes" ripplerFill="#8e8e8e" text="Edit Nodes">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
@@ -254,7 +254,7 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="228.0">
                            <children>
-                              <JFXButton buttonType="RAISED" onAction="#editEdges" ripplerFill="#8e8e8e" text="Edit Edges">
+                              <JFXButton fx:id="editEdgeBtn" buttonType="RAISED" onAction="#editEdges" ripplerFill="#8e8e8e" text="Edit Edges">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>

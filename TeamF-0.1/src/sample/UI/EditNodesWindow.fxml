@@ -107,26 +107,26 @@
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <JFXButton onAction="#openMapEditing" prefHeight="26.0" prefWidth="43.0" ripplerFill="#8e8e8e" text="Back" />
+                  <JFXButton fx:id="close" onAction="#openMapEditing" prefHeight="26.0" prefWidth="43.0" ripplerFill="#8e8e8e" text="Back" />
                </graphic>
             </Menu>
          </menus></MenuBar>
-      <JFXButton buttonType="RAISED" layoutX="179.0" layoutY="351.0" onAction="#editNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit Node">
+      <JFXButton fx:id="editNodeBtn" buttonType="RAISED" layoutX="179.0" layoutY="351.0" onAction="#editNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit Node">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="433.0" layoutY="351.0" onAction="#openMapEditing" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
+      <JFXButton fx:id="close" buttonType="RAISED" layoutX="433.0" layoutY="351.0" onAction="#openMapEditing" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="61.0" layoutY="351.0" onAction="#addNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add Node">
+      <JFXButton fx:id="addNodeBtn" buttonType="RAISED" layoutX="61.0" layoutY="351.0" onAction="#addNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add Node">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="292.0" layoutY="351.0" onAction="#removeNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Remove Nodes">
+      <JFXButton fx:id="remNodeBtn" buttonType="RAISED" layoutX="292.0" layoutY="351.0" onAction="#removeNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Remove Nodes">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>

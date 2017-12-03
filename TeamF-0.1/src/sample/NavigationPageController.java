@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -23,6 +24,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Line;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -31,8 +34,14 @@ import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.layout.*;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 public class NavigationPageController implements Initializable, Data{
 
@@ -45,6 +54,8 @@ public class NavigationPageController implements Initializable, Data{
     private Label sendLabel;
     @FXML
     private JFXButton sendButton;
+    @FXML
+    private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
     private JFXListView directionSteps;
     @FXML
@@ -61,8 +72,6 @@ public class NavigationPageController implements Initializable, Data{
     private VBox labelBox;
     @FXML
     private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
-    @FXML
-    private JFXTextField email;
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
     private javafx.scene.image.ImageView map;
@@ -89,7 +98,8 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private Label startLabel, endLabel;
     @FXML
-    private StackPane stackPane;
+    private JFXTextField email;
+
     @FXML
     private AnchorPane mainAnchor;
     @FXML
@@ -103,7 +113,7 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<Node> path = new Vector<Node>();
 
-    //private Map CurMap;
+    private Map CurMap;
 
     private Node Kiosk;
 
@@ -114,9 +124,15 @@ public class NavigationPageController implements Initializable, Data{
     private int currentAlgo = 1;
 
 
-    //initialization
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Initialization and Start
+
+    //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Data.data.gc = pathCanvas.getGraphicsContext2D();
+        map.setImage(Data.data.firstFloor);
+
         //disables the bars and starts up the zoom function
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -130,7 +146,7 @@ public class NavigationPageController implements Initializable, Data{
                 "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
         threeList.setItems(threeItems);
 
-        //populating list view -- second
+        // Second Floor
         ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
                 "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
                 "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
@@ -139,7 +155,7 @@ public class NavigationPageController implements Initializable, Data{
                 "Weiner Center for Preoperative Evaluation");
         twoList.setItems(twoItems);
 
-        //populating list view -- first
+        // First Floor
         ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
                 "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
                 "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
@@ -147,19 +163,23 @@ public class NavigationPageController implements Initializable, Data{
                 "Zinner Breakout Room");
         oneList.setItems(oneItems);
 
-        //populating list view -- lower two
-        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
-                "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
-        lowerTwoList.setItems(lowerTwoItems);
+        // Ground Floor
+        ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
+        groundList.setItems(groundItems);
 
-        //populating list view -- lower one
+
+        // Lower 1 Floor
         ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
                 "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
                 "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
         lowerOneList.setItems(lowerOneItems);
 
-        //time - 0
-        //adding all possible entries
+        // Lower 2 Floor
+        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
+                "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
+        lowerTwoList.setItems(lowerTwoItems);
+
+        // All entries
         allEntries = FXCollections.observableArrayList("Restroom; S elevator; 1st floor", "Restroom; BTM conference center; 3rd floor",
                 "Elevator S G", "Infusion Waiting Area", "BTM Security Desk", "Clinical Trials", "Schlagler Innovation Lobby",
                 "Elevator S 01", "Neuroscience Waiting Room", "Orthopedics and Rhemutalogy", "CART Waiting", "Elevator S; Floor 3",
@@ -182,7 +202,7 @@ public class NavigationPageController implements Initializable, Data{
                 "Carrie M. Hall Conference Center Floor 2", "Pat's Place Floor 2", "15 Lobby Entrance Floor 2", "Ambulance Parking Exit Floor 1",
                 "Waiting Room 1 Floor 1", "Connor's Center Security Desk Floor 1", "Restroom G1 Floor 1", "Exit 2 Floor 1", "Asthma Research Floor 1",
                 "Wound and Ambulatory 1", "Ocupational Health Floor 1", "Restroom F1 Floor 1", "Restroom H1 Floor 1", "Ambulatory X-Ray Floor 1",
-                "Rehabilitation Services Floor 1", "Staircase H2 Floor 1", "Lobby Shattuck Street",
+                "Rehabilitation Services Floor 1", "Staircase H2 Floor 1", "Lower Pike Hallway Exit Lobby", "Lobby Shattuck Street",
                 "Shattuck Street Lobby 1", "Shattuck Street Lobby Exit", "Shattuck Street Lobby 2", "Lobby Vending Machine", "Shattuck Street Lobby 3",
                 "Shattuck Street Lobby ATM", "Tower Lobby Entrance 1", "Tower Elevator Entrance", "Tower Staff Entrance",
                 "Center for International Medicine", "Spiritual Care Office", "Tower Medical Cashier", "Multifaith Chapel",
@@ -203,15 +223,8 @@ public class NavigationPageController implements Initializable, Data{
                 "Gynecology");
         searchList.setItems(allEntries);
 
-        //populating list -- ground
-        ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
-        groundList.setItems(groundItems);
         end.setSelected(true);
-
-        //time - 0.506
-        map.setImage(new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png")));
-
-        tabPane.getSelectionModel().select(floorOne);
+        map.setImage(Data.data.firstFloor);
         stairs.setSelected(true);
         elevator.setSelected(true);
 
@@ -276,8 +289,9 @@ public class NavigationPageController implements Initializable, Data{
         });
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Getters and Setters
 
-    //setters and getters
     public void setMainController(Main in){
         mainController = in;
     }
@@ -353,52 +367,81 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public void setMap(Map m) throws IOException{
-        //this.CurMap = m;
-        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
+        this.CurMap = m;
+        Data.data.currentMap = "1";
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Change Floor Methods
     @FXML
     public void changeFloorL1() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
+        testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
     }
 
     @FXML
     public void changeFloorL2() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
+        testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
     }
 
     @FXML
     public void changeFloor1() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.firstFloor);
+        testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
     }
 
     @FXML
     public void changeFloor2() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        if(Data.data.gc != null){
+             Data.data.gc.clearRect(0, 0, x, y);
+        }
         map.setImage(Data.data.secondFloor);
+        testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
     }
 
     @FXML
     public void changeFloor3() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        if(Data.data.gc != null) {
+            Data.data.gc.clearRect(0, 0, x, y);
+        }
         map.setImage(Data.data.thirdFloor);
+        testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
     }
 
     @FXML
     public void changeFloorG() {
-        //tabPane.getSelectionModel().clearSelection();
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,1000,1000);
         map.setImage(Data.data.GFloor);
+        testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
     }
 
-
-    //functions to open screens
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Change Screen Functions
     @FXML
     public void login() throws IOException{
-        Main.loginScreen();
+        Main.loginScreen(loginButton);
         clearFields();
         clear();
     }
@@ -414,11 +457,10 @@ public class NavigationPageController implements Initializable, Data{
         clear();
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Path Finding Functions
 
-    //path finding functions
-    // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
-
-    public void findPath(String Start, String End) throws IOException {
+    public void findPath(String Start, String End) throws IOException, InterruptedException {
         //Returns
         Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,Kiosk);
 
@@ -446,12 +488,13 @@ public class NavigationPageController implements Initializable, Data{
 
         MultiFloorPathDrawing(this.path);
 
-
-
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
+        int length = path.size();
+        String lastFloor = path.get(length - 1).getFloor();
+        setMap(lastFloor);
     }
 
 
@@ -469,10 +512,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
-        for(int i = 0; i < Data.data.floorList.size() ; i++){
-            Data.data.floorList.set(i,false);
-        }
-
+        findPath(startLabel.getText(),endLabel.getText());
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             System.out.println("called");
             if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
@@ -489,70 +529,10 @@ public class NavigationPageController implements Initializable, Data{
 
         searchList.setVisible(false);
         directionSteps.setVisible(true);
-        findPath(startLabel.getText(),endLabel.getText());
-
-
     }
 
-    public void setListView (){}
-
-    //other functions
-    // Method to clear the path on the map when the user presses clear map
-    @FXML
-    public void clear() throws FileNotFoundException{
-        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
-        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
-        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
-        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
-        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
-        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
-        map.setImage(selectMap(Data.data.currentMap));
-        for(int i = 0; i < Data.data.floorList.size() ; i++){
-            Data.data.floorList.set(i,false);
-        }
-        directionSteps.getItems().clear();
-    }
-
-    public void adminSetUp(){
-        loginButton.setText("Log Out");
-        loginButton.setOnAction((event) -> {
-            logout();
-        });
-        adminBox.setVisible(true);
-    }
-
-    @FXML
-    public void logout(){
-        Main.startScreen();
-    }
-
-    // this function returns the proper image based on the current image string
-    public Image selectMap(String currentMap) {
-        if (currentMap != null) {
-            if (currentMap.equals("L2")) {
-                return Data.data.L2Floor;
-            } else if (currentMap.equals("L1")) {
-                return Data.data.L1Floor;
-            } else if (currentMap.equals("0G") || currentMap.equals("G")) {
-                return Data.data.GFloor;
-            } else if (currentMap.equals("01") || currentMap.equals("1")) {
-                return Data.data.firstFloor;
-            } else if (currentMap.equals("02") || currentMap.equals("2")) {
-                return Data.data.secondFloor;
-            } else if (currentMap.equals("03") || currentMap.equals("3")) {
-                return Data.data.thirdFloor;
-            }
-        }
-            return Data.data.firstFloor;
-    }
-
-    // User clicks send email button
-    @FXML
-    public void sendMsg() throws Exception{
-        //Vector<Node> msgVec = new Vector<Node>(10);
-        EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
-        emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
-    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Path Drawing and Directions functions
 
     // Purpose: Print out directions for a path of nodes
     public static String directions(Vector<Node> in){
@@ -625,9 +605,10 @@ public class NavigationPageController implements Initializable, Data{
         }
         return paths;
     }
+
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
-    public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
+    public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         ObservableList<String> populateSteps = FXCollections.observableArrayList();
@@ -640,71 +621,78 @@ public class NavigationPageController implements Initializable, Data{
         populateSteps.add("You have arrived at your destination.");
         directionSteps.setItems(populateSteps);
 
+
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
+        //System.out.println("Reached the multifloor path drawing function");
+        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
         Vector<Vector<Node>> paths = separator(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
-                    Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
-                    Data.data.currentMap = "L2";
-                    Data.data.floorList.set(0,true);
+                    Data.data.pathL2 = floorPath;
                 } else if (pathFloor.equals("L1")) {
-                    Data.data.L1Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L1Floor, null));
-                    Data.data.currentMap = "L1";
-                    Data.data.floorList.set(1,true);
+                    Data.data.pathL1 = floorPath;
                 } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
-                    Data.data.GFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.GFloor, null));
-                    Data.data.currentMap = "G";
-                    Data.data.floorList.set(2,true);
+                    Data.data.pathG = floorPath;
                 } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
-                    Data.data.firstFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.firstFloor, null));
-                    Data.data.currentMap = "1";
-                    Data.data.floorList.set(3,true);
+                    Data.data.pathFirst = floorPath;
                 } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
-                    Data.data.secondFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.secondFloor, null));
-                    Data.data.currentMap = "2";
-                    Data.data.floorList.set(4,true);
+                    Data.data.pathSecond = floorPath;
                 } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
-                    Data.data.thirdFloor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.thirdFloor, null));
-                    Data.data.currentMap = "3";
-                    Data.data.floorList.set(5,true);
+                    Data.data.pathThird = floorPath;
                 }
             }
         }
-        //String floor = path.get(0).getFloor();
+        setMap("1");
     }
 
+    public void setMap(String map) {
+        map.replaceAll("\\s+","");
+        if(map.equals("L2")) {
+            changeFloorL2();
+        } else if(map.equals("L1")) {
+            changeFloorL1();
+        }else if(map.equals("G")) {
+            changeFloorG();
+        } else if(map.equals("01") || map.equals("1")) {
+            changeFloor1();
+        } else if(map.equals("02") || map.equals("2")) {
+            changeFloor2();
+        } else if(map.equals("03") || map.equals("3")){
+            changeFloor3();
+        }
+    }
     // Purpose: Draw a path of nodes on the map
     @FXML
-    public Image testDrawDirections(Vector<Node> path, BufferedImage floorImage) throws IOException {
-        Graphics2D pathImage = floorImage.createGraphics();
-        int length = path.size();
-        String nameDest = path.get(length-1).getShortName();
-        String nameDept = path.get(0).getShortName();
-
-        //Data.data.emailMapFloor1 = "path" + nameDept + "-" + nameDest;
-
-        // Setting up the proper color settings
-        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
-        // Iterate through all the path nodes to draw the path
-        for(int i = 0; i < length ; i++) {
-            Node node = path.get(i);
-            if(i + 1 < length){
-                Node node2 = path.get(i+1);
-                // Lines are drawn offset,
-                if(!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                    pathImage.setColor(new java.awt.Color(0, 0, 0)); // This color is black
-                    pathImage.drawLine(node.getxCoordinate(), node.getyCoordinate(), node2.getxCoordinate(), node2.getyCoordinate());
+    public void testDrawDirections(Vector<Node> path) {
+        if(path != null) {
+            int length = path.size();
+            String nameDest = path.get(length - 1).getShortName();
+            String nameDept = path.get(0).getShortName();
+            // Setting up the proper color settings
+            Data.data.gc.setLineWidth(2);
+            Data.data.gc.setStroke(javafx.scene.paint.Color.BLACK);
+            Data.data.gc.stroke();
+            // Iterate through all the path nodes to draw the path
+            for (int i = 0; i < length; i++) {
+                Node node = path.get(i);
+                //System.out.println("This is node: " + node.getNodeID());
+                if (i + 1 < length) {
+                    Node node2 = path.get(i + 1);
+                    //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
+                    // Lines are drawn offset,
+                    if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
+                        Data.data.gc.strokeLine(node.getxCoordinate() / 4.4 + 2, node.getyCoordinate() / 4.4 + 2, node2.getxCoordinate() / 4.4 + 2, node2.getyCoordinate() / 4.4 + 2);
+                    }
                 }
-                }
+            }
+            String floor = path.get(0).getFloor().replaceAll("\\s+","");
         }
-        map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        return SwingFXUtils.toFXImage(floorImage,null);
     }
 
-    /*//Purpose: This draws all the nodes and edges currently in the database
+    //Purpose: This draws all the nodes and edges currently in the database
     //Used for debugging and admin
     /*@FXML
     public void drawAll() throws IOException{
@@ -717,7 +705,9 @@ public class NavigationPageController implements Initializable, Data{
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         for(int i = 0; i < edgeLength; i++ ) {
             Node nodeStart = edges.get(i).getStart();
+            System.out.println("Start: " + nodeStart.getShortName());
             Node nodeEnd = edges.get(i).getEnd();
+            System.out.println("Stop: " + nodeEnd.getShortName());
             pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
             pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
         }
@@ -728,49 +718,12 @@ public class NavigationPageController implements Initializable, Data{
             pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-    }*/
+    } */
 
-    @FXML
-    public void autoComplete(){
-        searchList.setVisible(true);
-        ObservableList<String> filteredEntries = FXCollections.observableArrayList("empty");
-        //filtering
-        destination.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
-                LinkedList<String> searchResult = new LinkedList<>();
-                //Check if the entered Text is part of some entry
-                String text = destination.getText();
-                Pattern pattern;
-                pattern = Pattern.compile(".*" + text + ".*",
-                        Pattern.CASE_INSENSITIVE);
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Zooming Panning & Dragging functions
 
-                for (String entry : allEntries) {
-                    Matcher matcher = pattern.matcher(entry);
-                    if (matcher.matches()) {
-                        searchResult.add(entry);
-                    }
-                }
-
-                if (allEntries.size() > 0) {
-                    filteredEntries.clear();
-                    filteredEntries.addAll(searchResult);
-                }
-                searchList.setItems(filteredEntries);
-
-            }
-        });
-
-        searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-                searchList.setVisible(false);
-            }
-        });
-
-    }
-
+    // Purpose: Zoom the map when the user zooms
     @FXML
     private void zoom() {
         int MIN_PIXELS = 15;
@@ -838,8 +791,9 @@ public class NavigationPageController implements Initializable, Data{
     private void reset(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
     }
+
     // shift the viewport of the imageView by the specified delta, clamping so
-// the viewport does not move off the actual image:
+    // the viewport does not move off the actual image:
     private void shift(ImageView imageView, Point2D delta) {
         Rectangle2D viewport = imageView.getViewport();
 
@@ -856,7 +810,6 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     private double clamp(double value, double min, double max) {
-
         if (value < min)
             return min;
         if (value > max)
@@ -868,11 +821,34 @@ public class NavigationPageController implements Initializable, Data{
     private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
         double xProportion = imageViewCoordinates.getX() / imageView.getBoundsInLocal().getWidth();
         double yProportion = imageViewCoordinates.getY() / imageView.getBoundsInLocal().getHeight();
-
         Rectangle2D viewport = imageView.getViewport();
         return new Point2D(
                 viewport.getMinX() + xProportion * viewport.getWidth(),
                 viewport.getMinY() + yProportion * viewport.getHeight());
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Other Functions
+
+    // Purpose: Method to clear the path on the map when the user presses clear map
+    @FXML
+    public void clear() throws FileNotFoundException{
+        Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
+        Data.data.pathThird = null;
+        Data.data.pathSecond = null;
+        Data.data.pathFirst = null;
+        Data.data.pathL1 = null;
+        Data.data.pathL2 = null;
+        Data.data.pathG = null;
+
+        for(int i = 0; i < Data.data.floorList.size() ; i++){
+            Data.data.floorList.set(i,false);
+        }
+    }
+
+    @FXML
+    public void logout(){
+        Main.startScreen();
     }
 
     //  EDIT LATER
@@ -891,4 +867,56 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void setAlgorithm(){}
+}
+
+    // Purpose: Send an email when user clicks send email button
+    @FXML
+    public void sendMsg() throws Exception{
+        //Vector<Node> msgVec = new Vector<Node>(10);
+        EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
+        emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
+    }
+
+    // Purpose: Find the proper destination when a user types in the search bar
+    @FXML
+    public void autoComplete(){
+        searchList.setVisible(true);
+        ObservableList<String> filteredEntries = FXCollections.observableArrayList("empty");
+        //filtering
+        destination.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = destination.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                searchList.setItems(filteredEntries);
+            }
+        });
+
+        searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println(newValue);
+                destination.setText(newValue);
+                searchList.setVisible(false);
+            }
+        });
+
+    }
+
 }

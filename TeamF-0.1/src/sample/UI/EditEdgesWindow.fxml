@@ -18,7 +18,7 @@
          <menus>
             <Menu mnemonicParsing="false">
                <graphic>
-                  <JFXButton onAction="#openMapEditing" prefHeight="26.0" prefWidth="49.0" ripplerFill="#8e8e8e" text="Back" />
+                  <JFXButton fx:id="close" onAction="#openMapEditing" prefHeight="26.0" prefWidth="49.0" ripplerFill="#8e8e8e" text="Back" />
                </graphic>
             </Menu>
          </menus>
@@ -66,22 +66,22 @@
             <Insets right="45.0" />
          </padding>
       </GridPane>
-      <JFXButton buttonType="RAISED" layoutX="78.0" layoutY="334.0" onAction="#addEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add Edge">
+      <JFXButton fx:id="addEdgebtn" buttonType="RAISED" layoutX="78.0" layoutY="334.0" onAction="#addEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Add Edge">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="194.0" layoutY="334.0" onAction="#editEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit Edge">
+      <JFXButton fx:id="editEdgebtn" buttonType="RAISED" layoutX="194.0" layoutY="334.0" onAction="#editEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit Edge">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="317.0" layoutY="335.0" onAction="#removeEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Remove Edge">
+      <JFXButton fx:id="removeEdgebtn" buttonType="RAISED" layoutX="317.0" layoutY="335.0" onAction="#removeEdgeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Remove Edge">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="471.0" layoutY="335.0" onAction="#openMapEditing" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
+      <JFXButton fx:id="close" buttonType="RAISED" layoutX="471.0" layoutY="335.0" onAction="#openMapEditing" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Cancel">
          <font>
             <Font name="Montserrat Regular" size="12.0" />
          </font>
