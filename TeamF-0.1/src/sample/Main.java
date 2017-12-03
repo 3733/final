@@ -1,19 +1,26 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import java.util.Map.Entry;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Observable;
 import java.util.Vector;
 
 public class Main extends Application implements Data{
@@ -23,6 +30,7 @@ public class Main extends Application implements Data{
     private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
+    private static Stage popUp;
     private static Scene start;
     private static Scene login;
     private static Scene map;
@@ -131,6 +139,7 @@ public class Main extends Application implements Data{
         editUserWin = new Scene(userWin);
 
         stage = primaryStage;
+        popUp = new Stage();
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
         //login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 600, 344);
@@ -165,10 +174,14 @@ public class Main extends Application implements Data{
         destination = "";
     }
 
-    public static void loginScreen(){
+    public static void loginScreen(JFXButton btn1){
         //SingletonTTS.getInstance().say("Hey Sexy?");
-        stage.setScene(login);
-        stage.centerOnScreen();
+        Stage popUp = new Stage();
+        popUp.setScene(login);
+        popUp.setTitle("Log In");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
     }
 
     public static void startScreen(){
@@ -208,14 +221,22 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
-    public static void nodeEditScreen(){
-        stage.setScene(nodeEdit);
-        stage.centerOnScreen();
+    public static void nodeEditScreen(JFXButton btn1){
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
     }
 
-    public static void edgeEditScreen(){
-        stage.setScene(edgeEdit);
-        stage.centerOnScreen();
+    public static void edgeEditScreen(JFXButton btn1){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
     }
 
 
@@ -240,20 +261,31 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
-    public static void editUserWindow(){
-        stage.setScene(editUserWin);
-        stage.centerOnScreen();
+    public static void editUserWindow(JFXButton btn1){
+        Stage popUp = new Stage();
         editUserWindowController.addingUsers();
+        popUp.setScene(editUserWin);
+        popUp.setTitle("Add User");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
     }
 
-    public static void editUserWindowEdit(Staff staff){
-        stage.setScene(editUserWin);
-        stage.centerOnScreen();
+    public static void editUserWindowEdit(Staff staff, JFXButton btn1){
+        Stage popUp = new Stage();
         editUserWindowController.fillFields(staff);
         editUserWindowController.editingUsers();
+        popUp.setScene(editUserWin);
+        popUp.setTitle("Edit User");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
     }
 
-
+    public static void closePopUp(Button btn2){
+        popUp=(Stage)btn2.getScene().getWindow();
+        popUp.close();
+    }
 
     public static void setLoggedInGuy(Staff user){
         loggedInGuy = user;
@@ -263,21 +295,40 @@ public class Main extends Application implements Data{
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
-        long st = System.currentTimeMillis();
+        //long st = System.currentTimeMillis();
+
+        //testEmbeddedDB db = new testEmbeddedDB();
+        /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
+
+        for(String s : o){
+            System.out.println(s + " trim?");
+        }*/
 
         //startMap();
+
+        /*HashMap<String, Node> test = new HashMap<>();
+
+        test = testEmbeddedDB.getNodesByFloor(1);
+
+        for (java.util.Map.Entry<String, Node> entry : test.entrySet())
+        {
+            System.out.println(entry.getKey() + " trimmed/" + entry.getValue() + " trimmed");
+        }*/
+
+
         launch(args);
 
-        long et = System.currentTimeMillis();
+        /*long et = System.currentTimeMillis();
         double timer = (double) (et-st)/1000;
-        System.out.println("Main " + timer+"<===TIMER");
+        System.out.println("Main " + timer+"<===TIMER");*/
 
-//        testEmbeddedDB db = new testEmbeddedDB();
-//        testEmbeddedDB.dropNodes();
-//        testEmbeddedDB.dropTables();
-//        testEmbeddedDB.createTable();
-        //startMap();
+
+
+
+        //UNCOMMENT THIS LINE
         testEmbeddedDB.dbBuildMap();
+
+
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");

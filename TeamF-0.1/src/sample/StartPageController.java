@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +21,9 @@ public class StartPageController {
 
     @FXML
     private Button helpButton;
+
+    @FXML
+    private JFXButton loginButton;
 
     private Main mainController;
 
@@ -50,7 +54,7 @@ public class StartPageController {
 
     @FXML
     public void login(){
-        Main.loginScreen();
+        Main.loginScreen(loginButton);
     }
 
     @FXML

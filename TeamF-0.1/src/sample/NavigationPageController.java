@@ -105,6 +105,9 @@ public class NavigationPageController implements Initializable, Data{
     private JFXTextField email;
 
     @FXML
+    private AnchorPane mainAnchor;
+    @FXML
+    private JFXButton loginButton;
     private static Label invalidEmailText;     // Contains the Invalid email error message
 
     @FXML
@@ -423,8 +426,9 @@ public class NavigationPageController implements Initializable, Data{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Screen Functions
     @FXML
-    public void login(){
-        Main.loginScreen();
+    public void login() throws IOException{
+        Main.loginScreen(loginButton);
+        clear();
     }
 
     @FXML

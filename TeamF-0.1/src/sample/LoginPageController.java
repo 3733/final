@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.PauseTransition;
@@ -19,6 +20,10 @@ public class LoginPageController {
 
     @FXML
     private Label invalidLoginText;
+    @FXML
+    private JFXButton close;
+    @FXML
+    private JFXButton loginButton;
 
     private Main mainController;
 
@@ -32,11 +37,12 @@ public class LoginPageController {
 
     @FXML
     public void login(){
-        System.out.println(username.getText());
-        System.out.println(password.getText());
+        //System.out.println(username.getText());
+        //System.out.println(password.getText());
         if(checkUser(username.getText(), password.getText())){
             invalidLoginText.setVisible(false);
             Main.adminScreen();
+            Main.closePopUp(loginButton);
         }else {
             invalidLoginText.setVisible(true);
             PauseTransition visiblePause = new PauseTransition(
@@ -65,6 +71,10 @@ public class LoginPageController {
 
 
     @FXML
-    public void back(){Main.startScreen();}
+    public void back(){
+        username.clear();
+        password.clear();
+        Main.closePopUp(close);
+    }
 
 }
