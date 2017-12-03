@@ -148,10 +148,16 @@ public class NavigationPageController implements Initializable, Data{
         zoom();
 
 
-        Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+        //Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+
+        try {
+            clickSelected();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
-        drawNodesCircle(Data.data.firstFloorNodes);
+        //drawNodesCircle(Data.data.firstFloorNodes);
 
         // Populating the lists on the bottom left of the UI
         // Third Floor
@@ -719,6 +725,36 @@ public class NavigationPageController implements Initializable, Data{
             }
 
         }
+
+    @FXML
+    public void clickSelected() throws IOException {
+        System.out.println("MOuse Clicked");
+
+        map.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
+            System.out.println("Mouse Clicked 1");
+            if (e.getClickCount() == 1) {
+                System.out.println("HH");
+
+                Data.data.gc.setStroke(Color.RED);
+
+                double newX = (e.getSceneX()-244)* 4.37;
+                double newY = (e.getSceneY()-36) * 4.37;
+
+                pathCanvas.getGraphicsContext2D().strokeOval(newX/4.4 +2.0 ,newY/4.4 +2.0, 2.0, 2.0);
+                pathCanvas.getGraphicsContext2D().fillOval(newX/4.4 +2.0 ,newY/4.4 +2.0, 2.0, 2.0);
+
+                System.out.println("IMAGE SET");
+
+            }
+
+
+
+        });
+
+
+
+
+    }
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
