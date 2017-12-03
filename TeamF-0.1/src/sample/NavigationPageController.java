@@ -35,75 +35,71 @@ import java.util.regex.Pattern;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
+
 public class NavigationPageController implements Initializable{
 
-    //FXML UI Components
+    //fxml components
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private javafx.scene.image.ImageView icon;
     @FXML
     private JFXListView directionSteps;
-
     @FXML
     private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
-
     @FXML
     private JFXListView searchList;
-
     @FXML
     private ScrollPane scrollMap;
-
+    @FXML
+    private AnchorPane mainPane;
     @FXML
     private JFXTabPane tabPane;
-
     @FXML
     private VBox labelBox;
-
     @FXML
     private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
-
+    // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
-    private javafx.scene.image.ImageView map;   // Contains the map displayed
-
+    private javafx.scene.image.ImageView map;
+    // Contains the desired user destination
     @FXML
-    private JFXTextField destination;     // Contains the desired user destination
-
+    private JFXTextField destination;
+    // Contains stairs option
     @FXML
-    private JFXCheckBox stairs;     // Contains stairs option
-
+    private JFXCheckBox stairs;
+    // Contains the elevator option
     @FXML
-    private JFXCheckBox elevator;     // Contains the elevator option
-
+    private JFXCheckBox elevator;
+    // Contains the Invalid email error message
+    @FXML
+    private static Label invalidEmailText;
     @FXML
     private JFXRadioButton start, end;
-
     @FXML
     private JFXTextField startField, endField;
-
     @FXML
     private ToggleGroup points;
-
     @FXML
     private String defaultStart;
-
     @FXML
     private Label startLabel, endLabel;
-
-    // Email UI Components
+    @FXML
+    private StackPane stackPane;
+    @FXML
+    private AnchorPane mainAnchor;
+    @FXML
+    private Label sendLabel;
+    @FXML
+    private JFXButton sendButton;
     @FXML
     private JFXTextField email;
 
-    @FXML
-    private static Label invalidEmailText;     // Contains the Invalid email error message
-
-    @FXML
-    private Label sendLabel;
-
-    @FXML
-    private JFXButton sendButton;
-
+    //other components
     //other components
     private Main mainController;
 
@@ -278,15 +274,12 @@ public class NavigationPageController implements Initializable{
     public void setKiosk(Node k){
         this.Kiosk = k;
     }
-
     public void setSearch(String s){
         this.destination.setText(s);
     }
-
     public void autoClose(){
         searchList.setVisible(false);
     }
-
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
     }
@@ -384,8 +377,10 @@ public class NavigationPageController implements Initializable{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Screen Functions
     @FXML
-    public void login(){
+    public void login() throws FileNotFoundException{
         Main.loginScreen();
+        clearFields();
+        clear();
     }
 
     @FXML
@@ -393,8 +388,10 @@ public class NavigationPageController implements Initializable{
 
     // Button to return to the welcome screen
     @FXML
-    public void back(){
+    public void back() throws FileNotFoundException{
         Main.startScreen();
+        clearFields();
+        clear();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -403,41 +400,30 @@ public class NavigationPageController implements Initializable{
     public void findPath(String Start, String End) throws IOException {
         //Returns
         Node EndNode = SearchEngine.SearchPath(End,CurMap,Kiosk);
-        System.out.println(EndNode.getLongName()+"<=====END");
-
 
         Node StartNode = SearchEngine.SearchPath(Start,CurMap,Kiosk);
-        System.out.println(StartNode.getLongName()+"<=====START");
 
         switch (currentAlgo){
             case 1:
                 PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
                 this.path = pathFinder1.executeStrategy(StartNode,EndNode, CurMap);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 2:
                 PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
                 this.path = pathFinder2.executeStrategy(StartNode,EndNode, CurMap);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 3:
                 PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
                 this.path = pathFinder3.executeStrategy(StartNode,EndNode, CurMap);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
             case 4:
                 PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
                 this.path = pathFinder4.executeStrategy(StartNode,EndNode, CurMap);
-                System.out.println(currentAlgo+"<==ALGO USED");
                 break;
         }
 
 
-
-
         MultiFloorPathDrawing(this.path);
-
-
 
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
@@ -446,7 +432,7 @@ public class NavigationPageController implements Initializable{
     }
 
 
-    // The go button next to the destination text field, starts pathfinding algorithm, direction print, map drawing
+
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
@@ -553,24 +539,10 @@ public class NavigationPageController implements Initializable{
 
 
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        //System.out.println("Reached the multifloor path drawing function");
-        //System.out.println("This is the first node floor: " + path.get(0).getFloor());
         Vector<Vector<Node>> paths = separator(path);
-        //System.out.println("Size of the vector of paths " + paths.size());
-        /*
-        for (Vector<Node> i: paths) {
-            for (Node j: i){
-                System.out.println(j.getLongName());
-            }
-
-        }*/
-        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
-                // System.out.println(Data.data.floorList);
-                //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
@@ -600,6 +572,7 @@ public class NavigationPageController implements Initializable{
             }
         }
         //String floor = path.get(0).getFloor();
+
     }
 
     // Purpose: Draw a path of nodes on the map
@@ -610,15 +583,15 @@ public class NavigationPageController implements Initializable{
         String nameDest = path.get(length-1).getShortName();
         String nameDept = path.get(0).getShortName();
 
+        //Data.data.emailMapFloor1 = "path" + nameDept + "-" + nameDest;
+
         // Setting up the proper color settings
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         // Iterate through all the path nodes to draw the path
         for(int i = 0; i < length ; i++) {
             Node node = path.get(i);
-            //System.out.println("This is node: " + node.getNodeID());
             if(i + 1 < length){
                 Node node2 = path.get(i+1);
-                //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                 // Lines are drawn offset,
                 if(!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
                     pathImage.setColor(new java.awt.Color(0, 0, 0)); // This color is black
@@ -627,10 +600,8 @@ public class NavigationPageController implements Initializable{
             }
         }
         map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        //System.out.println("Image set on map");
         return SwingFXUtils.toFXImage(floorImage,null);
     }
-
 
     //Purpose: This draws all the nodes and edges currently in the database
     //Used for debugging and admin
@@ -645,9 +616,7 @@ public class NavigationPageController implements Initializable{
         pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
         for(int i = 0; i < edgeLength; i++ ) {
             Node nodeStart = edges.get(i).getStart();
-            System.out.println("Start: " + nodeStart.getShortName());
             Node nodeEnd = edges.get(i).getEnd();
-            System.out.println("Stop: " + nodeEnd.getShortName());
             pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
             pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
         }
@@ -689,7 +658,7 @@ public class NavigationPageController implements Initializable{
         });
 
         map.setOnScroll(e -> {
-            double delta = e.getDeltaY();
+            double delta = -e.getDeltaY();
             Rectangle2D viewport = map.getViewport();
 
             double scale = clamp(Math.pow(1.01, delta),
@@ -785,6 +754,20 @@ public class NavigationPageController implements Initializable{
             Data.data.floorList.set(i,false);
         }
     }
+
+
+    //Purpose:clearingFields
+    @FXML
+    public void clearFields(){
+        double width = map.getImage().getWidth();
+        double height = map.getImage().getHeight();
+        endLabel.setText("");
+        startLabel.setText("Lower Pike Hallway Exit Lobby");
+        destination.setText("");
+        directionSteps.getItems().clear();
+        reset(map, width, height);
+    }
+
 
     // Purpose: This function returns the proper image based on the current image string
     public Image selectMap(String currentMap) {

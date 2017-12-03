@@ -293,13 +293,11 @@ public class AdminPageController implements Initializable{
 
     public void findPath(String in) throws IOException {
         //Returns
-        long st = System.currentTimeMillis();
         //this.path= SearchEngine.SearchPath(in,CurMap,Kiosk);
-        long et = System.currentTimeMillis();
 
-        st = System.currentTimeMillis();
+
         MultiFloorPathDrawing(path);
-        et = System.currentTimeMillis();
+
     }
     @FXML
     public void go() throws IOException,InterruptedException{
@@ -433,9 +431,15 @@ public class AdminPageController implements Initializable{
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException{
         for(Node i: path){
+
         }
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
+
         Vector<Vector<Node>> paths = separator2(path);
+
+
+        //Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
+        //paths.add(path);
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {

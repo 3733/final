@@ -2,32 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SwitchingController">
     <children>
-        <MenuBar layoutY="-1.0" prefHeight="28.0" prefWidth="600.0">
-         <menus>
-            <Menu mnemonicParsing="false">
-               <graphic>
-                  <JFXButton fx:id="back" contentDisplay="CENTER" ripplerFill="#8e8e8e">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0">
-                           <image>
-                              <Image url="@Icons/closeButton.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-               </graphic>
-            </Menu>
-         </menus></MenuBar>
-        <Label layoutX="89.0" layoutY="80.0" prefHeight="20.0" prefWidth="415.0" text="Looks like you're going between floors, are you sure aboout that?">
+        <Label layoutX="92.0" layoutY="69.0" prefHeight="20.0" prefWidth="415.0" text="Looks like you're going between floors, are you sure aboout that?">
             <font>
                 <Font size="14.0" />
             </font>

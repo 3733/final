@@ -25,101 +25,27 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MapEditPageController implements Initializable{
-    @FXML
-    private Button backButton;
+
+    //fxml components
     @FXML
     private ScrollPane scrollMap;
     @FXML
     private ImageView map;
-    @FXML
-    private JFXButton upButton, downButton;
-    @FXML
-    private Label floorLabel;
-    @FXML
-    private String currentFloor = "First Floor";
-    @FXML
-    private SplitMenuButton quickFloor;
     @FXML
     private JFXListView threeList, twoList, oneList, groundList, lowerTwoList, lowerOneList;
     @FXML
     private Tab floorOne;
     @FXML
     private JFXTabPane tabPane;
-    private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
     @FXML
     private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk;
 
 
+    //other variables
     private Main mainController;
 
 
-    public void setMainController(Main main){
-        this.mainController = main;
-    }
-
-    @FXML
-    public void editNodes(){
-        Main.nodeEditScreen();
-    }
-
-    @FXML
-    public void editEdges(){
-        Main.edgeEditScreen();
-    }
-
-    @FXML
-    public void changeFloorL1() {
-        map.setImage(Data.data.L1Floor);
-    }
-
-    @FXML
-    public void importCSV(){
-        testEmbeddedDB.fillEdgesTable();
-        testEmbeddedDB.fillNodesTable();
-    }
-
-    @FXML
-    public void exportCSV(){
-        testEmbeddedDB.writeToCSV();
-    }
-
-    @FXML
-    public void changeFloorL2() {
-        map.setImage(Data.data.L2Floor);
-    }
-
-    @FXML
-    public void changeFloor1() {
-        map.setImage(Data.data.firstFloor);
-    }
-
-    @FXML
-    public void changeFloor2() {
-        map.setImage(Data.data.secondFloor);
-    }
-
-    @FXML
-    public void changeFloor3() {
-        map.setImage(Data.data.thirdFloor);
-    }
-
-    @FXML
-    public void changeFloorG() {
-        map.setImage(Data.data.GFloor);
-    }
-
-    @FXML
-    public void openMapScreen() throws IOException, InterruptedException {
-        Main.mapScreen();
-    }
-
-    @FXML
-    public void help(){Main.genErrorScreen();}
-    @FXML
-    public void logout(){Main.startScreen();}
-    @FXML
-    public void back(){Main.adminScreen();}
-
+    //initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try{
@@ -203,6 +129,83 @@ public class MapEditPageController implements Initializable{
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+
+    //getter and setters
+    public void setMainController(Main main){
+        this.mainController = main;
+    }
+
+    @FXML
+    public void changeFloorL1() {
+        map.setImage(Data.data.L1Floor);
+    }
+
+    @FXML
+    public void changeFloor1() {
+        map.setImage(Data.data.firstFloor);
+    }
+
+    @FXML
+    public void changeFloor2() {
+        map.setImage(Data.data.secondFloor);
+    }
+
+    @FXML
+    public void changeFloor3() {
+        map.setImage(Data.data.thirdFloor);
+    }
+
+    @FXML
+    public void changeFloorG() {
+        map.setImage(Data.data.GFloor);
+    }
+
+    @FXML
+    public void changeFloorL2() {
+        map.setImage(Data.data.L2Floor);
+    }
+
+
+    //functions to open pages
+    @FXML
+    public void editNodes(){
+        Main.nodeEditScreen();
+    }
+
+    @FXML
+    public void editEdges(){
+        Main.edgeEditScreen();
+    }
+
+    @FXML
+    public void openMapScreen() throws IOException, InterruptedException {
+        Main.mapScreen();
+    }
+
+    @FXML
+    public void help(){Main.genErrorScreen();}
+
+    @FXML
+    public void logout(){Main.startScreen();}
+
+    @FXML
+    public void back(){Main.adminScreen();}
+
+
+
+
+    //other functions
+    @FXML
+    public void importCSV(){
+        testEmbeddedDB.fillEdgesTable();
+        testEmbeddedDB.fillNodesTable();
+    }
+
+    @FXML
+    public void exportCSV(){
+        testEmbeddedDB.writeToCSV();
     }
 
     @FXML
