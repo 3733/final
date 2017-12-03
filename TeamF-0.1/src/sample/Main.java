@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
@@ -15,10 +16,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Vector;
 
-public class Main extends Application {
+public class Main extends Application implements Data{
 
     private  static String destination;
     private  static Staff loggedInGuy;
+    private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
     private static Scene start;
@@ -26,6 +28,7 @@ public class Main extends Application {
     private static Scene map;
     private static Scene admin;
     private static Scene service;
+    private static Scene accept;
     private static Scene itError;
     private static Scene itRequest;
     private static Scene mapEdit;
@@ -33,6 +36,7 @@ public class Main extends Application {
     private static Scene edgeEdit;
     private static Scene editUsers;
     private static Scene genError;
+    private static Scene editUserWin;
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -40,15 +44,17 @@ public class Main extends Application {
     public static NavigationPageController navigationPageController = new NavigationPageController();
     public static AdminPageController adminPageController = new AdminPageController();
     public static ServiceRequestController serviceRequestController = new ServiceRequestController();
+    public static ServiceAcceptController serviceAcceptController = new ServiceAcceptController();
     public static MapEditPageController mapEditPageController = new MapEditPageController();
     public static EditNodesController editNodesController = new EditNodesController();
     public static EditEdgesController editEdgesController = new EditEdgesController();
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
+    public static EditUserWindowController editUserWindowController = new EditUserWindowController();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
+        this.DataStart();
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -66,6 +72,9 @@ public class Main extends Application {
         navigationPageController = navLoader.getController();
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
+        //startMap();
+        navigationPageController.setKiosk(data.graph.getNodes().get(0));
+        navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
         Parent Admin = adminLoader.load();
@@ -78,6 +87,12 @@ public class Main extends Application {
         serviceRequestController = serviceLoader.getController();
         serviceRequestController.setMainController(this);
         service = new Scene(Service);
+
+        FXMLLoader acceptLoader = new FXMLLoader(getClass().getResource("UI/Service_Accept_Menu.fxml"));
+        Parent Accept = acceptLoader.load();
+        serviceAcceptController = acceptLoader.getController();
+        serviceAcceptController.setMainController(this);
+        accept = new Scene(Accept);
 
         FXMLLoader mapEditLoader = new FXMLLoader(getClass().getResource("UI/MapEditingScreen.fxml"));
         Parent MapEdit = mapEditLoader.load();
@@ -109,6 +124,12 @@ public class Main extends Application {
         genErrorController.setMainController(this);
         genError = new Scene(Error);
 
+        FXMLLoader editUserWinLoader = new FXMLLoader(getClass().getResource("UI/EditUserWindow.fxml"));
+        Parent userWin = editUserWinLoader.load();
+        editUserWindowController = editUserWinLoader.getController();
+        editUserWindowController.setMainController(this);
+        editUserWin = new Scene(userWin);
+
         stage = primaryStage;
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
@@ -120,6 +141,8 @@ public class Main extends Application {
         admin.getStylesheets().add("sample/UI/style.css");
         //service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1386, 810);
         service.getStylesheets().add("sample/UI/style.css");
+        //accept = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Accept_Menu.fxml")), 1386, 810);
+        accept.getStylesheets().add("sample/UI/style.css");
         //mapEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/MapEditingScreen.fxml")), 1386,810);
         mapEdit.getStylesheets().add("sample/UI/style.css");
         //nodeEdit = new Scene(FXMLLoader.load(getClass().getResource("UI/EditNodesWindow.fxml")), 600,400);
@@ -130,17 +153,20 @@ public class Main extends Application {
         editUsers.getStylesheets().add("sample/UI/style.css");
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
+        editUserWin.getStylesheets().add("sample/UI/style.css");
+
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
-
         stage.show();
-
+        Data.data.XWindow = stage.getX();
+        Data.data.YWindow = stage.getY();
         destination = "";
     }
 
     public static void loginScreen(){
+        //SingletonTTS.getInstance().say("Hey Sexy?");
         stage.setScene(login);
         stage.centerOnScreen();
     }
@@ -153,10 +179,12 @@ public class Main extends Application {
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
         stage.centerOnScreen();
-        startMap();
+        Data.data.XWindow = stage.getX();
+        Data.data.YWindow = stage.getY();
+        //startMap();
         if(getDestination().length() > 0){
-
-            navigationPageController.findPath(getDestination());
+            navigationPageController.setSearch(getDestination());
+            navigationPageController.settingFields();
         }
     }
 
@@ -167,6 +195,11 @@ public class Main extends Application {
 
     public static void serviceScreen(){
         stage.setScene(service);
+        stage.centerOnScreen();
+    }
+
+    public static void acceptScreen(){
+        stage.setScene(accept);
         stage.centerOnScreen();
     }
 
@@ -198,11 +231,26 @@ public class Main extends Application {
     public static void editUsersScreen(){
         stage.setScene(editUsers);
         stage.centerOnScreen();
+        editUsersController.disableButtons();
+        editUsersController.refreshTable();
     }
 
     public static void genErrorScreen(){
         stage.setScene(genError);
         stage.centerOnScreen();
+    }
+
+    public static void editUserWindow(){
+        stage.setScene(editUserWin);
+        stage.centerOnScreen();
+        editUserWindowController.addingUsers();
+    }
+
+    public static void editUserWindowEdit(Staff staff){
+        stage.setScene(editUserWin);
+        stage.centerOnScreen();
+        editUserWindowController.fillFields(staff);
+        editUserWindowController.editingUsers();
     }
 
 
@@ -215,24 +263,59 @@ public class Main extends Application {
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
+        long st = System.currentTimeMillis();
 
-        //testEmbeddedDB db = new testEmbeddedDB();
-        startMap();
-        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Doctor", "eyago@yagokorolab.net");
+        //startMap();
+        launch(args);
+
+        long et = System.currentTimeMillis();
+        double timer = (double) (et-st)/1000;
+        System.out.println("Main " + timer+"<===TIMER");
+
+//        testEmbeddedDB db = new testEmbeddedDB();
+//        testEmbeddedDB.dropNodes();
+//        testEmbeddedDB.dropTables();
+//        testEmbeddedDB.createTable();
+        //startMap();
+        testEmbeddedDB.dbBuildMap();
+        /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
+        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
+        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
+        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris", "van Rossum", "Admin", "florisvanrossum@gmail.com");
+        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke", "Ludington", "Admin", "Pmwws1@gmail.com");
+        Staff Will = new Staff("William", "Godsey", 4, "William", "Godsey", "Admin", "willgodsey@gmail.com");
+        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin", "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
+        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan", "Wang", "Admin", "WillisWang514@gmail.com");
+        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion", "Patias", "Admin", "Parmenion.Patias@gmail.com");
+        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie", "Raca", "Admin", "stephanie.r.racca@gmail.com");
+        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos", "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
+        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew", "Schueler", "Admin", "andrewtheschueler@gmail.com");
         testEmbeddedDB.addStaff(Gary);
         testEmbeddedDB.addStaff(Eirin);
-
+        testEmbeddedDB.addStaff(Talal);
+        testEmbeddedDB.addStaff(Griffin);
+        testEmbeddedDB.addStaff(Floris);
+        testEmbeddedDB.addStaff(Luke);
+        testEmbeddedDB.addStaff(Will);
+        testEmbeddedDB.addStaff(Ben);
+        testEmbeddedDB.addStaff(Willis);
+        testEmbeddedDB.addStaff(Parm);
+        testEmbeddedDB.addStaff(Steph);
+        testEmbeddedDB.addStaff(Nik);
+        testEmbeddedDB.addStaff(Andrew);//*/
 
 
 
         //controller.drawDirections(Vec);
-        launch(args);
+        //launch(args);
     }
 
-    public static void startMap(){
+    public static Map startMap() throws IOException{
 
-        Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
+        Map CurMap = testEmbeddedDB.dbBuildMap();
+
+        /*Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
 
         Vector <Edge> EdgesBad = testEmbeddedDB.getAllEdges();
 
@@ -272,7 +355,7 @@ public class Main extends Application {
 
         CurMap.BuildMap();
 
-
+/*
         for (int i =0; i<CurMap.getNodes().size();i++){
 
             System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
@@ -282,9 +365,25 @@ public class Main extends Application {
                 System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
             }
         }
-
-        navigationPageController.setMap(CurMap);
+*/
+        /*navigationPageController.setMap(CurMap);
+        adminPageController.setMap(CurMap);
         //Default kiosk location is the Center for International Medecine
         navigationPageController.setKiosk(CurMap.getNodes().get(0));
+        adminPageController.setKiosk(CurMap.getNodes().get(0));*/
+
+
+        return CurMap;
+    }
+
+    public void DataStart() throws IOException {
+        data.graph = startMap();
+        Data.data.firstFloor = new Image(getClass().getResourceAsStream(filePath + "01_thefirstfloor.png"));
+        Data.data.secondFloor = new Image(getClass().getResourceAsStream(filePath + "02_thesecondfloor.png"));
+        Data.data.thirdFloor = new Image(getClass().getResourceAsStream(filePath + "03_thethirdfloor.png"));
+        Data.data.GFloor = new Image(getClass().getResourceAsStream(filePath + "00_thegroundfloor.png"));
+        Data.data.L1Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel1.png"));
+        Data.data.L2Floor = new Image(getClass().getResourceAsStream(filePath + "00_thelowerlevel2.png"));
+        Data.data.currentMap = "1";
     }
 }

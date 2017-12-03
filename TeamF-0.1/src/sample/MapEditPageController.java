@@ -1,8 +1,15 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.WeakEventHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -17,32 +24,159 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MapEditPageController implements Initializable {
-    @FXML
-    private Button backButton;
+public class MapEditPageController implements Initializable{
+
+    //fxml components
     @FXML
     private ScrollPane scrollMap;
     @FXML
     private ImageView map;
     @FXML
-    private JFXButton upButton, downButton;
+    private JFXListView threeList, twoList, oneList, groundList, lowerTwoList, lowerOneList;
     @FXML
-    private Label floorLabel;
+    private Tab floorOne;
     @FXML
-    private String currentFloor = "First Floor";
+    private JFXTabPane tabPane;
     @FXML
-    private SplitMenuButton quickFloor;
-    @FXML
-    private RadioMenuItem groundSet, lowerOneSet, lowerTwoSet, oneSet, twoSet, threeSet;
+    private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk;
 
 
+    //other variables
     private Main mainController;
 
 
+    //initialization
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try{
+            zoom();
+            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+            //popluating list view -- three
+            ObservableList<String> threeItems = FXCollections.observableArrayList (
+                    "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
+                    "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                    "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
+                    "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
+            threeList.setItems(threeItems);
+
+            //populating list view -- second
+            ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
+                    "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
+                    "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
+                    "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
+                    "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
+                    "Weiner Center for Preoperative Evaluation");
+            twoList.setItems(twoItems);
+
+            //populating list view -- first
+            ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
+                    "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
+                    "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
+                    "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
+                    "Zinner Breakout Room");
+            oneList.setItems(oneItems);
+
+            //populating list view -- lower two
+            ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
+                    "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
+            lowerTwoList.setItems(lowerTwoItems);
+
+            //populating list view -- lower one
+            ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
+                    "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
+                    "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
+            lowerOneList.setItems(lowerOneItems);
+
+            //populating list -- ground
+            ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
+            groundList.setItems(groundItems);
+            tabPane.getSelectionModel().select(floorOne);
+            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+
+            chooseAStar.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(1);
+                    Main.adminPageController.setCurrentAlgo(1);
+                    System.out.println(1);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+
+            chooseBreadth.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(2);
+                    Main.adminPageController.setCurrentAlgo(2);
+                    System.out.println(2);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+
+            chooseDepth.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(3);
+                    Main.adminPageController.setCurrentAlgo(3);
+                    System.out.println(3);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+
+            chooseDijk.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(4);
+                    Main.adminPageController.setCurrentAlgo(4);
+                    System.out.println(4);
+                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                }
+            });
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //getter and setters
     public void setMainController(Main main){
         this.mainController = main;
     }
 
+    @FXML
+    public void changeFloorL1() {
+        map.setImage(Data.data.L1Floor);
+    }
+
+    @FXML
+    public void changeFloor1() {
+        map.setImage(Data.data.firstFloor);
+    }
+
+    @FXML
+    public void changeFloor2() {
+        map.setImage(Data.data.secondFloor);
+    }
+
+    @FXML
+    public void changeFloor3() {
+        map.setImage(Data.data.thirdFloor);
+    }
+
+    @FXML
+    public void changeFloorG() {
+        map.setImage(Data.data.GFloor);
+    }
+
+    @FXML
+    public void changeFloorL2() {
+        map.setImage(Data.data.L2Floor);
+    }
+
+
+    //functions to open pages
     @FXML
     public void editNodes(){
         Main.nodeEditScreen();
@@ -60,102 +194,26 @@ public class MapEditPageController implements Initializable {
 
     @FXML
     public void help(){Main.genErrorScreen();}
+
     @FXML
     public void logout(){Main.startScreen();}
+
     @FXML
     public void back(){Main.adminScreen();}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try{
-            zoom();
-            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-            //setting menu item actions
-            groundSet.setOnAction(event -> {
-                currentFloor = "Ground Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(true);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
 
-            lowerOneSet.setOnAction(event -> {
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
 
-            lowerTwoSet.setOnAction(event -> {
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
+    //other functions
+    @FXML
+    public void importCSV(){
+        testEmbeddedDB.fillEdgesTable();
+        testEmbeddedDB.fillNodesTable();
+    }
 
-            oneSet.setOnAction(event -> {
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
-
-            twoSet.setOnAction(event -> {
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
-
-            threeSet.setOnAction(event -> {
-                currentFloor = "Third Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(true);
-                downButton.setDisable(false);
-                try {
-                    map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(currentFloor);
-            });
-
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-            floorLabel.setText("First Floor");
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    public void exportCSV(){
+        testEmbeddedDB.writeToCSV();
     }
 
     @FXML
@@ -260,99 +318,6 @@ public class MapEditPageController implements Initializable {
         return new Point2D(
                 viewport.getMinX() + xProportion * viewport.getWidth(),
                 viewport.getMinY() + yProportion * viewport.getHeight());
-    }
-
-    //switches images based on floors
-    public void floorUp() throws FileNotFoundException {
-        switch (currentFloor){
-            case "Ground Floor":
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level One":
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level Two":
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "First Floor":
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Second Floor":
-                currentFloor = "Third Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(true);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/03_thethirdfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            default: break;
-        }
-    }
-
-    public void floorDown() throws FileNotFoundException{
-        switch (currentFloor){
-            case "Lower Level One":
-                currentFloor = "Ground Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(true);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thegroundfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Lower Level Two":
-                currentFloor = "Lower Level One";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel1.png")));
-                System.out.println(currentFloor);
-                break;
-            case "First Floor":
-                currentFloor = "Lower Level Two";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/00_thelowerlevel2.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Second Floor":
-                currentFloor = "First Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            case "Third Floor":
-                currentFloor = "Second Floor";
-                floorLabel.setText(currentFloor);
-                upButton.setDisable(false);
-                downButton.setDisable(false);
-                map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/02_thesecondfloor.png")));
-                System.out.println(currentFloor);
-                break;
-            default: break;
-        }
     }
 
 }

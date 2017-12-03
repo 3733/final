@@ -9,12 +9,17 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="resouces" level="project" />
-    <orderEntry type="library" name="jfoenix" level="project" />
-    <orderEntry type="library" name="activation" level="application" />
     <orderEntry type="library" name="common-lang3" level="application" />
     <orderEntry type="library" name="derby" level="application" />
-    <orderEntry type="library" name="jdk1.8" level="application" />
-    <orderEntry type="library" name="mail" level="application" />
     <orderEntry type="library" name="opencsv-4.0" level="application" />
+    <orderEntry type="library" name="jfoenix" level="application" />
+    <orderEntry type="library" name="mail" level="application" />
+    <orderEntry type="library" name="javax.mail" level="application" />
+    <orderEntry type="library" name="MapIteration2v6" level="project" />
+    <orderEntry type="library" name="jfoenix-1.10.0" level="project" />
+    <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="cmu_us_kal" level="project" />
+    <orderEntry type="library" name="en_us" level="project" />
+    <orderEntry type="library" name="freetts" level="project" />
   </component>
 </module>

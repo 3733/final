@@ -8,7 +8,7 @@ public class Node {
     private String nodeID;
     private int xCoordinate;
     private int yCoordinate;
-    private int floor;
+    private String floor;
     private String building;
     private String nodeType;
     private String longName;
@@ -18,7 +18,7 @@ public class Node {
 
 
     //Constructor
-    public Node (String nodeID, int xCoordinate, int yCoordinate, int floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
+    public Node (String nodeID, int xCoordinate, int yCoordinate, String floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
 
         this.nodeID = nodeID;
         this.xCoordinate = xCoordinate;
@@ -59,11 +59,11 @@ public class Node {
         this.yCoordinate = yCoordinate;
     }
 
-    public int getFloor() {
+    public String getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
+    public void setFloor(String floor) {
         this.floor = floor;
     }
 

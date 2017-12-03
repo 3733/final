@@ -1,6 +1,8 @@
 package sample;
 
-public class Staff {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class Staff extends RecursiveTreeObject<Staff> {
     protected String firstName;
     protected String lastName;
     protected long employeeID;

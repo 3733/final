@@ -2,8 +2,10 @@ package sample;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 import sample.Main;
 
 import java.util.LinkedList;
@@ -33,9 +35,17 @@ public class LoginPageController {
         System.out.println(username.getText());
         System.out.println(password.getText());
         if(checkUser(username.getText(), password.getText())){
+            invalidLoginText.setVisible(false);
             Main.adminScreen();
         }else {
             invalidLoginText.setVisible(true);
+            PauseTransition visiblePause = new PauseTransition(
+                    Duration.seconds(3)
+            );
+            visiblePause.setOnFinished(
+                    event -> invalidLoginText.setVisible(false)
+            );
+            visiblePause.play();
         }
         username.clear();
         password.clear();

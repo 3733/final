@@ -25,13 +25,17 @@ public class SearchEngine {
      * @return  ListPoint it returns a vector that contains the nodes, that the minimum path from Start to End consists of.
      */
 
-    public static Vector<Node> SearchPath(String search, Map map, Node kiosk){
+    public static Node SearchPath(String search, Map map, Node kiosk){
+
+
+
 
 
         Vector<Node> r = new Vector<>();
 
 
         if ( search !=  ""){
+            search = search.toLowerCase();
             for(int i = 0; i<map.getNodes().size();i++){
                 if ((map.getNodes().get(i).getLongName().toLowerCase().contains(search.toLowerCase()))){
                     r.add(map.getNodes().get(i));
@@ -39,44 +43,50 @@ public class SearchEngine {
             }
         }
 
-
-        //Vector<Node> r = findMatches(search,map.getNodes());
 /*
+        double maxLav = 0;
+        Node maxNode = null;
+        for(int i=0; i<map.getNodes().size();i++){
+
+            if(scoreName(search,map.getNodes().get(i).getLongName().toLowerCase())>maxLav){
+                maxLav = scoreName(search,map.getNodes().get(i).getLongName().toLowerCase());
+                maxNode = map.getNodes().get(i);
+            }
+            System.out.println((i+1)+")  "+scoreName(search,map.getNodes().get(i).getLongName().toLowerCase()));
+        }
+
+        System.out.println(maxNode.getLongName());
+
+        Vector<Node> r = findMatches(search,map.getNodes());
+
         for(int i=0;i<r.size();i++){
             System.out.println(i+": "+r.get(i).getLongName());
         }
+
         */
+
 
         Node MinNode = kiosk;
         Double MinDistance=1000000.0;
+        PathAlgorithm pathFinder = new PathAlgorithm(new Dijkstras());
+
 
         for(int i =0; i<r.size();i++ ){
-            Double CurDist = map.TotalDistance(map.AStar(kiosk,r.get(i)));
+            Double CurDist = map.TotalDistance(pathFinder.executeStrategy(kiosk,r.get(i),map));
             if(MinDistance  > CurDist){
                 MinDistance =CurDist;
                 MinNode = r.get(i);
             }
         }
 
-        return map.AStar(kiosk,MinNode);
+        return MinNode;
 
-        /*
 
-        int editDistance = StringUtils.getLevenshteinDistance(searchName, NodeName);
-        System.out.println();
-        double score = (NodeName.length() - editDistance) / NodeName.length();
-
-        if (searchName.charAt(0) != NodeName.charAt(0)) {
-            score = Math.min(score, MAX_SCORE_FOR_NO_FIRST_LETTER_MATCH);
-        }
-
-        return Math.max(0.0, Math.min(score, 1.0));
-        */
     }
 
 
-
 /*
+
 
     public static Vector<Node> findMatches(String searchLocation, Vector<Node> ListOfNodes) {
 
@@ -95,9 +105,48 @@ public class SearchEngine {
     }
 
 
-    scoreName
+    public static double scoreName(String searchName, String candidateName) {
+        if (searchName.equals(candidateName)) return 1.0;
 
+        double editDistance = computeLevenshteinDistance(searchName, candidateName);
+
+        // Normalize for length:
+        double score = (editDistance - ((double) candidateName.length()) / editDistance);
+        //System.out.println(score);
+        // Artificially reduce the score if the first letters don't match
+        if (searchName.charAt(0) != candidateName.charAt(0)) {
+            score = Math.min(score, MAX_SCORE_FOR_NO_FIRST_LETTER_MATCH);
+        }
+
+        // Try Soundex or other matching here.  Remember that you don't want
+        // to go above 1.0, so you may want to create a second score and
+        // return the higher.
+
+        return Math.max(0.0, Math.min(score, 1.0));
+    }
+
+
+    private static int minimum(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
+    }
+
+    public static int computeLevenshteinDistance(String lhs,String rhs) {
+        int[][] distance = new int[lhs.length() + 1][rhs.length() + 1];
+
+        for (int i = 0; i <= lhs.length(); i++)
+            distance[i][0] = i;
+        for (int j = 1; j <= rhs.length(); j++)
+            distance[0][j] = j;
+
+        for (int i = 1; i <= lhs.length(); i++)
+            for (int j = 1; j <= rhs.length(); j++)
+                distance[i][j] = minimum(
+                        distance[i - 1][j] + 1,
+                        distance[i][j - 1] + 1,
+                        distance[i - 1][j - 1] + ((lhs.charAt(i - 1) == rhs.charAt(j - 1)) ? 0 : 1));
+
+        return distance[lhs.length()][rhs.length()];
+    }
 */
 
 }
-

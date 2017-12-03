@@ -3,11 +3,11 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -32,9 +32,9 @@
       </MenuBar>
       <AnchorPane prefHeight="793.0" prefWidth="1328.0">
          <children>
-            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="228.0">
+            <JFXDrawer defaultDrawerSize="50.0" prefHeight="786.0" prefWidth="174.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="786.0" prefWidth="197.0">
                      <children>
                         <AnchorPane prefHeight="107.0" prefWidth="200.0">
                            <children>
@@ -43,7 +43,7 @@
                                     <JFXBadge />
                                     <ImageView fx:id="icon" fitHeight="97.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                                          <Image url="@../../../../../newUI/src/views/Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
                                        </image>
                                        <HBox.margin>
                                           <Insets left="15.0" top="10.0" />
@@ -60,6 +60,15 @@
                                                    </font></JFXButton>
                                              </children>
                                           </JFXBadge>
+                                          <JFXBadge>
+                                             <children>
+                                                <JFXButton onAction="#refreshTable" ripplerFill="#8e8e8e" text="Refresh">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXButton>
+                                             </children>
+                                          </JFXBadge>
                                        </children>
                                     </VBox>
                                  </children>
@@ -70,7 +79,7 @@
                            <children>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="228.0">
                                  <children>
-                                    <JFXButton ripplerFill="#8e8e8e" text="Edit User">
+                                    <JFXButton fx:id="editUserButt" onAction="#editUserButton" ripplerFill="#8e8e8e" text="Edit User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
@@ -78,7 +87,7 @@
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton ripplerFill="#8e8e8e" text="Add User">
+                                    <JFXButton onAction="#addUserButton" ripplerFill="#8e8e8e" text="Add User">
                                        <VBox.margin>
                                           <Insets bottom="15.0" />
                                        </VBox.margin>
@@ -86,7 +95,7 @@
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton ripplerFill="#8e8e8e" text="Remove User">
+                                    <JFXButton fx:id="remButton" onAction="#removeUserButton" ripplerFill="#8e8e8e" text="Remove User">
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font></JFXButton>
@@ -101,17 +110,17 @@
                   </VBox>
                </children>
             </JFXDrawer>
-            <AnchorPane layoutX="230.0" layoutY="2.0" prefHeight="716.0" prefWidth="1052.0">
+            <AnchorPane layoutX="226.0" layoutY="-2.0" prefHeight="786.0" prefWidth="1114.0">
                <children>
-                  <JFXTreeTableView prefHeight="788.0" prefWidth="1106.0">
-                     <columns>
-                        <TreeTableColumn prefWidth="248.79998779296875" text="Last Name" />
-                        <TreeTableColumn prefWidth="214.39999389648438" text="First Name" />
-                        <TreeTableColumn prefWidth="149.60003662109375" text="ID" />
-                        <TreeTableColumn prefWidth="164.0" text="Password" />
-                        <TreeTableColumn prefWidth="328.80010986328125" text="Position" />
-                     </columns>
-                  </JFXTreeTableView>
+                  <TableView fx:id="tableView" onMousePressed="#enableButtons" prefHeight="785.0" prefWidth="1110.0">
+                    <columns>
+                      <TableColumn fx:id="lastName" prefWidth="207.1999969482422" text="Last Name" />
+                      <TableColumn fx:id="firstName" minWidth="3.73333740234375" prefWidth="242.13336181640625" text="FirstName" />
+                        <TableColumn fx:id="id" prefWidth="177.066650390625" text="ID" />
+                        <TableColumn fx:id="position" prefWidth="244.26666259765625" text="Position" />
+                        <TableColumn fx:id="email" prefWidth="246.13330078125" text="Email" />
+                    </columns>
+                  </TableView>
                </children>
             </AnchorPane>
          </children>

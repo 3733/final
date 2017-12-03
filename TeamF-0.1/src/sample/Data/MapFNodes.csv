@@ -1,7 +1,4 @@
 nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName,teamAssigned
-WELEV00L01 ,1810,930,1,Tower,ELEV,Elevator L Floor 1,Elevator L1,Team F
-WELEV00M01 ,1810,1280,1,Tower,ELEV,Elevator M Floor 1,Elevator M1,Team F
-WHALL00101,2160,910,1,45 Francis,HALL,Hallway Connector 1 Floor 1,Hallway W0101,Team F
 FHALL00101,2055,910,1,Tower,HALL,Lower Pike Hallway Exit Lobby,Hallway F00101,Team F
 FHALL00201,2026,910,1,Tower ,HALL,Lobby Shattuck Street,Hallway F00201,Team F
 FSTAI00101,2026,892,1,Tower,STAI,Lobby Shattuck Street Stairs,Stairway F00101,Team F
