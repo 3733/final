@@ -28,7 +28,7 @@
                </graphic>
             </Menu>
          </menus></MenuBar>
-      <Label layoutX="164.0" layoutY="66.0" prefHeight="53.0" prefWidth="273.0" text="Need Help?">
+      <Label layoutX="196.0" layoutY="71.0" prefHeight="53.0" prefWidth="195.0" text="Need Help?">
          <font>
             <Font name="Montserrat Regular" size="36.0" />
          </font>
@@ -38,11 +38,11 @@
             <Font name="Montserrat Regular" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="110.0" layoutY="159.0" prefHeight="20.0" prefWidth="366.0" text="Please call the following phone number: ***-***-****" wrapText="true">
+      <Label layoutX="199.0" layoutY="161.0" prefHeight="20.0" prefWidth="189.0" text="Please click the button below" wrapText="true">
          <font>
             <Font name="Montserrat Regular" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="388.0" layoutY="244.0" mnemonicParsing="false" text="Send a Service Request" />
+      <Button layoutX="231.0" layoutY="240.0" mnemonicParsing="false" text="Send a Service Request" />
    </children>
 </AnchorPane>
