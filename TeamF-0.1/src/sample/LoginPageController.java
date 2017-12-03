@@ -74,7 +74,6 @@ public class LoginPageController {
     public void back(){
         username.clear();
         password.clear();
-        Main.startScreen();
         Main.closePopUp(close);
     }
 
