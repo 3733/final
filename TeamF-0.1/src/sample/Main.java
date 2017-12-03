@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import sample.UI.HelpScreenServiceRequestScreenController;
 
 
 import java.io.IOException;
@@ -37,6 +38,8 @@ public class Main extends Application implements Data{
     private static Scene editUsers;
     private static Scene genError;
     private static Scene editUserWin;
+    private static Scene helpRequest;
+
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -51,6 +54,8 @@ public class Main extends Application implements Data{
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
+    public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -66,6 +71,13 @@ public class Main extends Application implements Data{
         loginPageController = loginLoader.getController();
         loginPageController.setMainController(this);
         login = new Scene(LogIn);
+
+        FXMLLoader helpRequestLoader = new FXMLLoader(getClass().getResource(name: "UI/HelpScreenServiceRequestScreen.fxml"));
+        Parent HelpRequest = helpRequestLoader.load();
+        helpScreenServiceRequestScreenController = helpRequestLoader.getController();
+        helpScreenServiceRequestScreenController.setMainController(this);
+        helpRequest = new Scene(HelpRequest)
+        ;
 
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
