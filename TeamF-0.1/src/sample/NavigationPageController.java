@@ -723,6 +723,39 @@ public class NavigationPageController implements Initializable, Data{
 
     }
 
+    /** showFloorNodes
+     * willis
+     * function to show the nodes on the specific floor
+     * @param node
+     * @param floorImage
+     * @return
+     * @throws IOException
+     */
+//    @FXML
+//    private Image showFloorNodes(Vector<Node> node, BufferedImage floorImage) throws IOException
+//    {
+//        Graphics2D nodesMapImage = floorImage.createGraphics();
+//        int nodesLength = node.size();
+//        nodesMapImage.setStroke(new BasicStroke(10));
+//
+//        for (int i = 0, i < )
+//    }
+
+//    /** showFloorEdges
+//     * willis
+//     * @param edge
+//     * @param floorImage
+//     * @return
+//     * @throws IOException
+//     */
+//
+//    private Image showFloorEdges(Vector<Node> edge, BufferedImage floorImage) throws IOException {
+//        Graphics2D edgesMapImage = floorImage.createGraphics();
+//        int edgesLength = edge.size();
+//        edgesMapImage.setStroke(new BasicStroke(10));
+//
+//    }
+
     @FXML
     private void zoom() {
         int MIN_PIXELS = 15;
@@ -814,6 +847,28 @@ public class NavigationPageController implements Initializable, Data{
         if (value > max)
             return max;
         return value;
+    }
+
+
+    /**
+     * willis
+     * reverse function
+     */
+    public void reverseButton_Clicked(){
+        String start =startLabel.getText();
+        String end = endLabel.getText();
+        if( !(start == null || start.equals("") || end == null ||end.equals("")) ){
+            startLabel.setText(end);
+            endLabel.setText(start);
+            try {
+                go();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     // convert mouse coordinates in the imageView to coordinates in the actual image:

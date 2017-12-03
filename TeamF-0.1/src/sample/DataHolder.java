@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
+import java.util.HashMap;
 
 public class DataHolder {
     // Current map stored, old
@@ -35,4 +36,19 @@ public class DataHolder {
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;
+
+
+    /**
+     * Creating the HashMap for the floor nodes.
+     *the following maybe has issues.
+     */
+    public HashMap<String, Node>  groundFloorNodes;
+    public HashMap<String, Node>  lowerLevel01FloorNodes;
+    public HashMap<String, Node>  lowerLevel02FloorNodes;
+    public HashMap<String, Node>  firstFloorNodes;
+    public HashMap<String, Node>  secondFloorNodes;
+    public HashMap<String, Node>  thirdFloorNodes;
+
+
+
 }
