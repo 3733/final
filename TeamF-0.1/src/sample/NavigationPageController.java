@@ -40,6 +40,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -145,6 +146,12 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
+
+
+        Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+
+
+        drawNodesCircle(Data.data.firstFloorNodes);
 
         // Populating the lists on the bottom left of the UI
         // Third Floor
@@ -685,39 +692,34 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
     }*/
 
+    @FXML
+    public void drawNodesCircle(HashMap<String, Node> node,Vector<Node> FloorNodes) {
 
-    /** showFloorNodes
-     * willis
-     * function to show the nodes on the specific floor
-     * @param node
-     * @param floorImage
-     * @return
-     * @throws IOException
-     */
-//    @FXML
-//    private Image showFloorNodes(Vector<Node> node, BufferedImage floorImage) throws IOException
-//    {
-//        Graphics2D nodesMapImage = floorImage.createGraphics();
-//        int nodesLength = node.size();
-//        nodesMapImage.setStroke(new BasicStroke(10));
-//
-//        for (int i = 0, i < )
-//    }
 
-//    /** showFloorEdges
-//     * willis
-//     * @param edge
-//     * @param floorImage
-//     * @return
-//     * @throws IOException
-//     */
-//
-//    private Image showFloorEdges(Vector<Node> edge, BufferedImage floorImage) throws IOException {
-//        Graphics2D edgesMapImage = floorImage.createGraphics();
-//        int edgesLength = edge.size();
-//        edgesMapImage.setStroke(new BasicStroke(10));
-//
-//    }
+        for (int i= 0; i<FloorNodes.size();i++){
+            node.put(FloorNodes.get(i).getNodeID(),FloorNodes.get(i));
+        }
+
+        if(node != null) {
+            int length = node.size();
+
+            // Setting up the proper color settings
+           // Data.data.gc.setLineWidth(2);
+
+            Data.data.gc.setStroke(Color.BLUE);
+            Data.data.gc.stroke();
+            // Iterate through all the given nodes to draw the node
+            for (int i = 0; i < length; i++)
+            {
+                Node nodesMap = node.get(i);
+                pathCanvas.getGraphicsContext2D().strokeOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
+                pathCanvas.getGraphicsContext2D().fillOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
+
+            }
+            }
+
+        }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions

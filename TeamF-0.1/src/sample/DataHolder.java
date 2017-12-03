@@ -33,6 +33,9 @@ public class DataHolder {
     public javafx.scene.image.Image L2Floor;
 
 
+    //this variable hold for the which floor you are on
+    public int currentFloor;
+
     //List of all Nodes and Edges, a Map
     public Map graph;
 
