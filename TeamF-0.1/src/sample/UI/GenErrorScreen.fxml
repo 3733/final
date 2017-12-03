@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GenErrorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="298.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GenErrorController">
    <children>
       <MenuBar layoutY="-1.0" prefHeight="28.0" prefWidth="600.0">
          <menus>
@@ -27,20 +27,25 @@
                </graphic>
             </Menu>
          </menus></MenuBar>
-      <Label layoutX="69.0" layoutY="62.0" text="Uh Oh!">
+      <Label layoutX="164.0" layoutY="66.0" prefHeight="53.0" prefWidth="273.0" text="Need Help?">
          <font>
             <Font name="Montserrat Regular" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="156.0" layoutY="123.0" text="Looks Like Someone Needs Help!">
+      <Label layoutX="110.0" layoutY="141.0" prefHeight="20.0" prefWidth="366.0" text="For further help and information with resolving your issue" wrapText="true">
          <font>
             <Font name="Montserrat Regular" size="14.0" />
          </font>
       </Label>
-      <ImageView fitHeight="101.0" fitWidth="126.0" layoutX="450.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="101.0" fitWidth="126.0" layoutX="476.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Icons/sad.png" />
          </image>
       </ImageView>
+      <Label layoutX="110.0" layoutY="159.0" prefHeight="20.0" prefWidth="366.0" text="Please call the following phone number: ***-***-****" wrapText="true">
+         <font>
+            <Font name="Montserrat Regular" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
