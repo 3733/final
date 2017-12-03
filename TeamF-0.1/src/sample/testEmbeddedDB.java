@@ -1,6 +1,7 @@
 package sample;
 
 import com.opencsv.CSVWriter;
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -1343,13 +1344,74 @@ public class testEmbeddedDB {
                 names.add(lname.trim());
             }
 
-
-
-
         } catch (Exception e){
             System.out.println("getAllLongNames error: " + e.getMessage());
         }
 
         return names;
+    }
+
+    public static HashMap<String, Node> getNodesByFloor(int floor){
+        HashMap<String, Node> nodesByFloor = new HashMap<>();
+        Node n;
+
+        String dbFloor = testEmbeddedDB.floorIntToString(floor);
+
+        try{
+            if(dbFloor.equals("uh oh")){
+                throw new Exception("error with the given floor int");
+            }
+
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM NODES WHERE FLOOR = '" + dbFloor + "'");
+
+            while(r.next()){
+                String nodeID = r.getString("nodeID").trim();
+                int xcord = r.getInt("xcoord");
+                int ycoord = r.getInt("ycoord");
+                String tableFloor = r.getString("floor").trim();
+                String building = r.getString("building").trim();
+                String nodetype = r.getString("nodeType").trim();
+                String longname = r.getString("longname").trim();
+                String shortname = r.getString("shortname").trim();
+                char team = r.getString("teamassigned").charAt(0);
+
+                n = new Node(nodeID, xcord, ycoord, tableFloor, building, nodetype, longname, shortname, team);
+
+                nodesByFloor.put(nodeID, n);
+            }
+
+
+        } catch (Exception e){
+            System.out.println("getNodesByFloor error: " + e.getMessage());
+        }
+
+
+        return nodesByFloor;
+    }
+
+    private static String floorIntToString(int i){
+        String ret = new String();
+
+        switch (i){
+            case 0:
+                return "L2";
+            case 1:
+                return "L1";
+            case 2:
+                return "G";
+            case 3:
+                return "1";
+            case 4:
+                return "2";
+            case 5:
+                return "3";
+            default:
+                return "oh no";
+        }
+
     }
 }

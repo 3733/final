@@ -12,9 +12,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import java.util.Map.Entry;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Vector;
 
@@ -275,6 +277,17 @@ public class Main extends Application implements Data{
         }*/
 
         //startMap();
+
+        /*HashMap<String, Node> test = new HashMap<>();
+
+        test = testEmbeddedDB.getNodesByFloor(1);
+
+        for (java.util.Map.Entry<String, Node> entry : test.entrySet())
+        {
+            System.out.println(entry.getKey() + " trimmed/" + entry.getValue() + " trimmed");
+        }*/
+
+
         launch(args);
 
         long et = System.currentTimeMillis();
@@ -285,7 +298,7 @@ public class Main extends Application implements Data{
 
 
         //UNCOMMENT THIS LINE
-        //testEmbeddedDB.dbBuildMap();
+        testEmbeddedDB.dbBuildMap();
 
 
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
