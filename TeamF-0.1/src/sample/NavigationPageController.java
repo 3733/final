@@ -462,6 +462,14 @@ public class NavigationPageController implements Initializable, Data{
                 PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
                 this.path = pathFinder4.executeStrategy(StartNode,EndNode, Data.data.graph);
                 break;
+            case 5:
+                PathAlgorithm pathFinder5 = new PathAlgorithm(new BestFirstSearch());
+                this.path = pathFinder5.executeStrategy(StartNode,EndNode, Data.data.graph);
+                break;
+            case 6:
+                PathAlgorithm pathFinder6 = new PathAlgorithm(new BeamFirstSearch());
+                this.path = pathFinder6.executeStrategy(StartNode,EndNode, Data.data.graph);
+                break;
         }
 
 
