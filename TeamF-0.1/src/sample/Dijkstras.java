@@ -85,7 +85,6 @@ public class Dijkstras extends AbsAlgorithm{
                 double gScoreT = gScore.get(Current) + HeuristicCost(Current,Current.getNeighbors().get(i));
 
                 if (gScoreT >= gScore.get(Current.getNeighbors().get(i))){
-
                     continue;		// This is not a better path
                 }
 

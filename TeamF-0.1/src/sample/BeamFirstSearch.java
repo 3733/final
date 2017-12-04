@@ -1,101 +1,68 @@
 package sample;
 
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 public class BeamFirstSearch extends AbsAlgorithm {
 
 
     /**
-     * This is the BestFirstSearch algorithm to find a path to a node
+     * This is the Beam Search algorithm to find the most efficient path
      * <p>
-     * BestFirstSearch is designed so that it finds the ending node, without taking the fastest path.
+     * BFS is designed so that it finds the path to the selected node.
      * </p>
      *
      * @param Start starting point
      * @param End   desired location
      * @return ListPoint it returns a vector that contains the nodes, that the minimum path from Start to End consists of.
      */
-    public Vector<Node> findPath(Node Start, Node End, Map map){
+
+    public Vector<Node> findPath(Node Start, Node End, Map map) {
+
+        System.out.println("BeamFirstSearch");
 
 
-        Vector<Node> Nodes = map.getNodes();
-        //System.out.println("Dijkstras");
+        int BeamSize = 2;
 
-        // The set of nodes already evaluated
-        Vector<Node> closedSet = new Vector<>();
-
-        // The set of currently discovered nodes that are not evaluated yet
         Vector<Node> openSet = new Vector<>();
-
-        // Initially, only the start node is known.
+        Vector<Node> closedSet = new Vector<>();
+        HashMap<Node,Node> cameFrom = new HashMap<>();
         openSet.add(Start);
 
-        // For each node, which node it can most efficiently be reached from.
-        // If a node can be reached from many nodes, cameFrom will eventually contain the
-        // most efficient previous step.
-        HashMap<Node,Node> cameFrom = new HashMap<>();
+        while(!openSet.isEmpty()){
 
-        // For each node, the cost of getting from the start node to that node.Map with default value of Infinity
-        HashMap<Node,Double> gScore  = new HashMap<>();
-
-
-        for (int i=1; i< Nodes.size();i++){
-
-            gScore.put(Nodes.get(i),1000000.0);
-        }
-
-
-        // The cost of going from start to start is zero.
-        gScore.put(Start,0.0);
-
-
-
-
-        // The node in openSet having the lowest fScore value
-        Node Current;
-        while(openSet.size()>0){
-
-            Current = openSet.get(0);
-
-            if (Current.equals(End)){
-                return reconstructPath(cameFrom, Current);
-            }
-
+            Node Current = openSet.get(0);
             openSet.remove(Current);
             closedSet.add(Current);
 
+            if(Current.equals(End)){
+                return reconstructPath(cameFrom, Current);
+            }
 
-            for( int i=0; i< Current.getNeighbors().size();i++){
+            Vector<Node> CurrentNeighbors = new Vector<>();
 
-                // Ignore the neighbor which is already evaluated
+            for(int i =0;i<Current.getNeighbors().size();i++){
                 if (closedSet.contains(Current.getNeighbors().get(i))){
                     continue;
+                }else{
+                    CurrentNeighbors.add(Current.getNeighbors().get(i));
+                }
+            }
+
+            CurrentNeighbors.sort((Node1, Node2) -> (int)(map.HeuristicCost(Node1,End) - map.HeuristicCost(Node2,End)));
+
+            if(CurrentNeighbors.size() < BeamSize){
+                openSet.addAll(CurrentNeighbors);
+                for (Node neighbor : CurrentNeighbors) {
+                    cameFrom.put(neighbor, Current);
                 }
 
-                // Discover a new node
-                if (!openSet.contains(Current.getNeighbors().get(i))){
-                    openSet.add(Current.getNeighbors().get(i));
+            } else{
+                openSet.addAll(CurrentNeighbors.subList(0, BeamSize));
+                for(int i=0;i<BeamSize;i++){
+                    cameFrom.put(CurrentNeighbors.get(i), Current);
                 }
-
-
-                // The distance from start to a neighbor
-                double gScoreT = gScore.get(Current) + HeuristicCost(Current,Current.getNeighbors().get(i));
-
-                if (gScoreT >= gScore.get(Current.getNeighbors().get(i))){
-
-                    continue;		// This is not a better path
-                }
-
-
-                // This path is the best until now. Record it!
-                cameFrom.put(Current.getNeighbors().get(i),Current);
-                gScore.put(Current.getNeighbors().get(i),gScoreT);
-
-
             }
         }
-
         return null;
     }
 }
