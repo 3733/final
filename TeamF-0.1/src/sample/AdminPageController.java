@@ -79,7 +79,6 @@ public class AdminPageController implements Initializable{
 
     public void setMap(Map m){
         this.CurMap = m;
-        //System.out.println("KSJHDFUZBXCGV"+CurMap.getNodes().size());
     }
 
     public void setKiosk(Node k){
@@ -324,7 +323,6 @@ public class AdminPageController implements Initializable{
 
     // this function returns the proper image based on the current image string
     public Image selectMap(String currentMap) {
-        //System.out.println(currentMap);
         if (currentMap != null) {
             if (currentMap.equals("L2")) {
                 return Data.data.L2Floor;
@@ -340,7 +338,6 @@ public class AdminPageController implements Initializable{
                 return Data.data.thirdFloor;
             }
         }
-        //System.out.println("ERROR: INVALID FLOOR ID");
         return Data.data.firstFloor;
     }
 
@@ -450,7 +447,6 @@ public class AdminPageController implements Initializable{
 
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
-                //System.out.println("This is the node floor: " + floorPath.elementAt(0).getFloor().replaceAll("\\s+", ""));
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.L2Floor = testDrawDirections(floorPath, SwingFXUtils.fromFXImage(Data.data.L2Floor, null));
@@ -496,7 +492,6 @@ public class AdminPageController implements Initializable{
             }
         }
         map.setImage(SwingFXUtils.toFXImage(floorImage,null));
-        //System.out.println("Image set on map");
         return SwingFXUtils.toFXImage(floorImage,null);
     }
 

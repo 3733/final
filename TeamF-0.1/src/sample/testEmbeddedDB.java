@@ -1109,7 +1109,6 @@ public class testEmbeddedDB {
             ResultSet r = s.executeQuery("SELECT NODEID FROM NODES WHERE LONGNAME = '" +lName +"'");
 
             while(r.next()) {
-                System.out.println(r.getString("nodeID"));
                 n = testEmbeddedDB.getNode(r.getString("nodeID"));
 
                 allNodes.add(n);
@@ -1119,7 +1118,6 @@ public class testEmbeddedDB {
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
         }
-        System.out.println(allNodes.size());
         return allNodes.get(0);
     }
 

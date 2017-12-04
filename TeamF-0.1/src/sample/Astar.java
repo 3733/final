@@ -91,7 +91,6 @@ public class Astar implements PathFinder {
 
         Vector<Node> Nodes = map.getNodes();
 
-        //System.out.println("ASTAR");
 
         // The set of nodes already evaluated
         Vector<Node> closedSet = new Vector<>();

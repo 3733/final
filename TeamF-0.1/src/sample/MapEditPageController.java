@@ -101,8 +101,8 @@ public class MapEditPageController implements Initializable{
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(1);
                     Main.adminPageController.setCurrentAlgo(1);
-                    System.out.println(1);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    //System.out.println(1);
+                    //System.out.println(Main.navigationPageController.getCurrentAlgo());
                 }
             });
 
@@ -111,7 +111,7 @@ public class MapEditPageController implements Initializable{
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(2);
                     Main.adminPageController.setCurrentAlgo(2);
-                    System.out.println(2);
+                    //System.out.println(2);
                     System.out.println(Main.navigationPageController.getCurrentAlgo());
                 }
             });
@@ -121,8 +121,8 @@ public class MapEditPageController implements Initializable{
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(3);
                     Main.adminPageController.setCurrentAlgo(3);
-                    System.out.println(3);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    //System.out.println(3);
+                    //System.out.println(Main.navigationPageController.getCurrentAlgo());
                 }
             });
 
@@ -131,8 +131,8 @@ public class MapEditPageController implements Initializable{
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(4);
                     Main.adminPageController.setCurrentAlgo(4);
-                    System.out.println(4);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    //System.out.println(4);
+                    //System.out.println(Main.navigationPageController.getCurrentAlgo());
                 }
             });
         }catch (FileNotFoundException e) {

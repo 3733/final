@@ -25,7 +25,6 @@ public class BFSearch implements PathFinder {
             Path.add(0, Current);
         }
         for (int i =0; i<Path.size();i++){
-            //System.out.println(Path.get(i).getLongName()+"<======");
         }
         return Path;
 
@@ -63,8 +62,6 @@ public class BFSearch implements PathFinder {
 
     public Vector<Node> findPath(Node Start, Node End, Map map) {
 
-        System.out.println("BFSearch");
-
 
         //a FIFO open_set
         Vector<Node> openSet = new Vector<>();
@@ -85,7 +82,6 @@ public class BFSearch implements PathFinder {
 
             Node Current = openSet.remove(0);
             //All.add(Current);
-            System.out.println(Current.getNodeID()+"--------");
             if (Current.equals(End)) {
 
                 return reconstructPath(cameFrom, Current);

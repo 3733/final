@@ -81,7 +81,7 @@ public class CSVLoader {
 				.replaceFirst(KEYS_REGEX, StringUtils.join(headerRow, ","));
 		query = query.replaceFirst(VALUES_REGEX, questionmarks);
 
-		System.out.println("Query: " + query);
+		//System.out.println("Query: " + query);
 
 		String[] nextLine;
 		Connection con = null;

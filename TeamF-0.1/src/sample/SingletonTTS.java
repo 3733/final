@@ -10,9 +10,9 @@ public class SingletonTTS implements Voice{
 
     private SingletonTTS() {}
 
-    public void printSquat() {
+    /*public void printSquat() {
         System.out.println("Hello World");
-    }
+    }*/
 
     public static SingletonTTS getInstance() {
         // Double Checked Locking: google this on wikipedia

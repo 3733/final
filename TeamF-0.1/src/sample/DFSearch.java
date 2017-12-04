@@ -51,12 +51,6 @@ public class DFSearch implements PathFinder {
 
     public Vector<Node> findPath(Node Start, Node End, Map map) {
 
-
-
-        //System.out.println("DFSearch");
-
-
-
         //an empty set to maintain visited nodes
         HashMap<Node, Boolean> checked = new HashMap();
         // A hash map to keep the path
