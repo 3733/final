@@ -21,7 +21,7 @@ public class BeamFirstSearch extends AbsAlgorithm {
         System.out.println("BeamFirstSearch");
 
 
-        int BeamSize = 2;
+        int BeamSize = 3;
 
         Vector<Node> openSet = new Vector<>();
         Vector<Node> closedSet = new Vector<>();
