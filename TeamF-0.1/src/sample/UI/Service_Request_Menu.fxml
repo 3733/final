@@ -32,11 +32,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="228.0">
-                     <children>
-                        <JFXButton onAction="#backToAdmin" ripplerFill="#8e8e8e" text="Back to Admin Screen" />
-                     </children>
-                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="45.0" prefWidth="228.0" />
                   <AnchorPane prefHeight="107.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
@@ -52,14 +48,6 @@
                               <VBox prefHeight="200.0" prefWidth="100.0">
                                  <children>
                                     <JFXBadge prefHeight="25.0" prefWidth="25.0" />
-                                    <JFXButton onAction="#logout" ripplerFill="#8e8e8e" text="Log Out">
-                                       <VBox.margin>
-                                          <Insets left="25.0" />
-                                       </VBox.margin>
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                    </JFXButton>
                                     <JFXButton onAction="#help" ripplerFill="#8e8e8e" text="Help">
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
@@ -213,8 +201,8 @@
                                              <children>
                                                 <SplitMenuButton mnemonicParsing="false" text="Location">
                                                    <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#foodThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#foodChooseLocation" text="Choose Location" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#foodThisLocation" text="Here" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#foodChooseLocation" text="Selected Destination" />
                                                    </items>
                                                    <HBox.margin>
                                                       <Insets right="40.0" />
@@ -303,8 +291,8 @@
                                              <children>
                                                 <SplitMenuButton mnemonicParsing="false" text="Location">
                                                    <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#assistanceThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#assistanceChooseLocation" text="Choose Location" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#assistanceThisLocation" text="Here" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#assistanceChooseLocation" text="Selected Destination" />
                                                    </items>
                                                    <HBox.margin>
                                                       <Insets right="40.0" />
@@ -400,8 +388,8 @@
                                              <children>
                                                 <SplitMenuButton mnemonicParsing="false" text="Location">
                                                    <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#transportThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#transportChooseLocation" text="Choose Location" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#transportThisLocation" text="Here" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#transportChooseLocation" text="Selected Destination" />
                                                    </items>
                                                    <HBox.margin>
                                                       <Insets right="40.0" />
@@ -490,8 +478,8 @@
                                              <children>
                                                 <SplitMenuButton mnemonicParsing="false" text="Location">
                                                    <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#cleanThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#cleanChooseLocation" text="Choose Location" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#cleanThisLocation" text="Here" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#cleanChooseLocation" text="Selected Destination" />
                                                    </items>
                                                    <HBox.margin>
                                                       <Insets right="40.0" />
@@ -580,8 +568,8 @@
                                              <children>
                                                 <SplitMenuButton mnemonicParsing="false" text="Location">
                                                    <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#securityThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#securityChooseLocation" text="Choose Location" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#securityThisLocation" text="Here" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#securityChooseLocation" text="Selected Destination" />
                                                    </items>
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
@@ -603,7 +591,7 @@
                               </AnchorPane>
                            </content>
                         </Tab>
-                        <Tab fx:id="itPane" onSelectionChanged="#updateIt" style="-fx-text-fill: #8e8e8e;" text="Kiosk Issue">
+                        <Tab fx:id="itPane" onSelectionChanged="#updateIt" style="-fx-text-fill: #8e8e8e;" text="IT Request">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="587.0" prefWidth="524.0">
                                  <children>
@@ -661,6 +649,15 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
+                                                <SplitMenuButton mnemonicParsing="false" text="Location">
+                                                   <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#itThisLocation" text="Here" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#itChooseLocation" text="Selected Destination" />
+                                                   </items>
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="14.0" />
+                                                   </font>
+                                                </SplitMenuButton>
                                                 <JFXButton buttonType="RAISED" onAction="#itSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />

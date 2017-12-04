@@ -1,7 +1,7 @@
 package sample;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,28 +23,27 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import static sample.Main.getLoggedInGuy;
+
 
 public class ServiceAcceptController implements Initializable{
 
     //top menu bar
     @FXML
-    public void backToAdmin() {Main.adminScreen();}
+    public void backToAdmin() {}
 
-    private Main mainController;
+    private API APIController;
 
-    public void setMainController(Main main){
-        this.mainController = main;
+    public void setAPIController(API API){
+        this.APIController = API;
     }
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){
+        API.genErrorScreen();}
 
     @FXML
-    public void logout(){Main.startScreen();}
-
-    @FXML
-    public void toServiceRequest() {Main.serviceScreen();}
+    public void toServiceRequest() {
+        API.serviceScreen();}
 
     //fixes issue with database that creates unnecessary spaces in strings
     public String removeWhiteSpace(String input) {
@@ -64,6 +63,9 @@ public class ServiceAcceptController implements Initializable{
 
     @FXML
     private JFXCheckBox emailCheck;
+
+    @FXML
+    private JFXTextField emailField;
 
     //formatted list of requests that go into table
     private ObservableList<ServiceRequest> requestObserve = FXCollections.observableArrayList();
@@ -109,13 +111,6 @@ public class ServiceAcceptController implements Initializable{
     public void acceptRequest() throws InvalidEmailException, IOException {
         ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
 
-        if( (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
-                (requestSelected.getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
-                (requestSelected.getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
-                (requestSelected.getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
-                (requestSelected.getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                (requestSelected.getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
-
             Date date = new Date();
             SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
 
@@ -123,8 +118,8 @@ public class ServiceAcceptController implements Initializable{
             requestSelected.setAcceptTime(ft.format(date));
 
             //links the service request with updated status and acceptTime to a staff member in the database
-            testEmbeddedDB.addAssignment(requestSelected.getServiceID(), getLoggedInGuy().getEmployeeID(),
-                    requestSelected.getAcceptTime(), requestSelected.getStatus());
+            testEmbeddedDB.editStartTime(requestSelected.getServiceID(), requestSelected.getAcceptTime());
+            testEmbeddedDB.editCompletionStatus(requestSelected.getServiceID(), requestSelected.getStatus());
 
             for (int i = 0; i < requestObserve.size(); i++)             //looks for the selected service in the table
                 if (requestSelected.serviceID == (requestObserve.get(i)).serviceID)
@@ -165,9 +160,8 @@ public class ServiceAcceptController implements Initializable{
             //emailing the service request to the employee
             if (emailCheck.isSelected()) {
                 EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", icon);
-                emailService.sendRequestEmail(serviceInformation, getLoggedInGuy().getEmployeeEmail());
+                emailService.sendRequestEmail(serviceInformation, emailField.getText());
             }
-        }
     }
 
     public void deleteRequest()
@@ -181,12 +175,6 @@ public class ServiceAcceptController implements Initializable{
         //loop over the selected rows and remove the ServiceRequest objects from the table
         for (ServiceRequest req: selectedRows)
         {
-            if( (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
-                    (req.getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
-                    (req.getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
-                    (req.getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
-                    (req.getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                    (req.getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
 
                 Date date = new Date();
                 SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
@@ -197,7 +185,7 @@ public class ServiceAcceptController implements Initializable{
                 testEmbeddedDB.editFinishTime(req.getServiceID(), req.getFinishTime());
 
                 allrequests.remove(req);
-            }
+
         }
 
         refreshTable();

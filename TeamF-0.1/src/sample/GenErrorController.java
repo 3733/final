@@ -1,16 +1,15 @@
 package sample;
 
 import javafx.fxml.FXML;
-import sample.Main;
 
 public class GenErrorController {
 
-    private Main mainController;
+    private API APIController;
 
-    public void setMainController(Main main){
-        this.mainController = main;
+    public void setAPIController(API API){
+        this.APIController = API;
     }
 
     @FXML
-    public void back(){ Main.startScreen();}
+    public void back(){ API.serviceScreen();}
 }

@@ -30,7 +30,7 @@ public class DataHolder {
 
 
     //List of all Nodes and Edges, a Map
-    public Map graph;
+    //public Map graph;
 
     // Stores the x and y of the window
     public double XWindow;

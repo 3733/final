@@ -14,63 +14,35 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.time.format.DateTimeFormatter;
-import java.util.Properties;
 
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import sample.testEmbeddedDB;
 
 //import javax.xml.ws.Service;   <--doesn't work on Talal's computer
 import java.net.URL;
 import java.util.*;
-import java.text.*;
-
-import static sample.Main.getLoggedInGuy;
 
 
 public class ServiceRequestController implements Initializable {
 
 
     //top menu bar
-    @FXML
-    public void backToStart() {
-        Main.startScreen();
-    }
 
-    @FXML
-    public void backToAdmin() {
-        Main.adminScreen();
-    }
+    private API APIController;
 
-    private Main mainController;
-
-    public void setMainController(Main main) {
-        this.mainController = main;
+    public void setAPIController(API API) {
+        this.APIController = API;
     }
 
     @FXML
     public void help() {
-        Main.genErrorScreen();
-    }
-
-    @FXML
-    public void logout() {
-        Main.startScreen();
+        API.genErrorScreen();
     }
 
     @FXML
     public void toServiceAccept() {
-        Main.acceptScreen();
+        API.acceptScreen();
     }
 
     public static int ID = 0;   //service ID counter
@@ -108,11 +80,12 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void assistanceThisLocation() {
-        assistanceNode = n1;
+        assistanceNode = testEmbeddedDB.getNode(API.getOrigin());
     }
 
     @FXML
     public void assistanceChooseLocation() {
+        assistanceNode = testEmbeddedDB.getNode(API.getDestination());
     }
 
     @FXML
@@ -171,11 +144,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void foodThisLocation() {
-        foodNode = n1;
+        foodNode = testEmbeddedDB.getNode(API.getOrigin());
     }
 
     @FXML
-    public void foodChooseLocation() {
+    public void foodChooseLocation() { foodNode = testEmbeddedDB.getNode(API.getDestination());
     }
 
     @FXML
@@ -223,18 +196,18 @@ public class ServiceRequestController implements Initializable {
         transportID.setText(Integer.toString(ID));
 
         transportMenu.setItems(FXCollections.observableArrayList(
-                "Wheelchair", "Stretcher"));
+                "Wheelchair", "Stretcher", "Helicopter"));
     }
 
     private Node transportNode;
 
     @FXML
     public void transportThisLocation() {
-        transportNode = n1;
+        transportNode = testEmbeddedDB.getNode(API.getOrigin());
     }
 
     @FXML
-    public void transportChooseLocation() {
+    public void transportChooseLocation() { transportNode = testEmbeddedDB.getNode(API.getDestination());
     }
 
     @FXML
@@ -283,11 +256,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void cleanThisLocation() {
-        cleanNode = n1;
+        cleanNode = testEmbeddedDB.getNode(API.getOrigin());
     }
 
     @FXML
-    public void cleanChooseLocation() {
+    public void cleanChooseLocation() { cleanNode = testEmbeddedDB.getNode(API.getDestination());
     }
 
     @FXML
@@ -336,11 +309,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void securityThisLocation() {
-        securityNode = n1;
+        securityNode = testEmbeddedDB.getNode(API.getOrigin());
     }
 
     @FXML
-    public void securityChooseLocation() {
+    public void securityChooseLocation() { securityNode = testEmbeddedDB.getNode(API.getDestination());
     }
 
     @FXML
@@ -388,10 +361,21 @@ public class ServiceRequestController implements Initializable {
         itID.setText(Integer.toString(ID));
     }
 
+    private Node itNode;
+
+    @FXML
+    public void itThisLocation() {
+        itNode = testEmbeddedDB.getNode(API.getOrigin());
+    }
+
+    @FXML
+    public void itChooseLocation() { itNode = testEmbeddedDB.getNode(API.getDestination());
+    }
+
     @FXML
     public void itSendRequest() throws MissingFieldException {
         ArrayList<Integer> itEmployees = new ArrayList<Integer>();
-        ItRequest newIt = new ItRequest(n1, itDescription.getText(),
+        ItRequest newIt = new ItRequest(itNode, itDescription.getText(),
                 Integer.parseInt(itID.getText()), itTime.getValue().format(formatter), "", "",
                 0000, "it", "unaccepted", Integer.parseInt(itUrgency.getText()));
 

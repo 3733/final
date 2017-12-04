@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -25,10 +26,7 @@
     <children>
         <MenuBar prefHeight="35.0" prefWidth="1000.0">
             <menus>
-                <Menu mnemonicParsing="false">
-                    <graphic>
-                        <JFXButton onAction="#backToAdmin" ripplerFill="#8e8e8e" text="Back to Admin Screen" />
-                    </graphic></Menu>
+                <Menu mnemonicParsing="false" />
             <Menu mnemonicParsing="false">
                <graphic>
                   <JFXButton onAction="#toServiceRequest" ripplerFill="#8e8e8e" text="Back to Service Request Screen" />
@@ -55,14 +53,6 @@
                                           <VBox prefHeight="200.0" prefWidth="100.0">
                                               <children>
                                                   <JFXBadge prefHeight="25.0" prefWidth="25.0" />
-                                                  <JFXButton onAction="#logout" ripplerFill="#8e8e8e" text="Log Out">
-                                                      <VBox.margin>
-                                                          <Insets left="25.0" />
-                                                      </VBox.margin>
-                                                      <font>
-                                                          <Font name="Montserrat Regular" size="12.0" />
-                                                      </font>
-                                                  </JFXButton>
                                                   <JFXButton onAction="#help" ripplerFill="#8e8e8e" text="Help">
                                                       <font>
                                                           <Font name="Montserrat Regular" size="12.0" />
@@ -111,7 +101,7 @@
                                   </TableView>
                               </children>
                           </HBox>
-                          <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" translateX="-50.0">
+                          <HBox alignment="TOP_CENTER" prefHeight="62.0" prefWidth="402.0" translateX="-50.0">
                               <children>
                                   <JFXButton buttonType="RAISED" onAction="#acceptRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Start">
                                       <HBox.margin>
@@ -129,13 +119,18 @@
                                   <Insets top="15.0" />
                               </VBox.margin>
                           </HBox>
-                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="700.0" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="700.0" prefHeight="61.0" prefWidth="351.0">
                      <children>
                         <JFXCheckBox fx:id="emailCheck" text="Send me an email about service details when I start a service">
                            <padding>
                               <Insets left="5.0" />
                            </padding>
                         </JFXCheckBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="708.0" prefHeight="66.0" prefWidth="351.0">
+                     <children>
+                        <JFXTextField fx:id="emailField" prefHeight="26.0" prefWidth="176.0" promptText="Enter email address here..." />
                      </children>
                   </HBox>
                       </children>

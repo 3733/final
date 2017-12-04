@@ -34,8 +34,6 @@ public class testEmbeddedDB {
             testEmbeddedDB.fillNodesTable();
 
             //testEmbeddedDB.createPrimKey();
-
-            testEmbeddedDB.fillEdgesTable();
 /*
             Node test = new Node("dickbutt", 4, 4,
                     4, "test", "test", "test",
@@ -107,10 +105,6 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.createServiceRequestTable();
 
-            testEmbeddedDB.createStaffTable();
-
-            testEmbeddedDB.createAssignmentsTable();
-
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
                     14411, "the Bourgoisies head");
@@ -160,9 +154,6 @@ public class testEmbeddedDB {
             s.execute("DROP TABLE Nodes");
             System.out.println("Nodes dropped.");
 
-            s.execute("DROP TABLE Edges");
-            System.out.println("Edges dropped.");
-
         } catch (Exception e){
             System.out.println("dropTables error: " + e.getMessage());
         }
@@ -190,32 +181,6 @@ public class testEmbeddedDB {
 
         } catch (Exception e){
             System.out.println("dropServiceRequest error: " + e.getMessage());
-        }
-    }
-
-    public static void dropStaffTable(){
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("DROP TABLE STAFF");
-
-            s.close();
-
-        } catch (Exception e){
-            System.out.println("dropStaff error: " + e.getMessage());
-        }
-    }
-
-    public static void dropAssignmentsTable(){
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("DROP TABLE ASSIGNMENTS");
-
-        } catch (Exception e){
-            System.out.println("dropAssignments error: " + e.getMessage());
         }
     }
 
@@ -251,45 +216,6 @@ public class testEmbeddedDB {
 
         } catch (Exception e){
             System.out.println("error: " + e.getMessage());
-        }
-    }
-
-    public static void createStaffTable(){
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            s.execute("CREATE TABLE Staff (" +
-                    "firstName Char(25) NOT NULL," +
-                    "lastName CHAR(30), " +
-                    "employeeID BIGINT NOT NULL PRIMARY KEY," +
-                    "employeeType CHAR (30)," +
-                    "employeeEmail CHAR(30)," +
-                    "password CHAR(25)," +
-                    "username CHAR(25) UNIQUE )");
-
-            c.close();
-
-        } catch (Exception e){
-            System.out.println("createStaffTable error: " + e.getMessage());
-        }
-    }
-
-    public static void createAssignmentsTable(){
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            s.execute("CREATE TABLE Assignments (" +
-                    "employeeID BIGINT," +
-                    "serviceID BIGINT," +
-                    "FOREIGN KEY (employeeID) REFERENCES STAFF(EMPLOYEEID)," +
-                    "FOREIGN KEY (serviceID) REFERENCES SERVICEREQUESTS(SERVICEID))");
-
-        } catch (Exception e){
-            System.out.println("createAssignmentsTable error: " + e.getMessage());
         }
     }
 
@@ -399,37 +325,6 @@ public class testEmbeddedDB {
 
     }
 
-    public static Vector<Edge> getAllEdges(HashMap<String, Node> n){
-        //ArrayList<Node> allNodes = new ArrayList<Node>();
-        Vector<Edge> allEdges = new Vector<Edge>();
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
-
-            while(r.next()) {
-                String edgeID = r.getString("edgeid");
-                String start = r.getString("startnode");
-                String end = r.getString("endnode");
-
-                Node startNode;
-                Node endNode;
-
-                Edge e = new Edge(edgeID, n.get(start), n.get(end));
-
-                allEdges.add(e);
-                //System.out.println("nodeID: " + name);
-            }
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-        return allEdges;
-
-    }
 
     public static void addFoodRequest(FoodRequest f){
 
@@ -592,218 +487,6 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void addStaff(Staff p){
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            s.execute("INSERT INTO STAFF (FIRSTNAME, LASTNAME, EMPLOYEEID, EMPLOYEETYPE, " +
-                    "EMPLOYEEEMAIL, PASSWORD, USERNAME) VALUES ('" + p.firstName + "', '" + p.lastName + "'," +
-                    p.employeeID + ", '" + p.employeeType + "', '" + p.employeeEmail + "','" +
-                    p.password + "', '" + p.username + "')");
-
-            s.close();
-
-        } catch (Exception e){
-            System.out.println("addStaff error: " + e.getMessage());
-        }
-    }
-
-    public static void updateStaffFName(long staffID, String fName){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE STAFF set FIRSTNAME = '" + fName + "' where EMPLOYEEID = " + staffID);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void updateStaffLName(long staffID, String lName){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE STAFF set LASTNAME = '" + lName + "' where EMPLOYEEID = " + staffID);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void updateStaffEType(long staffID, String type){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE STAFF set EMPLOYEETYPE = '" + type + "' where EMPLOYEEID = " + staffID);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void updateStaffEmail(long staffID, String eMail){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE STAFF set EMPLOYEEEMAIL = '" + eMail + "' where EMPLOYEEID = " + staffID);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void updatePassword(long staffID, String password){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE STAFF set PASSWORD = '" + password + "' where EMPLOYEEID = " + staffID);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void updateUsername(long staffID, String username){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE STAFF set USERNAME = '" + username + "' where EMPLOYEEID = " + staffID);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void removeStaff(long staffID){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("DELETE FROM STAFF WHERE EMPLOYEEID = "+staffID);
-
-            c.close();
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-    }
-
-    public static Staff getStaff(long personalID){
-        Staff n = null;
-
-        try{
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            ResultSet r = s.executeQuery("SELECT * FROM STAFF WHERE EMPLOYEEID = "+ personalID);
-
-            while(r.next()){
-                String firstName = r.getString("FIRSTNAME");
-                String lastName = r.getString("LASTNAME");
-                long employeeID = r.getLong("EMPLOYEEID");
-                String username = r.getString("USERNAME");
-                String password = r.getString("PASSWORD");
-                String employeeType = r.getString("EMPLOYEETYPE");
-                String employeeEmail = r.getString("EMPLOYEEEMAIL");
-
-                n = new Staff(firstName, lastName, employeeID, username, password, employeeType, employeeEmail);
-            }
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-        return n;
-    }
-
-    public static LinkedList<Staff> getAllStaff(){
-        LinkedList<Staff> allStaff = new  LinkedList<Staff>();
-        try{
-            Staff p;
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            ResultSet r = s.executeQuery("SELECT * FROM STAFF");
-
-            while(r.next()) {
-                String firstName = r.getString("FIRSTNAME");
-                String lastName = r.getString("LASTNAME");
-                long employeeID = r.getLong("EMPLOYEEID");
-                String username = r.getString("USERNAME");
-                String password = r.getString("PASSWORD");
-                String employeeType = r.getString("EMPLOYEETYPE");
-                String employeeEmail = r.getString("EMPLOYEEEMAIL");
-
-                p = new Staff(firstName, lastName, employeeID, username, password, employeeType, employeeEmail);
-
-                p = testEmbeddedDB.getStaff(r.getLong("EMPLOYEEID"));
-
-                allStaff.add(p);
-                //System.out.println("nodeID: " + name);
-            }
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-        return allStaff;
-
-    }
-
-    public static void addAssignment(long serviceID, long employeeID, String startTime, String compStat){
-        try{
-
-            //update the start-time in the assignment table
-
-            testEmbeddedDB.editStartTime(serviceID, startTime);
-
-            //update the completion status
-
-            testEmbeddedDB.editCompletionStatus(serviceID, compStat);
-
-
-            //add the sid and eid to assignment table
-            final String url = "jdbc:derby:Skynet";
-
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            s.execute("INSERT INTO ASSIGNMENTS (EMPLOYEEID, SERVICEID) VALUES ((SELECT EMPLOYEEID " +
-                    "from STAFF WHERE STAFF.EMPLOYEEID = " + employeeID + "), (SELECT SERVICEID from " +
-                    "SERVICEREQUESTS WHERE SERVICEREQUESTS.SERVICEID = " + serviceID + "))");
-
-            s.close();
-
-
-        } catch (Exception e){
-            System.out.println("addAssignment error: " + e.getMessage());
-        }
-    }
-
     public static void editStartTime(long serviceID, String startTime){
         try{
             final String url = "jdbc:derby:Skynet";
@@ -852,25 +535,6 @@ public class testEmbeddedDB {
         }
     }
 
-    public static Map dbBuildMap(){
-
-        Vector<Node> nodes = getAllNodes();
-
-        HashMap<String, Node> nodeMap = new HashMap<>();
-
-        for(Node n : nodes){
-            nodeMap.put(n.getNodeID(), n);
-        }
-
-        Vector edges = getAllEdges(nodeMap);
-
-        Map CurMap = new Map(nodes, edges);
-
-        CurMap.BuildMap();
-
-        return CurMap;
-    }
-
     public static Node getNode(String nodeID){
         Node n = null;
 
@@ -902,30 +566,6 @@ public class testEmbeddedDB {
         return n;
     }
 
-    public static Edge getEdge(String edgeID) {
-        Edge n = null;
-
-        try {
-            final String url = "jdbc:derby:Skynet";
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-
-            ResultSet r = s.executeQuery("SELECT * FROM EDGES WHERE EDGEID = '" + edgeID + "'");
-
-            while (r.next()) {
-                String id = r.getString("edgeID");
-                Node startNode = getNode(r.getString("startNode"));
-                Node endNode = getNode(r.getString("endNode"));
-
-                n = new Edge(id, startNode, endNode);
-            }
-
-        } catch (Exception e) {
-            System.out.println("error: " + e.getMessage());
-        }
-
-        return n;
-    }
 
     public static void createTable(){
 
@@ -1003,44 +643,6 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void fillEdgesTable(){
-        CSVLoader l;
-        final String url = "jdbc:derby:Skynet";
-        try{
-            Connection c = DriverManager.getConnection(url);
-            l = new CSVLoader(c);
-            l.loadCSV("TeamF-0.1/src/sample/Data/MapFEdges.csv", "EDGES", true);
-            c.close();
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapAedges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapBedges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapCedges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapDedges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapEEdges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapGEdges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapHedges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapIedges.csv");
-            loadEdgesFile("TeamF-0.1/src/sample/Data/MapWedges.csv");
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-
-
-    }
-
-    public static void loadEdgesFile(String fileName){
-        CSVLoader l;
-        final String url = "jdbc:derby:Skynet";
-        try{
-            Connection c = DriverManager.getConnection(url);
-            l = new CSVLoader(c);
-            System.out.println("Loading Edges file: " + fileName);
-            l.loadCSV(fileName, "EDGES", false);
-            c.close();
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-    }
 
     public static void loadNodesFile(String fileName){
         CSVLoader l;
@@ -1056,271 +658,5 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void writeToCSV(){
 
-        CSVWriter w = null;
-        FileWriter f = null;
-        final String url = "jdbc:derby:Skynet";
-
-
-        try{
-            f = new FileWriter("TeamF-0.1/src/sample/Data/databaseOutput.csv");
-            w = new CSVWriter(f, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
-
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM NODES WHERE NODETYPE = 'DEPT'");
-
-            /*while(r.next()) {
-                String name = r.getString("nodeID");
-                System.out.println("nodeID: " + name);
-            }*/
-
-            w.writeAll(r, true);
-
-            c.close();
-
-            System.out.println("printed!");
-
-
-        } catch (Exception e){
-            System.out.println("writeToCSV error: " + e.getMessage());
-        } finally {
-            try{
-                w.close();
-
-            } catch (Exception e){
-                System.out.println("finally error: " + e.getMessage());
-            }
-        }
-    }
-
-    public static void addNodes(String nodeID, int xCoord, int yCoord, String floor, String building,
-                         String nodeType, String longName, String shortName, String team){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("INSERT INTO NODES (NODEID, XCOORD, YCOORD, FLOOR, BUILDING, " +
-                    "NODETYPE, LONGNAME, SHORTNAME, TEAMASSIGNED)" +
-                    " VALUES ('"+nodeID+"',"+ xCoord+","+yCoord+",'"+ floor+"','"+ building+"','" +
-                    nodeType+"','"+ longName+"','"+ shortName+"','" + team +"')");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-    }
-
-    public static void addEdges(String edgeID, String startNodes, String endNodes){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("INSERT INTO EDGES (EDGEID, STARTNODE, ENDNODE) VALUES ('"+edgeID+"','"
-                    +startNodes+"','" +endNodes+"')");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeXCoord(String nodeID, int xcoord){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set XCOORD = " + xcoord + " where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeYCoord(String nodeID, int ycoord){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set YCOORD = " + ycoord + " where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeFloor(String nodeID, String floor){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set FLOOR = '" + floor + "' where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeBuilding(String nodeID, String building){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set BUILDING = '" + building + "' where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeType(String nodeID, String nodeType){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set NODETYPE = '" + nodeType + "' where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeLongName(String nodeID, String longName){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set LONGNAME = '" + longName + "' where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateNodeShortName(String nodeID,String shortName){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("UPDATE NODES set SHORTNAME = '" + shortName + "' where NODEID = '" + nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-
-    }
-
-    public static void updateEdgeStart(String edgeID, String start){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE EDGES set STARTNODE = '" + start + "' where EDGEID = '" + edgeID+"'");
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void updateEdgeEnd(String edgeID, String end){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-            Statement s = c.createStatement();
-            s.execute("UPDATE EDGES set ENDNODE = '" + end + "' where EDGEID = '" + edgeID+"'");
-            c.close();
-        } catch (Exception e){
-            System.out.println("error : " + e.getMessage());
-        }
-
-    }
-
-    public static void removeNode(String nodeID){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("DELETE FROM NODES WHERE NODEID = '"+nodeID+"'");
-
-            c.close();
-
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-    }
-
-    public static void removeEdge(String edgeID){
-        final String url = "jdbc:derby:Skynet";
-
-        try{
-            Connection c = DriverManager.getConnection(url);
-
-            Statement s = c.createStatement();
-            s.execute("DELETE FROM EDGES WHERE EDGEID = '"+edgeID+"'");
-
-            c.close();
-
-        } catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-        }
-    }
 }
