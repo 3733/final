@@ -148,7 +148,7 @@ public class NavigationPageController implements Initializable, Data{
         zoom();
 
 
-        //Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+        Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
 
         try {
             clickSelected();
@@ -374,6 +374,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
         //tabPane.getSelectionModel().select(floorLowerOne);
+        drawNodesCircle(Data.data.lowerLevel01FloorNodes);
         Data.data.currentMap = "L1";
     }
 
@@ -385,16 +386,19 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
         //tabPane.getSelectionModel().select(floorLowerTwo);
+        drawNodesCircle(Data.data.lowerLevel02FloorNodes);
         Data.data.currentMap = "L2";
     }
 
     @FXML
     public void changeFloor1() {
+
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
+        drawNodesCircle(Data.data.firstFloorNodes);
         //tabPane.getSelectionModel().select(floorOne);
         Data.data.currentMap = "1";
     }
@@ -409,6 +413,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
         //tabPane.getSelectionModel().select(floorTwo);
+        drawNodesCircle(Data.data.secondFloorNodes);
         Data.data.currentMap = "2";
     }
 
@@ -422,6 +427,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
         //tabPane.getSelectionModel().select(floorThree);
+        drawNodesCircle(Data.data.thirdFloorNodes);
         Data.data.currentMap = "3";
     }
 
@@ -433,6 +439,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
         //tabPane.getSelectionModel().select(floorGround);
+        drawNodesCircle(Data.data.groundFloorNodes);
         Data.data.currentMap = "G";
     }
 
@@ -678,61 +685,29 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
-    //Purpose: This draws all the nodes and edges currently in the database
-    //Used for debugging and admin
-    /*@FXML
-    public void drawAll() throws IOException{
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
-        Graphics2D pathImage = firstFloor.createGraphics();
-        Vector<Edge> edges = testEmbeddedDB.getAllEdges();
-        Vector<Node> nodes = testEmbeddedDB.getAllNodes();
-        int edgeLength = edges.size();
-        int nodeLength = nodes.size();
-        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
-        for(int i = 0; i < edgeLength; i++ ) {
-            Node nodeStart = edges.get(i).getStart();
-            System.out.println("Start: " + nodeStart.getShortName());
-            Node nodeEnd = edges.get(i).getEnd();
-            System.out.println("Stop: " + nodeEnd.getShortName());
-            pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
-            pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
-        }
-        for(int i = 0; i < nodeLength; i++){
-            Node node = nodes.get(i);
-            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-        }
-        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-    }*/
 
+    /**
+     * function to draw the nodes of the  floors
+     * @param FloorNodes
+     */
     @FXML
-    public void drawNodesCircle(HashMap<String, Node> node,Vector<Node> FloorNodes) {
-
-
-        for (int i= 0; i<FloorNodes.size();i++){
-            node.put(FloorNodes.get(i).getNodeID(),FloorNodes.get(i));
-        }
-
-        if(node != null) {
-            int length = node.size();
-
-            // Setting up the proper color settings
-           // Data.data.gc.setLineWidth(2);
+    public void drawNodesCircle(Vector<Node> FloorNodes)
+    {
+        if(FloorNodes != null) {
+            int length = FloorNodes.size();
 
             Data.data.gc.setStroke(Color.BLUE);
             Data.data.gc.stroke();
             // Iterate through all the given nodes to draw the node
             for (int i = 0; i < length; i++)
             {
-                Node nodesMap = node.get(i);
+                Node nodesMap = FloorNodes.get(i);
                 pathCanvas.getGraphicsContext2D().strokeOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
                 pathCanvas.getGraphicsContext2D().fillOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
 
             }
             }
-
-        }
+    }
 
     /**
      * mouse click location done!

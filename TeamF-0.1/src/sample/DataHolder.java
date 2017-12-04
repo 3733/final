@@ -54,15 +54,15 @@ public class DataHolder {
 
 
     /**
-     * Creating the HashMap for the floor nodes.
+     * Creating the Vector for the floor nodes.
      *the following maybe has issues.
      */
-    public HashMap<String, Node>  groundFloorNodes;
-    public HashMap<String, Node>  lowerLevel01FloorNodes;
-    public HashMap<String, Node>  lowerLevel02FloorNodes;
-    public HashMap<String, Node>  firstFloorNodes;
-    public HashMap<String, Node>  secondFloorNodes;
-    public HashMap<String, Node>  thirdFloorNodes;
+    public Vector<Node>  groundFloorNodes;
+    public Vector<Node>  lowerLevel01FloorNodes;
+    public Vector<Node>  lowerLevel02FloorNodes;
+    public Vector<Node>  firstFloorNodes;
+    public Vector<Node>  secondFloorNodes;
+    public Vector<Node>  thirdFloorNodes;
 
 
 
