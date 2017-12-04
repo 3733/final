@@ -38,7 +38,9 @@ public class MapEditPageController implements Initializable{
     @FXML
     private JFXTabPane tabPane;
     @FXML
-    private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk;
+    private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk, chooseBeam, chooseBest;
+    @FXML
+    private SplitMenuButton algoMenu;
     @FXML
     private JFXButton editNodeBtn, editEdgeBtn;
 
@@ -96,13 +98,26 @@ public class MapEditPageController implements Initializable{
             tabPane.getSelectionModel().select(floorOne);
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
 
+
+
+            /*
+            * AStar -1
+            * Breadth -2
+            * Depth -3
+            * Dijk -4
+            * Beam -5
+            * Best -6
+            * */
+
+            //default is Astar
+            algoMenu.setText(chooseAStar.getText());
+            chooseAStar.setSelected(true);
+
             chooseAStar.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(1);
-                    Main.adminPageController.setCurrentAlgo(1);
-                    System.out.println(1);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    algoMenu.setText(chooseAStar.getText());
                 }
             });
 
@@ -110,9 +125,7 @@ public class MapEditPageController implements Initializable{
                 @Override
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(2);
-                    Main.adminPageController.setCurrentAlgo(2);
-                    System.out.println(2);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    algoMenu.setText(chooseBreadth.getText());
                 }
             });
 
@@ -120,9 +133,7 @@ public class MapEditPageController implements Initializable{
                 @Override
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(3);
-                    Main.adminPageController.setCurrentAlgo(3);
-                    System.out.println(3);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    algoMenu.setText(chooseDepth.getText());
                 }
             });
 
@@ -130,9 +141,23 @@ public class MapEditPageController implements Initializable{
                 @Override
                 public void handle(ActionEvent event) {
                     Main.navigationPageController.setCurrentAlgo(4);
-                    Main.adminPageController.setCurrentAlgo(4);
-                    System.out.println(4);
-                    System.out.println(Main.navigationPageController.getCurrentAlgo());
+                    algoMenu.setText(chooseDijk.getText());
+                }
+            });
+
+            chooseBeam.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(5);
+                    algoMenu.setText(chooseBeam.getText());
+                }
+            });
+
+            chooseBest.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Main.navigationPageController.setCurrentAlgo(6);
+                    algoMenu.setText(chooseBest.getText());
                 }
             });
         }catch (FileNotFoundException e) {
@@ -200,7 +225,7 @@ public class MapEditPageController implements Initializable{
     public void logout(){Main.startScreen();}
 
     @FXML
-    public void back(){Main.adminScreen();}
+    public void back() throws IOException, InterruptedException{Main.mapScreen();}
 
 
 

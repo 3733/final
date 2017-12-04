@@ -74,8 +74,10 @@ public class SearchEngine {
         for(int i =0; i<r.size();i++ ){
             Double CurDist = map.TotalDistance(pathFinder.executeStrategy(kiosk,r.get(i),map));
             if(MinDistance  > CurDist){
-                MinDistance =CurDist;
-                MinNode = r.get(i);
+                if(r.get(i) != kiosk){
+                    MinDistance =CurDist;
+                    MinNode = r.get(i);
+                }
             }
         }
 

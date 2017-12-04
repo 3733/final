@@ -136,7 +136,7 @@
          <children>
             <AnchorPane layoutX="127.0" layoutY="2.0" prefHeight="810.0" prefWidth="1050.0">
                <children>
-                  <JFXTabPane layoutX="-106.0" prefHeight="810.0" prefWidth="1142.0">
+                  <JFXTabPane layoutX="-114.0" prefHeight="810.0" prefWidth="1150.0">
                      <tabs>
                         <Tab fx:id="foodPane" onSelectionChanged="#updateFood" style="-fx-text-fill: #8e8e8e;" text="Food Request">
                            <content>

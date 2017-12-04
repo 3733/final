@@ -2,6 +2,7 @@ package sample;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +15,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+import java.util.Map.Entry;
 
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Observable;
 import java.util.Vector;
 
 public class Main extends Application implements Data{
@@ -162,6 +166,7 @@ public class Main extends Application implements Data{
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
+        stage.setResizable(true);
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
@@ -293,19 +298,38 @@ public class Main extends Application implements Data{
     public static void main(String[] args) throws IOException{
         //long st = System.currentTimeMillis();
 
+        //testEmbeddedDB db = new testEmbeddedDB();
+        /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
+
+        for(String s : o){
+            System.out.println(s + " trim?");
+        }*/
+
         //startMap();
+
+        /*HashMap<String, Node> test = new HashMap<>();
+
+        test = testEmbeddedDB.getNodesByFloor(1);
+
+        for (java.util.Map.Entry<String, Node> entry : test.entrySet())
+        {
+            System.out.println(entry.getKey() + " trimmed/" + entry.getValue() + " trimmed");
+        }*/
+
+
         launch(args);
 
         /*long et = System.currentTimeMillis();
         double timer = (double) (et-st)/1000;
         System.out.println("Main " + timer+"<===TIMER");*/
 
-//        testEmbeddedDB db = new testEmbeddedDB();
-//        testEmbeddedDB.dropNodes();
-//        testEmbeddedDB.dropTables();
-//        testEmbeddedDB.createTable();
-        //startMap();
+
+
+
+        //UNCOMMENT THIS LINE
         testEmbeddedDB.dbBuildMap();
+
+
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");

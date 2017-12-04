@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import sample.Main;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -36,7 +37,7 @@ public class EditUsersController implements Initializable{
         this.mainController = main;
     }
     @FXML
-    public void back(){ Main.adminScreen();}
+    public void back()throws IOException, InterruptedException{ Main.mapScreen();}
 
     @FXML
     public void help(){Main.genErrorScreen();}
