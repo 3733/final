@@ -6,16 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.stage.Stage;
-import sample.UI.HelpScreenServiceRequestScreenController;
 
 
 import java.io.IOException;
-import java.util.Vector;
 
 public class Main extends Application implements Data{
 
