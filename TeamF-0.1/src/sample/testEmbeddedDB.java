@@ -1337,7 +1337,36 @@ public class testEmbeddedDB {
 
             Statement s = c.createStatement();
 
-            ResultSet r = s.executeQuery("SELECT LONGNAME FROM NODES");
+
+            ResultSet r = s.executeQuery("select LONGNAME from NODES " +
+                    "where NODETYPE NOT like 'HALL' and NODETYPE NOT like 'ELEV' and NODETYPE " +
+                    "NOT like 'STAI'");
+
+            while(r.next()){
+                String lname = r.getString("longname");
+                names.add(lname.trim());
+            }
+
+        } catch (Exception e){
+            System.out.println("getAllLongNames error: " + e.getMessage());
+        }
+
+        return names;
+    }
+
+    public static ObservableList getLongNamesByFloor(String q){
+        ObservableList names = FXCollections.observableArrayList();
+
+        try{
+
+            String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("select LONGNAME from NODES " +
+                    "where NODETYPE NOT like 'HALL' and NODETYPE NOT like 'ELEV' and NODETYPE " +
+                    "NOT like 'STAI' and FLOOR = '" + q + "'");
 
             while(r.next()){
                 String lname = r.getString("longname");
