@@ -296,6 +296,22 @@ public class testEmbeddedDB {
         }
     }
 
+    public static void createTagTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            /*s.execute("CREATE TABLE Tags (" +
+                    "nodeID char(25)," +
+                    "tag CHAR(20)," +
+                    "FOREIGN KEY (nodeID) REFERENCES )")*/
+
+        } catch (Exception e){
+            System.out.println("createTagTable error: " + e.getMessage());
+        }
+    }
+
     public static Vector<ServiceRequest> getAllServiceRequests(){
         Vector<ServiceRequest> requests = new Vector<ServiceRequest>();
 
@@ -1351,8 +1367,33 @@ public class testEmbeddedDB {
         return names;
     }
 
-    public static HashMap<String, Node> getNodesByFloor(int floor){
-        HashMap<String, Node> nodesByFloor = new HashMap<>();
+    public static ObservableList getLongNamesByFloor(String q){
+        ObservableList names = FXCollections.observableArrayList();
+
+        try{
+
+            String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("select LONGNAME from NODES " +
+                    "where NODETYPE NOT like 'HALL' and FLOOR = '" + q + "'");
+
+            while(r.next()){
+                String lname = r.getString("longname");
+                names.add(lname.trim());
+            }
+
+        } catch (Exception e){
+            System.out.println("getAllLongNames error: " + e.getMessage());
+        }
+
+        return names;
+    }
+
+    public static Vector<Node> getNodesByFloor(int floor){
+        Vector<Node> nodesByFloor = new Vector<>();
         Node n;
 
         String dbFloor = testEmbeddedDB.floorIntToString(floor);
@@ -1381,7 +1422,7 @@ public class testEmbeddedDB {
 
                 n = new Node(nodeID, xcord, ycoord, tableFloor, building, nodetype, longname, shortname, team);
 
-                nodesByFloor.put(nodeID, n);
+                nodesByFloor.add(n);
             }
 
 
