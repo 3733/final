@@ -298,9 +298,10 @@ public class Main extends Application implements Data{
         //long st = System.currentTimeMillis();
 
         //testEmbeddedDB db = new testEmbeddedDB();
-        /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
+        //ObservableList<String> o = testEmbeddedDB.getAllLongNames();
+        //ObservableList<String> o = testEmbeddedDB.getLongNamesByFloor("L2");
 
-        for(String s : o){
+        /*for(String s : o){
             System.out.println(s + " trim?");
         }*/
 
@@ -325,7 +326,7 @@ public class Main extends Application implements Data{
 
 
         //UNCOMMENT THIS LINE
-        testEmbeddedDB.dbBuildMap();
+        //testEmbeddedDB.dbBuildMap();
 
 
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
