@@ -867,7 +867,7 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void setAlgorithm(){}
-}
+
 
     // Purpose: Send an email when user clicks send email button
     @FXML

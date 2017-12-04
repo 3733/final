@@ -23,6 +23,11 @@ public class LoginPageController {
     @FXML
     private Label invalidLoginText;
 
+    @FXML
+    private JFXButton loginButton;
+    @FXML
+    private JFXButton close;
+
     private Main mainController;
 
     private NavigationPageController navController;
@@ -44,6 +49,7 @@ public class LoginPageController {
             AuthenticationInfo newUser = new AuthenticationInfo(username.getText(),AuthenticationInfo.Privilege.ADMIN);
             SettingSingleton.getSettingSingleton().setAuthProperty(newUser);
             Main.mapScreen();
+            Main.closePopUp(loginButton);
         }else {
             invalidLoginText.setVisible(true);
             PauseTransition visiblePause = new PauseTransition(
@@ -72,6 +78,9 @@ public class LoginPageController {
 
 
     @FXML
-    public void back(){Main.startScreen();}
+    public void back(){
+        Main.startScreen();
+        Main.closePopUp(close);
+    }
 
 }
