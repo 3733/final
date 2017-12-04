@@ -809,6 +809,8 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void logout() throws IOException, InterruptedException{
+        AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+        SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
         Main.startScreen();
         clearFields();
         clear();
