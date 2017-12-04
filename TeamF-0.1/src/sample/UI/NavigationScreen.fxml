@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
     <right>
         <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
             <children>
@@ -221,7 +221,7 @@
                                         <Image url="@Icons/01_thefirstfloor.png" />
                                     </image>
                                 </ImageView>
-                                <Canvas fx:id="pathCanvas" height="883.0" width="1302.0" StackPane.alignment="TOP_LEFT" />
+                                <Canvas fx:id="pathCanvas" height="883.0" onMouseReleased="#clickSelected" width="1302.0" StackPane.alignment="TOP_LEFT" />
                             </children>
                         </StackPane>
                     </content>

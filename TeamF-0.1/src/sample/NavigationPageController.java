@@ -726,34 +726,41 @@ public class NavigationPageController implements Initializable, Data{
 
         }
 
+    /**
+     * mouse click location done!
+     * @throws IOException
+     */
     @FXML
     public void clickSelected() throws IOException {
-        System.out.println("MOuse Clicked");
+        // double prevx = 0;
+        // double prevy = 0;
 
-        map.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
-            System.out.println("Mouse Clicked 1");
-            if (e.getClickCount() == 1) {
-                System.out.println("HH");
+        pathCanvas.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
 
-                Data.data.gc.setStroke(Color.RED);
-
-                double newX = (e.getSceneX()-244)* 4.37;
-                double newY = (e.getSceneY()-36) * 4.37;
-
-                pathCanvas.getGraphicsContext2D().strokeOval(newX/4.4 +2.0 ,newY/4.4 +2.0, 2.0, 2.0);
-                pathCanvas.getGraphicsContext2D().fillOval(newX/4.4 +2.0 ,newY/4.4 +2.0, 2.0, 2.0);
-
-                System.out.println("IMAGE SET");
+            if (e.getClickCount() == 1)
+            {
+                Data.data.gc.clearRect(0,0,1143, 783);
 
             }
-
-
-
         });
 
 
+        pathCanvas.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
 
+            if (e.getClickCount() == 1)
+            {
+                double scaleX = 5000d / 1143d;
+                double scaleY = 3400d / 781d;
 
+                double newX1 = (e.getSceneX());
+                double newY1 = (e.getY());
+                // prevx = newX1;
+                // prevy = newY1;
+                Data.data.gc.setStroke(Color.RED);
+                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 5.0, 5.0);
+                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 5.0, 5.0);
+            }
+        });
     }
 
 
