@@ -5,55 +5,13 @@ package sample;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class Dijkstras implements PathFinder{
+public class Dijkstras extends AbsAlgorithm{
 
 
     /**
-     * This is the reconstructPath method, it is a helper for A*
+     * This is the Dijkstras algorithm to find the most efficient path
      * <p>
-     *   Given a hashmap of nodes, that map to other nodes, and a current node it adds all the nodes to the final path
-     * </p>
-     * @param   cameFrom  Hash map with all the edges
-     * @param   Current   desired location
-     * @return  Path , a vector with all the nodes of the total path
-     */
-
-    private Vector<Node> reconstructPath(HashMap<Node,Node> cameFrom, Node Current){
-
-        Vector<Node> Path = new Vector<Node>();
-        Path.add(Current);
-
-        while (cameFrom.keySet().contains(Current)){
-            Current = cameFrom.get(Current);
-            Path.add(0,Current);
-        }
-
-        return Path;
-    }
-
-
-    /**
-     * This is the Euclidean Distance function, it is a helper method for A*
-     * </p>
-     * @param   Start  starting point
-     * @param   End   desired location
-     * @return  Returns the direct distance between the two points.
-     */
-
-    public double HeuristicCost(Node Start, Node End){
-        return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))));
-    }
-
-
-
-
-
-
-    /**
-     * This is the A* algorithm to find the most efficient path
-     * <p>
-     *   A* is designed so that it finds the most cost efficient path. Now with multiple floors based
-     *   on elevators and stairs
+     *   Dijkstras is designed so that it finds the most cost efficient path.
      * </p>
      * @param   Start  starting point for the A* algorithm
      * @param   End   desired location

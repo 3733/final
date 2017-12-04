@@ -343,46 +343,6 @@ public class Main extends Application implements Data{
 
         Map CurMap = testEmbeddedDB.dbBuildMap();
 
-        /*Vector<Node> dbnodes = testEmbeddedDB.getAllNodes();
-
-        Vector <Edge> EdgesBad = testEmbeddedDB.getAllEdges();
-
-        Vector <Edge> EdgesGood = new Vector<>();
-
-
-        for(int i =0;i<EdgesBad.size();i++){
-
-            String ID;
-            String StID;
-            String EndID;
-            Node Start = null;
-            Node End = null;
-
-            ID = EdgesBad.get(i).getEdgeID();
-            StID = EdgesBad.get(i).getStart().getNodeID();
-            EndID = EdgesBad.get(i).getEnd().getNodeID();
-
-            for(int j = 0; j< dbnodes.size();j++){
-
-                if(dbnodes.get(j).getNodeID().equals(StID)){
-                    Start = dbnodes.get(j);
-
-                }else if(dbnodes.get(j).getNodeID().equals(EndID)){
-
-                    End = dbnodes.get(j);
-                }
-            }
-
-            Edge e = new Edge(ID,Start,End);
-
-
-            EdgesGood.add(e);
-        }
-
-        Map CurMap = new Map(dbnodes, EdgesGood);
-
-        CurMap.BuildMap();
-
 /*
         for (int i =0; i<CurMap.getNodes().size();i++){
 
@@ -394,12 +354,6 @@ public class Main extends Application implements Data{
             }
         }
 */
-        /*navigationPageController.setMap(CurMap);
-        adminPageController.setMap(CurMap);
-        //Default kiosk location is the Center for International Medecine
-        navigationPageController.setKiosk(CurMap.getNodes().get(0));
-        adminPageController.setKiosk(CurMap.getNodes().get(0));*/
-
 
         return CurMap;
     }

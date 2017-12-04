@@ -4,9 +4,9 @@ import java.util.Vector;
 
 public class PathAlgorithm {
 
-    private PathFinder pathfinder;
+    private IPathFinder pathfinder;
 
-    public PathAlgorithm(PathFinder pathfinder){
+    public PathAlgorithm(IPathFinder pathfinder){
         this.pathfinder = pathfinder;
     }
 
