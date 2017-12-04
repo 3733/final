@@ -126,7 +126,7 @@ public class NavigationPageController implements Initializable, Data{
 
     ObservableList<String> allEntries;
 
-    private int currentAlgo = 1;
+    private int currentAlgo = 6;
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

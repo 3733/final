@@ -1,5 +1,6 @@
 package sample;
 
+import java.util.Comparator;
 import java.util.Vector;
 
 public class Node {
