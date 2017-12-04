@@ -29,7 +29,7 @@ public class ServiceAcceptController implements Initializable{
 
     //top menu bar
     @FXML
-    public void backToAdmin() {Main.adminScreen();}
+    public void backToAdmin() throws IOException, InterruptedException{Main.mapScreen();}
 
     private Main mainController;
 

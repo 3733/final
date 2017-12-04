@@ -218,6 +218,8 @@
                                           <ToggleGroup fx:id="pathOpt" />
                                        </toggleGroup>
                                     </RadioMenuItem>
+                                    <RadioMenuItem fx:id="chooseBeam" mnemonicParsing="false" text="Beam First" toggleGroup="$pathOpt" />
+                                    <RadioMenuItem fx:id="chooseBest" mnemonicParsing="false" text="Best First" toggleGroup="$pathOpt" />
                                     <RadioMenuItem fx:id="chooseBreadth" mnemonicParsing="false" text="Breadth First" toggleGroup="$pathOpt" />
                                     <RadioMenuItem fx:id="chooseDepth" mnemonicParsing="false" text="Depth First" toggleGroup="$pathOpt" />
                                     <RadioMenuItem fx:id="chooseDijk" mnemonicParsing="false" text="Dijkstra" toggleGroup="$pathOpt" />
@@ -315,7 +317,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXTabPane fx:id="tabPane" layoutX="120.0" layoutY="520.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
+            <JFXTabPane fx:id="tabPane" layoutX="720.0" layoutY="520.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
                <tabs>
                   <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3">
                      <content>

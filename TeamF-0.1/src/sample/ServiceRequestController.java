@@ -48,8 +48,8 @@ public class ServiceRequestController implements Initializable {
     }
 
     @FXML
-    public void backToAdmin() {
-        Main.adminScreen();
+    public void backToAdmin() throws IOException, InterruptedException{
+        Main.mapScreen();
     }
 
     private Main mainController;

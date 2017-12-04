@@ -5,10 +5,12 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 import sample.Main;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class LoginPageController {
@@ -20,12 +22,15 @@ public class LoginPageController {
 
     @FXML
     private Label invalidLoginText;
-    @FXML
-    private JFXButton close;
+
     @FXML
     private JFXButton loginButton;
+    @FXML
+    private JFXButton close;
 
     private Main mainController;
+
+    private NavigationPageController navController;
 
     public void setMainController(Main main){
         this.mainController = main;
@@ -36,12 +41,14 @@ public class LoginPageController {
 
 
     @FXML
-    public void login(){
-        //System.out.println(username.getText());
-        //System.out.println(password.getText());
+    public void login() throws IOException, InterruptedException{
+        System.out.println(username.getText());
+        System.out.println(password.getText());
+
         if(checkUser(username.getText(), password.getText())){
-            invalidLoginText.setVisible(false);
-            Main.adminScreen();
+            AuthenticationInfo newUser = new AuthenticationInfo(username.getText(),AuthenticationInfo.Privilege.ADMIN);
+            SettingSingleton.getSettingSingleton().setAuthProperty(newUser);
+            Main.mapScreen();
             Main.closePopUp(loginButton);
         }else {
             invalidLoginText.setVisible(true);
@@ -72,8 +79,7 @@ public class LoginPageController {
 
     @FXML
     public void back(){
-        username.clear();
-        password.clear();
+        Main.startScreen();
         Main.closePopUp(close);
     }
 
