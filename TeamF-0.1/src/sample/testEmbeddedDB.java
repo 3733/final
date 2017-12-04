@@ -296,6 +296,22 @@ public class testEmbeddedDB {
         }
     }
 
+    public static void createTagTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            /*s.execute("CREATE TABLE Tags (" +
+                    "nodeID char(25)," +
+                    "tag CHAR(20)," +
+                    "FOREIGN KEY (nodeID) REFERENCES )")*/
+
+        } catch (Exception e){
+            System.out.println("createTagTable error: " + e.getMessage());
+        }
+    }
+
     public static Vector<ServiceRequest> getAllServiceRequests(){
         Vector<ServiceRequest> requests = new Vector<ServiceRequest>();
 
