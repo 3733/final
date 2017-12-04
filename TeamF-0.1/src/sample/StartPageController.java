@@ -38,7 +38,17 @@ public class StartPageController {
 
 
     @FXML
-    public void search() throws IOException, InterruptedException {
+    public void search() {
+        try{
+            //API a = new API();
+            //a
+        } catch (Exception e){
+            System.out.println("api error: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    public void search2() throws IOException, InterruptedException {
         //System.out.print(searchBox.getText());
         if(getSearch().length()>0) {
             Main.setDestination(getSearch());
