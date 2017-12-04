@@ -79,7 +79,7 @@ public class ServiceRequestController implements Initializable {
     }
 
     public static int ID = 0;   //service ID counter
-    Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
+    Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medicine", "CIM", 'F');
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");      //for formatting the time functions
     ArrayList<ServiceRequest> requestList = new ArrayList<ServiceRequest>();  //list to hold local service requests
 
@@ -102,6 +102,10 @@ public class ServiceRequestController implements Initializable {
     private JFXTextField assistanceUrgency;
 
     @FXML
+    private JFXTextField assistDestination;
+
+
+    @FXML
     private TextArea assistanceDescription;
 
     @FXML
@@ -114,6 +118,7 @@ public class ServiceRequestController implements Initializable {
     @FXML
     public void assistanceThisLocation() {
         assistanceNode = n1;
+        assistDestination.setText(n1.getLongName());
     }
 
     @FXML
@@ -122,6 +127,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void assistanceSendRequest() throws MissingFieldException {    //when the Send button is pressed
+        assistanceNode = testEmbeddedDB.findNode(assistDestination.getText());
         AssistanceRequest newAssist = new AssistanceRequest(assistanceNode, assistanceDescription.getText(),
                 Integer.parseInt(assistanceID.getText()), assistanceTime.getValue().format(formatter), "",
                 "", 0000, "assistance", "unaccepted",
@@ -134,6 +140,7 @@ public class ServiceRequestController implements Initializable {
         assistanceUrgency.clear();
         assistanceDescription.clear();
         ID++;
+        assistDestination.clear();
         assistanceID.setText(Integer.toString(ID));   //increments and sets correct service ID
 
         refreshTable();
@@ -198,11 +205,115 @@ public class ServiceRequestController implements Initializable {
             }
         });
 
+        assistDestination.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = assistDestination.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                foodSearchList.setItems(filteredEntries);
+            }
+        });
+
+        transportDestination.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = transportDestination.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                foodSearchList.setItems(filteredEntries);
+            }
+        });
+
+        cleaningDestination.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = cleaningDestination.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                foodSearchList.setItems(filteredEntries);
+            }
+        });
+
+        securityDestination.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = securityDestination.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                foodSearchList.setItems(filteredEntries);
+            }
+        });
+
         foodSearchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 //System.out.println(newValue);
                 foodDestination.setText(newValue);
+                assistDestination.setText(newValue);
+                transportDestination.setText(newValue);
+                cleaningDestination.setText(newValue);
+                securityDestination.setText(newValue);
                 foodSearchList.setVisible(false);
             }
         });
@@ -229,11 +340,12 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void foodChooseLocation() {
-
     }
 
     @FXML
     public void foodSendRequest() throws MissingFieldException {
+        foodNode = testEmbeddedDB.findNode(foodDestination.getText());
+
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
                 foodTime.getValue().format(formatter), "", "", 0000, "food",
                 "unaccepted", foodPatient.getText(), foodServingTime.getValue().format(formatter),
@@ -247,6 +359,7 @@ public class ServiceRequestController implements Initializable {
         foodServingTime.setValue(null);
         foodDescription.clear();
         ID++;
+        foodDestination.clear();
         foodID.setText(Integer.toString(ID));
 
         refreshTable();
@@ -265,6 +378,8 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     private JFXTextField transportPatient;
+    @FXML
+    private JFXTextField transportDestination;
 
     @FXML
     private ChoiceBox transportMenu;
@@ -285,6 +400,7 @@ public class ServiceRequestController implements Initializable {
     @FXML
     public void transportThisLocation() {
         transportNode = n1;
+        transportDestination.setText(n1.getLongName());
     }
 
     @FXML
@@ -293,6 +409,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void transportSendRequest() throws MissingFieldException {
+        transportNode = testEmbeddedDB.findNode(transportDestination.getText());
         ArrayList<Integer> transportingEmployees = new ArrayList<Integer>();
         TransportRequest newTransport = new TransportRequest(transportNode, transportDescription.getText(),
                 Integer.parseInt(transportID.getText()), transportTime.getValue().format(formatter), "",
@@ -306,6 +423,7 @@ public class ServiceRequestController implements Initializable {
         transportPatient.clear();
         transportDescription.clear();
         ID++;
+        transportDestination.clear();
         transportID.setText(Integer.toString(ID));
 
         refreshTable();
@@ -326,6 +444,9 @@ public class ServiceRequestController implements Initializable {
     private JFXTextField cleanUrgency;
 
     @FXML
+    private JFXTextField cleaningDestination;
+
+    @FXML
     private TextArea cleanDescription;
 
     @FXML
@@ -338,6 +459,7 @@ public class ServiceRequestController implements Initializable {
     @FXML
     public void cleanThisLocation() {
         cleanNode = n1;
+        cleaningDestination.setText(n1.getLongName());
     }
 
     @FXML
@@ -346,6 +468,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void cleanSendRequest() throws MissingFieldException {
+        cleanNode = testEmbeddedDB.findNode(cleaningDestination.getText());
         ArrayList<Integer> cleaningEmployees = new ArrayList<Integer>();
         CleaningRequest newClean = new CleaningRequest(cleanNode, cleanDescription.getText(),
                 Integer.parseInt(cleanID.getText()), cleanTime.getValue().format(formatter), "", "",
@@ -359,6 +482,7 @@ public class ServiceRequestController implements Initializable {
         cleanUrgency.clear();
         cleanDescription.clear();
         ID++;
+        cleaningDestination.clear();
         cleanID.setText(Integer.toString(ID));
 
         refreshTable();
@@ -379,6 +503,9 @@ public class ServiceRequestController implements Initializable {
     private JFXTextField securityUrgency;
 
     @FXML
+    private JFXTextField securityDestination;
+
+    @FXML
     private TextArea securityDescription;
 
     @FXML
@@ -391,6 +518,7 @@ public class ServiceRequestController implements Initializable {
     @FXML
     public void securityThisLocation() {
         securityNode = n1;
+        securityDestination.setText(n1.getLongName());
     }
 
     @FXML
@@ -399,7 +527,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void securitySendRequest() throws MissingFieldException {
-
+        securityNode = testEmbeddedDB.findNode(securityDestination.getText());
         SecurityRequest newSecurity = new SecurityRequest(securityNode, securityDescription.getText(),
                 Integer.parseInt(securityID.getText()), securityTime.getValue().format(formatter), "",
                 "", 0000, "security", "unaccepted",
