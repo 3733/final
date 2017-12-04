@@ -40,6 +40,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -145,6 +146,18 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
+
+
+        //Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+
+        try {
+            clickSelected();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //drawNodesCircle(Data.data.firstFloorNodes);
 
         // Populating the lists on the bottom left of the UI
         // Third Floor
@@ -691,7 +704,73 @@ public class NavigationPageController implements Initializable, Data{
             pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-    } */
+    }*/
+
+    @FXML
+    public void drawNodesCircle(HashMap<String, Node> node,Vector<Node> FloorNodes) {
+
+
+        for (int i= 0; i<FloorNodes.size();i++){
+            node.put(FloorNodes.get(i).getNodeID(),FloorNodes.get(i));
+        }
+
+        if(node != null) {
+            int length = node.size();
+
+            // Setting up the proper color settings
+           // Data.data.gc.setLineWidth(2);
+
+            Data.data.gc.setStroke(Color.BLUE);
+            Data.data.gc.stroke();
+            // Iterate through all the given nodes to draw the node
+            for (int i = 0; i < length; i++)
+            {
+                Node nodesMap = node.get(i);
+                pathCanvas.getGraphicsContext2D().strokeOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
+                pathCanvas.getGraphicsContext2D().fillOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
+
+            }
+            }
+
+        }
+
+    /**
+     * mouse click location done!
+     * @throws IOException
+     */
+    @FXML
+    public void clickSelected() throws IOException {
+        // double prevx = 0;
+        // double prevy = 0;
+
+        pathCanvas.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
+
+            if (e.getClickCount() == 1)
+            {
+                Data.data.gc.clearRect(0,0,1143, 783);
+
+            }
+        });
+
+
+        pathCanvas.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
+
+            if (e.getClickCount() == 1)
+            {
+                double scaleX = 5000d / 1143d;
+                double scaleY = 3400d / 781d;
+
+                double newX1 = (e.getSceneX());
+                double newY1 = (e.getY());
+                // prevx = newX1;
+                // prevy = newY1;
+                Data.data.gc.setStroke(Color.RED);
+                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 5.0, 5.0);
+                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 5.0, 5.0);
+            }
+        });
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
@@ -788,6 +867,29 @@ public class NavigationPageController implements Initializable, Data{
         if (value > max)
             return max;
         return value;
+    }
+
+
+    /**
+     * willis
+     * reverse function
+     */
+    public void reverseButton_Clicked(){
+        String start =startLabel.getText();
+        String end = endLabel.getText();
+        if( !(start == null || start.equals("") || end == null ||end.equals("")) )
+        {
+            startLabel.setText(end);
+            endLabel.setText(start);
+            try {
+                go();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     // convert mouse coordinates in the imageView to coordinates in the actual image:
