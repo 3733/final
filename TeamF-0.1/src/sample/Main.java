@@ -291,21 +291,15 @@ public class Main extends Application implements Data{
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
-        //long st = System.currentTimeMillis();
 
         //startMap();
         launch(args);
-
-        /*long et = System.currentTimeMillis();
-        double timer = (double) (et-st)/1000;
-        System.out.println("Main " + timer+"<===TIMER");*/
 
 //        testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
-        //startMap();
-        testEmbeddedDB.dbBuildMap();
+
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
@@ -336,7 +330,6 @@ public class Main extends Application implements Data{
 
 
         //controller.drawDirections(Vec);
-        //launch(args);
     }
 
     public static Map startMap() throws IOException{

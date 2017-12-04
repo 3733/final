@@ -53,7 +53,7 @@ public class DFSearch implements PathFinder {
 
 
 
-        System.out.println("DFSearch");
+        //System.out.println("DFSearch");
 
 
 

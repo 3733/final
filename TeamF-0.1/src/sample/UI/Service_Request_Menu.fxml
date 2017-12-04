@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
@@ -211,18 +212,16 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                   <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#foodThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#foodChooseLocation" text="Choose Location" />
-                                                   </items>
-                                                   <HBox.margin>
-                                                      <Insets right="40.0" />
-                                                   </HBox.margin>
+                                                <JFXButton buttonType="RAISED" onAction="#foodThisLocation" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="This Location">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
-                                                </SplitMenuButton>
+                                                </JFXButton>
+                                                <JFXTextField fx:id="foodDestination" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXTextField>
                                                 <JFXButton buttonType="RAISED" onAction="#foodSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
@@ -233,6 +232,7 @@
                                                 </JFXButton>
                                              </children>
                                           </HBox>
+                                          <JFXListView fx:id="foodSearchList" onMouseExited="#autoClose" prefHeight="129.0" prefWidth="842.0" visible="false" />
                                        </children>
                                     </VBox>
                                  </children>

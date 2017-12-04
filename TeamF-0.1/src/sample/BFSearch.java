@@ -25,7 +25,7 @@ public class BFSearch implements PathFinder {
             Path.add(0, Current);
         }
         for (int i =0; i<Path.size();i++){
-            System.out.println(Path.get(i).getLongName()+"<======");
+            //System.out.println(Path.get(i).getLongName()+"<======");
         }
         return Path;
 

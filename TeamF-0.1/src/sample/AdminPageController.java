@@ -324,7 +324,7 @@ public class AdminPageController implements Initializable{
 
     // this function returns the proper image based on the current image string
     public Image selectMap(String currentMap) {
-        System.out.println(currentMap);
+        //System.out.println(currentMap);
         if (currentMap != null) {
             if (currentMap.equals("L2")) {
                 return Data.data.L2Floor;
@@ -340,7 +340,7 @@ public class AdminPageController implements Initializable{
                 return Data.data.thirdFloor;
             }
         }
-        System.out.println("ERROR: INVALID FLOOR ID");
+        //System.out.println("ERROR: INVALID FLOOR ID");
         return Data.data.firstFloor;
     }
 
