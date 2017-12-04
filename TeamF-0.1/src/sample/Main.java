@@ -72,7 +72,7 @@ public class Main extends Application implements Data{
         loginPageController.setMainController(this);
         login = new Scene(LogIn);
 
-        FXMLLoader helpRequestLoader = new FXMLLoader(getClass().getResource(name: "UI/HelpScreenServiceRequestScreen.fxml"));
+        FXMLLoader helpRequestLoader = new FXMLLoader(getClass().getResource("UI/HelpScreenServiceRequestScreen.fxml"));
         Parent HelpRequest = helpRequestLoader.load();
         helpScreenServiceRequestScreenController = helpRequestLoader.getController();
         helpScreenServiceRequestScreenController.setMainController(this);
@@ -167,7 +167,7 @@ public class Main extends Application implements Data{
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
-        
+
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);

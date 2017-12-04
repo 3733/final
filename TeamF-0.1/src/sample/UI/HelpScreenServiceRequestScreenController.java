@@ -11,7 +11,7 @@ public class HelpScreenServiceRequestScreenController {
     public void back(){Main.startScreen();}
 
     @FXML
-    public void HELP(){Main.setHelpScreenServiceRequestScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
 
 
