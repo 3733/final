@@ -306,13 +306,12 @@ public class Main extends Application implements Data{
 
         //startMap();
 
-        /*HashMap<String, Node> test = new HashMap<>();
+        /*Vector<Node> test = new Vector<>();
 
         test = testEmbeddedDB.getNodesByFloor(0);
 
-        for (java.util.Map.Entry<String, Node> entry : test.entrySet())
-        {
-            System.out.println(entry.getKey() + " trimmed /" + entry.getValue().getFloor() + " trimmed");
+        for(Node n : test){
+            System.out.println(n.getFloor());
         }*/
 
 
@@ -326,7 +325,7 @@ public class Main extends Application implements Data{
 
 
         //UNCOMMENT THIS LINE
-        //testEmbeddedDB.dbBuildMap();
+        testEmbeddedDB.dbBuildMap();
 
 
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
