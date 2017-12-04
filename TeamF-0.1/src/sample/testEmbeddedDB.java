@@ -1100,6 +1100,30 @@ public class testEmbeddedDB {
         }
     }
 
+    public static Node findNode(String lName){
+        Node n;
+        LinkedList<Node> allNodes = new LinkedList<Node>();
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT NODEID FROM NODES WHERE LONGNAME = '" +lName +"'");
+
+            while(r.next()) {
+                n = testEmbeddedDB.getNode(r.getString("nodeID"));
+
+                allNodes.add(n);
+            }
+            c.close();
+
+        } catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+        return allNodes.get(0);
+    }
+
     public static void addNodes(String nodeID, int xCoord, int yCoord, String floor, String building,
                          String nodeType, String longName, String shortName, String team){
         final String url = "jdbc:derby:Skynet";
