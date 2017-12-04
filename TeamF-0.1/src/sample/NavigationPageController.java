@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
@@ -31,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.time.DateTimeException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +40,9 @@ import java.util.regex.Pattern;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -49,6 +53,11 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXListView directionSteps;
 
+    @FXML
+    private ScrollPane zoomPane;
+
+    @FXML
+    private Group zoomGroup;
     @FXML
     private AnchorPane anchor;
 
@@ -113,6 +122,9 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXButton sendButton;
 
+    @FXML
+    private StackPane stackPane;
+
     //other components
     private Main mainController;
 
@@ -128,13 +140,13 @@ public class NavigationPageController implements Initializable, Data{
 
     private int currentAlgo = 1;
 
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
 
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+//        scrollMap.setStyle("-fx-background-color:transparent; -fx-border-color:transparent;");
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
 
@@ -487,7 +499,6 @@ public class NavigationPageController implements Initializable, Data{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
-
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -568,8 +579,6 @@ public class NavigationPageController implements Initializable, Data{
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
-        ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         ObservableList<String> populateSteps = FXCollections.observableArrayList();
         //edit later
         String directions = directions(path);
@@ -612,17 +621,17 @@ public class NavigationPageController implements Initializable, Data{
     public void setMap(String map) {
         map.replaceAll("\\s+","");
         if(map.equals("L2")) {
-            changeFloorL2();
+            tabPane.getSelectionModel().select(floorLowerTwo);
         } else if(map.equals("L1")) {
-            changeFloorL1();
+            tabPane.getSelectionModel().select(floorLowerOne);
         }else if(map.equals("G")) {
-            changeFloorG();
+            tabPane.getSelectionModel().select(floorGround);
         } else if(map.equals("01") || map.equals("1")) {
-            changeFloor1();
+            tabPane.getSelectionModel().select(floorOne);
         } else if(map.equals("02") || map.equals("2")) {
-            changeFloor2();
+            tabPane.getSelectionModel().select(floorTwo);
         } else if(map.equals("03") || map.equals("3")){
-            changeFloor3();
+            tabPane.getSelectionModel().select(floorThree);
         }
     }
     // Purpose: Draw a path of nodes on the map
@@ -634,7 +643,7 @@ public class NavigationPageController implements Initializable, Data{
             String nameDept = path.get(0).getShortName();
             // Setting up the proper color settings
             Data.data.gc.setLineWidth(2);
-            Data.data.gc.setStroke(javafx.scene.paint.Color.BLACK);
+            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
             Data.data.gc.stroke();
             // Iterate through all the path nodes to draw the path
             for (int i = 0; i < length; i++) {
@@ -687,32 +696,61 @@ public class NavigationPageController implements Initializable, Data{
     // Purpose: Zoom the map when the user zooms
     @FXML
     private void zoom() {
+/*
         int MIN_PIXELS = 15;
         //zoom
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
-
+        double canvasW = pathCanvas.getWidth();
+        double canvasH = pathCanvas.getHeight();
         map.setPreserveRatio(true);
-        reset(map, width, height);
+        resetMap(map, width, height);
+        resetCanvas(pathCanvas,canvasW,canvasH);
 
         ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
 
-        map.setOnMousePressed(e -> {
-
+        pathCanvas.setOnMousePressed( e -> {
             Point2D mousePress = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
             mouseDown.set(mousePress);
         });
 
-        map.setOnMouseDragged(e -> {
+        pathCanvas.setOnMouseDragged( e -> {
             Point2D dragPoint = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            shift(map, dragPoint.subtract(mouseDown.get()));
+            shiftMap(map, dragPoint.subtract(mouseDown.get()));
+            shiftCanvas(pathCanvas,dragPoint.subtract(mouseDown.get()));
+
             mouseDown.set(imageViewToImage(map, new Point2D(e.getX(), e.getY())));
         });
 
-        map.setOnScroll(e -> {
+        map.setOnScroll( e -> {
             double delta = e.getDeltaY();
             Rectangle2D viewport = map.getViewport();
+            double scale = clamp(Math.pow(1.01, delta),
 
+                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
+
+                    // don't scale so that we're bigger than image dimensions:
+                    Math.max(width / viewport.getWidth(), height / viewport.getHeight()));
+
+            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
+
+            double newWidth = viewport.getWidth() * scale;
+            double newHeight = viewport.getHeight() * scale;
+
+            // To keep the visual point under the mouse from moving
+            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
+                    0, width - newWidth);
+            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
+                    0, height - newHeight);
+            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
+            data.gc.scale(scale,scale);
+        });
+
+        */
+/*
+        pathCanvas.setOnScroll( e -> {
+            double delta = e.getDeltaY();
+            Rectangle2D viewport = map.getViewport();
             double scale = clamp(Math.pow(1.01, delta),
 
                     // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
@@ -735,11 +773,31 @@ public class NavigationPageController implements Initializable, Data{
                     0, height - newHeight);
 
             map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-        });
+        }); *//*
 
-        map.setOnMouseClicked(e -> {
+
+        pathCanvas.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
-                reset(map, width, height);
+                resetMap(map, width, height);
+                resetCanvas(pathCanvas,canvasW,canvasH);
+            }
+        });
+*/
+        stackPane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
+                if (!(scaleFactor * stackPane.getScaleX() > 3) && !(scaleFactor * stackPane.getScaleX() < 1)) {
+                    System.out.println(scaleFactor);
+                    stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
+                    stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
+                }
             }
         });
 
@@ -748,14 +806,18 @@ public class NavigationPageController implements Initializable, Data{
         map.fitHeightProperty().bind(scrollMap.heightProperty());
     }
 
+
     // reset to the top left:
-    private void reset(ImageView imageView, double width, double height) {
+    private void resetMap(ImageView imageView, double width, double height) {
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
+    }
+
+    private void resetCanvas(javafx.scene.canvas.Canvas inCanvas, double width, double height) {
     }
 
     // shift the viewport of the imageView by the specified delta, clamping so
     // the viewport does not move off the actual image:
-    private void shift(ImageView imageView, Point2D delta) {
+    private void shiftMap(ImageView imageView, Point2D delta) {
         Rectangle2D viewport = imageView.getViewport();
 
         double width = imageView.getImage().getWidth() ;
@@ -768,6 +830,21 @@ public class NavigationPageController implements Initializable, Data{
         double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
 
         imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
+    }
+
+    private void shiftCanvas(javafx.scene.canvas.Canvas inCanvas, Point2D delta) {
+
+
+        double width = inCanvas.getWidth();
+        double height = inCanvas.getHeight();
+
+        double maxX = width;
+        double maxY = height;
+
+        double minX = clamp(0 - delta.getX(),0,maxX);
+        double minY = clamp(0 - delta.getY(),0,maxY);
+        pathCanvas.setWidth(width - minX);
+        pathCanvas.setHeight(height - minY);
     }
 
     private double clamp(double value, double min, double max) {
@@ -787,7 +864,6 @@ public class NavigationPageController implements Initializable, Data{
                 viewport.getMinX() + xProportion * viewport.getWidth(),
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Other Functions

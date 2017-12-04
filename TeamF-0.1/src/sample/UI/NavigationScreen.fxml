@@ -52,7 +52,7 @@
                                         <VBox prefHeight="200.0" prefWidth="100.0">
                                             <children>
                                                 <JFXBadge prefHeight="25.0" prefWidth="25.0" />
-                                                <JFXButton contentDisplay="CENTER" onAction="#login" ripplerFill="#8c8c8c" text="Log In">
+                                                <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" ripplerFill="#8c8c8c" text="Log In">
                                                     <font>
                                                         <Font name="Montserrat Regular" size="12.0" />
                                                     </font>
@@ -220,9 +220,9 @@
     <center>
         <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
             <children>
-                <ScrollPane fx:id="scrollMap" prefHeight="810.0" prefWidth="1146.0">
+                <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="810.0" prefWidth="1146.0">
                     <content>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
                             <children>
                                 <ImageView fx:id="map" fitHeight="881.0" fitWidth="1356.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
                                     <image>
