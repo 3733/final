@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
@@ -43,7 +44,7 @@ import java.util.regex.Pattern;
 import static sample.Main.getLoggedInGuy;
 
 
-public class ServiceRequestController implements Initializable {
+public class ServiceRequestController implements Initializable, Data {
 
     ObservableList<String> allEntries;
     //top menu bar
@@ -78,7 +79,8 @@ public class ServiceRequestController implements Initializable {
         Main.acceptScreen();
     }
 
-    public static int ID = 0;   //service ID counter
+    //public static int ID = 0;   //service ID counter
+    public static BigInteger ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
     Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medicine", "CIM", 'F');
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");      //for formatting the time functions
     ArrayList<ServiceRequest> requestList = new ArrayList<ServiceRequest>();  //list to hold local service requests
@@ -110,7 +112,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void updateAssistance() {                                      //when a request tab is opened
-        assistanceID.setText(Integer.toString(ID));                      //sets correct service ID
+        assistanceID.setText(ID.toString());                      //sets correct service ID
     }
 
     private Node assistanceNode;
@@ -127,7 +129,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void assistanceSendRequest() throws MissingFieldException {    //when the Send button is pressed
-        assistanceNode = testEmbeddedDB.findNode(assistDestination.getText());
+        assistanceNode = SearchEngine.SearchPath(assistDestination.getText(), data.graph, data.kiosk);
         AssistanceRequest newAssist = new AssistanceRequest(assistanceNode, assistanceDescription.getText(),
                 Integer.parseInt(assistanceID.getText()), assistanceTime.getValue().format(formatter), "",
                 "", 0000, "assistance", "unaccepted",
@@ -139,9 +141,9 @@ public class ServiceRequestController implements Initializable {
         assistanceTime.setValue(null);            //clears textfields
         assistanceUrgency.clear();
         assistanceDescription.clear();
-        ID++;
+        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
         assistDestination.clear();
-        assistanceID.setText(Integer.toString(ID));   //increments and sets correct service ID
+        assistanceID.setText(ID.toString());   //increments and sets correct service ID
 
         refreshTable();
     }
@@ -321,7 +323,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void updateFood() {
-        foodID.setText(Integer.toString(ID));
+        foodID.setText(ID.toString());
 
         foodMenu.setItems(FXCollections.observableArrayList(
                 "Apple pie", "Banana", "Catfish soup", "Chicken parmesan", "Chocolate cake", "Hamburger", "Lasagna",
@@ -343,7 +345,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void foodSendRequest() throws MissingFieldException {
-        foodNode = testEmbeddedDB.findNode(foodDestination.getText());
+        foodNode = SearchEngine.SearchPath(foodDestination.getText(), data.graph, data.kiosk);
 
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
                 foodTime.getValue().format(formatter), "", "", 0000, "food",
@@ -357,9 +359,9 @@ public class ServiceRequestController implements Initializable {
         foodPatient.clear();
         foodServingTime.setValue(null);
         foodDescription.clear();
-        ID++;
+        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
         foodDestination.clear();
-        foodID.setText(Integer.toString(ID));
+        foodID.setText(ID.toString());
 
         refreshTable();
     }
@@ -388,7 +390,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void updateTransport() {
-        transportID.setText(Integer.toString(ID));
+        transportID.setText(ID.toString());
 
         transportMenu.setItems(FXCollections.observableArrayList(
                 "Wheelchair", "Stretcher"));
@@ -408,7 +410,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void transportSendRequest() throws MissingFieldException {
-        transportNode = testEmbeddedDB.findNode(transportDestination.getText());
+        transportNode = SearchEngine.SearchPath(transportDestination.getText(), data.graph, data.kiosk);
         ArrayList<Integer> transportingEmployees = new ArrayList<Integer>();
         TransportRequest newTransport = new TransportRequest(transportNode, transportDescription.getText(),
                 Integer.parseInt(transportID.getText()), transportTime.getValue().format(formatter), "",
@@ -421,9 +423,9 @@ public class ServiceRequestController implements Initializable {
         transportTime.setValue(null);
         transportPatient.clear();
         transportDescription.clear();
-        ID++;
+        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
         transportDestination.clear();
-        transportID.setText(Integer.toString(ID));
+        transportID.setText(ID.toString());
 
         refreshTable();
     }
@@ -450,7 +452,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void updateClean() {
-        cleanID.setText(Integer.toString(ID));
+        cleanID.setText(ID.toString());
     }
 
     private Node cleanNode;
@@ -467,7 +469,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void cleanSendRequest() throws MissingFieldException {
-        cleanNode = testEmbeddedDB.findNode(cleaningDestination.getText());
+        cleanNode = SearchEngine.SearchPath(cleaningDestination.getText(), data.graph, data.kiosk);
         ArrayList<Integer> cleaningEmployees = new ArrayList<Integer>();
         CleaningRequest newClean = new CleaningRequest(cleanNode, cleanDescription.getText(),
                 Integer.parseInt(cleanID.getText()), cleanTime.getValue().format(formatter), "", "",
@@ -480,9 +482,9 @@ public class ServiceRequestController implements Initializable {
         cleanTime.setValue(null);
         cleanUrgency.clear();
         cleanDescription.clear();
-        ID++;
+        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
         cleaningDestination.clear();
-        cleanID.setText(Integer.toString(ID));
+        cleanID.setText(ID.toString());
 
         refreshTable();
     }
@@ -509,7 +511,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void updateSecurity() {
-        securityID.setText(Integer.toString(ID));
+        securityID.setText(ID.toString());
     }
 
     private Node securityNode;
@@ -526,7 +528,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void securitySendRequest() throws MissingFieldException {
-        securityNode = testEmbeddedDB.findNode(securityDestination.getText());
+        securityNode = SearchEngine.SearchPath(securityDestination.getText(), data.graph, data.kiosk);
         SecurityRequest newSecurity = new SecurityRequest(securityNode, securityDescription.getText(),
                 Integer.parseInt(securityID.getText()), securityTime.getValue().format(formatter), "",
                 "", 0000, "security", "unaccepted",
@@ -538,8 +540,8 @@ public class ServiceRequestController implements Initializable {
         securityTime.setValue(null);
         securityUrgency.clear();
         securityDescription.clear();
-        ID++;
-        securityID.setText(Integer.toString(ID));
+        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+        securityID.setText(ID.toString());
 
         refreshTable();
     }
@@ -566,7 +568,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void updateIt() {
-        itID.setText(Integer.toString(ID));
+        itID.setText(ID.toString());
     }
 
     @FXML
@@ -582,8 +584,8 @@ public class ServiceRequestController implements Initializable {
         itTime.setValue(null);
         itUrgency.clear();
         itDescription.clear();
-        ID++;
-        itID.setText(Integer.toString(ID));
+        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+        itID.setText(ID.toString());
 
         refreshTable();
     }

@@ -218,7 +218,7 @@
                                                       <Insets right="20.0" />
                                                    </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField fx:id="foodDestination" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                <JFXTextField fx:id="foodDestination" onAction="#foodSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="12.0" />
                                                    </font>
@@ -309,7 +309,7 @@
                                                       <Insets right="20.0" />
                                                    </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField fx:id="assistDestination" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                <JFXTextField fx:id="assistDestination" onAction="#assistanceSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="12.0" />
                                                    </font>
@@ -407,7 +407,7 @@
                                                       <Insets right="20.0" />
                                                    </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField fx:id="transportDestination" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                <JFXTextField fx:id="transportDestination" onAction="#transportSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="12.0" />
                                                    </font>
@@ -498,7 +498,7 @@
                                                       <Insets right="20.0" />
                                                    </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField fx:id="cleaningDestination" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                <JFXTextField fx:id="cleaningDestination" onAction="#cleanSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="12.0" />
                                                    </font>
@@ -589,7 +589,7 @@
                                                       <Insets right="20.0" />
                                                    </HBox.margin>
                                                 </JFXButton>
-                                                <JFXTextField fx:id="securityDestination" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                <JFXTextField fx:id="securityDestination" onAction="#securitySendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="12.0" />
                                                    </font>

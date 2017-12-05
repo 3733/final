@@ -63,6 +63,7 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
+        data.kiosk = data.graph.getNodes().get(0);
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -81,7 +82,7 @@ public class Main extends Application implements Data{
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
         //startMap();
-        navigationPageController.setKiosk(data.graph.getNodes().get(0));
+        navigationPageController.setKiosk(data.kiosk);
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
