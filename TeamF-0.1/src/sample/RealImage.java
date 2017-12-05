@@ -14,7 +14,7 @@ public class RealImage implements IImage {
     }
 
     public void display() {
-        System.out.println("Displaying: " + fileName);
+        //System.out.println("Displaying: " + fileName);
         //Data.data.map.setImage(map);
     }
 

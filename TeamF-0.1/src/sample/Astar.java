@@ -46,7 +46,6 @@ public class Astar extends AbsAlgorithm {
 
         Vector<Node> Nodes = map.getNodes();
 
-        System.out.println("ASTAR");
 
         // The set of nodes already evaluated
         Vector<Node> closedSet = new Vector<>();

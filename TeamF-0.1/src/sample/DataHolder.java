@@ -47,4 +47,6 @@ public class DataHolder {
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;
+
+    public Node kiosk;
 }

@@ -18,8 +18,6 @@ public class BFSearch extends AbsAlgorithm {
 
     public Vector<Node> findPath(Node Start, Node End, Map map) {
 
-        System.out.println("BFSearch");
-
 
         //a FIFO open_set
         Vector<Node> openSet = new Vector<>();
@@ -39,6 +37,7 @@ public class BFSearch extends AbsAlgorithm {
         while(openSet.size()>0) {
 
             Node Current = openSet.remove(0);
+            //All.add(Current);
             if (Current.equals(End)) {
 
                 return reconstructPath(cameFrom, Current);

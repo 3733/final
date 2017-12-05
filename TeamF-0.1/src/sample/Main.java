@@ -66,6 +66,7 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
+        data.kiosk = data.graph.getNodes().get(0);
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -91,7 +92,7 @@ public class Main extends Application implements Data{
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
         //startMap();
-        navigationPageController.setKiosk(data.graph.getNodes().get(0));
+        navigationPageController.setKiosk(data.kiosk);
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
@@ -300,7 +301,6 @@ public class Main extends Application implements Data{
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
-        //long st = System.currentTimeMillis();
 
         //testEmbeddedDB db = new testEmbeddedDB();
         /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
@@ -323,16 +323,10 @@ public class Main extends Application implements Data{
 
         launch(args);
 
-        /*long et = System.currentTimeMillis();
-        double timer = (double) (et-st)/1000;
-        System.out.println("Main " + timer+"<===TIMER");*/
-
-
-
-
-        //UNCOMMENT THIS LINE
-        testEmbeddedDB.dbBuildMap();
-
+//        testEmbeddedDB db = new testEmbeddedDB();
+//        testEmbeddedDB.dropNodes();
+//        testEmbeddedDB.dropTables();
+//        testEmbeddedDB.createTable();
 
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
@@ -364,7 +358,6 @@ public class Main extends Application implements Data{
 
 
         //controller.drawDirections(Vec);
-        //launch(args);
     }
 
     public static Map startMap() throws IOException{

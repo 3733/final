@@ -3,14 +3,13 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -134,7 +133,7 @@
    <center>
       <AnchorPane prefHeight="793.0" prefWidth="1328.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="127.0" layoutY="2.0" prefHeight="810.0" prefWidth="1050.0">
+            <AnchorPane layoutX="127.0" layoutY="2.0" prefHeight="810.0" prefWidth="1009.0">
                <children>
                   <JFXTabPane layoutX="-114.0" prefHeight="810.0" prefWidth="1150.0">
                      <tabs>
@@ -211,18 +210,19 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                   <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#foodThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#foodChooseLocation" text="Choose Location" />
-                                                   </items>
-                                                   <HBox.margin>
-                                                      <Insets right="40.0" />
-                                                   </HBox.margin>
+                                                <JFXButton buttonType="RAISED" onAction="#foodThisLocation" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="This Location">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
-                                                </SplitMenuButton>
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXTextField fx:id="foodDestination" onAction="#foodSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXTextField>
                                                 <JFXButton buttonType="RAISED" onAction="#foodSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
@@ -301,18 +301,19 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                   <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#assistanceThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#assistanceChooseLocation" text="Choose Location" />
-                                                   </items>
-                                                   <HBox.margin>
-                                                      <Insets right="40.0" />
-                                                   </HBox.margin>
+                                                <JFXButton buttonType="RAISED" onAction="#assistanceThisLocation" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="This Location">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
-                                                </SplitMenuButton>
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXTextField fx:id="assistDestination" onAction="#assistanceSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXTextField>
                                                 <JFXButton buttonType="RAISED" onAction="#assistanceSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
@@ -398,18 +399,19 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                   <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#transportThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#transportChooseLocation" text="Choose Location" />
-                                                   </items>
-                                                   <HBox.margin>
-                                                      <Insets right="40.0" />
-                                                   </HBox.margin>
+                                                <JFXButton buttonType="RAISED" onAction="#transportThisLocation" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="This Location">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
-                                                </SplitMenuButton>
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXTextField fx:id="transportDestination" onAction="#transportSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXTextField>
                                                 <JFXButton buttonType="RAISED" onAction="#transportSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
@@ -488,18 +490,19 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                   <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#cleanThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#cleanChooseLocation" text="Choose Location" />
-                                                   </items>
-                                                   <HBox.margin>
-                                                      <Insets right="40.0" />
-                                                   </HBox.margin>
+                                                <JFXButton buttonType="RAISED" onAction="#cleanThisLocation" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="This Location">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
-                                                </SplitMenuButton>
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXTextField fx:id="cleaningDestination" onAction="#cleanSendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXTextField>
                                                 <JFXButton buttonType="RAISED" onAction="#cleanSendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
@@ -578,15 +581,19 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="107.0" prefWidth="842.0">
                                              <children>
-                                                <SplitMenuButton mnemonicParsing="false" text="Location">
-                                                   <items>
-                                                      <MenuItem mnemonicParsing="false" onAction="#securityThisLocation" text="This Location" />
-                                                      <MenuItem mnemonicParsing="false" onAction="#securityChooseLocation" text="Choose Location" />
-                                                   </items>
+                                                <JFXButton buttonType="RAISED" onAction="#securityThisLocation" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="This Location">
                                                    <font>
                                                       <Font name="Montserrat Regular" size="14.0" />
                                                    </font>
-                                                </SplitMenuButton>
+                                                   <HBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </HBox.margin>
+                                                </JFXButton>
+                                                <JFXTextField fx:id="securityDestination" onAction="#securitySendRequest" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                                   <font>
+                                                      <Font name="Montserrat Regular" size="12.0" />
+                                                   </font>
+                                                </JFXTextField>
                                                 <JFXButton buttonType="RAISED" onAction="#securitySendRequest" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Submit">
                                                    <HBox.margin>
                                                       <Insets left="40.0" />
@@ -679,6 +686,7 @@
                         </Tab>
                      </tabs>
                   </JFXTabPane>
+                  <JFXListView fx:id="foodSearchList" layoutX="-113.0" layoutY="537.0" onMouseExited="#autoClose" prefHeight="266.0" prefWidth="719.0" visible="false" />
                </children>
             </AnchorPane>
          </children>
