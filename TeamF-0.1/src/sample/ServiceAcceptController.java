@@ -211,6 +211,13 @@ public class ServiceAcceptController implements Initializable{
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
+        for ( int z = 0; z<tableView.getItems().size(); z++) {
+            tableView.getItems().clear();
+        }
+        for ( int u = 0; u<finishedTableView.getItems().size(); u++) {
+            finishedTableView.getItems().clear();
+        }
+
         //for current requests table
         for (int i = 0; i < arrayOfRequestsFromDatabase.size(); i++) {   //searches through the list from the database
             boolean alreadyInTable = false;

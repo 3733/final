@@ -213,6 +213,7 @@ public class Main extends Application implements Data{
     }
 
     public static void acceptScreen(){
+        serviceAcceptController.refreshTable();
         stage.setScene(accept);
         stage.centerOnScreen();
     }
