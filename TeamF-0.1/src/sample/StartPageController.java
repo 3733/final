@@ -1,6 +1,7 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import dev2dev.textclient.TextClient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,9 +37,14 @@ public class StartPageController {
         return searchBox.getText();
     }
 
-
     @FXML
     public void search() throws IOException, InterruptedException {
+        TextClient t = new TextClient();
+        t.startIM("bmat2z", 6969);
+    }
+
+    @FXML
+    public void search2() throws IOException, InterruptedException {
         //System.out.print(searchBox.getText());
         if(getSearch().length()>0) {
             Main.setDestination(getSearch());
