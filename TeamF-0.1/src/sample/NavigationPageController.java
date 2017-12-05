@@ -720,7 +720,7 @@ public class NavigationPageController implements Initializable, Data{
 
                 double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
                 Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
-                if (!(scaleFactor * stackPane.getScaleX() > 3) && !(scaleFactor * stackPane.getScaleX() < 1)) {
+                if (!(scaleFactor * stackPane.getScaleX() < 1)) {
                     System.out.println(scaleFactor);
                     stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
                     stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
