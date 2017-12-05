@@ -44,7 +44,9 @@ public class ServiceAcceptController implements Initializable{
     public void logout(){Main.startScreen();}
 
     @FXML
-    public void toServiceRequest() {Main.serviceScreen();}
+    public void toServiceRequest() {
+        Main.serviceScreen();
+    }
 
     //fixes issue with database that creates unnecessary spaces in strings
     public String removeWhiteSpace(String input) {
@@ -109,64 +111,56 @@ public class ServiceAcceptController implements Initializable{
     public void acceptRequest() throws InvalidEmailException, IOException {
         ServiceRequest requestSelected =  tableView.getSelectionModel().getSelectedItem();  //gets the selected service
 
-        if( (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
-                (requestSelected.getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
-                (requestSelected.getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
-                (requestSelected.getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
-                (requestSelected.getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                (requestSelected.getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
 
-            Date date = new Date();
-            SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
+        requestSelected.acceptRequest();
+        requestSelected.setAcceptTime(ft.format(date));
 
-            requestSelected.acceptRequest();
-            requestSelected.setAcceptTime(ft.format(date));
+        //links the service request with updated status and acceptTime to a staff member in the database
+        testEmbeddedDB.addAssignment(requestSelected.getServiceID(), getLoggedInGuy().getEmployeeID(),
+                requestSelected.getAcceptTime(), requestSelected.getStatus());
 
-            //links the service request with updated status and acceptTime to a staff member in the database
-            testEmbeddedDB.addAssignment(requestSelected.getServiceID(), getLoggedInGuy().getEmployeeID(),
-                    requestSelected.getAcceptTime(), requestSelected.getStatus());
+        for (int i = 0; i < requestObserve.size(); i++)             //looks for the selected service in the table
+            if (requestSelected.serviceID == (requestObserve.get(i)).serviceID)
+                requestObserve.set(i, requestSelected);
 
-            for (int i = 0; i < requestObserve.size(); i++)             //looks for the selected service in the table
-                if (requestSelected.serviceID == (requestObserve.get(i)).serviceID)
-                    requestObserve.set(i, requestSelected);
+        refreshTable();
 
-            refreshTable();
+        String serviceInformation = "Service type: " + requestSelected.getType() + "<br>";
+        serviceInformation += "Time created: " + requestSelected.getServiceTime() + "<br>";
+        serviceInformation += "Service Location: " + requestSelected.getDestination().getLongName() + "<br>";
+        serviceInformation += "Time accepted: " + requestSelected.getAcceptTime() + "<br>";
 
-            String serviceInformation = "Service type: " + requestSelected.getType() + "<br>";
-            serviceInformation += "Time created: " + requestSelected.getServiceTime() + "<br>";
-            serviceInformation += "Service Location: " + requestSelected.getDestination().getLongName() + "<br>";
-            serviceInformation += "Time accepted: " + requestSelected.getAcceptTime() + "<br>";
+        if ((requestSelected.getType().trim()).equals("food")) {
+            serviceInformation += "Time to be served: " + ((FoodRequest) requestSelected).getServingTime() + "<br>";
+            serviceInformation += "Patient name: " + ((FoodRequest) requestSelected).getPatientName() + "<br>";
+            serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder() + "<br>";
+        }
 
-            if ((requestSelected.getType().trim()).equals("food")) {
-                serviceInformation += "Time to be served: " + ((FoodRequest) requestSelected).getServingTime() + "<br>";
-                serviceInformation += "Patient name: " + ((FoodRequest) requestSelected).getPatientName() + "<br>";
-                serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder() + "<br>";
-            }
+        if ((requestSelected.getType().trim()).equals("transport")) {
+            serviceInformation += "Patient name: " + ((TransportRequest) requestSelected).getPatientName() + "<br>";
+            serviceInformation += "Method of transportation: " + ((TransportRequest) requestSelected).getTypeOfTransport() + "<br>";
+        }
 
-            if ((requestSelected.getType().trim()).equals("transport")) {
-                serviceInformation += "Patient name: " + ((TransportRequest) requestSelected).getPatientName() + "<br>";
-                serviceInformation += "Method of transportation: " + ((TransportRequest) requestSelected).getTypeOfTransport() + "<br>";
-            }
+        if ((requestSelected.getType().trim()).equals("assistance"))
+            serviceInformation += "Urgency level: " + ((AssistanceRequest) requestSelected).getUrgency() + "<br>";
 
-            if ((requestSelected.getType().trim()).equals("assistance"))
-                serviceInformation += "Urgency level: " + ((AssistanceRequest) requestSelected).getUrgency() + "<br>";
+        if ((requestSelected.getType().trim()).equals("cleaning"))
+            serviceInformation += "Urgency level: " + ((CleaningRequest) requestSelected).getUrgency() + "<br>";
 
-            if ((requestSelected.getType().trim()).equals("cleaning"))
-                serviceInformation += "Urgency level: " + ((CleaningRequest) requestSelected).getUrgency() + "<br>";
+        if ((requestSelected.getType().trim()).equals("security"))
+            serviceInformation += "Urgency level: " + ((SecurityRequest) requestSelected).getUrgency() + "<br>";
 
-            if ((requestSelected.getType().trim()).equals("security"))
-                serviceInformation += "Urgency level: " + ((SecurityRequest) requestSelected).getUrgency() + "<br>";
+        if ((requestSelected.getType().trim()).equals("it"))
+            serviceInformation += "Urgency level: " + ((ItRequest) requestSelected).getUrgency() + "<br>";
 
-            if ((requestSelected.getType().trim()).equals("it"))
-                serviceInformation += "Urgency level: " + ((ItRequest) requestSelected).getUrgency() + "<br>";
+        serviceInformation += "Service Description: " + requestSelected.getDescription() + "<br>";
 
-            serviceInformation += "Service Description: " + requestSelected.getDescription() + "<br>";
-
-            //emailing the service request to the employee
-            if (emailCheck.isSelected()) {
-                EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", icon);
-                emailService.sendRequestEmail(serviceInformation, getLoggedInGuy().getEmployeeEmail());
-            }
+        //emailing the service request to the employee
+        if (emailCheck.isSelected()) {
+            EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", icon);
+            emailService.sendRequestEmail(serviceInformation, getLoggedInGuy().getEmployeeEmail());
         }
     }
 
@@ -181,23 +175,15 @@ public class ServiceAcceptController implements Initializable{
         //loop over the selected rows and remove the ServiceRequest objects from the table
         for (ServiceRequest req: selectedRows)
         {
-            if( (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
-                    (req.getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
-                    (req.getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
-                    (req.getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
-                    (req.getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                    (req.getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
+            req.setFinishTime(ft.format(date));
+            req.finishRequest();
 
-                Date date = new Date();
-                SimpleDateFormat ft = new SimpleDateFormat("h:mm a");
-                req.setFinishTime(ft.format(date));
-                req.finishRequest();
+            testEmbeddedDB.editCompletionStatus(req.getServiceID(), req.getStatus());
+            testEmbeddedDB.editFinishTime(req.getServiceID(), req.getFinishTime());
 
-                testEmbeddedDB.editCompletionStatus(req.getServiceID(), req.getStatus());
-                testEmbeddedDB.editFinishTime(req.getServiceID(), req.getFinishTime());
-
-                allrequests.remove(req);
-            }
+            allrequests.remove(req);
         }
 
         refreshTable();
@@ -218,6 +204,10 @@ public class ServiceAcceptController implements Initializable{
             finishedTableView.getItems().clear();
         }
 
+
+        requestObserve.clear();
+        finishedRequestObserve.clear();
+
         //for current requests table
         for (int i = 0; i < arrayOfRequestsFromDatabase.size(); i++) {   //searches through the list from the database
             boolean alreadyInTable = false;
@@ -235,8 +225,9 @@ public class ServiceAcceptController implements Initializable{
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")))
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
                 requestObserve.add(arrayOfRequestsFromDatabase.get(i));
+            }
         }
 
         tableView.setItems(requestObserve);

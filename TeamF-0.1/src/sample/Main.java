@@ -208,6 +208,7 @@ public class Main extends Application implements Data{
     }
 
     public static void serviceScreen(){
+        serviceRequestController.refreshTable();
         stage.setScene(service);
         stage.centerOnScreen();
     }
