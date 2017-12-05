@@ -303,20 +303,6 @@
                   </StackPane>
                </content>
             </ScrollPane>
-            <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
-               <font>
-                  <Font name="Montserrat Regular" size="12.0" />
-               </font>
-            </JFXTextField>
-            <JFXButton fx:id="search" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
             <JFXTabPane fx:id="tabPane" layoutX="720.0" layoutY="520.0" prefHeight="215.0" prefWidth="334.0" side="LEFT">
                <tabs>
                   <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3">

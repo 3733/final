@@ -122,6 +122,8 @@ public class NavigationPageController implements Initializable, Data{
     private VBox adminBox;
     @FXML
     private JFXButton loginButton;
+    @FXML
+    private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
 
 
     @FXML
@@ -143,6 +145,9 @@ public class NavigationPageController implements Initializable, Data{
     private int currentAlgo = 1;
 
     double scaleValue = 0.7;
+    private Vector<String> floorsVisited = new Vector<>();
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
 
@@ -256,6 +261,13 @@ public class NavigationPageController implements Initializable, Data{
                         });
                     }});
 
+        threeArrow.setVisible(false);
+        twoArrow.setVisible(false);
+        oneArrow.setVisible(false);
+        groundArrow.setVisible(false);
+        lowerTwoArrow.setVisible(false);
+        lowerOneArrow.setVisible(false);
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -318,6 +330,12 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void settingFields() throws IOException, InterruptedException {
         String destinationText = destination.getText();
+        oneArrow.setVisible(false);
+        twoArrow.setVisible(false);
+        threeArrow.setVisible(false);
+        groundArrow.setVisible(false);
+        lowerOneArrow.setVisible(false);
+        lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
             startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
         }
@@ -479,6 +497,16 @@ public class NavigationPageController implements Initializable, Data{
     public void clearFields(){
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
+        threeArrow.setVisible(false);
+        twoArrow.setVisible(false);
+        oneArrow.setVisible(false);
+        groundArrow.setVisible(false);
+        lowerOneArrow.setVisible(false);
+        lowerTwoArrow.setVisible(false);
+        sendLabel.setVisible(false);
+        email.setVisible(false);
+        sendButton.setVisible(false);
+        directionSteps.setVisible(false);
         endLabel.setText("");
         startLabel.setText("Lower Pike Hallway Exit Lobby");
         destination.setText("");
@@ -502,7 +530,7 @@ public class NavigationPageController implements Initializable, Data{
                 sendButton.setVisible(true);
             }
         });
-
+        setArrows(floorsVisited);
         searchList.setVisible(false);
         directionSteps.setVisible(true);
     }
@@ -601,25 +629,59 @@ public class NavigationPageController implements Initializable, Data{
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         Vector<Vector<Node>> paths = separator(path);
 
+        floorsVisited.clear();
         for(Vector<Node> floorPath: paths){
             if (floorPath.size() > 0) {
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
                     Data.data.pathL2 = floorPath;
+                    floorsVisited.add("L2");
                 } else if (pathFloor.equals("L1")) {
                     Data.data.pathL1 = floorPath;
+                    floorsVisited.add("L1");
                 } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
                     Data.data.pathG = floorPath;
+                    floorsVisited.add("G");
                 } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
                     Data.data.pathFirst = floorPath;
+                    floorsVisited.add("1");
                 } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
                     Data.data.pathSecond = floorPath;
+                    floorsVisited.add("2");
                 } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
                     Data.data.pathThird = floorPath;
+                    floorsVisited.add("3");
                 }
             }
         }
         setMap("1");
+    }
+
+    public void setArrows(Vector<String> floorsNeeded){
+        for (int i = 0; i < floorsNeeded.size(); i++) {
+            String floorAt = floorsNeeded.elementAt(i);
+            switch (floorAt){
+                case "L2":
+                    lowerTwoArrow.setVisible(true);
+                    break;
+                case "L1":
+                    lowerOneArrow.setVisible(true);
+                    break;
+                case "G":
+                    groundArrow.setVisible(true);
+                    break;
+                case "1":
+                    oneArrow.setVisible(true);
+                    break;
+                case "2":
+                    twoArrow.setVisible(true);
+                    break;
+                case "3":
+                    threeArrow.setVisible(true);
+                    break;
+                default: break;
+            }
+        }
     }
 
     public void setMap(String map) {
@@ -878,6 +940,8 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void logout() throws IOException, InterruptedException{
+        AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+        SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
         Main.startScreen();
         clearFields();
         clear();

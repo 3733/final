@@ -1,0 +1,23 @@
+Test Documentation by Stephanie Racca
+
+//Printing Directions Testing
+DirectionsITest satisfies the requirement of testing the actual method, as well as NodeMathTesting which gives the math
+for creating directions
+
+//Email Service Testing
+EmailServiceTest satisfies the requirement, as well as UI Testing in the Email Service UI document
+
+//Path Drawing Testing
+PathDrawITest satisfies the requirement of testing the actual methods, as well as UI Testing in the Path Drawing
+Testing Document
+
+//Search Testing
+SearchITest satisfies the requirement of testing the actual methods, as well as UI Testing in the Search Testing Document
+
+//Service Request Testing
+ServiceRequestITest satisfies the requirement of testing the actual methods, as well as UI Testing in the Service Request
+Testing Document
+
+//Database Testing
+Database Integration Testing is considered to be satisfied by the UI testing document, as it directly adds and deletes
+from the UI, showing the item is ingrated

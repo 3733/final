@@ -50,7 +50,6 @@ public class Main extends Application implements Data{
     public static StartPageController  startPageController = new StartPageController();
     public static LoginPageController loginPageController = new LoginPageController();
     public static NavigationPageController navigationPageController = new NavigationPageController();
-    public static AdminPageController adminPageController = new AdminPageController();
     public static ServiceRequestController serviceRequestController = new ServiceRequestController();
     public static ServiceAcceptController serviceAcceptController = new ServiceAcceptController();
     public static MapEditPageController mapEditPageController = new MapEditPageController();
@@ -83,12 +82,6 @@ public class Main extends Application implements Data{
         //startMap();
         navigationPageController.setKiosk(data.graph.getNodes().get(0));
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
-
-        FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
-        Parent Admin = adminLoader.load();
-        adminPageController = adminLoader.getController();
-        adminPageController.setMainController(this);
-        admin = new Scene(Admin);
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
         Parent Service = serviceLoader.load();
@@ -146,8 +139,6 @@ public class Main extends Application implements Data{
         login.getStylesheets().add("sample/UI/style.css");
         //map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1386, 810);
         map.getStylesheets().add("sample/UI/style.css");
-        //admin = new Scene(FXMLLoader.load(getClass().getResource("UI/AdminControls.fxml")), 1386, 810);
-        admin.getStylesheets().add("sample/UI/style.css");
         //service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1386, 810);
         service.getStylesheets().add("sample/UI/style.css");
         //accept = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Accept_Menu.fxml")), 1386, 810);
@@ -200,11 +191,6 @@ public class Main extends Application implements Data{
             navigationPageController.setSearch(getDestination());
             navigationPageController.settingFields();
         }
-    }
-
-    public static void adminScreen(){
-        stage.setScene(admin);
-        stage.centerOnScreen();
     }
 
     public static void serviceScreen(){
