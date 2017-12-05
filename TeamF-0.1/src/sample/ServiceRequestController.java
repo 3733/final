@@ -80,7 +80,8 @@ public class ServiceRequestController implements Initializable, Data {
     }
 
     //public static int ID = 0;   //service ID counter
-    public static BigInteger ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+    public static int ID = (int) System.currentTimeMillis();
+    //public static BigInteger ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
     Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medicine", "CIM", 'F');
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");      //for formatting the time functions
     ArrayList<ServiceRequest> requestList = new ArrayList<ServiceRequest>();  //list to hold local service requests
@@ -112,7 +113,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void updateAssistance() {                                      //when a request tab is opened
-        assistanceID.setText(ID.toString());                      //sets correct service ID
+        assistanceID.setText(Integer.toString(ID));                      //sets correct service ID
     }
 
     private Node assistanceNode;
@@ -141,9 +142,9 @@ public class ServiceRequestController implements Initializable, Data {
         assistanceTime.setValue(null);            //clears textfields
         assistanceUrgency.clear();
         assistanceDescription.clear();
-        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+        ID = (int) System.currentTimeMillis();
         assistDestination.clear();
-        assistanceID.setText(ID.toString());   //increments and sets correct service ID
+        assistanceID.setText(Integer.toString(ID));   //increments and sets correct service ID
 
         refreshTable();
     }
@@ -323,7 +324,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void updateFood() {
-        foodID.setText(ID.toString());
+        foodID.setText(Integer.toString(ID));
 
         foodMenu.setItems(FXCollections.observableArrayList(
                 "Apple pie", "Banana", "Catfish soup", "Chicken parmesan", "Chocolate cake", "Hamburger", "Lasagna",
@@ -359,9 +360,9 @@ public class ServiceRequestController implements Initializable, Data {
         foodPatient.clear();
         foodServingTime.setValue(null);
         foodDescription.clear();
-        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+        ID = (int) System.currentTimeMillis();
         foodDestination.clear();
-        foodID.setText(ID.toString());
+        foodID.setText(Integer.toString(ID));
 
         refreshTable();
     }
@@ -390,7 +391,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void updateTransport() {
-        transportID.setText(ID.toString());
+        transportID.setText(Integer.toString(ID));
 
         transportMenu.setItems(FXCollections.observableArrayList(
                 "Wheelchair", "Stretcher"));
@@ -423,9 +424,9 @@ public class ServiceRequestController implements Initializable, Data {
         transportTime.setValue(null);
         transportPatient.clear();
         transportDescription.clear();
-        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+        ID = (int) System.currentTimeMillis();
         transportDestination.clear();
-        transportID.setText(ID.toString());
+        transportID.setText(Integer.toString(ID));
 
         refreshTable();
     }
@@ -452,7 +453,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void updateClean() {
-        cleanID.setText(ID.toString());
+        cleanID.setText(Integer.toString(ID));
     }
 
     private Node cleanNode;
@@ -482,9 +483,9 @@ public class ServiceRequestController implements Initializable, Data {
         cleanTime.setValue(null);
         cleanUrgency.clear();
         cleanDescription.clear();
-        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
+        ID = (int) System.currentTimeMillis();
         cleaningDestination.clear();
-        cleanID.setText(ID.toString());
+        cleanID.setText(Integer.toString(ID));
 
         refreshTable();
     }
@@ -511,7 +512,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void updateSecurity() {
-        securityID.setText(ID.toString());
+        securityID.setText(Integer.toString(ID));
     }
 
     private Node securityNode;
@@ -540,8 +541,8 @@ public class ServiceRequestController implements Initializable, Data {
         securityTime.setValue(null);
         securityUrgency.clear();
         securityDescription.clear();
-        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
-        securityID.setText(ID.toString());
+        ID = (int) System.currentTimeMillis();
+        securityID.setText(Integer.toString(ID));
 
         refreshTable();
     }
@@ -568,7 +569,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void updateIt() {
-        itID.setText(ID.toString());
+        itID.setText(Integer.toString(ID));
     }
 
     @FXML
@@ -584,8 +585,8 @@ public class ServiceRequestController implements Initializable, Data {
         itTime.setValue(null);
         itUrgency.clear();
         itDescription.clear();
-        ID = BigInteger.valueOf((long) (Math.random() * 999999999+ 1));
-        itID.setText(ID.toString());
+        ID = (int) System.currentTimeMillis();
+        itID.setText(Integer.toString(ID));
 
         refreshTable();
     }
