@@ -175,6 +175,7 @@ public class NavigationPageController implements Initializable, Data{
         stairs.setSelected(true);
         elevator.setSelected(true);
         tabPane.getSelectionModel().select(floorOne);
+        tabPane.getSelectionModel().getSelectedIndex();
 
         threeList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override

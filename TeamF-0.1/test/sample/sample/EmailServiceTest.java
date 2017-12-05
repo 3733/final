@@ -1,13 +1,21 @@
+/*
 // Created by Stephanie and Floris
 // Purpose: To test directions were sent to the user defined email
-/*Satisfies Integration testing of Email - Steph*/
-/*ALL PASS - Steph*/
+*/
+/*Satisfies Integration testing of Email - Steph*//*
 
-package sample;
+*/
+/*ALL PASS - Steph*//*
+
+
+package sample.sample;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import sample.EmailService;
+import sample.NavigationPageController;
+import sample.Node;
 
 import java.util.Vector;
 
@@ -25,11 +33,10 @@ public class EmailServiceTest {
 
     @Before
     public void directionsSetUp() throws Exception{
-        //Creates a vector with only one node
         Vector<Node> vector = new Vector<Node>(10);
-        Node n1 = new Node("FDEPT00101", 1614, 829, 1, "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
+        Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
         vector.add(n1);
-        Node n2 = new Node("FHALL00201", 1640, 850, 1, "Tower", "HALL", "Chapel Hall Point 1", "CHP1", 'F');
+        Node n2 = new Node("FHALL00201", 1640, 850, "1", "Tower", "HALL", "Chapel Hall Point 1", "CHP1", 'F');
         vector.addElement(n2);
         //Creates string of directions
         directions = NavigationPageController.directions(vector);
@@ -41,7 +48,7 @@ public class EmailServiceTest {
     public void sendNotValidEmail() throws Exception {
         //tests validity
         thrown.expect(NullPointerException.class);
-        EmailService notValid = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng");
+        EmailService notValid = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", );
         notValid.sendEmail(directions, "notValid");
     }
 
@@ -88,3 +95,4 @@ public class EmailServiceTest {
 
 }
 
+*/

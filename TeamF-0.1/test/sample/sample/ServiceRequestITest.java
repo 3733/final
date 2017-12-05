@@ -3,7 +3,7 @@
 /*UNFINISHED - Steph*/
 
 
-package sample;
+package sample.sample;
 
 public class ServiceRequestITest {
 

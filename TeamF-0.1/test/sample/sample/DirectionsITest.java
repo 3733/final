@@ -1,13 +1,18 @@
 /*Steph - Testing Node Integration with Controller
-* Purpose: To see if Nodes are correctly integrated with directions*/
-/*UNFINISHED - Steph*/
+* Purpose: To see if Nodes are correctly integrated with directions*//*
 
-package sample;
+*/
+/*UNFINISHED - Steph*//*
+
+
+package sample.sample;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import sample.NavigationPageController;
+import sample.Node;
 
 import java.util.Vector;
 
@@ -91,4 +96,4 @@ public class DirectionsITest {
         assertEquals(expected, output);
     }
 
-}
+}*/

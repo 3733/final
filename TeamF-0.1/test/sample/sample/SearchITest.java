@@ -1,12 +1,18 @@
-/*Steph - Search Field Testing*/
-/*Purpose - To test how the main page interacts with the search function and pathfinding
-* Because buildMap is a part of searchPath, that satisfies component testing for that function*/
-/*ALL PASS - Steph*/
+/*Steph - Search Field Testing*//*
 
-package sample;
+*/
+/*Purpose - To test how the main page interacts with the search function and pathfinding
+* Because buildMap is a part of searchPath, that satisfies component testing for that function*//*
+
+*/
+/*ALL PASS - Steph*//*
+
+
+package sample.sample;
 
 import org.junit.Before;
 import org.junit.Test;
+import sample.*;
 
 import java.util.Vector;
 
@@ -21,7 +27,7 @@ public class SearchITest {
         Vector<Node> dbnodes = new Vector<Node>();
 
 
-        for (int i =0;i<testEmbeddedDB.getAllNodes().size();i++){
+        for (int i = 0; i< testEmbeddedDB.getAllNodes().size(); i++){
 
             dbnodes.add(testEmbeddedDB.getAllNodes().get(i));
         }
@@ -177,3 +183,4 @@ public class SearchITest {
 
 
 }
+*/

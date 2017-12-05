@@ -2,9 +2,10 @@
 * Purpose: To test the mathematics behind finding directiosn*/
 /*ALL PASS - Steph*/
 
-package sample;
+package sample.sample;
 
 import org.junit.Test;
+import sample.NodeMath;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
