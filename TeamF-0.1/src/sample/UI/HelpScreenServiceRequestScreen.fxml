@@ -11,7 +11,7 @@
    <children>
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0" />
       <Button layoutX="110.0" layoutY="416.0" mnemonicParsing="false" onAction="#sendITHelpRequest" text="Send a Service Request" />
-      <Button layoutX="342.0" layoutY="416.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="146.0" text="Cancel" />
+      <Button layoutX="342.0" layoutY="416.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="146.0" text="Back" />
       <Label layoutX="238.0" layoutY="47.0" text="Need Help?">
          <font>
             <Font size="24.0" />
