@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
@@ -152,9 +153,9 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.firstFloor);
 
         //disables the bars and starts up the zoom function
-        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        zoom3();
+        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        zoom();
 
         // Populating the lists on the bottom left of the UI
         // Third Floor
@@ -643,7 +644,7 @@ public class NavigationPageController implements Initializable, Data{
             String nameDest = path.get(length - 1).getShortName();
             String nameDept = path.get(0).getShortName();
             // Setting up the proper color settings
-            Data.data.gc.setLineWidth(2);
+            Data.data.gc.setLineWidth(3);
             Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
             Data.data.gc.stroke();
             // Iterate through all the path nodes to draw the path
@@ -655,7 +656,9 @@ public class NavigationPageController implements Initializable, Data{
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Data.data.gc.strokeLine(node.getxCoordinate() / 4.4 + 2, node.getyCoordinate() / 4.4 + 2, node2.getxCoordinate() / 4.4 + 2, node2.getyCoordinate() / 4.4 + 2);
+                        double divisionCst = 3.87;
+                        int offset = 2;
+                        Data.data.gc.strokeLine(node.getxCoordinate() / divisionCst + offset, node.getyCoordinate() / divisionCst , node2.getxCoordinate() / divisionCst + offset, node2.getyCoordinate() / divisionCst);
                     }
                 }
             }
@@ -695,291 +698,8 @@ public class NavigationPageController implements Initializable, Data{
     // Zooming Panning & Dragging functions
 
     // Purpose: Zoom the map when the user zooms
-/*    @FXML
-    private void zoom() {
-        int MIN_PIXELS = 15;
-        //zoom
-        double width = map.getImage().getWidth();
-        double height = map.getImage().getHeight();
-        double canvasW = pathCanvas.getWidth();
-        double canvasH = pathCanvas.getHeight();
-        *//*
-        map.setPreserveRatio(true);
-        resetMap(map, width, height);
-        resetCanvas(pathCanvas,canvasW,canvasH);
-
-        ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
-
-        pathCanvas.setOnMousePressed( e -> {
-            Point2D mousePress = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            mouseDown.set(mousePress);
-        });
-
-        pathCanvas.setOnMouseDragged( e -> {
-            Point2D dragPoint = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            shiftMap(map, dragPoint.subtract(mouseDown.get()));
-            shiftCanvas(pathCanvas,dragPoint.subtract(mouseDown.get()));
-
-            mouseDown.set(imageViewToImage(map, new Point2D(e.getX(), e.getY())));
-        });
-
-        map.setOnScroll( e -> {
-            double delta = e.getDeltaY();
-            Rectangle2D viewport = map.getViewport();
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight()));
-
-            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-            data.gc.scale(scale,scale);
-        });
-
-        *//*
-        scrollMap.setPannable(true);
-        *//*pathCanvas.setOnScroll( e -> {
-            double delta = e.getDeltaY();
-            Rectangle2D viewport = map.getViewport();
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight())
-            );
-
-            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-
-            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-        }); *//**//*
-
-
-        pathCanvas.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                resetMap(map, width, height);
-                resetCanvas(pathCanvas,canvasW,canvasH);
-            }
-        });
-*//*
-        scrollMap.setPannable(true);
-       stackPane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
-
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double zoomfactor = Math.exp(event.getDeltaY() * 0.02);
-
-                Bounds innerBounds = pathCanvas.getLayoutBounds();
-                Bounds viewportbounds = scrollMap.getViewportBounds();
-
-                double valX = scrollMap.getHvalue() * (innerBounds.getWidth() - viewportbounds.getWidth());
-                double valY = scrollMap.getVvalue() * (innerBounds.getHeight() - viewportbounds.getHeight());
-                System.out.println("valX: " + valX + " valY: " + valY);
-                scaleValue = scaleValue * zoomfactor;
-                System.out.println("ScaleVal " + scaleValue);
-
-                if( scaleValue < 4 && scaleValue > 1) {
-                    scrollMap.setScaleX(scaleValue);
-                    scrollMap.setScaleY(scaleValue);
-                    scrollMap.layout();
-                }
-
-                Point2D posInZoomTarget = scrollMap.parentToLocal(scrollMap.parentToLocal(new Point2D(event.getX(), event.getY())));
-
-                // calculate adjustment of scroll position (pixels)
-                Point2D adjustment = pathCanvas.getLocalToParentTransform().deltaTransform(posInZoomTarget.multiply(zoomfactor - 1));
-
-                // convert back to [0, 1] range
-                // (too large/small values are automatically corrected by ScrollPane)
-                Bounds updatedInnerBounds = pathCanvas.getBoundsInLocal();
-                scrollMap.setHmax((valX + adjustment.getX()) / (updatedInnerBounds.getWidth() - viewportbounds.getWidth()));
-                scrollMap.setVmax((valY + adjustment.getY()) / (updatedInnerBounds.getHeight() - viewportbounds.getHeight()));
-                System.out.println("This is the HValue: " + scrollMap.getHvalue());
-                System.out.println("This is the VValue: " + scrollMap.getVvalue());
-
-            *//*    double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
-                if (!(scaleFactor * stackPane.getScaleX() > 3) && !(scaleFactor * stackPane.getScaleX() < 1)) {
-                    System.out.println(scaleFactor);
-                    stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
-                    stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
-                }*//*
-            }
-        });
-
-        *//*map.setPreserveRatio(true);
-        map.fitWidthProperty().bind(scrollMap.widthProperty());
-        map.fitHeightProperty().bind(scrollMap.heightProperty());*//*
-    } */
-
-/*    @FXML
-    private void zoom2() {
-
-        int MIN_PIXELS = 15;
-        //zoom
-        double width = pathCanvas.getWidth();
-        double height = pathCanvas.getHeight();
-        double canvasW = pathCanvas.getWidth();
-        double canvasH = pathCanvas.getHeight();
-        map.setPreserveRatio(true);
-        //resetMap(map, width, height);
-        //resetCanvas(pathCanvas,canvasW,canvasH);
-        resetStack(scrollMap,width,height);
-        ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
-
-        *//*pathCanvas.setOnMousePressed( e -> {
-            Point2D mousePress = new Point2D(e.getX(), e.getY());
-            mouseDown.set(mousePress);
-        });
-
-        pathCanvas.setOnMouseDragged( e -> {
-            Point2D dragPoint = new Point2D(e.getX(), e.getY());
-            //shiftMap(map, dragPoint.subtract(mouseDown.get()));
-            //shiftCanvas(pathCanvas,dragPoint.subtract(mouseDown.get()));
-            shiftStack(scrollMap, dragPoint.subtract(mouseDown.get()));
-            System.out.println("This is the point" + dragPoint);
-            mouseDown.set( new Point2D(e.getX(), e.getY()));
-        });*//*
-
-        *//*map.setOnScroll( e -> {
-            double delta = e.getDeltaY();
-            Rectangle2D viewport = map.getViewport();
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight()));
-
-            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-            data.gc.scale(scale,scale);
-        });
-
-
-
-        pathCanvas.setOnScroll( e -> {
-            double delta = e.getDeltaY();
-            Rectangle2D viewport = map.getViewport();
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight())
-
-            );
-
-            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-
-            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-        });
-
-
-        pathCanvas.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                resetMap(map, width, height);
-                resetCanvas(pathCanvas,canvasW,canvasH);
-            }
-        });
-            *//*
-
-        stackPane.setOnScroll(new EventHandler<ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
-
-                if (event.getDeltaY() == 0) {
-                    return;
-                }
-
-                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
-                if (!(scaleFactor * stackPane.getScaleX() > 3) && !(scaleFactor * stackPane.getScaleX() < 1)) {
-                    System.out.println(scaleFactor);
-                    stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
-                    stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
-                }
-            }
-        });*//*
-
-        stackPane.setOnScroll( e -> {
-            System.out.println("Scrolling");
-            double delta = e.getDeltaY();
-            Bounds viewport = scrollMap.getViewportBounds();
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight())
-
-            );
-            System.out.println("This is the scale: " + scale);
-            Point2D mouse = new Point2D(e.getX(), e.getY());
-            System.out.println("this is the current bounds: " + viewport);
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-            scrollMap.setViewportBounds(new BoundingBox(newMinX, newMinY, newWidth, newHeight));
-        }); *//*
-
-        map.setPreserveRatio(true);
-        map.fitWidthProperty().bind(scrollMap.widthProperty());
-        map.fitHeightProperty().bind(scrollMap.heightProperty());
-    }*/
-
     @FXML
-    public void zoom3() {
+    public void zoom() {
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
