@@ -14,17 +14,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
-public class MapEditPageController implements Initializable{
+public class MapEditPageController implements Initializable, Data{
 
     //fxml components
     @FXML
@@ -34,8 +39,6 @@ public class MapEditPageController implements Initializable{
     @FXML
     private JFXListView threeList, twoList, oneList, groundList, lowerTwoList, lowerOneList;
     @FXML
-    private Tab floorOne;
-    @FXML
     private JFXTabPane tabPane;
     @FXML
     private RadioMenuItem chooseAStar, chooseDepth, chooseBreadth, chooseDijk, chooseBeam, chooseBest;
@@ -43,6 +46,12 @@ public class MapEditPageController implements Initializable{
     private SplitMenuButton algoMenu;
     @FXML
     private JFXButton editNodeBtn, editEdgeBtn;
+    @FXML
+    private Canvas pathCanvas;
+    @FXML
+    private Canvas pathCanvas1;
+    @FXML
+    private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
 
     //other variables
     private Main mainController;
@@ -52,7 +61,11 @@ public class MapEditPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try{
-            zoom();
+            updateNodes();
+
+            Data.data.gc1 = pathCanvas1.getGraphicsContext2D();
+            Data.data.gc2 = pathCanvas.getGraphicsContext2D();
+
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -97,8 +110,6 @@ public class MapEditPageController implements Initializable{
             groundList.setItems(groundItems);
             tabPane.getSelectionModel().select(floorOne);
             map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
-
-
 
             /*
             * AStar -1
@@ -160,45 +171,94 @@ public class MapEditPageController implements Initializable{
                     algoMenu.setText(chooseBest.getText());
                 }
             });
+
+            try {
+                clickNearestNodeSelected();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-
+    public void updateNodes() {
+        Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+        //System.out.println(data.firstFloorNodes);
+        Data.data.groundFloorNodes = testEmbeddedDB.getNodesByFloor(2);
+        Data.data.lowerLevel01FloorNodes = testEmbeddedDB.getNodesByFloor(1);
+        Data.data.lowerLevel02FloorNodes = testEmbeddedDB.getNodesByFloor(0);
+        Data.data.secondFloorNodes = testEmbeddedDB.getNodesByFloor(4);
+        Data.data.thirdFloorNodes = testEmbeddedDB.getNodesByFloor(5);
+    }
     //getter and setters
     public void setMainController(Main main){
         this.mainController = main;
     }
 
+    public void clearCanvas(GraphicsContext gcIn, Canvas pathCanvasIn) {
+        double y = pathCanvasIn.getHeight();
+        double x = pathCanvasIn.getWidth();
+        System.out.println("Cleared: " + x + ", " + y);
+        if(gcIn != null)
+            gcIn.clearRect(0,0,x,y);
+        else {
+            System.out.println("IT WAS NULL" + gcIn);
+        }
+    }
+
     @FXML
     public void changeFloorL1() {
+        clearCanvas(data.gc2,pathCanvas);
+        clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.L1Floor);
+        drawNodesCircle(data.lowerLevel01FloorNodes);
+        System.out.println("Switched floor L1");
     }
 
     @FXML
     public void changeFloor1() {
+        clearCanvas(data.gc2,pathCanvas);
+        clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.firstFloor);
+        drawNodesCircle(data.lowerLevel02FloorNodes);
+        System.out.println("Switched floor 1");
     }
 
     @FXML
     public void changeFloor2() {
+        clearCanvas(data.gc2,pathCanvas);
+        clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.secondFloor);
+        drawNodesCircle(data.secondFloorNodes);
+        System.out.println("Switched floor 2");
     }
 
     @FXML
     public void changeFloor3() {
+        clearCanvas(data.gc2, pathCanvas);
+        clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.thirdFloor);
+        drawNodesCircle(data.thirdFloorNodes);
+        System.out.println("Switched floor 3");
     }
 
     @FXML
     public void changeFloorG() {
+        clearCanvas(data.gc2,pathCanvas);
+        clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.GFloor);
+        drawNodesCircle(data.groundFloorNodes);
+        System.out.println("Switched floor G");
     }
 
     @FXML
     public void changeFloorL2() {
+        clearCanvas(data.gc2,pathCanvas);
+        clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.L2Floor);
+        drawNodesCircle(data.lowerLevel02FloorNodes);
+        System.out.println("Switched floor L2");
     }
 
 
@@ -227,9 +287,6 @@ public class MapEditPageController implements Initializable{
     @FXML
     public void back() throws IOException, InterruptedException{Main.mapScreen();}
 
-
-
-
     //other functions
     @FXML
     public void importCSV(){
@@ -242,108 +299,123 @@ public class MapEditPageController implements Initializable{
         testEmbeddedDB.writeToCSV();
     }
 
-    @FXML
-    private void zoom() {
-        int MIN_PIXELS = 15;
-        //zoom
-        double width = map.getImage().getWidth();
-        double height = map.getImage().getHeight();
 
-        map.setPreserveRatio(true);
-        reset(map, width, height);
+    /**
+     * function to draw the nodes of the  floors
+     * @param FloorNodes
+     */
+    public void drawNodesCircle(Vector<Node> FloorNodes)
+    {
+        if(FloorNodes != null) {
+            int length = FloorNodes.size();
 
-        ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
-
-        map.setOnMousePressed(e -> {
-
-            Point2D mousePress = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            mouseDown.set(mousePress);
-        });
-
-        map.setOnMouseDragged(e -> {
-            Point2D dragPoint = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            shift(map, dragPoint.subtract(mouseDown.get()));
-            mouseDown.set(imageViewToImage(map, new Point2D(e.getX(), e.getY())));
-        });
-
-        map.setOnScroll(e -> {
-            double delta = e.getDeltaY();
-            Rectangle2D viewport = map.getViewport();
-
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight())
-
-            );
-
-            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-
-            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-        });
-
-        map.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                reset(map, width, height);
+            Data.data.gc1.setStroke(Color.BLUE);
+            Data.data.gc1.stroke();
+            // Iterate through all the given nodes to draw the node
+            for (int i = 0; i < length; i++)
+            {
+                Node nodesMap = FloorNodes.get(i);
+                double divisionCst = 4.15;
+                data.gc1.strokeOval(nodesMap.getxCoordinate()/divisionCst  ,nodesMap.getyCoordinate()/divisionCst , 4.0, 4.0);
+                data.gc1.fillOval(nodesMap.getxCoordinate()/divisionCst  ,nodesMap.getyCoordinate()/divisionCst , 4.0, 4.0);
             }
+        }
+    }
+
+    /**
+     * mouse click location done!
+     * @throws IOException
+     */
+
+    public void clickNearestNodeSelected() throws IOException {
+        pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
+            System.out.println("Happened");
+            e.consume();
+            Data.data.gc1.clearRect(0,0,1143,783);
         });
 
-        map.setPreserveRatio(true);
-        map.fitWidthProperty().bind(scrollMap.widthProperty());
-        map.fitHeightProperty().bind(scrollMap.heightProperty());
+        pathCanvas1.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
+            System.out.println("Happened2");
+            e.consume();
+            double scaleX = 5000d / 1143d;
+            double scaleY = 3400d / 781d;
+
+            double newX1 = (e.getSceneX());
+            double newY1 = (e.getSceneY());
+
+            Node node = null;
+            double divisionCst = 4.15;
+            if(floorLowerTwo.isSelected()) {
+                node = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.lowerLevel02FloorNodes);
+            } else if(floorLowerOne.isSelected()) {
+                node = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.lowerLevel01FloorNodes);
+            } else if(floorGround.isSelected()) {
+                node = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.groundFloorNodes);
+            } else if(floorOne.isSelected()) {
+                node = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.firstFloorNodes);
+            } else if(floorTwo.isSelected()) {
+                node = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.secondFloorNodes);
+            } else if(floorThree.isSelected()){
+                node = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.thirdFloorNodes);
+            }
+
+            Data.data.gc1.setStroke(Color.RED);
+            Data.data.gc1.stroke();
+
+            Data.data.gc1.strokeOval(node.getxCoordinate()/divisionCst +data.offset ,node.getyCoordinate()/divisionCst +data.offset, 7.0, 7.0);
+            Data.data.gc1.fillOval(node.getxCoordinate()/divisionCst +data.offset ,node.getyCoordinate()/divisionCst +data.offset, 7.0, 7.0);
+            Main.nodeEditScreenClick(node,editNodeBtn);
+            System.out.println("Node clicked: " + node.getLongName());
+            drawFloor();
+            // prevx = newX1;
+            // prevy = newY1;
+
+//                Data.data.gc.setStroke(Color.YELLOW);
+//                pathCanvas.getGraphicsContext2D().setFill(Color.RED);
+//                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 6.0, 6.0);
+//                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 6.0, 6.0);
+        });
     }
 
-    // reset to the top left:
-    private void reset(ImageView imageView, double width, double height) {
-        imageView.setViewport(new Rectangle2D(0, 0, width, height));
+    public void drawFloor(){
+        if(floorLowerTwo.isSelected()) {
+            drawNodesCircle(data.lowerLevel02FloorNodes);
+        } else if(floorLowerOne.isSelected()) {
+            drawNodesCircle(data.lowerLevel01FloorNodes);
+        } else if(floorGround.isSelected()) {
+            drawNodesCircle(data.groundFloorNodes);
+        } else if(floorOne.isSelected()) {
+            drawNodesCircle(data.firstFloorNodes);
+        } else if(floorTwo.isSelected()) {
+            drawNodesCircle(data.secondFloorNodes);
+        } else if(floorThree.isSelected()){
+            drawNodesCircle(data.thirdFloorNodes);
+        }
     }
-    // shift the viewport of the imageView by the specified delta, clamping so
-// the viewport does not move off the actual image:
-    private void shift(ImageView imageView, Point2D delta) {
-        Rectangle2D viewport = imageView.getViewport();
+    /**
+     * Function to calculate the nearest node depend on the mouse click location.
+     * @param x
+     * @param y
+     * @param NodesOfTheFloor
+     * @return
+     */
+    public Node mousePosition (double x, double y,Vector<Node> NodesOfTheFloor) {
+        double newMouseX = x;
+        double newMouseY = y;
+        Node GoodOne = null;
+        double MinDist = 100000000.0;
+        double dist;
 
-        double width = imageView.getImage().getWidth() ;
-        double height = imageView.getImage().getHeight() ;
 
-        double maxX = width - viewport.getWidth();
-        double maxY = height - viewport.getHeight();
 
-        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
-        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
+        for (Node i: NodesOfTheFloor) {
+            dist = data.graph.MouseNodeDist(newMouseX,newMouseY,i);
+            if(dist < MinDist) {
+                MinDist = dist;
+                GoodOne = i;
+            }
+        }
+        return GoodOne;
 
-        imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
     }
-
-    private double clamp(double value, double min, double max) {
-
-        if (value < min)
-            return min;
-        if (value > max)
-            return max;
-        return value;
-    }
-
-    // convert mouse coordinates in the imageView to coordinates in the actual image:
-    private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
-        double xProportion = imageViewCoordinates.getX() / imageView.getBoundsInLocal().getWidth();
-        double yProportion = imageViewCoordinates.getY() / imageView.getBoundsInLocal().getHeight();
-
-        Rectangle2D viewport = imageView.getViewport();
-        return new Point2D(
-                viewport.getMinX() + xProportion * viewport.getWidth(),
-                viewport.getMinY() + yProportion * viewport.getHeight());
-    }
-
 }

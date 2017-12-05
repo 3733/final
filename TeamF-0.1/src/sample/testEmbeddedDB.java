@@ -1380,8 +1380,8 @@ public class testEmbeddedDB {
         return names;
     }
 
-    public static HashMap<String, Node> getNodesByFloor(int floor){
-        HashMap<String, Node> nodesByFloor = new HashMap<>();
+    public static Vector<Node> getNodesByFloor(int floor){
+        Vector<Node> nodesByFloor = new Vector<Node>();
         Node n;
 
         String dbFloor = testEmbeddedDB.floorIntToString(floor);
@@ -1410,7 +1410,7 @@ public class testEmbeddedDB {
 
                 n = new Node(nodeID, xcord, ycoord, tableFloor, building, nodetype, longname, shortname, team);
 
-                nodesByFloor.put(nodeID, n);
+                nodesByFloor.add(n);
             }
 
 

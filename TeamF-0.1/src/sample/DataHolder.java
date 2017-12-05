@@ -43,8 +43,25 @@ public class DataHolder {
     public Vector<Node> pathL1;
     public Vector<Node> pathG;
 
-    public javafx.scene.canvas.GraphicsContext gc;
+    public javafx.scene.canvas.GraphicsContext gc; // Used only in navigation
+    public javafx.scene.canvas.GraphicsContext gc1; // Used only in Map editing
+    public javafx.scene.canvas.GraphicsContext gc2; // Used only in Map editing
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;
+
+
+    /**
+     * Creating the Vector for the floor nodes.
+     *the following maybe has issues.
+     */
+    public Vector<Node>  groundFloorNodes;
+    public Vector<Node>  lowerLevel01FloorNodes;
+    public Vector<Node>  lowerLevel02FloorNodes;
+    public Vector<Node>  firstFloorNodes;
+    public Vector<Node>  secondFloorNodes;
+    public Vector<Node>  thirdFloorNodes;
+
+    public double divisionCst = 3.87;
+    public int offset = 2;
 }

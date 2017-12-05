@@ -230,6 +230,16 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void nodeEditScreenClick(Node selected, JFXButton btn1) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editNodesController.setScreen(selected);
+        popUp.showAndWait();
+    }
+
     public static void edgeEditScreen(JFXButton btn1){
         Stage popUp = new Stage();
         popUp.setScene(edgeEdit);
