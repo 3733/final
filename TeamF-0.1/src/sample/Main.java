@@ -45,6 +45,8 @@ public class Main extends Application implements Data{
     private static Scene editUsers;
     private static Scene genError;
     private static Scene editUserWin;
+    private static Scene helpRequest;
+
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -58,6 +60,8 @@ public class Main extends Application implements Data{
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
+    public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -73,6 +77,13 @@ public class Main extends Application implements Data{
         loginPageController = loginLoader.getController();
         loginPageController.setMainController(this);
         login = new Scene(LogIn);
+
+        FXMLLoader helpRequestLoader = new FXMLLoader(getClass().getResource("UI/HelpScreenServiceRequestScreen.fxml"));
+        Parent HelpRequest = helpRequestLoader.load();
+        helpScreenServiceRequestScreenController = helpRequestLoader.getController();
+        helpScreenServiceRequestScreenController.setMainController(this);
+        helpRequest = new Scene(HelpRequest)
+        ;
 
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
@@ -154,6 +165,8 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
+        helpRequest.getStylesheets().add("sample/UI/style.css");
+
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
@@ -245,6 +258,11 @@ public class Main extends Application implements Data{
 
     public static void genErrorScreen(){
         stage.setScene(genError);
+        stage.centerOnScreen();
+    }
+
+    public static void setHelpScreenServiceRequestScreen(){
+        stage.setScene(helpRequest);
         stage.centerOnScreen();
     }
 

@@ -49,7 +49,7 @@ public class StartPageController {
 
     @FXML
     public void help(){
-        Main.genErrorScreen();
+        Main.setHelpScreenServiceRequestScreen();
     }
 
     @FXML

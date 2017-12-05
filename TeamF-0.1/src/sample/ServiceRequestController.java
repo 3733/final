@@ -60,7 +60,7 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void help() {
-        Main.genErrorScreen();
+        Main.setHelpScreenServiceRequestScreen();
     }
 
     @FXML
