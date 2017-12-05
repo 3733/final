@@ -22,7 +22,6 @@ public class Dijkstras extends AbsAlgorithm{
     public Vector<Node> findPath(Node Start, Node End,Map map){
 
         Vector<Node> Nodes = map.getNodes();
-        //System.out.println("Dijkstras");
 
         // The set of nodes already evaluated
         Vector<Node> closedSet = new Vector<>();

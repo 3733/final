@@ -37,13 +37,11 @@ public class LoginPageController {
     }
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
 
     @FXML
     public void login() throws IOException, InterruptedException{
-        System.out.println(username.getText());
-        System.out.println(password.getText());
 
         if(checkUser(username.getText(), password.getText())){
             AuthenticationInfo newUser = new AuthenticationInfo(username.getText(),AuthenticationInfo.Privilege.ADMIN);
@@ -79,7 +77,8 @@ public class LoginPageController {
 
     @FXML
     public void back(){
-        Main.startScreen();
+        username.clear();
+        password.clear();
         Main.closePopUp(close);
     }
 

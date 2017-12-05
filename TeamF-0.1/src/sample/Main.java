@@ -45,12 +45,13 @@ public class Main extends Application implements Data{
     private static Scene editUsers;
     private static Scene genError;
     private static Scene editUserWin;
+    private static Scene helpRequest;
+
 
 
     public static StartPageController  startPageController = new StartPageController();
     public static LoginPageController loginPageController = new LoginPageController();
     public static NavigationPageController navigationPageController = new NavigationPageController();
-    public static AdminPageController adminPageController = new AdminPageController();
     public static ServiceRequestController serviceRequestController = new ServiceRequestController();
     public static ServiceAcceptController serviceAcceptController = new ServiceAcceptController();
     public static MapEditPageController mapEditPageController = new MapEditPageController();
@@ -59,10 +60,13 @@ public class Main extends Application implements Data{
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
+    public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
+        data.kiosk = data.graph.getNodes().get(0);
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -75,20 +79,21 @@ public class Main extends Application implements Data{
         loginPageController.setMainController(this);
         login = new Scene(LogIn);
 
+        FXMLLoader helpRequestLoader = new FXMLLoader(getClass().getResource("UI/HelpScreenServiceRequestScreen.fxml"));
+        Parent HelpRequest = helpRequestLoader.load();
+        helpScreenServiceRequestScreenController = helpRequestLoader.getController();
+        helpScreenServiceRequestScreenController.setMainController(this);
+        helpRequest = new Scene(HelpRequest)
+        ;
+
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
         navigationPageController = navLoader.getController();
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
         //startMap();
-        navigationPageController.setKiosk(data.graph.getNodes().get(0));
+        navigationPageController.setKiosk(data.kiosk);
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
-
-        FXMLLoader adminLoader = new FXMLLoader(getClass().getResource("UI/AdminControls.fxml"));
-        Parent Admin = adminLoader.load();
-        adminPageController = adminLoader.getController();
-        adminPageController.setMainController(this);
-        admin = new Scene(Admin);
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
         Parent Service = serviceLoader.load();
@@ -146,8 +151,6 @@ public class Main extends Application implements Data{
         login.getStylesheets().add("sample/UI/style.css");
         //map = new Scene(FXMLLoader.load(getClass().getResource("UI/NavigationScreen.fxml")), 1386, 810);
         map.getStylesheets().add("sample/UI/style.css");
-        //admin = new Scene(FXMLLoader.load(getClass().getResource("UI/AdminControls.fxml")), 1386, 810);
-        admin.getStylesheets().add("sample/UI/style.css");
         //service = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Request_Menu.fxml")), 1386, 810);
         service.getStylesheets().add("sample/UI/style.css");
         //accept = new Scene(FXMLLoader.load(getClass().getResource("UI/Service_Accept_Menu.fxml")), 1386, 810);
@@ -163,6 +166,8 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
+        helpRequest.getStylesheets().add("sample/UI/style.css");
+
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
@@ -200,11 +205,6 @@ public class Main extends Application implements Data{
             navigationPageController.setSearch(getDestination());
             navigationPageController.settingFields();
         }
-    }
-
-    public static void adminScreen(){
-        stage.setScene(admin);
-        stage.centerOnScreen();
     }
 
     public static void serviceScreen(){
@@ -262,6 +262,11 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
+    public static void setHelpScreenServiceRequestScreen(){
+        stage.setScene(helpRequest);
+        stage.centerOnScreen();
+    }
+
     public static void editUserWindow(JFXButton btn1){
         Stage popUp = new Stage();
         editUserWindowController.addingUsers();
@@ -296,7 +301,6 @@ public class Main extends Application implements Data{
         return loggedInGuy;
     }
     public static void main(String[] args) throws IOException{
-        //long st = System.currentTimeMillis();
 
         //testEmbeddedDB db = new testEmbeddedDB();
         /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
@@ -319,16 +323,10 @@ public class Main extends Application implements Data{
 
         launch(args);
 
-        /*long et = System.currentTimeMillis();
-        double timer = (double) (et-st)/1000;
-        System.out.println("Main " + timer+"<===TIMER");*/
-
-
-
-
-        //UNCOMMENT THIS LINE
-        testEmbeddedDB.dbBuildMap();
-
+//        testEmbeddedDB db = new testEmbeddedDB();
+//        testEmbeddedDB.dropNodes();
+//        testEmbeddedDB.dropTables();
+//        testEmbeddedDB.createTable();
 
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
@@ -360,7 +358,6 @@ public class Main extends Application implements Data{
 
 
         //controller.drawDirections(Vec);
-        //launch(args);
     }
 
     public static Map startMap() throws IOException{

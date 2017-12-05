@@ -387,16 +387,16 @@ public class EmailService implements Data {
                 if(Data.data.floorList.get(i)) {
                     String savedImageName = this.imageName + "-" + i + ".png";
                     ImageIO.write(SwingFXUtils.fromFXImage(getImage(i), null), "PNG", new File(savedImageName.replaceAll("\\s+","")));
-                    System.out.println("Image generated: " + savedImageName.replaceAll("\\s+",""));
+                    //System.out.println("Image generated: " + savedImageName.replaceAll("\\s+",""));
                 }
             }
         }
-        System.out.println(status);
+        //System.out.println(status);
         // Check to see if a valid email address was entered
         if (receiver.length() < 4 || !(receiver.contains("@"))) {
             // Work on the invalid email exception here
             this.status = "That is not a valid Email, try again!";
-            System.out.println(this.status);
+            //System.out.println(this.status);
             throw new InvalidEmailException(receiver);
         } else {
 
@@ -405,10 +405,10 @@ public class EmailService implements Data {
                 Message msg = buildMessage(session,directions,receiver);
                 Transport.send(msg);
                 this.status = "Sent message";
-                System.out.println(this.status);
+                //System.out.println(this.status);
             } catch (MessagingException e) {
                 this.status = "An error occurred while sending the message";
-                System.out.println(this.status);
+                //System.out.println(this.status);
             }
         }
     }
@@ -697,12 +697,12 @@ public class EmailService implements Data {
     // Parameters: String Directions, String receiver (email address)
     public void sendRequestEmail(String directions, String receiver) throws InvalidEmailException, IOException {
         ImageIO.write(SwingFXUtils.fromFXImage(map.getImage(),null), "PNG", new File(Data.data.currentMap+".png"));
-        System.out.println(status);
+        //System.out.println(status);
         // Check to see if a valid email address was entered
         if (receiver.length() < 4 || !(receiver.contains("@"))) {
             // Work on the invalid email exception here
             this.status = "That is not a valid Email, try again!";
-            System.out.println(this.status);
+            //System.out.println(this.status);
             throw new InvalidEmailException(receiver);
         } else {
 
@@ -711,10 +711,10 @@ public class EmailService implements Data {
                 Message msg = buildRequestMessage(session,directions,receiver);
                 Transport.send(msg);
                 this.status = "Sent message";
-                System.out.println(this.status);
+                //System.out.println(this.status);
             } catch (MessagingException e) {
                 this.status = "An error occurred while sending the message";
-                System.out.println(this.status);
+                //System.out.println(this.status);
             }
         }
     }

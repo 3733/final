@@ -40,7 +40,7 @@ public class EditUsersController implements Initializable{
     public void back()throws IOException, InterruptedException{ Main.mapScreen();}
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     public void addUserButton(){
         Main.editUserWindow(addButton);

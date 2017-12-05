@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
@@ -23,7 +32,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
     <right>
         <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
             <children>
@@ -274,18 +283,22 @@
     <center>
         <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
             <children>
-                <ScrollPane fx:id="scrollMap" prefHeight="810.0" prefWidth="1146.0">
+                <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="810.0" prefWidth="1146.0">
                     <content>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                            <children>
-                                <ImageView fx:id="map" fitHeight="881.0" fitWidth="1356.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                    <image>
-                                        <Image url="@Icons/01_thefirstfloor.png" />
-                                    </image>
-                                </ImageView>
-                                <Canvas fx:id="pathCanvas" height="883.0" width="1302.0" StackPane.alignment="TOP_LEFT" />
-                            </children>
-                        </StackPane>
+                  <Group fx:id="scrollContent">
+                     <children>
+                              <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
+                                  <children>
+                                      <ImageView fx:id="map" fitHeight="881.0" fitWidth="1356.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                          <image>
+                                              <Image url="@Icons/01_thefirstfloor.png" />
+                                          </image>
+                                      </ImageView>
+                                      <Canvas fx:id="pathCanvas" height="883.0" width="1302.0" StackPane.alignment="TOP_LEFT" />
+                                  </children>
+                              </StackPane>
+                     </children>
+                  </Group>
                     </content>
                 </ScrollPane>
                 <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
@@ -375,6 +388,36 @@
                         <Font name="Montserrat Regular" size="12.0" />
                     </font>
                 </JFXButton>
+            <ImageView fx:id="threeArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="twoArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="oneArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="groundArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lowerOneArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lowerTwoArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="685.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
             </children>
         </AnchorPane>
     </center>
