@@ -35,15 +35,20 @@ public class MessengerController implements Initializable{
     //Purpose: to initialize the fxml
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        Calendar currentTime = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
-        sdf.setTimeZone(TimeZone.getTimeZone("EST"));
-        currentChat.add("Chat started at " + sdf);
+        chatListView.setItems(currentChat);
     }
 
     //getters and setters
     public void setMainController(Main in){
         mainController = in;
+    }
+
+    public ObservableList<String> getCurrentChat(){
+        return currentChat;
+    }
+
+    public JFXListView getChatListView() {
+        return chatListView;
     }
 
     //other functions
