@@ -223,7 +223,12 @@ public class ServiceAcceptController implements Initializable{
                         requestObserve.remove(j);
                 }
             }
-            if ( !alreadyInTable && !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")))
+            if ( !alreadyInTable && !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) && (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")))
                 requestObserve.add(arrayOfRequestsFromDatabase.get(i));
         }
 
