@@ -1396,7 +1396,7 @@ public class testEmbeddedDB {
         return names;
     }
 
-    public static ObservableList getLongNamesByFloor(String q){
+    public static ObservableList getLongNames(String q){
         ObservableList names = FXCollections.observableArrayList();
 
         try{

@@ -34,7 +34,7 @@ public class DataHolder {
 
 
     //this variable hold for the which floor you are on
-    public int currentFloor;
+    //public int currentFloor;
 
     //List of all Nodes and Edges, a Map
     public Map graph;
@@ -47,7 +47,15 @@ public class DataHolder {
     public Vector<Node> pathL1;
     public Vector<Node> pathG;
 
+    //gc variable for the navigation page layer1 which holds all the floor nodes.
     public javafx.scene.canvas.GraphicsContext gc;
+
+    //gc1 variable for the navigation page layer2 which holds the mouse click canvas
+    public javafx.scene.canvas.GraphicsContext gc1;
+
+    //gc2 => AdminPage
+    public javafx.scene.canvas.GraphicsContext gc2;
+
     // Stores the x and y of the window
     public double XWindow;
     public double YWindow;

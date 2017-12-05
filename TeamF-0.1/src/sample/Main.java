@@ -185,6 +185,20 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    /**
+     * Pop Up window for selecting node to change.
+     */
+    public static void editNodeScreen(JFXButton btn, Node in) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Node Edit");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn.getScene().getWindow());
+        editNodesController.setNode(in);
+        popUp.showAndWait();
+    }
+
+
     public static void startScreen(){
         stage.setScene(start);
         stage.centerOnScreen();

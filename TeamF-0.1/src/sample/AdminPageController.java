@@ -42,6 +42,7 @@ public class AdminPageController implements Initializable{
     private Label floorLabel;
     @FXML
     private ScrollPane scrollMap;
+
     @FXML
     private ImageView map;
     @FXML
@@ -54,6 +55,7 @@ public class AdminPageController implements Initializable{
     private JFXListView threeList, twoList, oneList, groundList, lowerTwoList, lowerOneList;
     @FXML
     private JFXTabPane tabPane;
+
     @FXML
     private Tab floorOne;
     @FXML

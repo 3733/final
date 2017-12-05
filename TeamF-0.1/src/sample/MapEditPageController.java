@@ -7,7 +7,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.WeakEventHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +16,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,6 +43,11 @@ public class MapEditPageController implements Initializable{
     private SplitMenuButton algoMenu;
     @FXML
     private JFXButton editNodeBtn, editEdgeBtn;
+    /**
+     * node canvas fo the clickable map
+     */
+//     @FXML
+//     private javafx.scene.canvas.Canvas mapCanvas;
 
     //other variables
     private Main mainController;
@@ -52,9 +57,12 @@ public class MapEditPageController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try{
-            zoom();
+
             scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+            zoom();
+
 
             //popluating list view -- three
             ObservableList<String> threeItems = FXCollections.observableArrayList (
@@ -173,31 +181,39 @@ public class MapEditPageController implements Initializable{
 
     @FXML
     public void changeFloorL1() {
+
         map.setImage(Data.data.L1Floor);
     }
 
     @FXML
     public void changeFloor1() {
+
         map.setImage(Data.data.firstFloor);
     }
 
     @FXML
     public void changeFloor2() {
+
         map.setImage(Data.data.secondFloor);
     }
 
     @FXML
-    public void changeFloor3() {
+    public void changeFloor3()
+    {
+
         map.setImage(Data.data.thirdFloor);
     }
 
     @FXML
-    public void changeFloorG() {
+    public void changeFloorG()
+    {
+
         map.setImage(Data.data.GFloor);
     }
 
     @FXML
     public void changeFloorL2() {
+
         map.setImage(Data.data.L2Floor);
     }
 
@@ -304,6 +320,11 @@ public class MapEditPageController implements Initializable{
         map.fitWidthProperty().bind(scrollMap.widthProperty());
         map.fitHeightProperty().bind(scrollMap.heightProperty());
     }
+
+
+
+
+
 
     // reset to the top left:
     private void reset(ImageView imageView, double width, double height) {

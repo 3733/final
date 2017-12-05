@@ -99,6 +99,11 @@ public class Map {
         return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))));
     }
 
+    public double MouseNodeDist(double x, double y,Node End){
+        return (Math.sqrt((Math.abs(x - End.getxCoordinate())*Math.abs(x - End.getxCoordinate()) + Math.abs(y - End.getyCoordinate())*Math.abs(y - End.getyCoordinate()))));
+    }
+
+
 
     /**
      * This is the BuildMap Method

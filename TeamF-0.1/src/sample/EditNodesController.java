@@ -28,7 +28,25 @@ public class EditNodesController {
     private JFXTextField longNameField;
     @FXML
     private JFXTextField shortNameField;
+
+    private Node node;
     private Main mainController;
+
+    /**
+     * set the current node value to the node popUp screen
+     * @param in
+     */
+    public void setNode(Node in){
+        node = in;
+        nodeIDField.setText(in.getNodeID());
+        xCoordField.setText("" + in.getxCoordinate());
+        yCoordField.setText("" + in.getyCoordinate());
+        floorField.setText(in.getFloor());
+        buildingField.setText(in.getBuilding());
+        nodeTypeField.setText(in.getNodeType());
+        longNameField.setText(in.getLongName());
+        shortNameField.setText(in.getShortName());
+    }
 
     public void setMainController(Main main){
         this.mainController = main;

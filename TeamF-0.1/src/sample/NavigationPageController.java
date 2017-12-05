@@ -1,48 +1,29 @@
 package sample;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
-import javafx.geometry.Insets;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.Line;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
-import javafx.util.Duration;
 
 public class NavigationPageController implements Initializable, Data{
 
@@ -55,6 +36,10 @@ public class NavigationPageController implements Initializable, Data{
     private Label sendLabel;
     @FXML
     private JFXButton sendButton;
+
+    /**
+     * canvas pathCanvas
+     */
     @FXML
     private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
@@ -73,6 +58,7 @@ public class NavigationPageController implements Initializable, Data{
     private VBox labelBox;
     @FXML
     private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
+
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
     private javafx.scene.image.ImageView map;
@@ -139,10 +125,16 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
 
+
         Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
+        Data.data.groundFloorNodes = testEmbeddedDB.getNodesByFloor(2);
+        Data.data.lowerLevel01FloorNodes = testEmbeddedDB.getNodesByFloor(1);
+        Data.data.lowerLevel02FloorNodes = testEmbeddedDB.getNodesByFloor(0);
+        Data.data.secondFloorNodes = testEmbeddedDB.getNodesByFloor(4);
+        Data.data.thirdFloorNodes = testEmbeddedDB.getNodesByFloor(5);
 
         try {
-            clickSelected();
+            clickNearestNodeSelected();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -673,7 +665,6 @@ public class NavigationPageController implements Initializable, Data{
      * function to draw the nodes of the  floors
      * @param FloorNodes
      */
-    @FXML
     public void drawNodesCircle(Vector<Node> FloorNodes)
     {
         if(FloorNodes != null) {
@@ -685,8 +676,8 @@ public class NavigationPageController implements Initializable, Data{
             for (int i = 0; i < length; i++)
             {
                 Node nodesMap = FloorNodes.get(i);
-                pathCanvas.getGraphicsContext2D().strokeOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
-                pathCanvas.getGraphicsContext2D().fillOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 2.0, 2.0);
+                pathCanvas.getGraphicsContext2D().strokeOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 4.0, 4.0);
+                pathCanvas.getGraphicsContext2D().fillOval(nodesMap.getxCoordinate()/4.4 +2.0 ,nodesMap.getyCoordinate()/4.4 +2.0, 4.0, 4.0);
 
             }
             }
@@ -696,22 +687,9 @@ public class NavigationPageController implements Initializable, Data{
      * mouse click location done!
      * @throws IOException
      */
-    @FXML
-    public void clickSelected() throws IOException {
-        // double prevx = 0;
-        // double prevy = 0;
 
-        pathCanvas.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
-
-            if (e.getClickCount() == 1)
-            {
-                Data.data.gc.clearRect(0,0,1143, 783);
-
-            }
-        });
-
-
-        pathCanvas.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
+    public void clickNearestNodeSelected() throws IOException {
+        pathCanvas.setOnMouseClicked((javafx.scene.input.MouseEvent e) -> {
 
             if (e.getClickCount() == 1)
             {
@@ -719,14 +697,71 @@ public class NavigationPageController implements Initializable, Data{
                 double scaleY = 3400d / 781d;
 
                 double newX1 = (e.getSceneX());
-                double newY1 = (e.getY());
+                double newY1 = (e.getSceneY());
+
+                Node node = null;
+
+                if(floorLowerTwo.isSelected()) {
+                    node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.lowerLevel02FloorNodes);
+                } else if(floorLowerOne.isSelected()) {
+                    node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.lowerLevel01FloorNodes);
+                } else if(floorGround.isSelected()) {
+                    node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.groundFloorNodes);
+                } else if(floorOne.isSelected()) {
+                    node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.firstFloorNodes);
+                } else if(floorTwo.isSelected()) {
+                    node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.secondFloorNodes);
+                } else if(floorThree.isSelected()){
+                    node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.thirdFloorNodes);
+                }
+
+                Data.data.gc.setStroke(Color.RED);
+                Data.data.gc.stroke();
+
+                pathCanvas.getGraphicsContext2D().strokeOval(node.getxCoordinate()/4.4 +2.0 ,node.getyCoordinate()/4.4 +2.0, 7.0, 7.0);
+                pathCanvas.getGraphicsContext2D().fillOval(node.getxCoordinate()/4.4 +2.0 ,node.getyCoordinate()/4.4 +2.0, 7.0, 7.0);
+                Main.editNodeScreen(sendButton, node);
+
+
+
+
                 // prevx = newX1;
                 // prevy = newY1;
-                Data.data.gc.setStroke(Color.RED);
-                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 5.0, 5.0);
-                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 5.0, 5.0);
+//                Data.data.gc.setStroke(Color.YELLOW);
+//                pathCanvas.getGraphicsContext2D().setFill(Color.RED);
+//                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 6.0, 6.0);
+//                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 6.0, 6.0);
+
+
             }
         });
+    }
+
+    /**
+     * Function to calculate the nearest node depend on the mouse click location.
+     * @param x
+     * @param y
+     * @param NodesOfTheFloor
+     * @return
+     */
+    public Node mousePosition (double x, double y,Vector<Node> NodesOfTheFloor) {
+        double newMouseX = x;
+        double newMouseY = y;
+        Node GoodOne = null;
+        double MinDist = 100000000.0;
+        double dist;
+
+
+
+        for (Node i: NodesOfTheFloor) {
+            dist = data.graph.MouseNodeDist(newMouseX,newMouseY,i);
+            if(dist < MinDist) {
+                MinDist = dist;
+                GoodOne = i;
+            }
+        }
+        return GoodOne;
+
     }
 
 

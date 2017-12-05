@@ -283,7 +283,7 @@
                                         <Image url="@Icons/01_thefirstfloor.png" />
                                     </image>
                                 </ImageView>
-                                <Canvas fx:id="pathCanvas" height="883.0" onMouseReleased="#clickSelected" width="1302.0" StackPane.alignment="TOP_LEFT" />
+                                <Canvas fx:id="pathCanvas" height="883.0" onMouseReleased="#clickNearestNodeSelected" width="1302.0" StackPane.alignment="TOP_LEFT" />
                             </children>
                         </StackPane>
                     </content>
