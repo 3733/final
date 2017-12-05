@@ -16,11 +16,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
@@ -31,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.time.DateTimeException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,14 +41,19 @@ import java.util.regex.Pattern;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class NavigationPageController implements Initializable, Data{
 
-    //fxml components
+    //FXML UI Components
+
+    @FXML
+    private Group scrollContent;
     @FXML
     private JFXDrawer drawer;
     @FXML
@@ -68,8 +76,10 @@ public class NavigationPageController implements Initializable, Data{
     private AnchorPane mainPane;
     @FXML
     private JFXTabPane tabPane;
+
     @FXML
     private VBox labelBox;
+
     @FXML
     private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
@@ -89,14 +99,20 @@ public class NavigationPageController implements Initializable, Data{
     private static Label invalidEmailText;
     @FXML
     private JFXRadioButton start, end;
+
     @FXML
     private JFXTextField startField, endField;
+
     @FXML
     private ToggleGroup points;
+
     @FXML
     private String defaultStart;
+
     @FXML
     private Label startLabel, endLabel;
+
+    // Email UI Components
     @FXML
     private JFXTextField email;
 
@@ -107,6 +123,9 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXButton loginButton;
 
+
+    @FXML
+    private StackPane stackPane;
 
     //other components
     private Main mainController;
@@ -123,7 +142,7 @@ public class NavigationPageController implements Initializable, Data{
 
     private int currentAlgo = 1;
 
-
+    double scaleValue = 0.7;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
 
@@ -627,8 +646,8 @@ public class NavigationPageController implements Initializable, Data{
             String nameDest = path.get(length - 1).getShortName();
             String nameDept = path.get(0).getShortName();
             // Setting up the proper color settings
-            Data.data.gc.setLineWidth(2);
-            Data.data.gc.setStroke(javafx.scene.paint.Color.BLACK);
+            Data.data.gc.setLineWidth(3);
+            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
             Data.data.gc.stroke();
             // Iterate through all the path nodes to draw the path
             for (int i = 0; i < length; i++) {
@@ -639,7 +658,9 @@ public class NavigationPageController implements Initializable, Data{
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Data.data.gc.strokeLine(node.getxCoordinate() / 4.4 + 2, node.getyCoordinate() / 4.4 + 2, node2.getxCoordinate() / 4.4 + 2, node2.getyCoordinate() / 4.4 + 2);
+                        double divisionCst = 3.87;
+                        int offset = 2;
+                        Data.data.gc.strokeLine(node.getxCoordinate() / divisionCst + offset, node.getyCoordinate() / divisionCst , node2.getxCoordinate() / divisionCst + offset, node2.getyCoordinate() / divisionCst);
                     }
                 }
             }
@@ -680,66 +701,95 @@ public class NavigationPageController implements Initializable, Data{
 
     // Purpose: Zoom the map when the user zooms
     @FXML
-    private void zoom() {
-        int MIN_PIXELS = 15;
-        //zoom
-        double width = map.getImage().getWidth();
-        double height = map.getImage().getHeight();
-
-        map.setPreserveRatio(true);
-        reset(map, width, height);
-
-        ObjectProperty<Point2D> mouseDown = new SimpleObjectProperty<>();
-
-        map.setOnMousePressed(e -> {
-
-            Point2D mousePress = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            mouseDown.set(mousePress);
-        });
-
-        map.setOnMouseDragged(e -> {
-            Point2D dragPoint = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-            shift(map, dragPoint.subtract(mouseDown.get()));
-            mouseDown.set(imageViewToImage(map, new Point2D(e.getX(), e.getY())));
-        });
-
-        map.setOnScroll(e -> {
-            double delta = -e.getDeltaY();
-            Rectangle2D viewport = map.getViewport();
-
-            double scale = clamp(Math.pow(1.01, delta),
-
-                    // don't scale so we're zoomed in to fewer than MIN_PIXELS in any direction:
-                    Math.min(MIN_PIXELS / viewport.getWidth(), MIN_PIXELS / viewport.getHeight()),
-
-                    // don't scale so that we're bigger than image dimensions:
-                    Math.max(width / viewport.getWidth(), height / viewport.getHeight())
-
-            );
-
-            Point2D mouse = imageViewToImage(map, new Point2D(e.getX(), e.getY()));
-
-            double newWidth = viewport.getWidth() * scale;
-            double newHeight = viewport.getHeight() * scale;
-
-            // To keep the visual point under the mouse from moving
-            double newMinX = clamp(mouse.getX() - (mouse.getX() - viewport.getMinX()) * scale,
-                    0, width - newWidth);
-            double newMinY = clamp(mouse.getY() - (mouse.getY() - viewport.getMinY()) * scale,
-                    0, height - newHeight);
-
-            map.setViewport(new Rectangle2D(newMinX, newMinY, newWidth, newHeight));
-        });
-
-        map.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                reset(map, width, height);
+    public void zoom() {
+        scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
             }
         });
 
-        map.setPreserveRatio(true);
-        map.fitWidthProperty().bind(scrollMap.widthProperty());
-        map.fitHeightProperty().bind(scrollMap.heightProperty());
+        stackPane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
+                Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
+                if (!(scaleFactor * stackPane.getScaleX() > 3) && !(scaleFactor * stackPane.getScaleX() < 1)) {
+                    System.out.println(scaleFactor);
+                    stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
+                    stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
+                }
+                repositionScroller(scrollContent, scrollMap, scaleFactor, scrollOffset);
+            }
+        });
+
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            }
+        });
+
+        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+                double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
+                double desiredH = scrollMap.getHvalue() - deltaH;
+                System.out.println("deltaX: " + deltaX + " extraWidth: " + extraWidth + " deltaH: " + extraWidth+ " deltaH: " + deltaH + " desiredH: " + desiredH);
+                if(deltaX > 0) {
+                    scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+                }
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+                double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
+                double desiredV = scrollMap.getVvalue() - deltaV;
+                //System.out.println("Current H: " + scrollMap.getHvalue() + " Current V: " + scrollMap.getVvalue());
+                System.out.println("Desired H: " + desiredH + " Desired V: " + desiredV);
+                if ( deltaY > 0) {
+                    scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+                }
+            }
+        });
+    }
+
+    private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+    private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
+            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
     }
 
     // reset to the top left:
@@ -747,9 +797,13 @@ public class NavigationPageController implements Initializable, Data{
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
     }
 
+    private void resetStack(ScrollPane pane, double width, double height) {
+        pane.setViewportBounds(new BoundingBox(0,0,width,height));
+    }
+
     // shift the viewport of the imageView by the specified delta, clamping so
     // the viewport does not move off the actual image:
-    private void shift(ImageView imageView, Point2D delta) {
+    private void shiftMap(ImageView imageView, Point2D delta) {
         Rectangle2D viewport = imageView.getViewport();
 
         double width = imageView.getImage().getWidth() ;
@@ -762,6 +816,21 @@ public class NavigationPageController implements Initializable, Data{
         double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
 
         imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
+    }
+
+    private void shiftStack(ScrollPane pane, Point2D delta) {
+        Bounds viewport = pane.getViewportBounds();
+
+        double width = pathCanvas.getWidth() ;
+        double height = pathCanvas.getHeight();
+
+        double maxX = width - viewport.getWidth();
+        double maxY = height - viewport.getHeight();
+
+        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
+        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
+
+        pane.setViewportBounds(new BoundingBox(minX, minY, viewport.getWidth(), viewport.getHeight()));
     }
 
     private double clamp(double value, double min, double max) {
