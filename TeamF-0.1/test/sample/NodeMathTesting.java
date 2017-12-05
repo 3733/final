@@ -2,7 +2,7 @@
 * Purpose: To test the mathematics behind finding directiosn*/
 /*ALL PASS - Steph*/
 
-package sample.sample;
+package sample;
 
 import org.junit.Test;
 import sample.NodeMath;
