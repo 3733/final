@@ -16,7 +16,7 @@
       <HBox alignment="CENTER" prefHeight="54.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <JFXTextField fx:id="questionAsked" prefHeight="26.0" prefWidth="394.0" />
-            <JFXButton fx:id="sendAsk" buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE">
+            <JFXButton fx:id="sendAsk" buttonType="RAISED" onAction="#sendQuestion" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
@@ -33,6 +33,15 @@
    <top>
       <VBox prefHeight="88.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="backButton" buttonType="RAISED" onAction="#back" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Help">

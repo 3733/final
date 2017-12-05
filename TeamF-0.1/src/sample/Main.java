@@ -226,6 +226,14 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void messageScreen(JFXButton btn1){
+        Stage popUp = new Stage();
+        popUp.setScene(messageWin);
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
+    }
+
     public static void edgeEditScreen(JFXButton btn1){
         Stage popUp = new Stage();
         popUp.setScene(edgeEdit);
