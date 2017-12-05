@@ -375,6 +375,36 @@
                         <Font name="Montserrat Regular" size="12.0" />
                     </font>
                 </JFXButton>
+            <ImageView fx:id="threeArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="twoArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="555.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="oneArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="585.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="groundArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lowerOneArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="lowerTwoArrow" fitHeight="23.0" fitWidth="31.0" layoutX="680.0" layoutY="685.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icons/Right-Arrow-Transparent-Background.png" />
+               </image>
+            </ImageView>
             </children>
         </AnchorPane>
     </center>
