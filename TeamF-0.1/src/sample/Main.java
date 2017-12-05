@@ -45,6 +45,7 @@ public class Main extends Application implements Data{
     private static Scene editUsers;
     private static Scene genError;
     private static Scene editUserWin;
+    private static Scene messageWin;
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -58,6 +59,7 @@ public class Main extends Application implements Data{
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
+    public static MessengerController messengerWindowController = new MessengerController();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -131,6 +133,12 @@ public class Main extends Application implements Data{
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
 
+        FXMLLoader messengerLoader = new FXMLLoader(getClass().getResource("UI/MessengerUI.fxml"));
+        Parent msgWin = messengerLoader.load();
+        messengerWindowController = messengerLoader.getController();
+        messengerWindowController.setMainController(this);
+        messageWin = new Scene(msgWin);
+
         stage = primaryStage;
         popUp = new Stage();
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
@@ -154,6 +162,7 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
+        messageWin.getStylesheets().add("sample/UI/style.css");
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(start);
