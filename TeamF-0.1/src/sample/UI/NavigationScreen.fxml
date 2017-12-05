@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -222,16 +223,20 @@
             <children>
                 <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="810.0" prefWidth="1146.0">
                     <content>
-                        <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
-                            <children>
-                                <ImageView fx:id="map" fitHeight="881.0" fitWidth="1356.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                    <image>
-                                        <Image url="@Icons/01_thefirstfloor.png" />
-                                    </image>
-                                </ImageView>
-                                <Canvas fx:id="pathCanvas" height="883.0" width="1302.0" StackPane.alignment="TOP_LEFT" />
-                            </children>
-                        </StackPane>
+                  <Group fx:id="scrollContent">
+                     <children>
+                              <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
+                                  <children>
+                                      <ImageView fx:id="map" fitHeight="881.0" fitWidth="1356.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                          <image>
+                                              <Image url="@Icons/01_thefirstfloor.png" />
+                                          </image>
+                                      </ImageView>
+                                      <Canvas fx:id="pathCanvas" height="883.0" width="1302.0" StackPane.alignment="TOP_LEFT" />
+                                  </children>
+                              </StackPane>
+                     </children>
+                  </Group>
                     </content>
                 </ScrollPane>
                 <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
