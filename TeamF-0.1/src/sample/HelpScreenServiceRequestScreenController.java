@@ -18,7 +18,7 @@ public class HelpScreenServiceRequestScreenController {
     @FXML
     public JFXTextArea box;
 
-    public int id = 9000;
+    public static int id = (int) System.currentTimeMillis(); //sets ID according to time, prevents IDs from being the same
 
 
     @FXML
@@ -32,6 +32,6 @@ public class HelpScreenServiceRequestScreenController {
         testEmbeddedDB.addItRequest(newIt);
 
         box.clear();
-        id++;
+        id = (int) System.currentTimeMillis();
     }
 }
