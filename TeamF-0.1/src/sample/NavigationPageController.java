@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -111,6 +112,9 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     private Label startLabel, endLabel;
+
+    @FXML
+    private JFXButton helpButton;
 
     // Email UI Components
     @FXML
@@ -970,6 +974,15 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void editUsers(){Main.editUsersScreen();}
+
+    @FXML
+    public void chat(){
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+        sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+        String sCertDate = sdf.format(new Date());
+        Main.messengerWindowController.getCurrentChat().add("Chat started at " + sCertDate);
+        Main.messageScreen(helpButton);
+    }
 
     @FXML
     public void setAlgorithm(){}

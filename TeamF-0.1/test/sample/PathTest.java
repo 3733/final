@@ -156,7 +156,6 @@ public class PathTest {
         expected.add("2");
         expected.add("3");
         n.MultiFloorPathDrawing(allFloorNodes);
-        System.out.println(n.getDirectionSteps().);
         assertEquals(expected, n.getFloorsVisited());
     }
 
