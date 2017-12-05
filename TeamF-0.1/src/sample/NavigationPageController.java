@@ -10,6 +10,7 @@ import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -37,6 +38,8 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXButton sendButton;
 
+    @FXML
+    private Canvas pathCanvas1;
     /**
      * canvas pathCanvas
      */
@@ -118,6 +121,7 @@ public class NavigationPageController implements Initializable, Data{
     @Override
     public void initialize(URL location, ResourceBundle resources){
         Data.data.gc = pathCanvas.getGraphicsContext2D();
+        Data.data.gc1 = pathCanvas1.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
 
         //disables the bars and starts up the zoom function
@@ -689,10 +693,15 @@ public class NavigationPageController implements Initializable, Data{
      */
 
     public void clickNearestNodeSelected() throws IOException {
-        pathCanvas.setOnMouseClicked((javafx.scene.input.MouseEvent e) -> {
+        pathCanvas.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
+            System.out.println("Happened");
+            e.consume();
+            Data.data.gc1.clearRect(0,0,1143,783);
+        });
 
-            if (e.getClickCount() == 1)
-            {
+        pathCanvas.setOnMouseReleased((javafx.scene.input.MouseEvent e) -> {
+            System.out.println("Happened2");
+            e.consume();
                 double scaleX = 5000d / 1143d;
                 double scaleY = 3400d / 781d;
 
@@ -715,15 +724,12 @@ public class NavigationPageController implements Initializable, Data{
                     node = mousePosition((newX1-2)*4.4,(newY1-2)*4.4,Data.data.thirdFloorNodes);
                 }
 
-                Data.data.gc.setStroke(Color.RED);
-                Data.data.gc.stroke();
+                Data.data.gc1.setStroke(Color.RED);
+                Data.data.gc1.stroke();
 
-                pathCanvas.getGraphicsContext2D().strokeOval(node.getxCoordinate()/4.4 +2.0 ,node.getyCoordinate()/4.4 +2.0, 7.0, 7.0);
-                pathCanvas.getGraphicsContext2D().fillOval(node.getxCoordinate()/4.4 +2.0 ,node.getyCoordinate()/4.4 +2.0, 7.0, 7.0);
+                Data.data.gc1.strokeOval(node.getxCoordinate()/4.4 +2.0 ,node.getyCoordinate()/4.4 +2.0, 7.0, 7.0);
+                Data.data.gc1.fillOval(node.getxCoordinate()/4.4 +2.0 ,node.getyCoordinate()/4.4 +2.0, 7.0, 7.0);
                 Main.editNodeScreen(sendButton, node);
-
-
-
 
                 // prevx = newX1;
                 // prevy = newY1;
@@ -731,9 +737,6 @@ public class NavigationPageController implements Initializable, Data{
 //                pathCanvas.getGraphicsContext2D().setFill(Color.RED);
 //                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 6.0, 6.0);
 //                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 6.0, 6.0);
-
-
-            }
         });
     }
 
