@@ -9,6 +9,12 @@ import static org.junit.Assert.*;
 
 public class PathTest {
 
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ *DIRECTIONS TESTS
+* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+//All pass - Steph
+
     Node start, end, mid, corner, sharpRight, right, left;
     Vector<Node> straightNodes = new Vector<Node>();
     Vector<Node> sharpLeftNodes = new Vector<>();
@@ -18,13 +24,6 @@ public class PathTest {
     Vector<Node> nullNodes = new Vector<>();
     NavigationPageController n = new NavigationPageController();
 
-
-
-
-/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- *DIRECTIONS TESTS
-* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-//All pass - Steph
     @Before
     public void setUpDirections(){
 
@@ -110,24 +109,51 @@ public class PathTest {
     }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- *DIRECTIONS TESTS
+ * MULTI FLOOR PATH DRAWING  TESTS
 * ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+    Node oneNode;
+    Node twoNode;
+    Node threeNode;
+    Node groundNode;
+    Node lowerOneNode;
+    Node lowerTwoNode;
 
-    @Test
-    public void separator() throws Exception {
+    @Before
+    public void multiSetUp(){
+
     }
 
+    //path draws on all floors
     @Test
-    public void go() throws Exception {
+    public void multiTestAll(){
+
+    }
+
+    //path draws on one floor
+    @Test
+    public void multiTestOne(){
+
+    }
+
+    //path draws on more than one floor
+    @Test
+    public void multiTestMore(){
+
+    }
+
+    //path draws on none
+    @Test
+    public void multiTestNone(){}
+
+    //throws an exception
+    @Test
+    public void multiTestError(){
+
     }
 
     @Test
     public void clear() throws Exception {
-    }
-
-    @Test
-    public void multiFloorPathDrawing() throws Exception {
     }
 
     @Test
