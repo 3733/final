@@ -428,7 +428,7 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     // Button to return to the welcome screen
     @FXML

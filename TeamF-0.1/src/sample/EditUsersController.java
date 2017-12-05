@@ -37,7 +37,7 @@ public class EditUsersController implements Initializable{
     public void back(){ Main.adminScreen();}
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     public void addUserButton(){
         Main.editUserWindow();

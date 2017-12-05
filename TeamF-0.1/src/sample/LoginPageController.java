@@ -27,7 +27,7 @@ public class LoginPageController {
     }
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
 
     @FXML

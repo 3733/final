@@ -97,7 +97,7 @@ public class AdminPageController implements Initializable{
     @FXML
     public void back(){Main.startScreen();}
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     @FXML
     public void setAlgorithm(){}

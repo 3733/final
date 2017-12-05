@@ -38,7 +38,7 @@ public class ServiceAcceptController implements Initializable{
     }
 
     @FXML
-    public void help(){Main.genErrorScreen();}
+    public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     @FXML
     public void logout(){Main.startScreen();}
