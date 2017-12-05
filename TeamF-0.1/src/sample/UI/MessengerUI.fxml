@@ -10,13 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MessengerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MessengerController">
    <bottom>
       <HBox alignment="CENTER" prefHeight="54.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <JFXTextField fx:id="questionAsked" prefHeight="26.0" prefWidth="394.0" />
-            <JFXButton fx:id="sendAsk" buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE">
+            <JFXButton fx:id="sendAsk" buttonType="RAISED" onAction="#send" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
