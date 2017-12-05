@@ -3,6 +3,7 @@ package sample;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Vector;
 
 import static org.junit.Assert.*;
@@ -118,16 +119,45 @@ public class PathTest {
     Node groundNode;
     Node lowerOneNode;
     Node lowerTwoNode;
+    Vector<Node> allFloorNodes = new Vector<>();
 
     @Before
     public void multiSetUp(){
 
+        oneNode = new Node("01", 50, 50, "1", "Tower", "HALL", "floorOneNode",
+                "floorOne", 'F');
+        twoNode = new Node("02", 50, 50, "2", "Tower", "HALL", "floorTwoNode",
+                "floorTwo", 'F');
+        threeNode = new Node("03", 50, 50, "3", "Tower", "HALL", "floorThreeNode",
+                "floorThree", 'F');
+        groundNode = new Node("0G", 50, 50, "G", "Tower", "HALL", "floorGroundNode",
+                "floorGroud", 'F');
+        lowerOneNode = new Node("0L1", 50, 50, "L1", "Tower", "HALL", "floorLowerOneNode",
+                "floorLowerOne", 'F');
+        lowerTwoNode = new Node("0L2", 50, 50, "L2", "Tower", "HALL", "floorLowerTwoNode",
+                "floorLowerTwo", 'F');
+
+        allFloorNodes.add(oneNode);
+        allFloorNodes.add(twoNode);
+        allFloorNodes.add(threeNode);
+        allFloorNodes.add(groundNode);
+        allFloorNodes.add(lowerOneNode);
+        allFloorNodes.add(lowerTwoNode);
     }
 
     //path draws on all floors
     @Test
-    public void multiTestAll(){
-
+    public void multiTestAll()throws IOException, InterruptedException{
+        Vector<String> expected = new Vector<>();
+        expected.add("L2");
+        expected.add("L1");
+        expected.add("G");
+        expected.add("1");
+        expected.add("2");
+        expected.add("3");
+        n.MultiFloorPathDrawing(allFloorNodes);
+        System.out.println(n.getDirectionSteps().);
+        assertEquals(expected, n.getFloorsVisited());
     }
 
     //path draws on one floor

@@ -277,6 +277,14 @@ public class NavigationPageController implements Initializable, Data{
         mainController = in;
     }
 
+    public JFXListView getDirectionSteps(){
+        return this.directionSteps;
+    }
+
+    public Vector<String> getFloorsVisited(){
+        return  this.floorsVisited;
+    }
+
     public int getCurrentAlgo(){
         return this.currentAlgo;
     }
