@@ -4,6 +4,9 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.fxml.FXML;
 import sample.Main;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HelpScreenServiceRequestScreenController {
     private Main mainController;
     public void setMainController(Main main){ this.mainController = main;}
@@ -23,8 +26,11 @@ public class HelpScreenServiceRequestScreenController {
 
     @FXML
     public void sendITHelpRequest() throws MissingFieldException { //when the Send button is pressed
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("h:mm a"); //sets the created time field in the right format
+
         ItRequest newIt = new ItRequest(n1 , box.getText(),
-                id, "", "",
+                id, ft.format(date), "",
                 "", 0000, "it", "unaccepted",
                1);
 
