@@ -384,6 +384,20 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
+    //reverse
+    @FXML
+    public void reverse() throws IOException, InterruptedException{
+        String originalStart = startLabel.getText();
+        String originalEnd = endLabel.getText();
+
+        System.out.println(originalEnd);
+        System.out.println(originalStart);
+
+        startLabel.setText(originalEnd.trim());
+        endLabel.setText(originalStart.trim());
+        go();
+    }
+
     //sets invalid email label when necessary for errorhandling
     @FXML
     public static void setInvalidEmail(){
@@ -586,6 +600,7 @@ public class NavigationPageController implements Initializable, Data{
         searchList.setVisible(false);
         directionSteps.setVisible(true);
     }
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Drawing and Directions functions
