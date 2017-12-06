@@ -239,28 +239,49 @@ public class Main extends Application implements Data{
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
 
+        editNodesController.clear();
         editNodesController.setScreen(selected);
 
         double windowX = 616;
-        System.out.println("This is window size: " + windowX);
         double windowY = 440;
-        System.out.println("This is the window height: " + windowY);
         double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-        System.out.println(screenWidth);
         double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        System.out.println(screenHeight);
         double x = MouseInfo.getPointerInfo().getLocation().x;
         double y = MouseInfo.getPointerInfo().getLocation().y;
 
         if(( x + windowX) > screenWidth) {
             popUp.setX(screenWidth - windowX);
-            System.out.println("THIS FUCKING HAPPENED");
         } else {
             popUp.setX(x);
         }
         popUp.setY(y);
         popUp.showAndWait();
+    }
 
+    public static void nodeAddEditScreenClick(JFXButton btn1, double x, double y) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+
+        editNodesController.clear();
+        editNodesController.setScreenAdd(x,y);
+
+        double windowX = 616;
+        double windowY = 440;
+        double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        double xClick = MouseInfo.getPointerInfo().getLocation().x;
+        double yClick = MouseInfo.getPointerInfo().getLocation().y;
+
+        if(( xClick + windowX) > screenWidth) {
+            popUp.setX(screenWidth - windowX);
+        } else {
+            popUp.setX(xClick);
+        }
+        popUp.setY(yClick);
+        popUp.showAndWait();
     }
 
     public static void edgeEditScreen(JFXButton btn1){

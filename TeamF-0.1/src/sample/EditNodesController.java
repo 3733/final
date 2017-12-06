@@ -134,4 +134,22 @@ public class EditNodesController {
         longNameField.setText(selected.getLongName());
         shortNameField.setText(selected.getShortName());
     }
+
+    @FXML
+    public void setScreenAdd(double x, double y) {
+        xCoordField.setText("" + (int)x);
+        yCoordField.setText("" + (int)y);
+    }
+
+    @FXML
+    public void clear(){
+        nodeIDField.clear();
+        xCoordField.clear();
+        yCoordField.clear();
+        floorField.clear();
+        buildingField.clear();
+        nodeTypeField.clear();
+        longNameField.clear();
+        shortNameField.clear();
+    }
 }
