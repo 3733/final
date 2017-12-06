@@ -235,6 +235,12 @@ public class MapEditPageController implements Initializable, Data{
     }
 
     @FXML
+    public void changeFloorL12() {
+        System.out.println("in here");
+        alignNodes();
+    }
+
+    @FXML
     public void changeFloor1() {
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
@@ -438,6 +444,63 @@ public class MapEditPageController implements Initializable, Data{
                 }
             });
         }
+
+    public void alignNodes(){
+        try{
+            Node n1 = returnNearestNodeSelected();
+            Node n2 = returnNearestNodeSelected();
+            Node n3 = returnNearestNodeSelected();
+
+            nodeAlign a = new nodeAlign();
+
+            int newx = a.getgoodX(n1, n2, n3);
+            int newy = a.getgoodY(n1, n2, n3);
+
+            n1.setxCoordinate(newx);
+            n2.setyCoordinate(newy);
+
+        } catch (Exception e){
+            System.out.println(e.getCause());
+        }
+    }
+
+    public Node returnNearestNodeSelected() throws IOException {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Edit Node");
+        MenuItem item2 = new MenuItem("Add Node");
+        contextMenu.getItems().addAll(item1, item2);
+
+        ContextMenu contextMenu2 = new ContextMenu();
+        MenuItem item3 = new MenuItem("Set Start Node");
+        MenuItem item4 = new MenuItem("Set End Node");
+        contextMenu2.getItems().addAll(item3, item4);
+
+        pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
+            e.consume();
+            Data.data.gc1.clearRect(0, 0, 1143, 783);
+
+            double newX1 = (e.getSceneX());
+            double newY1 = (e.getSceneY());
+
+            double divisionCst = 4.15;
+            int offset = 1;
+            if (floorLowerTwo.isSelected()) {
+                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+            } else if (floorLowerOne.isSelected()) {
+                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+            } else if (floorGround.isSelected()) {
+                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+            } else if (floorOne.isSelected()) {
+                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+            } else if (floorTwo.isSelected()) {
+                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+            } else if (floorThree.isSelected()) {
+                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+            }
+        });
+
+        return selectedNode;
+    }
 
     @FXML
     public void drawFloorNodes(){
