@@ -1434,6 +1434,44 @@ public class testEmbeddedDB {
         return nodesByFloor;
     }
 
+    public static Vector<Edge> getEdgesByFloor(int floor){
+        Vector<Node> nodesByFloor = getNodesByFloor(floor);
+
+        HashMap<String, Node> nodeMap = new HashMap<>();
+
+        for(Node n : nodesByFloor){
+            nodeMap.put(n.getNodeID(), n);
+        }
+
+        Vector<Edge> edgesByFloor = new Vector<>();
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
+
+            while(r.next()){
+                String edgeID = r.getString("edgeid");
+                String startNode = r.getString("startNode");
+                String endNode = r.getString("endnode");
+
+                if(nodeMap.containsKey(startNode) && nodeMap.containsKey(endNode)){
+                    Edge e = new Edge(edgeID, nodeMap.get(startNode), nodeMap.get(endNode));
+                    edgesByFloor.add(e);
+                }
+            }
+
+
+        } catch (Exception e){
+            System.out.println("getNodesByFloor error: " + e.getMessage());
+        }
+
+
+        return edgesByFloor;
+    }
+
     private static String floorIntToString(int i){
         String ret = new String();
 
