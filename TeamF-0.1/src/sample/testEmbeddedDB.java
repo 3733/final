@@ -1458,7 +1458,6 @@ public class testEmbeddedDB {
                 if(nodeMap.containsKey(startNode) && nodeMap.containsKey(endNode)){
                     Edge e = new Edge(edgeID, nodeMap.get(startNode), nodeMap.get(endNode));
                     edgesByFloor.add(e);
-                    System.out.println("Added an edge");
                 }
             }
 

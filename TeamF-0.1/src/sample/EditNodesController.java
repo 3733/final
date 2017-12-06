@@ -57,6 +57,7 @@ public class EditNodesController {
         nodeTypeField.clear();
         longNameField.clear();
         shortNameField.clear();
+        MapEditPageController.updateNodes();
         Main.closePopUp(addNodeBtn);
     }
 
@@ -92,6 +93,7 @@ public class EditNodesController {
            nodeTypeField.clear();
            longNameField.clear();
            shortNameField.clear();
+           MapEditPageController.updateNodes();
            Main.closePopUp(editNodeBtn);
        }
     }
@@ -106,6 +108,7 @@ public class EditNodesController {
         nodeTypeField.clear();
         longNameField.clear();
         shortNameField.clear();
+        MapEditPageController.updateNodes();
         Main.closePopUp(remNodeBtn);
     }
 

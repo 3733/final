@@ -135,7 +135,7 @@
                   </AnchorPane>
                   <HBox alignment="TOP_CENTER" prefHeight="14.0" prefWidth="242.0">
                      <children>
-                        <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
+                        <JFXButton buttonType="RAISED" onAction="#clear" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -196,21 +196,33 @@
                   </AnchorPane>
                   <HBox alignment="CENTER" prefHeight="74.0" prefWidth="228.0">
                      <children>
-                        <VBox prefHeight="81.0" prefWidth="130.0">
+                        <VBox alignment="CENTER" prefHeight="81.0" prefWidth="130.0">
                            <children>
-                              <JFXCheckBox fx:id="allEdges" checkedColor="#1a479a" onAction="#drawFloorEdges" text="Display All Edges">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
-                                 </font>
-                              </JFXCheckBox>
-                              <JFXCheckBox fx:id="allNodes" checkedColor="#1a479a" onAction="#drawFloorNodes" text="Display All Nodes">
-                                 <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
-                                 </font>
-                              </JFXCheckBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#drawFloorNodes" text="Draw Nodes" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#drawFloorEdges" text="Draw Edges" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="75.0" prefWidth="193.0">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Node" />
+                                       </children>
+                                    </HBox>
+                                    <JFXToggleButton fx:id="nodeEdgeEdit" onAction="#updateBoolean" text=" " />
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Edge" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>

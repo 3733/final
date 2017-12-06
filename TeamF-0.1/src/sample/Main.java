@@ -293,6 +293,25 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void edgeStartEditScreen(JFXButton btn1, Node startNode){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editEdgesController.setScreenStart(startNode);
+        popUp.showAndWait();
+    }
+
+    public static void edgeEndEditScreen(JFXButton btn1, Node endNode){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editEdgesController.setScreenEnd(endNode);
+        popUp.showAndWait();
+    }
 
     public static void setDestination(String place){
         destination = place;

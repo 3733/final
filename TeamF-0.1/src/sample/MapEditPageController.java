@@ -1,9 +1,6 @@
 package sample;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -34,6 +31,8 @@ import java.util.Vector;
 public class MapEditPageController implements Initializable, Data{
 
     //fxml components
+    @FXML
+    private JFXToggleButton nodeEdgeEdit;
     @FXML
     private ScrollPane scrollMap;
     @FXML
@@ -68,6 +67,8 @@ public class MapEditPageController implements Initializable, Data{
     public double calcX; // Used for opening map editing windows
 
     public double calcY; // Used for opening map editing windows
+
+    boolean editEdges;
 
     //initialization
     @Override
@@ -194,9 +195,8 @@ public class MapEditPageController implements Initializable, Data{
         }
     }
 
-    public void updateNodes() {
+    public static void updateNodes() {
         Data.data.firstFloorNodes = testEmbeddedDB.getNodesByFloor(3);
-        //System.out.println(data.firstFloorNodes);
         Data.data.groundFloorNodes = testEmbeddedDB.getNodesByFloor(2);
         Data.data.lowerLevel01FloorNodes = testEmbeddedDB.getNodesByFloor(1);
         Data.data.lowerLevel02FloorNodes = testEmbeddedDB.getNodesByFloor(0);
@@ -204,8 +204,7 @@ public class MapEditPageController implements Initializable, Data{
         Data.data.thirdFloorNodes = testEmbeddedDB.getNodesByFloor(5);
     }
 
-    public void updateEdges() {
-        System.out.println("Updated edges");
+    public static void updateEdges() {
         Data.data.thirdFloorEdges = testEmbeddedDB.getEdgesByFloor(5);
         Data.data.secondFloorEdges = testEmbeddedDB.getEdgesByFloor(4);
         Data.data.firstFloorEdges = testEmbeddedDB.getEdgesByFloor(3);
@@ -221,7 +220,6 @@ public class MapEditPageController implements Initializable, Data{
     public void clearCanvas(GraphicsContext gcIn, Canvas pathCanvasIn) {
         double y = pathCanvasIn.getHeight();
         double x = pathCanvasIn.getWidth();
-        System.out.println("Cleared: " + x + ", " + y);
         if(gcIn != null)
             gcIn.clearRect(0,0,x,y);
         else {
@@ -234,9 +232,6 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.L1Floor);
-        drawFloorNodes();
-        System.out.println("Switched floor L1");
-        drawFloorEdges();
     }
 
     @FXML
@@ -244,9 +239,6 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.firstFloor);
-        drawFloorNodes();
-        System.out.println("Switched floor 1");
-        drawFloorEdges();
     }
 
     @FXML
@@ -254,9 +246,6 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.secondFloor);
-        drawFloorNodes();
-        System.out.println("Switched floor 2");
-        drawFloorEdges();
     }
 
     @FXML
@@ -264,9 +253,6 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2, pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.thirdFloor);
-        drawFloorNodes();
-        System.out.println("Switched floor 3");
-        drawFloorEdges();
     }
 
     @FXML
@@ -274,9 +260,6 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.GFloor);
-        drawFloorNodes();
-        System.out.println("Switched floor G");
-        drawFloorEdges();
     }
 
     @FXML
@@ -284,9 +267,6 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.L2Floor);
-        System.out.println("Switched floor L2");
-        drawFloorEdges();
-        drawFloorNodes();
     }
 
 
@@ -356,7 +336,6 @@ public class MapEditPageController implements Initializable, Data{
      */
     public void drawEdges(Vector<Edge> floorEdges) {
         if(floorEdges != null) {
-            System.out.println("Drawing some edges inside the drawing function");
             Data.data.gc1.setStroke(Color.RED);
             Data.data.gc1.stroke();
             Data.data.gc1.setLineWidth(4);
@@ -364,7 +343,6 @@ public class MapEditPageController implements Initializable, Data{
                 double divisionCst = 4.15;
                 Node start = edge.getStart();
                 Node stop = edge.getEnd();
-                System.out.println(start.getLongName());
                 data.gc1.strokeLine(start.getxCoordinate() / divisionCst + 1,start.getyCoordinate() / divisionCst + 1, stop.getxCoordinate() / divisionCst + 1, stop.getyCoordinate()/ divisionCst  + 1);
             }
         }
@@ -376,89 +354,93 @@ public class MapEditPageController implements Initializable, Data{
      */
 
     public void clickNearestNodeSelected() throws IOException {
-        ContextMenu contextMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Edit Node");
-        MenuItem item2 = new MenuItem("Add Node");
-        contextMenu.getItems().addAll(item1,item2);
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem item1 = new MenuItem("Edit Node");
+            MenuItem item2 = new MenuItem("Add Node");
+            contextMenu.getItems().addAll(item1, item2);
 
-/*        pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
-            System.out.println("Happened");
-        });*/
+            ContextMenu contextMenu2 = new ContextMenu();
+            MenuItem item3 = new MenuItem("Set Start Node");
+            MenuItem item4 = new MenuItem("Set End Node");
+            contextMenu2.getItems().addAll(item3, item4);
 
-        pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
-            e.consume();
-            Data.data.gc1.clearRect(0,0,1143,783);
-            System.out.println("Happened2");
-            double scaleX = 5000d / 1143d;
-            double scaleY = 3400d / 781d;
-
-            double newX1 = (e.getSceneX());
-            double newY1 = (e.getSceneY());
-
-            double divisionCst = 4.15;
-            int offset = 1;
-            if(floorLowerTwo.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.lowerLevel02FloorNodes);
-            } else if(floorLowerOne.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.lowerLevel01FloorNodes);
-            } else if(floorGround.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.groundFloorNodes);
-            } else if(floorOne.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.firstFloorNodes);
-            } else if(floorTwo.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.secondFloorNodes);
-            } else if(floorThree.isSelected()){
-                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.thirdFloorNodes);
-            }
-
-            if(e.isPrimaryButtonDown()) {
+            pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
                 e.consume();
-                Data.data.gc1.setStroke(Color.RED);
-                Data.data.gc1.stroke();
+                Data.data.gc1.clearRect(0, 0, 1143, 783);
 
-                Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst , selectedNode.getyCoordinate() / divisionCst , 7.0, 7.0);
-                Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst , selectedNode.getyCoordinate() / divisionCst , 7.0, 7.0);
-                Main.nodeEditScreenClick(selectedNode,editNodeBtn);
+                double newX1 = (e.getSceneX());
+                double newY1 = (e.getSceneY());
 
+                double divisionCst = 4.15;
+                int offset = 1;
+                if (floorLowerTwo.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                } else if (floorLowerOne.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                } else if (floorGround.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+                } else if (floorOne.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+                } else if (floorTwo.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+                } else if (floorThree.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+                }
 
+                if (e.isPrimaryButtonDown()) {
+                    e.consume();
+                    Data.data.gc1.setStroke(Color.RED);
+                    Data.data.gc1.stroke();
 
-                System.out.println("Node clicked: " + selectedNode.getLongName());
-                drawFloorNodes();
-            } else if (e.isSecondaryButtonDown()){
-                contextMenu.show(pathCanvas1,newX1 - 40, newY1);
-                contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        // Event handling for the first item, open the edit node screen
-                        Main.nodeEditScreenClick(selectedNode,editNodeBtn);
-                        drawFloorNodes();
+                    Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+                    drawFloorNodes();
+                } else if (e.isSecondaryButtonDown()) {
+                    if(editEdges) {
+                        contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
+                        contextMenu2.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                // Event handling for the first item, open the edit edge screen
+                                Main.edgeStartEditScreen(editEdgeBtn, selectedNode);
+                                drawFloorEdges();
+                            }
+                        });
+                        contextMenu2.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                Main.edgeEndEditScreen(editEdgeBtn, selectedNode);
+                                drawFloorEdges();
+                            }
+                        });
+                    } else {
+                        contextMenu.show(pathCanvas1, newX1 - 40, newY1);
+                        contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                // Event handling for the first item, open the edit node screen
+                                Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+                                drawFloorNodes();
+                            }
+                        });
+                        contextMenu.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                // Event handling for the second item, open add node screen
+                                calcX = (int) (e.getSceneX() - data.offset) * divisionCst;
+                                calcY = (e.getSceneY() - data.offset) * divisionCst;
+                                Main.nodeAddEditScreenClick(editNodeBtn, calcX, calcY);
+                                drawFloorNodes();
+                            }
+                        });
                     }
-                });
-                contextMenu.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        // Event handling for the second item, open add node screen
-                        calcX = (int)(e.getSceneX() - data.offset) * divisionCst;
-                        calcY = (e.getSceneY() - data.offset) * divisionCst;
-                        Main.nodeAddEditScreenClick(editNodeBtn,calcX,calcY);
-                        System.out.println("This is calcX: " + calcX + " This is calcY" + calcY);
-                        drawFloorNodes();
-                    }
-                });
-            }
-                // prevx = newX1;
-            // prevy = newY1;
-
-//                Data.data.gc.setStroke(Color.YELLOW);
-//                pathCanvas.getGraphicsContext2D().setFill(Color.RED);
-//                pathCanvas.getGraphicsContext2D().strokeOval(newX1 - 2.5,newY1 -.5, 6.0, 6.0);
-//                pathCanvas.getGraphicsContext2D().fillOval(newX1-2.5 ,newY1-.5, 6.0, 6.0);
-        });
-    }
+                }
+            });
+        }
 
     @FXML
     public void drawFloorNodes(){
-        if(allNodes.isSelected()) {
             if (floorLowerTwo.isSelected()) {
                 drawNodesCircle(data.lowerLevel02FloorNodes);
             } else if (floorLowerOne.isSelected()) {
@@ -472,13 +454,10 @@ public class MapEditPageController implements Initializable, Data{
             } else if (floorThree.isSelected()) {
                 drawNodesCircle(data.thirdFloorNodes);
             }
-        }
     }
 
     @FXML
     public void drawFloorEdges() {
-        System.out.println("Attempting to draw edges");
-        if(allEdges.isSelected()) {
             if (floorLowerTwo.isSelected()) {
                 drawEdges(data.lower2FloorEdges);
             } else if (floorLowerOne.isSelected()) {
@@ -492,7 +471,6 @@ public class MapEditPageController implements Initializable, Data{
             } else if (floorThree.isSelected()) {
                 drawEdges(data.thirdFloorEdges);
             }
-        }
     }
 
 
@@ -521,5 +499,16 @@ public class MapEditPageController implements Initializable, Data{
         }
         return GoodOne;
 
+    }
+
+    @FXML
+    public void updateBoolean() {
+        editEdges = nodeEdgeEdit.isSelected();
+    }
+
+    @FXML
+    public void clear() {
+        clearCanvas(Data.data.gc1,pathCanvas1);
+        clearCanvas(Data.data.gc,pathCanvas);
     }
 }
