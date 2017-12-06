@@ -39,8 +39,9 @@ public class StartPageController {
 
     @FXML
     public void search() throws IOException, InterruptedException {
-        TextClient t = new TextClient();
-        t.startIM("bmat2z", 6969);
+        messenger.Main m = new messenger.Main();
+        String[] args = new String[6];
+        m.run(args);
     }
 
     @FXML
