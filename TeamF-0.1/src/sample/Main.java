@@ -369,7 +369,7 @@ public class Main extends Application implements Data{
         Stage popUp = new Stage();
         editUserWindowController.addingUsers();
         popUp.setScene(aboutWin);
-        popUp.setTitle("Add User");
+        popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();
