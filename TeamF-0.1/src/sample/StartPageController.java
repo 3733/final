@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.ObjectUtils;
 import sample.Main;
 
 import java.awt.*;
@@ -39,9 +40,7 @@ public class StartPageController {
 
     @FXML
     public void search() throws IOException, InterruptedException {
-        messenger.Main m = new messenger.Main();
-        String[] args = new String[6];
-        m.run(args);
+        Main.mapScreen();
     }
 
     @FXML
@@ -56,7 +55,18 @@ public class StartPageController {
 
     @FXML
     public void help(){
-        Main.setHelpScreenServiceRequestScreen();
+        try{
+            /*ProcessBuilder pb = new ProcessBuilder("iperf", "-s");
+            pb.redirectOutput(new File("testresult.txt"));
+            Process p = pb.start();*/
+            messenger.Main m = new messenger.Main();
+            String[] args = new String[6];
+            m.run(60, 500, 600,300,
+                    "/sample/UI/style.css", "test", "Test");
+
+        } catch (Exception e){
+            System.out.println("api issue in search: " + e.getMessage());
+        }
     }
 
     @FXML
