@@ -165,7 +165,7 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
                             <children>
-                                <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
+                                <JFXButton buttonType="RAISED" onAction="#reverseNodes" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
                                     <HBox.margin>
                                         <Insets left="15.0" right="15.0" />
                                     </HBox.margin>

@@ -1082,4 +1082,15 @@ public class NavigationPageController implements Initializable, Data{
 
     }
 
+    public void reverseNodes() throws IOException, InterruptedException {
+        Vector<Node> currentPath = this.path;
+        Vector<Node> reversePath = new Vector<Node>();
+        int z = 0;
+        for(int i = currentPath.size(); i > 0; i--){
+            reversePath.add(currentPath.get(i-1));
+        }
+        this.path = reversePath;
+        MultiFloorPathDrawing(this.path);
+    }
+
 }

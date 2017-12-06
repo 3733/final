@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Wed Dec 06 03:12:56 EST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-2ae2-85a4-000005fd4d30 
-on database directory C:\Users\pmwws\Documents\iteration2\Skynet with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Wed Dec 06 09:09:32 EST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-2c28-fdb3-000005eeb198 
+on database directory C:\Users\rothg\Documents\CS3733 Iteration 2\iteration2\Skynet with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
 Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_151/db/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_151-b12
-user.dir=C:\Users\pmwws\Documents\iteration2
+user.dir=C:\Users\rothg\Documents\CS3733 Iteration 2\iteration2
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0
