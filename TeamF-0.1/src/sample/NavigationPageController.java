@@ -300,10 +300,16 @@ public class NavigationPageController implements Initializable, Data{
     public void settingFields() throws IOException, InterruptedException {
         String destinationText = destination.getText();
         if (points.getSelectedToggle() == start) {
+
+            System.out.println("LABEL!!!!!");
             startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
         }
         else{
+
+            System.out.println("LABEL!!!!!");
             endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+
+            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
             if(!destinationText.equals("")) {
                 go();
             }
@@ -412,9 +418,14 @@ public class NavigationPageController implements Initializable, Data{
 
     public void findPath(String Start, String End) throws IOException, InterruptedException {
         //Returns
+
+        System.out.println("START SEARCH!!!!!!!!!!");
+        Node StartNode = SearchEngine.SearchPath(Start,Data.data.graph,Kiosk);
+
+        System.out.println("END SEARCH!!!!!!!!!!!!");
         Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,Kiosk);
 
-        Node StartNode = SearchEngine.SearchPath(Start,Data.data.graph,Kiosk);
+
 
         switch (currentAlgo){
             case 1:
