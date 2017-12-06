@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -12,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditEdgesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditEdgesController">
    <children>
       <MenuBar prefHeight="26.0" prefWidth="600.0">
          <menus>
@@ -39,16 +45,6 @@
                   <Font name="Montserrat Regular" size="14.0" />
                </font>
             </Label>
-            <Label text="Start Node" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Montserrat Regular" size="14.0" />
-               </font>
-            </Label>
-            <Label text="End Node" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Montserrat Regular" size="14.0" />
-               </font>
-            </Label>
             <JFXTextField fx:id="edgeIDField" GridPane.columnIndex="1">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
@@ -61,6 +57,16 @@
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font></JFXTextField>
+            <HBox alignment="CENTER" GridPane.rowIndex="1">
+               <children>
+                  <JFXButton fx:id="clickStartNode" contentDisplay="CENTER" onAction="#selectEndNode" text="Start Node" GridPane.rowIndex="1" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" GridPane.rowIndex="2">
+               <children>
+                  <JFXButton fx:id="clickEndNode" contentDisplay="CENTER" onAction="#selectEndNode" text="End Node" />
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets right="45.0" />

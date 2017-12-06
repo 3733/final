@@ -15,6 +15,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.util.Map.Entry;
 
 
@@ -26,7 +28,7 @@ import java.util.Vector;
 public class Main extends Application implements Data{
 
     private  static String destination;
-    private  static Staff loggedInGuy;
+    private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
@@ -66,7 +68,13 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
-        data.kiosk = data.graph.getNodes().get(0);
+        data.kiosk = data.kiosk = data.graph.getNodes().get(0);
+        for(int i = 0;i<data.graph.getNodes().size();i++){
+            if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
+                data.kiosk = data.graph.getNodes().get(i);
+            }
+        }
+
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -208,11 +216,13 @@ public class Main extends Application implements Data{
     }
 
     public static void serviceScreen(){
+        serviceRequestController.refreshTable();
         stage.setScene(service);
         stage.centerOnScreen();
     }
 
     public static void acceptScreen(){
+        serviceAcceptController.refreshTable();
         stage.setScene(accept);
         stage.centerOnScreen();
     }
@@ -231,6 +241,58 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void nodeEditScreenClick(Node selected, JFXButton btn1) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+
+        editNodesController.clear();
+        editNodesController.setScreen(selected);
+
+        double windowX = 616;
+        double windowY = 440;
+        double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        double x = MouseInfo.getPointerInfo().getLocation().x;
+        double y = MouseInfo.getPointerInfo().getLocation().y;
+
+        if(( x + windowX) > screenWidth) {
+            popUp.setX(screenWidth - windowX);
+        } else {
+            popUp.setX(x);
+        }
+        popUp.setY(y);
+        popUp.showAndWait();
+    }
+
+    public static void nodeAddEditScreenClick(JFXButton btn1, double x, double y) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+
+        editNodesController.clear();
+        editNodesController.setScreenAdd(x,y);
+
+        double windowX = 616;
+        double windowY = 440;
+        double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        double xClick = MouseInfo.getPointerInfo().getLocation().x;
+        double yClick = MouseInfo.getPointerInfo().getLocation().y;
+
+        if(( xClick + windowX) > screenWidth) {
+            popUp.setX(screenWidth - windowX);
+        } else {
+            popUp.setX(xClick);
+        }
+        popUp.setY(yClick);
+        popUp.showAndWait();
+    }
+
     public static void edgeEditScreen(JFXButton btn1){
         Stage popUp = new Stage();
         popUp.setScene(edgeEdit);
@@ -240,6 +302,25 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void edgeStartEditScreen(JFXButton btn1, Node startNode){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editEdgesController.setScreenStart(startNode);
+        popUp.showAndWait();
+    }
+
+    public static void edgeEndEditScreen(JFXButton btn1, Node endNode){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editEdgesController.setScreenEnd(endNode);
+        popUp.showAndWait();
+    }
 
     public static void setDestination(String place){
         destination = place;
