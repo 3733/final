@@ -327,6 +327,7 @@ public class NavigationPageController implements Initializable, Data{
     //setting start and end nodes
     @FXML
     public void settingFields() throws IOException, InterruptedException {
+        searchList.setVisible(false);
         String destinationText = destination.getText();
         oneArrow.setVisible(false);
         twoArrow.setVisible(false);
@@ -348,6 +349,8 @@ public class NavigationPageController implements Initializable, Data{
             endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
 
             System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
+            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             if(!destinationText.equals("")) {
                 go();
             }
@@ -801,7 +804,6 @@ public class NavigationPageController implements Initializable, Data{
                 double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
                 Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
                 if (!(scaleFactor * stackPane.getScaleX() < 1)) {
-                    System.out.println(scaleFactor);
                     stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
                     stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
                 }
@@ -824,7 +826,6 @@ public class NavigationPageController implements Initializable, Data{
                 double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
                 double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
                 double desiredH = scrollMap.getHvalue() - deltaH;
-                System.out.println("deltaX: " + deltaX + " extraWidth: " + extraWidth + " deltaH: " + extraWidth+ " deltaH: " + deltaH + " desiredH: " + desiredH);
                 if(deltaX > 0) {
                     scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
                 }
@@ -832,8 +833,6 @@ public class NavigationPageController implements Initializable, Data{
                 double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
                 double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
                 double desiredV = scrollMap.getVvalue() - deltaV;
-                //System.out.println("Current H: " + scrollMap.getHvalue() + " Current V: " + scrollMap.getVvalue());
-                System.out.println("Desired H: " + desiredH + " Desired V: " + desiredV);
                 if ( deltaY > 0) {
                     scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
                 }
@@ -1028,7 +1027,13 @@ public class NavigationPageController implements Initializable, Data{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 destination.setText(newValue);
-                searchList.setVisible(false);
+                try {
+                    settingFields();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

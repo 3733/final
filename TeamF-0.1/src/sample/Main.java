@@ -26,7 +26,7 @@ import java.util.Vector;
 public class Main extends Application implements Data{
 
     private  static String destination;
-    private  static Staff loggedInGuy;
+    private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
@@ -214,11 +214,13 @@ public class Main extends Application implements Data{
     }
 
     public static void serviceScreen(){
+        serviceRequestController.refreshTable();
         stage.setScene(service);
         stage.centerOnScreen();
     }
 
     public static void acceptScreen(){
+        serviceAcceptController.refreshTable();
         stage.setScene(accept);
         stage.centerOnScreen();
     }

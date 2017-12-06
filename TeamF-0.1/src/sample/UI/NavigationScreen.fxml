@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
@@ -18,6 +9,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -32,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
     <right>
         <JFXDrawer defaultDrawerSize="50.0" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
             <children>
@@ -301,7 +293,7 @@
                   </Group>
                     </content>
                 </ScrollPane>
-                <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                     <font>
                         <Font name="Montserrat Regular" size="12.0" />
                     </font>
