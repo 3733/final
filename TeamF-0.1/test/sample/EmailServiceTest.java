@@ -6,7 +6,25 @@ package sample;
 //import static org.junit.Assert.*;
 
 
+import org.junit.Before;
+import org.junit.Test;
+
 public class EmailServiceTest {
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @Test
+    public void sendEmail() throws Exception {
+    }
+
+    @Test
+    public void buildSession() throws Exception {
+    }
+
+    @Test
+    public void sendRequestEmail() throws Exception {
+    }
 
 //Uses a correct string of directions to send emails out
 
