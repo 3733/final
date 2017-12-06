@@ -118,18 +118,21 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     private AnchorPane mainAnchor;
+
     @FXML
     private VBox adminBox;
+
     @FXML
     private JFXButton loginButton;
+
     @FXML
     private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
-
 
     @FXML
     private StackPane stackPane;
 
     //other components
+    @FXML
     private Main mainController;
 
     private Vector<Node> path = new Vector<Node>();
@@ -741,9 +744,7 @@ public class NavigationPageController implements Initializable, Data{
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        double divisionCst = 3.87;
-                        int offset = 2;
-                        Data.data.gc.strokeLine(node.getxCoordinate() / divisionCst + offset, node.getyCoordinate() / divisionCst , node2.getxCoordinate() / divisionCst + offset, node2.getyCoordinate() / divisionCst);
+                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
                     }
                 }
             }

@@ -1404,8 +1404,8 @@ public class testEmbeddedDB {
         return names;
     }
 
-    public static HashMap<String, Node> getNodesByFloor(int floor){
-        HashMap<String, Node> nodesByFloor = new HashMap<>();
+    public static Vector<Node> getNodesByFloor(int floor){
+        Vector<Node> nodesByFloor = new Vector<Node>();
         Node n;
 
         String dbFloor = testEmbeddedDB.floorIntToString(floor);
@@ -1434,7 +1434,7 @@ public class testEmbeddedDB {
 
                 n = new Node(nodeID, xcord, ycoord, tableFloor, building, nodetype, longname, shortname, team);
 
-                nodesByFloor.put(nodeID, n);
+                nodesByFloor.add(n);
             }
 
 
@@ -1444,6 +1444,53 @@ public class testEmbeddedDB {
 
 
         return nodesByFloor;
+    }
+
+    public static Vector<Edge> getEdgesByFloor(int floor){
+
+        Vector<Node> nodesByFloor = getNodesByFloor(floor);
+
+        HashMap<String, Node> nodeMap = new HashMap<>();
+
+
+
+        for(Node n : nodesByFloor){
+            nodeMap.put(n.getNodeID(), n);
+        }
+
+
+        System.out.println("num Nodes: " + nodeMap.size());
+
+        Vector<Edge> edgesByFloor = new Vector<>();
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
+
+            while(r.next()){
+                String edgeID = r.getString("edgeid").trim();
+                String startNode = r.getString("startnode").trim();
+                String endNode = r.getString("endnode").trim();
+
+                /*System.out.println("start: " + startNode);
+                System.out.println("end: " + endNode);
+                System.out.println("edgeid: " + edgeID);*/
+
+                if(nodeMap.containsKey(startNode) && nodeMap.containsKey(endNode)){
+                    Edge e = new Edge(edgeID, nodeMap.get(startNode), nodeMap.get(endNode));
+                    edgesByFloor.add(e);
+                }
+            }
+
+        } catch (Exception e){
+            System.out.println("getNodesByFloor error: " + e.getMessage());
+        }
+
+        System.out.println(" DB Size: "+edgesByFloor.size());
+        return edgesByFloor;
     }
 
     private static String floorIntToString(int i){
@@ -1467,4 +1514,7 @@ public class testEmbeddedDB {
         }
 
     }
+
+
+
 }

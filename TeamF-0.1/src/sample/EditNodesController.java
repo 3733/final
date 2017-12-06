@@ -9,6 +9,9 @@ import javafx.scene.control.TextField;
 import sample.Main;
 import sample.testEmbeddedDB;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class EditNodesController {
     @FXML
     private JFXButton close, addNodeBtn, editNodeBtn, remNodeBtn;
@@ -54,9 +57,10 @@ public class EditNodesController {
         nodeTypeField.clear();
         longNameField.clear();
         shortNameField.clear();
+        MapEditPageController.updateNodes();
         Main.closePopUp(addNodeBtn);
-
     }
+
     public void editNodeButton(){
        if(!nodeIDField.getText().trim().equals(null) && testEmbeddedDB.getNode(nodeIDField.getText().trim())!=null) {
            if (!xCoordField.getText().trim().equals("")) {
@@ -89,6 +93,7 @@ public class EditNodesController {
            nodeTypeField.clear();
            longNameField.clear();
            shortNameField.clear();
+           MapEditPageController.updateNodes();
            Main.closePopUp(editNodeBtn);
        }
     }
@@ -103,6 +108,7 @@ public class EditNodesController {
         nodeTypeField.clear();
         longNameField.clear();
         shortNameField.clear();
+        MapEditPageController.updateNodes();
         Main.closePopUp(remNodeBtn);
     }
 
@@ -118,5 +124,35 @@ public class EditNodesController {
         longNameField.clear();
         shortNameField.clear();
         Main.closePopUp(close);
+    }
+
+    @FXML
+    public void setScreen(Node selected) {
+        nodeIDField.setText(selected.getNodeID());
+        xCoordField.setText("" + selected.getxCoordinate());
+        yCoordField.setText("" + selected.getyCoordinate());
+        floorField.setText(selected.getFloor());
+        buildingField.setText(selected.getBuilding());
+        nodeTypeField.setText(selected.getNodeType());
+        longNameField.setText(selected.getLongName());
+        shortNameField.setText(selected.getShortName());
+    }
+
+    @FXML
+    public void setScreenAdd(double x, double y) {
+        xCoordField.setText("" + (int)x);
+        yCoordField.setText("" + (int)y);
+    }
+
+    @FXML
+    public void clear(){
+        nodeIDField.clear();
+        xCoordField.clear();
+        yCoordField.clear();
+        floorField.clear();
+        buildingField.clear();
+        nodeTypeField.clear();
+        longNameField.clear();
+        shortNameField.clear();
     }
 }

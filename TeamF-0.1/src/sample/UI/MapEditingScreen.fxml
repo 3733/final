@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
@@ -25,7 +33,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <right>
       <JFXDrawer defaultDrawerSize="50.0" direction="RIGHT" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
          <children>
@@ -127,7 +135,7 @@
                   </AnchorPane>
                   <HBox alignment="TOP_CENTER" prefHeight="14.0" prefWidth="242.0">
                      <children>
-                        <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
+                        <JFXButton buttonType="RAISED" onAction="#clear" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -188,21 +196,33 @@
                   </AnchorPane>
                   <HBox alignment="CENTER" prefHeight="74.0" prefWidth="228.0">
                      <children>
-                        <VBox prefHeight="81.0" prefWidth="130.0">
+                        <VBox alignment="CENTER" prefHeight="81.0" prefWidth="130.0">
                            <children>
-                              <JFXCheckBox checkedColor="#1a479a" text="Display All Edges">
-                                 <VBox.margin>
-                                    <Insets bottom="15.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
-                                 </font>
-                              </JFXCheckBox>
-                              <JFXCheckBox checkedColor="#1a479a" text="Display All Nodes">
-                                 <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
-                                 </font>
-                              </JFXCheckBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#drawFloorNodes" text="Draw Nodes" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#drawFloorEdges" text="Draw Edges" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="75.0" prefWidth="193.0">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Node" />
+                                       </children>
+                                    </HBox>
+                                    <JFXToggleButton fx:id="nodeEdgeEdit" onAction="#updateBoolean" text=" " />
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Edge" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
@@ -293,12 +313,13 @@
                <content>
                   <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Canvas height="812.0" width="1115.0" />
                         <ImageView fx:id="map" fitHeight="824.0" fitWidth="1237.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/01_thefirstfloor.png" />
                            </image>
                         </ImageView>
+                        <Canvas fx:id="pathCanvas" height="812.0" width="1115.0" />
+                        <Canvas fx:id="pathCanvas1" height="812.0" width="1115.0" />
                      </children>
                   </StackPane>
                </content>
