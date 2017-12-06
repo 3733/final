@@ -419,7 +419,7 @@ public class Main extends Application implements Data{
         }*/
 
 
-        launch(args);
+
 
 //        testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
@@ -453,7 +453,7 @@ public class Main extends Application implements Data{
         testEmbeddedDB.addStaff(Nik);
         testEmbeddedDB.addStaff(Andrew);//*/
 
-
+        launch(args);
 
         //controller.drawDirections(Vec);
     }
