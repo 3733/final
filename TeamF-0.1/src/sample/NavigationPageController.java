@@ -395,7 +395,20 @@ public class NavigationPageController implements Initializable, Data{
 
         startLabel.setText(originalEnd.trim());
         endLabel.setText(originalStart.trim());
-        go();
+
+        //this line is giving a null pointer exception.
+        Vector<Node> temp = CurMap.getNodes();
+
+        for(Node n : temp){
+            if(n.getNodeID().equals(originalEnd)){
+                data.kiosk = n;
+            }
+        }
+
+        System.out.println("kiosk: " + data.kiosk.getNodeID());
+        System.out.println("orig end: " + originalEnd);
+
+        //go();
     }
 
     //sets invalid email label when necessary for errorhandling
@@ -600,7 +613,6 @@ public class NavigationPageController implements Initializable, Data{
         searchList.setVisible(false);
         directionSteps.setVisible(true);
     }
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Drawing and Directions functions
