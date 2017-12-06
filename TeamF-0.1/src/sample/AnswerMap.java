@@ -38,10 +38,10 @@ public class AnswerMap implements Data{
 
 
         double maxLav = 0;
-        String maxKey = null;
+        String maxKey = "";
         for (String key : qAndA.keySet()) {
 
-            if(maxLav > SearchEngine.computeDistance(question,key)){
+            if(maxLav < SearchEngine.computeDistance(question,key)){
                 maxLav = SearchEngine.computeDistance(question,key);
                 maxKey = key;
             }
