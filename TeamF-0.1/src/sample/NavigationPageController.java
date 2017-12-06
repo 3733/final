@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -111,6 +112,9 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     private Label startLabel, endLabel;
+
+    @FXML
+    private JFXButton helpButton;
 
     // Email UI Components
     @FXML
@@ -278,6 +282,14 @@ public class NavigationPageController implements Initializable, Data{
         mainController = in;
     }
 
+    public JFXListView getDirectionSteps(){
+        return this.directionSteps;
+    }
+
+    public Vector<String> getFloorsVisited(){
+        return  this.floorsVisited;
+    }
+
     public int getCurrentAlgo(){
         return this.currentAlgo;
     }
@@ -293,6 +305,18 @@ public class NavigationPageController implements Initializable, Data{
     public void autoClose(){
         searchList.setVisible(false);
     }
+
+    public JFXTextField getDestination(){return this.destination;}
+
+    public Label getStartLabel(){return this.startLabel;}
+
+    public Label getEndLabel(){return this.endLabel;}
+
+    public JFXRadioButton getRadioStart(){return this.start;}
+
+    public void setDestination(String s){destination.setText(s);}
+
+    public JFXRadioButton getRadioEnd(){return this.end;}
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
@@ -369,6 +393,10 @@ public class NavigationPageController implements Initializable, Data{
     public void setMap(Map m) throws IOException{
         this.CurMap = m;
         Data.data.currentMap = "1";
+    }
+
+    public Map getMap(){
+        return this.CurMap;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -961,6 +989,13 @@ public class NavigationPageController implements Initializable, Data{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
         Main.startScreen();
+        loginButton.setOnAction((event) -> {
+            try {
+                login();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         clearFields();
         clear();
     }
@@ -980,6 +1015,15 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void editUsers(){Main.editUsersScreen();}
+
+    @FXML
+    public void chat(){
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+        sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+        String sCertDate = sdf.format(new Date());
+        Main.messengerWindowController.getCurrentChat().add("Chat started at " + sCertDate);
+        Main.messageScreen(helpButton);
+    }
 
     @FXML
     public void setAlgorithm(){}

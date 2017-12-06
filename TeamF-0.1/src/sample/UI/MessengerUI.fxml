@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MessengerController">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="54.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXTextField fx:id="questionAsked" prefHeight="26.0" prefWidth="394.0" />
+            <JFXButton fx:id="sendAsk" buttonType="RAISED" onAction="#sendQuestion" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="15.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+   <top>
+      <VBox prefHeight="88.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="backButton" buttonType="RAISED" onAction="#back" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Help">
+                     <font>
+                        <Font name="Montserrat Regular" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="From:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="fromLabel" prefHeight="18.0" prefWidth="510.0">
+                     <HBox.margin>
+                        <Insets bottom="15.0" left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="To:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <JFXTextField fx:id="toField" prefHeight="26.0" prefWidth="509.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </JFXTextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <HBox alignment="CENTER" prefHeight="261.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXListView fx:id="chatListView" prefHeight="258.0" prefWidth="507.0" />
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
