@@ -3,7 +3,7 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import dev2dev.textclient.TextClient;
+//import dev2dev.textclient.TextClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,13 +32,13 @@ public class MessengerController implements Initializable{
 
     private Main mainController;
 
-    TextClient t = new TextClient();
+    //TextClient t = new TextClient();
 
     //Purpose: to initialize the fxml
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        chatListView.setItems(currentChat);
-        t.boot("bmat2z", 6969);
+        //chatListView.setItems(currentChat);
+        //t.boot("bmat2z", 6969);
     }
 
     //getters and setters
@@ -75,8 +75,8 @@ public class MessengerController implements Initializable{
     }
 
     //send button
-    public void send(){
-        t.sendMsg(fromLabel.getText(), questionAsked.getText());
-    }
+    //public void send(){
+        //t.sendMsg(fromLabel.getText(), questionAsked.getText());
+    //}
 
 }

@@ -1,7 +1,7 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
-import dev2dev.textclient.TextClient;
+//import dev2dev.textclient.TextClient;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
