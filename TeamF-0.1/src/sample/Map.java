@@ -119,4 +119,6 @@ public class Map {
         return (Math.sqrt((Math.abs(x - End.getxCoordinate())*Math.abs(x - End.getxCoordinate()) + Math.abs(y - End.getyCoordinate())*Math.abs(y - End.getyCoordinate()))));
     }
 
+
+
 }
