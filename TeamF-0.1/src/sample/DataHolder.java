@@ -62,6 +62,13 @@ public class DataHolder {
     public Vector<Node>  secondFloorNodes;
     public Vector<Node>  thirdFloorNodes;
 
+    public Vector<Edge> thirdFloorEdges;
+    public Vector<Edge> secondFloorEdges;
+    public Vector<Edge> firstFloorEdges;
+    public Vector<Edge> groundFloorEdges;
+    public Vector<Edge> lower1FloorEdges;
+    public Vector<Edge> lower2FloorEdges;
+
     public double divisionCst = 3.87;
     public int offset = 2;
 }

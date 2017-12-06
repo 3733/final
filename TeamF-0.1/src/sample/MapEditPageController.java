@@ -1,6 +1,7 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.beans.property.ObjectProperty;
@@ -53,7 +54,11 @@ public class MapEditPageController implements Initializable, Data{
     private Canvas pathCanvas1;
     @FXML
     private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
-
+    @FXML
+    private JFXCheckBox allNodes;
+    @FXML
+    private JFXCheckBox allEdges;
+    
     //other variables
     private Main mainController;
 
@@ -69,7 +74,7 @@ public class MapEditPageController implements Initializable, Data{
     public void initialize(URL location, ResourceBundle resources) {
         try{
             updateNodes();
-
+            updateEdges();
             Data.data.gc1 = pathCanvas1.getGraphicsContext2D();
             Data.data.gc2 = pathCanvas.getGraphicsContext2D();
 
@@ -198,6 +203,16 @@ public class MapEditPageController implements Initializable, Data{
         Data.data.secondFloorNodes = testEmbeddedDB.getNodesByFloor(4);
         Data.data.thirdFloorNodes = testEmbeddedDB.getNodesByFloor(5);
     }
+
+    public void updateEdges() {
+        System.out.println("Updated edges");
+        Data.data.thirdFloorEdges = testEmbeddedDB.getEdgesByFloor(5);
+        Data.data.secondFloorEdges = testEmbeddedDB.getEdgesByFloor(4);
+        Data.data.firstFloorEdges = testEmbeddedDB.getEdgesByFloor(3);
+        Data.data.groundFloorEdges = testEmbeddedDB.getEdgesByFloor(2);
+        Data.data.lower1FloorEdges = testEmbeddedDB.getEdgesByFloor(1);
+        Data.data.lower2FloorEdges = testEmbeddedDB.getEdgesByFloor(0);
+    }
     //getter and setters
     public void setMainController(Main main){
         this.mainController = main;
@@ -219,8 +234,9 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.L1Floor);
-        drawNodesCircle(data.lowerLevel01FloorNodes);
+        drawFloorNodes();
         System.out.println("Switched floor L1");
+        drawFloorEdges();
     }
 
     @FXML
@@ -228,8 +244,9 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.firstFloor);
-        drawNodesCircle(data.lowerLevel02FloorNodes);
+        drawFloorNodes();
         System.out.println("Switched floor 1");
+        drawFloorEdges();
     }
 
     @FXML
@@ -237,8 +254,9 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.secondFloor);
-        drawNodesCircle(data.secondFloorNodes);
+        drawFloorNodes();
         System.out.println("Switched floor 2");
+        drawFloorEdges();
     }
 
     @FXML
@@ -246,8 +264,9 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2, pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.thirdFloor);
-        drawNodesCircle(data.thirdFloorNodes);
+        drawFloorNodes();
         System.out.println("Switched floor 3");
+        drawFloorEdges();
     }
 
     @FXML
@@ -255,8 +274,9 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.GFloor);
-        drawNodesCircle(data.groundFloorNodes);
+        drawFloorNodes();
         System.out.println("Switched floor G");
+        drawFloorEdges();
     }
 
     @FXML
@@ -264,8 +284,9 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
         map.setImage(Data.data.L2Floor);
-        drawNodesCircle(data.lowerLevel02FloorNodes);
         System.out.println("Switched floor L2");
+        drawFloorEdges();
+        drawFloorNodes();
     }
 
 
@@ -323,8 +344,28 @@ public class MapEditPageController implements Initializable, Data{
             {
                 Node nodesMap = FloorNodes.get(i);
                 double divisionCst = 4.15;
-                data.gc1.strokeOval(nodesMap.getxCoordinate()/divisionCst  ,nodesMap.getyCoordinate()/divisionCst , 4.0, 4.0);
-                data.gc1.fillOval(nodesMap.getxCoordinate()/divisionCst  ,nodesMap.getyCoordinate()/divisionCst , 4.0, 4.0);
+                int offset = 0;
+                data.gc1.strokeOval(nodesMap.getxCoordinate()/divisionCst + offset ,nodesMap.getyCoordinate()/divisionCst + offset, 4.0, 4.0);
+                data.gc1.fillOval(nodesMap.getxCoordinate()/divisionCst + offset ,nodesMap.getyCoordinate()/divisionCst + offset, 4.0, 4.0);
+            }
+        }
+    }
+
+    /**
+     * function to draw all the edges of the floor
+     */
+    public void drawEdges(Vector<Edge> floorEdges) {
+        if(floorEdges != null) {
+            System.out.println("Drawing some edges inside the drawing function");
+            Data.data.gc1.setStroke(Color.RED);
+            Data.data.gc1.stroke();
+            Data.data.gc1.setLineWidth(4);
+            for (Edge edge:floorEdges) {
+                double divisionCst = 4.15;
+                Node start = edge.getStart();
+                Node stop = edge.getEnd();
+                System.out.println(start.getLongName());
+                data.gc1.strokeLine(start.getxCoordinate() / divisionCst + 1,start.getyCoordinate() / divisionCst + 1, stop.getxCoordinate() / divisionCst + 1, stop.getyCoordinate()/ divisionCst  + 1);
             }
         }
     }
@@ -355,18 +396,19 @@ public class MapEditPageController implements Initializable, Data{
             double newY1 = (e.getSceneY());
 
             double divisionCst = 4.15;
+            int offset = 1;
             if(floorLowerTwo.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.lowerLevel02FloorNodes);
+                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.lowerLevel02FloorNodes);
             } else if(floorLowerOne.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.lowerLevel01FloorNodes);
+                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.lowerLevel01FloorNodes);
             } else if(floorGround.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.groundFloorNodes);
+                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.groundFloorNodes);
             } else if(floorOne.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.firstFloorNodes);
+                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.firstFloorNodes);
             } else if(floorTwo.isSelected()) {
-                selectedNode = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.secondFloorNodes);
+                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.secondFloorNodes);
             } else if(floorThree.isSelected()){
-                selectedNode = mousePosition((newX1-2)*divisionCst,(newY1-2)*divisionCst,Data.data.thirdFloorNodes);
+                selectedNode = mousePosition((newX1-2)*divisionCst + offset,(newY1-2)*divisionCst + offset,Data.data.thirdFloorNodes);
             }
 
             if(e.isPrimaryButtonDown()) {
@@ -374,14 +416,14 @@ public class MapEditPageController implements Initializable, Data{
                 Data.data.gc1.setStroke(Color.RED);
                 Data.data.gc1.stroke();
 
-                Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst + data.offset, selectedNode.getyCoordinate() / divisionCst + data.offset, 7.0, 7.0);
-                Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst + data.offset, selectedNode.getyCoordinate() / divisionCst + data.offset, 7.0, 7.0);
+                Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst , selectedNode.getyCoordinate() / divisionCst , 7.0, 7.0);
+                Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst , selectedNode.getyCoordinate() / divisionCst , 7.0, 7.0);
                 Main.nodeEditScreenClick(selectedNode,editNodeBtn);
 
 
 
                 System.out.println("Node clicked: " + selectedNode.getLongName());
-                drawFloor();
+                drawFloorNodes();
             } else if (e.isSecondaryButtonDown()){
                 contextMenu.show(pathCanvas1,newX1 - 40, newY1);
                 contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
@@ -389,7 +431,7 @@ public class MapEditPageController implements Initializable, Data{
                     public void handle(ActionEvent event) {
                         // Event handling for the first item, open the edit node screen
                         Main.nodeEditScreenClick(selectedNode,editNodeBtn);
-                        drawFloor();
+                        drawFloorNodes();
                     }
                 });
                 contextMenu.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
@@ -400,7 +442,7 @@ public class MapEditPageController implements Initializable, Data{
                         calcY = (e.getSceneY() - data.offset) * divisionCst;
                         Main.nodeAddEditScreenClick(editNodeBtn,calcX,calcY);
                         System.out.println("This is calcX: " + calcX + " This is calcY" + calcY);
-                        drawFloor();
+                        drawFloorNodes();
                     }
                 });
             }
@@ -414,21 +456,46 @@ public class MapEditPageController implements Initializable, Data{
         });
     }
 
-    public void drawFloor(){
-        if(floorLowerTwo.isSelected()) {
-            drawNodesCircle(data.lowerLevel02FloorNodes);
-        } else if(floorLowerOne.isSelected()) {
-            drawNodesCircle(data.lowerLevel01FloorNodes);
-        } else if(floorGround.isSelected()) {
-            drawNodesCircle(data.groundFloorNodes);
-        } else if(floorOne.isSelected()) {
-            drawNodesCircle(data.firstFloorNodes);
-        } else if(floorTwo.isSelected()) {
-            drawNodesCircle(data.secondFloorNodes);
-        } else if(floorThree.isSelected()){
-            drawNodesCircle(data.thirdFloorNodes);
+    @FXML
+    public void drawFloorNodes(){
+        if(allNodes.isSelected()) {
+            if (floorLowerTwo.isSelected()) {
+                drawNodesCircle(data.lowerLevel02FloorNodes);
+            } else if (floorLowerOne.isSelected()) {
+                drawNodesCircle(data.lowerLevel01FloorNodes);
+            } else if (floorGround.isSelected()) {
+                drawNodesCircle(data.groundFloorNodes);
+            } else if (floorOne.isSelected()) {
+                drawNodesCircle(data.firstFloorNodes);
+            } else if (floorTwo.isSelected()) {
+                drawNodesCircle(data.secondFloorNodes);
+            } else if (floorThree.isSelected()) {
+                drawNodesCircle(data.thirdFloorNodes);
+            }
         }
     }
+
+    @FXML
+    public void drawFloorEdges() {
+        System.out.println("Attempting to draw edges");
+        if(allEdges.isSelected()) {
+            if (floorLowerTwo.isSelected()) {
+                drawEdges(data.lower2FloorEdges);
+            } else if (floorLowerOne.isSelected()) {
+                drawEdges(data.lower1FloorEdges);
+            } else if (floorGround.isSelected()) {
+                drawEdges(data.groundFloorEdges);
+            } else if (floorOne.isSelected()) {
+                drawEdges(data.firstFloorEdges);
+            } else if (floorTwo.isSelected()) {
+                drawEdges(data.secondFloorEdges);
+            } else if (floorThree.isSelected()) {
+                drawEdges(data.thirdFloorEdges);
+            }
+        }
+    }
+
+
     /**
      * Function to calculate the nearest node depend on the mouse click location.
      * @param x

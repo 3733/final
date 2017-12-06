@@ -1422,6 +1422,54 @@ public class testEmbeddedDB {
         return nodesByFloor;
     }
 
+    public static Vector<Edge> getEdgesByFloor(int floor){
+
+        Vector<Node> nodesByFloor = getNodesByFloor(floor);
+
+        HashMap<String, Node> nodeMap = new HashMap<>();
+
+
+
+        for(Node n : nodesByFloor){
+            nodeMap.put(n.getNodeID(), n);
+        }
+
+
+        System.out.println("num Nodes: " + nodeMap.size());
+
+        Vector<Edge> edgesByFloor = new Vector<>();
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
+
+            while(r.next()){
+                String edgeID = r.getString("edgeid").trim();
+                String startNode = r.getString("startnode").trim();
+                String endNode = r.getString("endnode").trim();
+
+                /*System.out.println("start: " + startNode);
+                System.out.println("end: " + endNode);
+                System.out.println("edgeid: " + edgeID);*/
+
+                if(nodeMap.containsKey(startNode) && nodeMap.containsKey(endNode)){
+                    Edge e = new Edge(edgeID, nodeMap.get(startNode), nodeMap.get(endNode));
+                    edgesByFloor.add(e);
+                    System.out.println("Added an edge");
+                }
+            }
+
+        } catch (Exception e){
+            System.out.println("getNodesByFloor error: " + e.getMessage());
+        }
+
+        System.out.println(" DB Size: "+edgesByFloor.size());
+        return edgesByFloor;
+    }
+
     private static String floorIntToString(int i){
         String ret = new String();
 
@@ -1443,4 +1491,7 @@ public class testEmbeddedDB {
         }
 
     }
+
+
+
 }

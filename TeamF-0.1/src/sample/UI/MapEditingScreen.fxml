@@ -198,7 +198,7 @@
                      <children>
                         <VBox prefHeight="81.0" prefWidth="130.0">
                            <children>
-                              <JFXCheckBox checkedColor="#1a479a" text="Display All Edges">
+                              <JFXCheckBox fx:id="allEdges" checkedColor="#1a479a" onAction="#drawFloorEdges" text="Display All Edges">
                                  <VBox.margin>
                                     <Insets bottom="15.0" />
                                  </VBox.margin>
@@ -206,7 +206,7 @@
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font>
                               </JFXCheckBox>
-                              <JFXCheckBox checkedColor="#1a479a" text="Display All Nodes">
+                              <JFXCheckBox fx:id="allNodes" checkedColor="#1a479a" onAction="#drawFloorNodes" text="Display All Nodes">
                                  <font>
                                     <Font name="Montserrat Regular" size="12.0" />
                                  </font>

@@ -165,7 +165,6 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
 
-
         //popluating list view -- three
         ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
         threeList.setItems(threeItems);
