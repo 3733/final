@@ -136,8 +136,6 @@ public class NavigationPageController implements Initializable, Data{
 
     private Map CurMap;
 
-    private Node Kiosk;
-
     private String filePath = "/sample/UI/Icons/";
 
     ObservableList<String> allEntries;
@@ -282,7 +280,7 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public void setKiosk(Node k){
-        this.Kiosk = k;
+        data.kiosk = k;
     }
 
     public void setSearch(String s){
@@ -323,7 +321,7 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public Node getKiosk(){
-        return this.Kiosk;
+        return data.kiosk;
     }
 
     //setting start and end nodes
@@ -337,10 +335,19 @@ public class NavigationPageController implements Initializable, Data{
         lowerOneArrow.setVisible(false);
         lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+
+            System.out.println("LABEL!!!!!");
+            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
+                go();
+            }
         }
         else{
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+
+            System.out.println("LABEL!!!!!");
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+
+            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
             if(!destinationText.equals("")) {
                 go();
             }
@@ -449,9 +456,20 @@ public class NavigationPageController implements Initializable, Data{
 
     public void findPath(String Start, String End) throws IOException, InterruptedException {
         //Returns
-        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,Kiosk);
 
-        Node StartNode = SearchEngine.SearchPath(Start,Data.data.graph,Kiosk);
+        for(int i = 0;i<data.graph.getNodes().size();i++){
+            if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
+                data.kiosk = data.graph.getNodes().get(i);
+                System.out.println(data.kiosk.getLongName());
+            }
+        }
+        System.out.println("START SEARCH!!!!!!!!!!");
+        Node StartNode = data.kiosk;
+
+        System.out.println("END SEARCH!!!!!!!!!!!!");
+        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
+
+
 
         switch (currentAlgo){
             case 1:
