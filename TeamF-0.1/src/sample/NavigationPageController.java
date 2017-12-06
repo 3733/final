@@ -1018,11 +1018,6 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void chat(){
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
-        sdf.setTimeZone(TimeZone.getTimeZone("EST"));
-        String sCertDate = sdf.format(new Date());
-        Main.messengerWindowController.getCurrentChat().add("Chat started at " + sCertDate);
-        Main.messageScreen(helpButton);
     }
 
     @FXML
