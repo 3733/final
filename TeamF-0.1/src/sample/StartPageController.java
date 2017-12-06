@@ -38,13 +38,13 @@ public class StartPageController {
     }
 
     @FXML
-    public void search2() throws IOException, InterruptedException {
+    public void search() throws IOException, InterruptedException {
         TextClient t = new TextClient();
         t.startIM("bmat2z", 6969);
     }
 
     @FXML
-    public void search() throws IOException, InterruptedException {
+    public void search2() throws IOException, InterruptedException {
         //System.out.print(searchBox.getText());
         if(getSearch().length()>0) {
             Main.setDestination(getSearch());

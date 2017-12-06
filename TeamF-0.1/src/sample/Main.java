@@ -45,7 +45,6 @@ public class Main extends Application implements Data{
     private static Scene editUsers;
     private static Scene genError;
     private static Scene editUserWin;
-    private static Scene messageWin;
     private static Scene helpRequest;
 
 
@@ -61,7 +60,6 @@ public class Main extends Application implements Data{
     public static EditUsersController editUsersController = new EditUsersController();
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
-    public static MessengerController messengerWindowController = new MessengerController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
 
 
@@ -145,12 +143,6 @@ public class Main extends Application implements Data{
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
 
-        FXMLLoader messengerLoader = new FXMLLoader(getClass().getResource("UI/MessengerUI.fxml"));
-        Parent msgWin = messengerLoader.load();
-        messengerWindowController = messengerLoader.getController();
-        messengerWindowController.setMainController(this);
-        messageWin = new Scene(msgWin);
-
         stage = primaryStage;
         popUp = new Stage();
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
@@ -174,7 +166,6 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
-        messageWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
 
@@ -235,14 +226,6 @@ public class Main extends Application implements Data{
         Stage popUp = new Stage();
         popUp.setScene(nodeEdit);
         popUp.setTitle("Edit Node");
-        popUp.initModality(Modality.APPLICATION_MODAL);
-        popUp.initOwner(btn1.getScene().getWindow());
-        popUp.showAndWait();
-    }
-
-    public static void messageScreen(JFXButton btn1){
-        Stage popUp = new Stage();
-        popUp.setScene(messageWin);
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();
@@ -340,16 +323,10 @@ public class Main extends Application implements Data{
 
         launch(args);
 
-        /*long et = System.currentTimeMillis();
-        double timer = (double) (et-st)/1000;
-        System.out.println("Main " + timer+"<===TIMER");*/
-
-
-
-
-        //UNCOMMENT THIS LINE
-        testEmbeddedDB.dbBuildMap();
-
+//        testEmbeddedDB db = new testEmbeddedDB();
+//        testEmbeddedDB.dropNodes();
+//        testEmbeddedDB.dropTables();
+//        testEmbeddedDB.createTable();
 
         /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
