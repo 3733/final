@@ -971,6 +971,13 @@ public class NavigationPageController implements Initializable, Data{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
         Main.startScreen();
+        loginButton.setOnAction((event) -> {
+            try {
+                login();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         clearFields();
         clear();
     }
