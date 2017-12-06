@@ -53,7 +53,7 @@ public class StartPageController {
         try{
             messenger.Main m = new messenger.Main();
             m.run(6,6,600,600,
-                    "/src/UI/style.css", "test", "test");
+                    "/src/UI/style.css", "test", "test", "sip:HELP@130.215.215.74.6969");
         } catch (Exception e){
             System.out.println("API ERROR: " + e.getLocalizedMessage());
         }

@@ -59,6 +59,7 @@ public class EditNodesController {
         shortNameField.clear();
         MapEditPageController.updateNodes();
         Main.closePopUp(addNodeBtn);
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
     }
 
     public void editNodeButton(){
@@ -95,6 +96,7 @@ public class EditNodesController {
            shortNameField.clear();
            MapEditPageController.updateNodes();
            Main.closePopUp(editNodeBtn);
+           Data.data.graph = testEmbeddedDB.dbBuildMap();
        }
     }
     public void removeNodeButton(){
@@ -110,6 +112,7 @@ public class EditNodesController {
         shortNameField.clear();
         MapEditPageController.updateNodes();
         Main.closePopUp(remNodeBtn);
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
     }
 
     @FXML

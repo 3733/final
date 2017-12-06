@@ -43,6 +43,7 @@ public class EditEdgesController {
         endNodeField.clear();
         MapEditPageController.updateEdges();
         Main.closePopUp(addEdgebtn);
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
     }
     public void editEdgeButton(){
         if(!edgeIDField.getText().equals(null) && testEmbeddedDB.getEdge(edgeIDField.getText())!=null) {
@@ -57,6 +58,7 @@ public class EditEdgesController {
             endNodeField.clear();
             MapEditPageController.updateEdges();
             Main.closePopUp(editEdgebtn);
+            Data.data.graph = testEmbeddedDB.dbBuildMap();
         }
     }
     public void removeEdgeButton(){
@@ -66,6 +68,7 @@ public class EditEdgesController {
         endNodeField.clear();
         MapEditPageController.updateEdges();
         Main.closePopUp(removeEdgebtn);
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
     }
 
     public void openMapEditing() {

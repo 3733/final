@@ -1,0 +1,64 @@
+<!-- Use the  Trace Viewer in src/tools/tracesviewer to view this  trace  
+Here are the stack configuration properties 
+javax.sip.IP_ADDRESS= 130.215.213.204
+javax.sip.STACK_NAME= TextClient
+javax.sip.ROUTER_PATH= null
+javax.sip.OUTBOUND_PROXY= null
+-->
+<message
+from="130.215.215.74:6100" 
+to="130.215.213.204:6000" 
+time="1512578355396"
+isSender="false" 
+transactionId="textclientv1.0:de30dd07112461bb3b324ad44f6c8153@130.215.215.74:1:message:130.215.215.74:6100" 
+callId="de30dd07112461bb3b324ad44f6c8153@130.215.215.74" 
+firstLine="MESSAGE sip:TEST@130.215.213.204:6000;transport=udp SIP/2.0" 
+>
+<![CDATA[MESSAGE sip:TEST@130.215.213.204:6000;transport=udp SIP/2.0
+Call-ID: de30dd07112461bb3b324ad44f6c8153@130.215.215.74
+CSeq: 1 MESSAGE
+From: "HELP" <sip:HELP@130.215.215.74:6100>;tag=textclientv1.0
+To: "TEST" <sip:TEST@130.215.213.204:6000>
+Via: SIP/2.0/UDP 130.215.215.74:6100;branch=branch1
+Max-Forwards: 70
+Contact: "HELP" <sip:HELP@130.215.215.74:6100>
+Content-Type: text/plain
+Content-Length: 1
+
+]]>
+</message>
+
+<message
+from="130.215.213.204:6000" 
+to="130.215.215.74:6100" 
+time="1512578355502"
+isSender="true" 
+transactionId="textclientv1.0:de30dd07112461bb3b324ad44f6c8153@130.215.215.74:1:message:130.215.215.74:6100" 
+callId="de30dd07112461bb3b324ad44f6c8153@130.215.215.74" 
+firstLine="SIP/2.0 200 OK" 
+>
+<![CDATA[SIP/2.0 200 OK
+Call-ID: de30dd07112461bb3b324ad44f6c8153@130.215.215.74
+CSeq: 1 MESSAGE
+From: "HELP" <sip:HELP@130.215.215.74:6100>;tag=textclientv1.0
+To: "TEST" <sip:TEST@130.215.213.204:6000>;tag=888
+Via: SIP/2.0/UDP 130.215.215.74:6100;branch=branch1
+Content-Length: 0
+
+]]>
+</message>
+
+<!-- Use the  Trace Viewer in src/tools/tracesviewer to view this  trace  
+Here are the stack configuration properties 
+javax.sip.IP_ADDRESS= 130.215.213.204
+javax.sip.STACK_NAME= TextClient
+javax.sip.ROUTER_PATH= null
+javax.sip.OUTBOUND_PROXY= null
+-->
+<!-- Use the  Trace Viewer in src/tools/tracesviewer to view this  trace  
+Here are the stack configuration properties 
+javax.sip.IP_ADDRESS= 130.215.213.204
+javax.sip.STACK_NAME= TextClient
+javax.sip.ROUTER_PATH= null
+javax.sip.OUTBOUND_PROXY= null
+-->
