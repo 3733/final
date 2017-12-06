@@ -49,7 +49,15 @@ public class StartPageController {
 
     @FXML
     public void help(){
-        Main.setHelpScreenServiceRequestScreen();
+        //Main.setHelpScreenServiceRequestScreen();
+        try{
+            messenger.Main m = new messenger.Main();
+            m.run(6,6,600,600,
+                    "/src/UI/style.css", "test", "test");
+        } catch (Exception e){
+            System.out.println("API ERROR: " + e.getLocalizedMessage());
+        }
+
     }
 
     @FXML
