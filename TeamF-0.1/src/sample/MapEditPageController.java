@@ -328,6 +328,11 @@ public class MapEditPageController implements Initializable, Data{
      */
 
     public void clickNearestNodeSelected() throws IOException {
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Edit Node");
+        MenuItem item2 = new MenuItem("Add Node");
+        contextMenu.getItems().addAll(item1,item2);
+
         pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
             System.out.println("Happened");
             e.consume();

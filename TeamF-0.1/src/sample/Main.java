@@ -15,6 +15,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.util.Map.Entry;
 
 
@@ -236,8 +238,29 @@ public class Main extends Application implements Data{
         popUp.setTitle("Edit Node");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
+
         editNodesController.setScreen(selected);
+
+        double windowX = 616;
+        System.out.println("This is window size: " + windowX);
+        double windowY = 440;
+        System.out.println("This is the window height: " + windowY);
+        double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        System.out.println(screenWidth);
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        System.out.println(screenHeight);
+        double x = MouseInfo.getPointerInfo().getLocation().x;
+        double y = MouseInfo.getPointerInfo().getLocation().y;
+
+        if(( x + windowX) > screenWidth) {
+            popUp.setX(screenWidth - windowX);
+            System.out.println("THIS FUCKING HAPPENED");
+        } else {
+            popUp.setX(x);
+        }
+        popUp.setY(y);
         popUp.showAndWait();
+
     }
 
     public static void edgeEditScreen(JFXButton btn1){

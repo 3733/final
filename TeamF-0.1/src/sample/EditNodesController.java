@@ -58,7 +58,6 @@ public class EditNodesController {
         longNameField.clear();
         shortNameField.clear();
         Main.closePopUp(addNodeBtn);
-
     }
 
     public void editNodeButton(){
