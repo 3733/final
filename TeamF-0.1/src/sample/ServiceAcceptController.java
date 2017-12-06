@@ -31,19 +31,19 @@ public class ServiceAcceptController implements Initializable{
     @FXML
     public void backToAdmin() {}
 
-    private API APIController;
+    private FoodAPI APIController;
 
-    public void setAPIController(API API){
+    public void setAPIController(FoodAPI API){
         this.APIController = API;
     }
 
     @FXML
     public void help(){
-        API.genErrorScreen();}
+        FoodAPI.genErrorScreen();}
 
     @FXML
     public void toServiceRequest() {
-        API.serviceScreen();}
+        FoodAPI.serviceScreen();}
 
     //fixes issue with database that creates unnecessary spaces in strings
     public String removeWhiteSpace(String input) {

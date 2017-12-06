@@ -4,12 +4,12 @@ import javafx.fxml.FXML;
 
 public class GenErrorController {
 
-    private API APIController;
+    private FoodAPI APIController;
 
-    public void setAPIController(API API){
+    public void setAPIController(FoodAPI API){
         this.APIController = API;
     }
 
     @FXML
-    public void back(){ API.serviceScreen();}
+    public void back(){ FoodAPI.serviceScreen();}
 }

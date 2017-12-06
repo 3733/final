@@ -29,20 +29,20 @@ public class ServiceRequestController implements Initializable {
 
     //top menu bar
 
-    private API APIController;
+    private FoodAPI APIController;
 
-    public void setAPIController(API API) {
+    public void setAPIController(FoodAPI API) {
         this.APIController = API;
     }
 
     @FXML
     public void help() {
-        API.genErrorScreen();
+        FoodAPI.genErrorScreen();
     }
 
     @FXML
     public void toServiceAccept() {
-        API.acceptScreen();
+        FoodAPI.acceptScreen();
     }
 
     public static int ID = 0;   //service ID counter
@@ -80,12 +80,12 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void assistanceThisLocation() {
-        assistanceNode = testEmbeddedDB.getNode(API.getOrigin());
+        assistanceNode = testEmbeddedDB.getNode(FoodAPI.getOrigin());
     }
 
     @FXML
     public void assistanceChooseLocation() {
-        assistanceNode = testEmbeddedDB.getNode(API.getDestination());
+        assistanceNode = testEmbeddedDB.getNode(FoodAPI.getDestination());
     }
 
     @FXML
@@ -144,11 +144,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void foodThisLocation() {
-        foodNode = testEmbeddedDB.getNode(API.getOrigin());
+        foodNode = testEmbeddedDB.getNode(FoodAPI.getOrigin());
     }
 
     @FXML
-    public void foodChooseLocation() { foodNode = testEmbeddedDB.getNode(API.getDestination());
+    public void foodChooseLocation() { foodNode = testEmbeddedDB.getNode(FoodAPI.getDestination());
     }
 
     @FXML
@@ -203,11 +203,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void transportThisLocation() {
-        transportNode = testEmbeddedDB.getNode(API.getOrigin());
+        transportNode = testEmbeddedDB.getNode(FoodAPI.getOrigin());
     }
 
     @FXML
-    public void transportChooseLocation() { transportNode = testEmbeddedDB.getNode(API.getDestination());
+    public void transportChooseLocation() { transportNode = testEmbeddedDB.getNode(FoodAPI.getDestination());
     }
 
     @FXML
@@ -256,11 +256,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void cleanThisLocation() {
-        cleanNode = testEmbeddedDB.getNode(API.getOrigin());
+        cleanNode = testEmbeddedDB.getNode(FoodAPI.getOrigin());
     }
 
     @FXML
-    public void cleanChooseLocation() { cleanNode = testEmbeddedDB.getNode(API.getDestination());
+    public void cleanChooseLocation() { cleanNode = testEmbeddedDB.getNode(FoodAPI.getDestination());
     }
 
     @FXML
@@ -309,11 +309,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void securityThisLocation() {
-        securityNode = testEmbeddedDB.getNode(API.getOrigin());
+        securityNode = testEmbeddedDB.getNode(FoodAPI.getOrigin());
     }
 
     @FXML
-    public void securityChooseLocation() { securityNode = testEmbeddedDB.getNode(API.getDestination());
+    public void securityChooseLocation() { securityNode = testEmbeddedDB.getNode(FoodAPI.getDestination());
     }
 
     @FXML
@@ -365,11 +365,11 @@ public class ServiceRequestController implements Initializable {
 
     @FXML
     public void itThisLocation() {
-        itNode = testEmbeddedDB.getNode(API.getOrigin());
+        itNode = testEmbeddedDB.getNode(FoodAPI.getOrigin());
     }
 
     @FXML
-    public void itChooseLocation() { itNode = testEmbeddedDB.getNode(API.getDestination());
+    public void itChooseLocation() { itNode = testEmbeddedDB.getNode(FoodAPI.getDestination());
     }
 
     @FXML
