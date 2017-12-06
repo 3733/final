@@ -305,6 +305,18 @@ public class NavigationPageController implements Initializable, Data{
         searchList.setVisible(false);
     }
 
+    public JFXTextField getDestination(){return this.destination;}
+
+    public Label getStartLabel(){return this.startLabel;}
+
+    public Label getEndLabel(){return this.endLabel;}
+
+    public JFXRadioButton getRadioStart(){return this.start;}
+
+    public void setDestination(String s){destination.setText(s);}
+
+    public JFXRadioButton getRadioEnd(){return this.end;}
+
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
     }
@@ -368,6 +380,10 @@ public class NavigationPageController implements Initializable, Data{
     public void setMap(Map m) throws IOException{
         this.CurMap = m;
         Data.data.currentMap = "1";
+    }
+
+    public Map getMap(){
+        return this.CurMap;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,8 @@
 package sample;
 
+import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
+import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -120,6 +123,9 @@ public class PathTest {
     Node lowerOneNode;
     Node lowerTwoNode;
     Vector<Node> allFloorNodes = new Vector<>();
+    Vector<Node> oneFloorNode = new Vector<>();
+    Vector<Node> twoFloorNodes = new Vector<>();
+    Vector<Node> emptyVec = new Vector<>();
 
     @Before
     public void multiSetUp(){
@@ -143,9 +149,15 @@ public class PathTest {
         allFloorNodes.add(groundNode);
         allFloorNodes.add(lowerOneNode);
         allFloorNodes.add(lowerTwoNode);
+
+        oneFloorNode.add(lowerTwoNode);
+
+        twoFloorNodes.add(threeNode);
+        twoFloorNodes.add(lowerOneNode);
     }
 
     //path draws on all floors
+    //NPE, no idea why - Steph
     @Test
     public void multiTestAll()throws IOException, InterruptedException{
         Vector<String> expected = new Vector<>();
@@ -161,72 +173,120 @@ public class PathTest {
 
     //path draws on one floor
     @Test
-    public void multiTestOne(){
-
+    public void multiTestOne() throws IOException, InterruptedException{
+        Vector<String> expected = new Vector<>();
+        expected.add("L2");
+        n.MultiFloorPathDrawing(oneFloorNode);
+        assertEquals(expected, n.getFloorsVisited());
     }
 
     //path draws on more than one floor
     @Test
-    public void multiTestMore(){
-
+    public void multiTestMore() throws IOException, InterruptedException{
+        Vector<String> expected = new Vector<>();
+        expected.add("L2");
+        n.MultiFloorPathDrawing(twoFloorNodes);
+        assertEquals(expected, n.getFloorsVisited());
     }
 
     //path draws on none
-    @Test
-    public void multiTestNone(){}
-
-    //throws an exception
-    @Test
-    public void multiTestError(){
-
+    @Test (expected = NullPointerException.class)
+    public void multiTestNone() throws IOException, InterruptedException{
+        Vector<String> expected = new Vector<>();
+        n.MultiFloorPathDrawing(emptyVec);
+        assertEquals(expected, n.getFloorsVisited());
     }
 
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+* SETTING SEARCH TESTS
+* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+    JFXRadioButton startRadio = n.getRadioStart();
+    JFXRadioButton endRadio = n.getRadioEnd();
+    JFXTextField destinationTest = n.getDestination();
+
+    //making sure it's set to start label
+    //NPE, idk why - Steph
     @Test
-    public void clear() throws Exception {
+    public void settingSearchStartTest() throws Exception {
+        destinationTest.setText("Test Start");
+        startRadio.setSelected(true);
+        endRadio.setSelected(false);
+        n.settingSearch();
+        assertEquals("Test Start", n.getStartLabel());
     }
 
+    //making sure it's set to end label
     @Test
-    public void setMap() throws Exception {
+    public void settingSearchEndTest() throws Exception {
+        destinationTest.setText("Test End");
+        startRadio.setSelected(false);
+        endRadio.setSelected(true);
+        n.settingSearch();
+        assertEquals("Test End", n.getEndLabel());
     }
 
-    @Test
-    public void testDrawDirections() throws Exception {
+    //making sure an exception is thrown if both are selected
+    @Test (expected = NullPointerException.class)
+    public void settingSearchErrorBothTest(){
+        destinationTest.setText("Error Test");
+        startRadio.setSelected(true);
+        startRadio.setSelected(true);
+        n.settingSearch();
     }
 
-    @Test
-    public void settingSearch() throws Exception {
+    //making sure an exception is thrown if none are selected
+    @Test (expected = NullPointerException.class)
+    public void settingSearchErrorNoneTest(){
+        destinationTest.setText("Error Test");
+        startRadio.setSelected(false);
+        endRadio.setSelected(false);
+        n.settingSearch();
     }
 
-    @Test
-    public void findPath() throws Exception {
-    }
 
-    @Test
-    public void settingFields() throws Exception {
-    }
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+* CHANGE FLOOR TESTS
+* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+    //make sure it changes to Floor L1
     @Test
     public void changeFloorL1() throws Exception {
+        n.changeFloorL1();
+        assertEquals("L1", Data.data.currentMap);
     }
 
+    //make sure it changes to Floor L2
     @Test
     public void changeFloorL2() throws Exception {
+        n.changeFloorL2();
+        assertEquals("L2", Data.data.currentMap);
     }
 
+    //make sure it changes to Floor 1
     @Test
     public void changeFloor1() throws Exception {
+        n.changeFloor1();
+        assertEquals("1", Data.data.currentMap);
     }
 
     @Test
     public void changeFloor2() throws Exception {
+        n.changeFloor2();
+        assertEquals("2", Data.data.currentMap);
     }
 
     @Test
     public void changeFloor3() throws Exception {
+        n.changeFloor3();
+        assertEquals("3", Data.data.currentMap);
     }
 
     @Test
     public void changeFloorG() throws Exception {
+        n.changeFloorG();
+        assertEquals("G", Data.data.currentMap);
     }
 
 
