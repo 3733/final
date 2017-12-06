@@ -3,6 +3,7 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -48,6 +49,7 @@ public class Main extends Application implements Data{
     private static Scene genError;
     private static Scene editUserWin;
     private static Scene helpRequest;
+    private static Scene aboutWin;
 
 
 
@@ -145,11 +147,16 @@ public class Main extends Application implements Data{
         genErrorController.setMainController(this);
         genError = new Scene(Error);
 
+        FXMLLoader aboutLoader = new FXMLLoader(getClass().getResource("UI/AboutPage.fxml"));
+        Parent about = aboutLoader.load();
+        aboutWin = new Scene(about);
+
         FXMLLoader editUserWinLoader = new FXMLLoader(getClass().getResource("UI/EditUserWindow.fxml"));
         Parent userWin = editUserWinLoader.load();
         editUserWindowController = editUserWinLoader.getController();
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
+
 
         stage = primaryStage;
         popUp = new Stage();
@@ -174,6 +181,7 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
+        aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
 
@@ -350,8 +358,17 @@ public class Main extends Application implements Data{
 
     public static void editUserWindow(JFXButton btn1){
         Stage popUp = new Stage();
+        popUp.setScene(aboutWin);
+        popUp.setTitle("About Team F");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
+    }
+
+    public static void aboutWindow(JFXButton btn1){
+        Stage popUp = new Stage();
         editUserWindowController.addingUsers();
-        popUp.setScene(editUserWin);
+        popUp.setScene(aboutWin);
         popUp.setTitle("Add User");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());

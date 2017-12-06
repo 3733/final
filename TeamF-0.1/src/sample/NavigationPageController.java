@@ -114,7 +114,7 @@ public class NavigationPageController implements Initializable, Data{
     private Label startLabel, endLabel;
 
     @FXML
-    private JFXButton helpButton;
+    private JFXButton helpButton, aboutButton;
 
     // Email UI Components
     @FXML
@@ -1015,6 +1015,9 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void editUsers(){Main.editUsersScreen();}
+
+    @FXML
+    public void about(){Main.aboutWindow(aboutButton);}
 
     @FXML
     public void chat(){
