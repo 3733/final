@@ -73,4 +73,10 @@ public class DataHolder {
 
     public double divisionCst = 3.87;
     public int offset = 2;
+
+    public Node aligonNode1;
+    public Node aligonNode2;
+    public Node aligonNode3;
+
+
 }

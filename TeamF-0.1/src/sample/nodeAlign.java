@@ -63,6 +63,4 @@ public class nodeAlign {
         return n1.getyCoordinate();
     }
 
-
-
 }
