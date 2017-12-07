@@ -75,56 +75,55 @@ public class MapEditPageController implements Initializable, Data{
     //initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try{
-            updateNodes();
-            updateEdges();
-            Data.data.gc1 = pathCanvas1.getGraphicsContext2D();
-            Data.data.gc2 = pathCanvas.getGraphicsContext2D();
+        updateNodes();
+        updateEdges();
+        Data.data.gc1 = pathCanvas1.getGraphicsContext2D();
+        Data.data.gc2 = pathCanvas.getGraphicsContext2D();
 
-            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-            //popluating list view -- three
-            ObservableList<String> threeItems = FXCollections.observableArrayList (
-                    "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
-                    "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
-                    "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
-                    "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
-            threeList.setItems(threeItems);
+        //popluating list view -- three
+        ObservableList<String> threeItems = FXCollections.observableArrayList (
+                "Bridge to Dana-Farber Cancer Institute", "Brigham Circle Medical Associates", "Center for Infertility and Reproductive Surgery",
+                "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
+                "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
+                "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
+        threeList.setItems(threeItems);
 
-            //populating list view -- second
-            ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
-                    "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
-                    "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
-                    "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
-                    "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
-                    "Weiner Center for Preoperative Evaluation");
-            twoList.setItems(twoItems);
+        //populating list view -- second
+        ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
+                "Chest Diseases", "Coffee Connection", "Comprehensive Breast Health", "Conference Center", "Duncan Reid Conference Room", "Ear, Nose, & Throat",
+                "Endoscopy", "Garden Cafe", "Gift Shop", "Jen Center for Primary Care", "Lee Bell Breast Center", "Louis Bornstein Family Amphitheater",
+                "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
+                "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
+                "Weiner Center for Preoperative Evaluation");
+        twoList.setItems(twoItems);
 
-            //populating list view -- first
-            ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
-                    "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
-                    "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
-                    "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
-                    "Zinner Breakout Room");
-            oneList.setItems(oneItems);
+        //populating list view -- first
+        ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
+                "Bretholtz Center for Patients and Families", "CART Waiting", "Connor's Center Security Desk", "CPE Classroom", "International Patient Center",
+                "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
+                "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
+                "Zinner Breakout Room");
+        oneList.setItems(oneItems);
 
-            //populating list view -- lower two
-            ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
-                    "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
-            lowerTwoList.setItems(lowerTwoItems);
+        //populating list view -- lower two
+        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
+                "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
+        lowerTwoList.setItems(lowerTwoItems);
 
-            //populating list view -- lower one
-            ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
-                    "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
-                    "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
-            lowerOneList.setItems(lowerOneItems);
+        //populating list view -- lower one
+        ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
+                "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
+                "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
+        lowerOneList.setItems(lowerOneItems);
 
-            //populating list -- ground
-            ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
-            groundList.setItems(groundItems);
-            tabPane.getSelectionModel().select(floorOne);
-            map.setImage(new Image(new FileInputStream("./TeamF-0.1/src/sample/UI/Icons/01_thefirstfloor.png")));
+        //populating list -- ground
+        ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
+        groundList.setItems(groundItems);
+        tabPane.getSelectionModel().select(floorOne);
+        map.setImage(data.firstFloor);//new Image(getClass().getResourceAsStream("/sample/UI/Icons/01_thefirstfloor.png")));
 
             /*
             * AStar -1
@@ -135,64 +134,61 @@ public class MapEditPageController implements Initializable, Data{
             * Best -6
             * */
 
-            //default is Astar
-            algoMenu.setText(chooseAStar.getText());
-            chooseAStar.setSelected(true);
+        //default is Astar
+        algoMenu.setText(chooseAStar.getText());
+        chooseAStar.setSelected(true);
 
-            chooseAStar.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Main.navigationPageController.setCurrentAlgo(1);
-                    algoMenu.setText(chooseAStar.getText());
-                }
-            });
-
-            chooseBreadth.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Main.navigationPageController.setCurrentAlgo(2);
-                    algoMenu.setText(chooseBreadth.getText());
-                }
-            });
-
-            chooseDepth.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Main.navigationPageController.setCurrentAlgo(3);
-                    algoMenu.setText(chooseDepth.getText());
-                }
-            });
-
-            chooseDijk.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Main.navigationPageController.setCurrentAlgo(4);
-                    algoMenu.setText(chooseDijk.getText());
-                }
-            });
-
-            chooseBeam.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Main.navigationPageController.setCurrentAlgo(5);
-                    algoMenu.setText(chooseBeam.getText());
-                }
-            });
-
-            chooseBest.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    Main.navigationPageController.setCurrentAlgo(6);
-                    algoMenu.setText(chooseBest.getText());
-                }
-            });
-
-            try {
-                clickNearestNodeSelected();
-            } catch (IOException e) {
-                e.printStackTrace();
+        chooseAStar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.navigationPageController.setCurrentAlgo(1);
+                algoMenu.setText(chooseAStar.getText());
             }
-        }catch (FileNotFoundException e) {
+        });
+
+        chooseBreadth.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.navigationPageController.setCurrentAlgo(2);
+                algoMenu.setText(chooseBreadth.getText());
+            }
+        });
+
+        chooseDepth.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.navigationPageController.setCurrentAlgo(3);
+                algoMenu.setText(chooseDepth.getText());
+            }
+        });
+
+        chooseDijk.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.navigationPageController.setCurrentAlgo(4);
+                algoMenu.setText(chooseDijk.getText());
+            }
+        });
+
+        chooseBeam.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.navigationPageController.setCurrentAlgo(5);
+                algoMenu.setText(chooseBeam.getText());
+            }
+        });
+
+        chooseBest.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Main.navigationPageController.setCurrentAlgo(6);
+                algoMenu.setText(chooseBest.getText());
+            }
+        });
+
+        try {
+            clickNearestNodeSelected();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
