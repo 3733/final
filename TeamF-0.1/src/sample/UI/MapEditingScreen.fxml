@@ -310,19 +310,19 @@
    <center>
       <AnchorPane fx:id="mainAnchor" prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <ScrollPane fx:id="scrollMap" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="830.0" prefWidth="1138.0">
+            <ScrollPane fx:id="scrollMap" nodeOrientation="LEFT_TO_RIGHT" pannable="true" prefHeight="831.0" prefWidth="1214.0">
                <content>
                   <Group fx:id="scrollContent">
                      <children>
-                        <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="811.0" prefWidth="1205.0">
                            <children>
                               <ImageView fx:id="map" fitHeight="824.0" fitWidth="1237.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Icons/01_thefirstfloor.png" />
                                  </image>
                               </ImageView>
-                              <Canvas fx:id="pathCanvas" height="812.0" width="1115.0" />
-                              <Canvas fx:id="pathCanvas1" height="812.0" width="1115.0" />
+                              <Canvas fx:id="pathCanvas" height="817.0" width="1213.0" />
+                              <Canvas fx:id="pathCanvas1" height="817.0" width="1213.0" />
                            </children>
                         </StackPane>
                      </children>

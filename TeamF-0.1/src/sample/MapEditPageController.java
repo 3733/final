@@ -553,6 +553,7 @@ public class MapEditPageController implements Initializable, Data{
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                System.out.println("this happened too");
                 stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
             }
         });
@@ -560,8 +561,8 @@ public class MapEditPageController implements Initializable, Data{
         scrollContent.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
-                event.consume();
-
+                //event.consume();
+                System.out.println("SCROLLING HAPPENED");
                 if (event.getDeltaY() == 0) {
                     return;
                 }
@@ -573,7 +574,9 @@ public class MapEditPageController implements Initializable, Data{
                 double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
                 double vScrollProportion = (scrollMap.getVvalue() - scrollMap.getVmin()) / (scrollMap.getVmax() - scrollMap.getVmin());
                 double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+
                 Point2D scrollOffset = new Point2D(scrollXOffset, scrollYOffset);
+
                 if (!(scaleFactor * stackPane.getScaleX() < 1)) {
                     stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
                     stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
@@ -582,7 +585,9 @@ public class MapEditPageController implements Initializable, Data{
                 double scrollXOffset2 = scrollOffset.getX();
 
                 double scrollYOffset2 = scrollOffset.getY();
+
                 double extraWidth2 = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+
                 if (extraWidth2 > 0) {
                     double halfWidth = scrollMap.getViewportBounds().getWidth() / 2 ;
                     double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset2;
@@ -590,7 +595,9 @@ public class MapEditPageController implements Initializable, Data{
                 } else {
                     scrollMap.setHvalue(scrollMap.getHmin());
                 }
+
                 double extraHeight2 = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+
                 if (extraHeight2 > 0) {
                     double halfHeight = scrollMap.getViewportBounds().getHeight() / 2 ;
                     double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset2;
@@ -602,8 +609,7 @@ public class MapEditPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-            pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent event) -> {
-                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            scrollContent.setOnMousePressed((javafx.scene.input.MouseEvent event) -> {
 
                 double newX1 = (event.getX());
                 double newY1 = (event.getY());
@@ -628,7 +634,7 @@ public class MapEditPageController implements Initializable, Data{
                 }
 
                 if (event.isSecondaryButtonDown()) {
-                    event.consume();
+                    //event.consume();
                     Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
                     Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
                     if (editEdges) {
@@ -670,24 +676,42 @@ public class MapEditPageController implements Initializable, Data{
                         });
                     }
                 }
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
             });
 
         scrollContent.setOnMouseDragged(new EventHandler<javafx.scene.input.MouseEvent>() {
+
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
+
+                System.out.println("These are last mouse coordinates X: " + lastMouseCoordinates.get().getX() + " Y: " + lastMouseCoordinates.get().getY());
+
                 double deltaX = event.getX() - lastMouseCoordinates.get().getX();
                 double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
                 double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
                 double desiredH = scrollMap.getHvalue() - deltaH;
-                if(deltaX > 0) {
+
+                System.out.println("This is the scrollmap HMax: " + scrollMap.getHmax() + " This is the desired H: " + desiredH);
+
+                if(deltaX > 0 ) {
+                    System.out.println("This is the set value: " + Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
                     scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+                    event.consume();
+                } else {
+                    System.out.println("FILTERED");
                 }
+
                 double deltaY = event.getY() - lastMouseCoordinates.get().getY();
                 double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
                 double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
                 double desiredV = scrollMap.getVvalue() - deltaV;
-                if ( deltaY > 0) {
-                    scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+
+                if ( deltaY > 0 ) {
+                    System.out.println("This is the scrollmap VMax: " + scrollMap.getVmax() + " This is the desired V: " + desiredV);
+                        scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+                    event.consume();
+                } else {
+                    System.out.println("FILTERED");
                 }
             }
         });
@@ -731,38 +755,6 @@ public class MapEditPageController implements Initializable, Data{
 
     private void resetStack(ScrollPane pane, double width, double height) {
         pane.setViewportBounds(new BoundingBox(0,0,width,height));
-    }
-
-    // shift the viewport of the imageView by the specified delta, clamping so
-    // the viewport does not move off the actual image:
-    private void shiftMap(ImageView imageView, Point2D delta) {
-        Rectangle2D viewport = imageView.getViewport();
-
-        double width = imageView.getImage().getWidth() ;
-        double height = imageView.getImage().getHeight() ;
-
-        double maxX = width - viewport.getWidth();
-        double maxY = height - viewport.getHeight();
-
-        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
-        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
-
-        imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
-    }
-
-    private void shiftStack(ScrollPane pane, Point2D delta) {
-        Bounds viewport = pane.getViewportBounds();
-
-        double width = pathCanvas.getWidth() ;
-        double height = pathCanvas.getHeight();
-
-        double maxX = width - viewport.getWidth();
-        double maxY = height - viewport.getHeight();
-
-        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
-        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
-
-        pane.setViewportBounds(new BoundingBox(minX, minY, viewport.getWidth(), viewport.getHeight()));
     }
 
     private double clamp(double value, double min, double max) {
