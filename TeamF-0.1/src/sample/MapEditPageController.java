@@ -457,13 +457,14 @@ public class MapEditPageController implements Initializable, Data{
 
     public void alignNodes(){
         //nodeAlign na = new nodeAlign(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
-        System.out.println(data.nodeAlign.get(0).getNodeID());
-        System.out.println(data.nodeAlign.get(1).getNodeID());
-        System.out.println(data.nodeAlign.get(2).getNodeID());
-        //int newX = na.getgoodX();
-        //int newY = na.getgoodY();
-        //testEmbeddedDB.updateNodeXCoord(data.nodeAlign.get(0).getNodeID(), newX);
-        //testEmbeddedDB.updateNodeYCoord(data.nodeAlign.get(0).getNodeID(), newY);
+        nodeAlign na = new nodeAlign();
+        int newX = na.setGoodX(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
+        int newY = na.setGoodY(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
+        testEmbeddedDB.updateNodeXCoord(data.nodeAlign.get(0).getNodeID(), newX);
+        testEmbeddedDB.updateNodeYCoord(data.nodeAlign.get(0).getNodeID(), newY);
+        MapEditPageController.updateNodes();
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
+
         drawFloorNodes();
     }
 
