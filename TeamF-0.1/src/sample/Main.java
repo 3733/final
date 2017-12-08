@@ -73,6 +73,7 @@ public class Main extends Application implements Data{
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
                 data.kiosk = data.graph.getNodes().get(i);
+                break;
             }
         }
 
@@ -420,7 +421,7 @@ public class Main extends Application implements Data{
 
 
 
-//        testEmbeddedDB db = new testEmbeddedDB();
+        //testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
