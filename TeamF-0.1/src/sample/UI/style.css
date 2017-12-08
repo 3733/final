@@ -65,4 +65,8 @@
     -fx-border-color: #1a479a;
 }
 
+.white-hamburger > StackPane{
+    -fx-background-color: white;
+}
+
 

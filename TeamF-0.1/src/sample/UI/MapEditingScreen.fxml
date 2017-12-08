@@ -190,11 +190,7 @@
                                     <Insets right="15.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <JFXButton buttonType="RAISED" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Align" textFill="WHITE">
-                                 <font>
-                                    <Font name="Montserrat Regular" size="12.0" />
-                                 </font>
-                              </JFXButton>
+                              <JFXCheckBox text="Align" />
                            </children>
                         </HBox>
                      </children>

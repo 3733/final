@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -13,6 +14,7 @@ import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
@@ -56,8 +58,6 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private Group scrollContent;
     @FXML
-    private JFXDrawer drawer;
-    @FXML
     private javafx.scene.image.ImageView icon;
     @FXML
     private Label sendLabel;
@@ -66,9 +66,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
-    private JFXListView directionSteps;
-    @FXML
-    private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
+    private JFXListView directionSteps, pointsInterest;
     @FXML
     private JFXListView searchList;
     @FXML
@@ -77,6 +75,10 @@ public class NavigationPageController implements Initializable, Data{
     private AnchorPane mainPane;
     @FXML
     private JFXTabPane tabPane;
+    @FXML
+    private JFXDrawer drawer;
+    @FXML
+    private JFXHamburger hamburger;
 
     @FXML
     private VBox labelBox;
@@ -130,9 +132,6 @@ public class NavigationPageController implements Initializable, Data{
     private JFXButton loginButton;
 
     @FXML
-    private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
-
-    @FXML
     private StackPane stackPane;
 
     //other components
@@ -150,7 +149,28 @@ public class NavigationPageController implements Initializable, Data{
     private int currentAlgo = 1;
 
     double scaleValue = 0.7;
+
     private Vector<String> floorsVisited = new Vector<>();
+
+    //popluating list view -- three
+    ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
+
+    // Second Floor
+    ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
+
+    // First Floor
+    ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
+
+    // Ground Floor
+    ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
+
+    // Lower 1 Floor
+    ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
+
+    // Lower 2 Floor
+    ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
+
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,119 +179,79 @@ public class NavigationPageController implements Initializable, Data{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        Data.data.gc = pathCanvas.getGraphicsContext2D();
-        map.setImage(Data.data.firstFloor);
+        try{
+            Data.data.gc = pathCanvas.getGraphicsContext2D();
+            map.setImage(Data.data.firstFloor);
 
-        //disables the bars and starts up the zoom function
-        scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        zoom();
+            //disables the bars and starts up the zoom function
+            scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            zoom();
 
-        //popluating list view -- three
-        ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
-        threeList.setItems(threeItems);
+            VBox menuBox = FXMLLoader.load(getClass().getResource("UI/mainMenuDrawer.fxml"));
+            drawer.close();
 
-        // Second Floor
-        ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
-        twoList.setItems(twoItems);
+            HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+            drawer.setSidePane(menuBox);
 
-        // First Floor
-        ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
-        oneList.setItems(oneItems);
-
-        // Ground Floor
-        ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
-        groundList.setItems(groundItems);
-
-
-        // Lower 1 Floor
-        ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
-        lowerOneList.setItems(lowerOneItems);
-
-        // Lower 2 Floor
-        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
-        lowerTwoList.setItems(lowerTwoItems);
-
-        // All entries
-        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
-        searchList.setItems(allEntries);
-
-        end.setSelected(true);
-        map.setImage(Data.data.firstFloor);
-        stairs.setSelected(true);
-        elevator.setSelected(true);
-        tabPane.getSelectionModel().select(floorOne);
-
-        threeList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
-
-        twoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
-        oneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
-        lowerOneList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
-        lowerTwoList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
-        groundList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
+            transition.setRate(-1);
+            hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
+                transition.setRate(transition.getRate() * -1);
+                transition.play();
+                if(drawer.isShown()){
+                    drawer.close();
+                }
+                else {
+                    drawer.open();
+                }
+            });
 
 
-        //switching admin privs
-        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
-                adminBox.setVisible(true);
-                loginButton.setText("Log Out");
-            } else {
-                adminBox.setVisible(false);
-                loginButton.setText("Log In");
-            }
-        });
+            // All entries
+            allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
+            searchList.setItems(allEntries);
 
-        //switching admin privs
-        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-                    if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
-                        loginButton.setOnAction((event) -> {
-                            try {
-                                logout();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    }});
+            end.setSelected(true);
+            map.setImage(Data.data.firstFloor);
+            stairs.setSelected(true);
+            elevator.setSelected(true);
+            tabPane.getSelectionModel().select(floorOne);
 
-        threeArrow.setVisible(false);
-        twoArrow.setVisible(false);
-        oneArrow.setVisible(false);
-        groundArrow.setVisible(false);
-        lowerTwoArrow.setVisible(false);
-        lowerOneArrow.setVisible(false);
+            pointsInterest.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    destination.setText(newValue);
+                }
+            });
+
+            //switching admin privs
+            SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
+                if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
+                    adminBox.setVisible(true);
+                    loginButton.setText("Log Out");
+                } else {
+                    adminBox.setVisible(false);
+                    loginButton.setText("Log In");
+                }
+            });
+
+            //switching admin privs
+            SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
+                if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
+                    loginButton.setOnAction((event) -> {
+                        try {
+                            logout();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }});
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -356,12 +336,6 @@ public class NavigationPageController implements Initializable, Data{
     public void settingFields() throws IOException, InterruptedException {
         searchList.setVisible(false);
         String destinationText = destination.getText();
-        oneArrow.setVisible(false);
-        twoArrow.setVisible(false);
-        threeArrow.setVisible(false);
-        groundArrow.setVisible(false);
-        lowerOneArrow.setVisible(false);
-        lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
 
             System.out.println("LABEL!!!!!");
@@ -409,6 +383,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
+        pointsInterest.setItems(lowerOneItems);
     }
 
     @FXML
@@ -419,6 +394,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
+        pointsInterest.setItems(lowerTwoItems);
     }
 
     @FXML
@@ -429,6 +405,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
+        pointsInterest.setItems(oneItems);
     }
 
     @FXML
@@ -441,6 +418,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
+        pointsInterest.setItems(twoItems);
     }
 
     @FXML
@@ -453,6 +431,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
+        pointsInterest.setItems(threeItems);
     }
 
     @FXML
@@ -463,6 +442,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
+        pointsInterest.setItems(groundItems);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,12 +529,6 @@ public class NavigationPageController implements Initializable, Data{
     public void clearFields(){
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
-        threeArrow.setVisible(false);
-        twoArrow.setVisible(false);
-        oneArrow.setVisible(false);
-        groundArrow.setVisible(false);
-        lowerOneArrow.setVisible(false);
-        lowerTwoArrow.setVisible(false);
         sendLabel.setVisible(false);
         email.setVisible(false);
         sendButton.setVisible(false);
@@ -582,7 +556,6 @@ public class NavigationPageController implements Initializable, Data{
                 sendButton.setVisible(true);
             }
         });
-        setArrows(floorsVisited);
         searchList.setVisible(false);
         directionSteps.setVisible(true);
     }
@@ -707,33 +680,6 @@ public class NavigationPageController implements Initializable, Data{
             }
         }
         setMap("1");
-    }
-
-    public void setArrows(Vector<String> floorsNeeded){
-        for (int i = 0; i < floorsNeeded.size(); i++) {
-            String floorAt = floorsNeeded.elementAt(i);
-            switch (floorAt){
-                case "L2":
-                    lowerTwoArrow.setVisible(true);
-                    break;
-                case "L1":
-                    lowerOneArrow.setVisible(true);
-                    break;
-                case "G":
-                    groundArrow.setVisible(true);
-                    break;
-                case "1":
-                    oneArrow.setVisible(true);
-                    break;
-                case "2":
-                    twoArrow.setVisible(true);
-                    break;
-                case "3":
-                    threeArrow.setVisible(true);
-                    break;
-                default: break;
-            }
-        }
     }
 
     public void setMap(String map) {
