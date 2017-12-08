@@ -28,159 +28,7 @@
     <center>
         <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
             <children>
-                <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="810.0" prefWidth="1386.0">
-                    <content>
-                        <Group fx:id="scrollContent">
-                            <children>
-                                <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
-                                    <children>
-                                        <ImageView fx:id="map" fitHeight="941.0" fitWidth="1587.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                            <image>
-                                                <Image url="@Icons/01_thefirstfloor.png" />
-                                            </image>
-                                        </ImageView>
-                                        <Canvas fx:id="pathCanvas" height="900.0" width="1384.0" StackPane.alignment="TOP_LEFT" />
-                                    </children>
-                                </StackPane>
-                            </children>
-                        </Group>
-                    </content>
-                </ScrollPane>
-                <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
-                    <font>
-                        <Font name="Montserrat Regular" size="12.0" />
-                    </font>
-                </JFXTextField>
-                <JFXButton fx:id="search" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-                    <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </JFXButton>
-                <JFXTabPane fx:id="tabPane" layoutX="1250.0" layoutY="360.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
-                    <tabs>
-                        <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
-                        <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
-                        <Tab fx:id="floorOne" onSelectionChanged="#changeFloor1" style="-fx-rotate: 90;" text="1" />
-                        <Tab fx:id="floorGround" onSelectionChanged="#changeFloorG" style="-fx-rotate: 90;" text="G" />
-                        <Tab fx:id="floorLowerOne" onSelectionChanged="#changeFloorL1" style="-fx-rotate: 90;" text="L1" />
-                        <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
-                    </tabs>
-                </JFXTabPane>
-                <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
-                <HBox alignment="CENTER" layoutX="915.0" layoutY="36.0" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #1a479a;" visible="false">
-                    <children>
-                        <JFXCheckBox checkedColor="#1a479a" text="Speak" textFill="WHITE" unCheckedColor="#1a479a">
-                            <font>
-                                <Font name="Montserrat Regular" size="12.0" />
-                            </font>
-                        </JFXCheckBox>
-                    </children>
-                </HBox>
-                <JFXButton contentDisplay="CENTER" layoutX="100.0" layoutY="36.0" onAction="#back" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
-                    <font>
-                        <Font name="Montserrat Regular" size="12.0" />
-                    </font>
-                </JFXButton>
-            <HBox layoutX="100.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
-               <children>
-                  <JFXButton fx:id="floorVisA" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="floorVisB" style="-fx-background-color: #1a479a;" text="L1" textFill="WHITE">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="floorVisC" style="-fx-background-color: #1a479a;" text="G" textFill="WHITE">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="floorVisD" style="-fx-background-color: #1a479a;" text="1" textFill="WHITE">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="floorVisE" style="-fx-background-color: #1a479a;" text="2" textFill="WHITE">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="floorVisF" style="-fx-background-color: #1a479a;" text="3" textFill="WHITE">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_RIGHT" layoutX="1100.0" layoutY="36.0" prefHeight="65.0" prefWidth="204.0">
-               <children>
-                  <JFXButton contentDisplay="CENTER">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icons/489749-Gear-512.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" prefHeight="45.0" prefWidth="59.0">
-                     <graphic>
-                        <ImageView fx:id="icon" fitHeight="46.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXButton fx:id="helpButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#chat" prefHeight="32.0" prefWidth="32.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" textAlignment="CENTER">
-                     <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icons/help-64.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="15.0" top="10.0" />
-                     </HBox.margin>
-                  </JFXButton>
-               </children>
-            </HBox>
-            <HBox alignment="BOTTOM_RIGHT" layoutX="1100.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0">
-               <children>
-                  <JFXButton fx:id="aboutButton" onAction="#about" text="ⓒ Fuschia Fairies">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
-               </children>
-            </HBox>
-            <VBox fx:id="mainMenuBox" layoutX="900.0" prefHeight="671.0" prefWidth="242.0">
+            <VBox layoutX="900.0" prefHeight="671.0" prefWidth="242.0">
                <children>
                   <AnchorPane prefHeight="107.0" prefWidth="200.0">
                      <children>
@@ -348,12 +196,164 @@
                   <JFXListView fx:id="floorPoints" prefHeight="711.0" prefWidth="242.0" visible="false" />
                </children>
             </VBox>
+                <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="810.0" prefWidth="1386.0">
+                    <content>
+                        <Group fx:id="scrollContent">
+                            <children>
+                                <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
+                                    <children>
+                                        <ImageView fx:id="map" fitHeight="941.0" fitWidth="1587.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                            <image>
+                                                <Image url="@Icons/01_thefirstfloor.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Canvas fx:id="pathCanvas" height="900.0" width="1384.0" StackPane.alignment="TOP_LEFT" />
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </Group>
+                    </content>
+                </ScrollPane>
+                <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                    <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                    </font>
+                </JFXTextField>
+                <JFXButton fx:id="search" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                    <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXTabPane fx:id="tabPane" layoutX="1250.0" layoutY="360.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
+                    <tabs>
+                        <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
+                        <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
+                        <Tab fx:id="floorOne" onSelectionChanged="#changeFloor1" style="-fx-rotate: 90;" text="1" />
+                        <Tab fx:id="floorGround" onSelectionChanged="#changeFloorG" style="-fx-rotate: 90;" text="G" />
+                        <Tab fx:id="floorLowerOne" onSelectionChanged="#changeFloorL1" style="-fx-rotate: 90;" text="L1" />
+                        <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
+                    </tabs>
+                </JFXTabPane>
+                <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
+                <HBox alignment="CENTER" layoutX="915.0" layoutY="36.0" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #1a479a;" visible="false">
+                    <children>
+                        <JFXCheckBox checkedColor="#1a479a" text="Speak" textFill="WHITE" unCheckedColor="#1a479a">
+                            <font>
+                                <Font name="Montserrat Regular" size="12.0" />
+                            </font>
+                        </JFXCheckBox>
+                    </children>
+                </HBox>
+                <JFXButton contentDisplay="CENTER" layoutX="100.0" layoutY="36.0" onAction="#back" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
+                    <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                    </font>
+                </JFXButton>
+            <HBox layoutX="100.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
+               <children>
+                  <JFXButton fx:id="floorVisA" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="floorVisB" style="-fx-background-color: #1a479a;" text="L1" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="floorVisC" style="-fx-background-color: #1a479a;" text="G" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="floorVisD" style="-fx-background-color: #1a479a;" text="1" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="floorVisE" style="-fx-background-color: #1a479a;" text="2" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="floorVisF" style="-fx-background-color: #1a479a;" text="3" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" layoutX="1100.0" layoutY="36.0" prefHeight="65.0" prefWidth="204.0">
+               <children>
+                  <JFXButton contentDisplay="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/489749-Gear-512.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" prefHeight="45.0" prefWidth="59.0">
+                     <graphic>
+                        <ImageView fx:id="icon" fitHeight="46.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="helpButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#chat" prefHeight="32.0" prefWidth="32.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/help-64.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="15.0" top="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
             <JFXDrawersStack prefHeight="554.0" prefWidth="233.0">
                <children>
-                  <JFXDrawer fx:id="mainMenu" defaultDrawerSize="500.0" prefHeight="554.0" prefWidth="58.0" />
+                  <JFXDrawer fx:id="mainMenu" />
                </children>
             </JFXDrawersStack>
-            <JFXButton fx:id="menuButton" contentDisplay="CENTER" layoutX="900.0" layoutY="36.0" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+            <HBox alignment="BOTTOM_RIGHT" layoutX="1100.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="aboutButton" onAction="#about" text="ⓒ Fuschia Fairies">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <JFXButton fx:id="menuButton" contentDisplay="CENTER" layoutX="900.0" layoutY="36.0" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>

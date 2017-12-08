@@ -174,6 +174,7 @@ public class NavigationPageController implements Initializable, Data{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
 
@@ -1086,6 +1087,7 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void initDrawer(){
+        mainMenu.setVisible(true);
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
@@ -1094,6 +1096,7 @@ public class NavigationPageController implements Initializable, Data{
             menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
                 if(mainMenu.isShown()){
                     mainMenu.close();
+                    mainMenu.setVisible(false);
                 }
                 else {
                     mainMenu.open();
