@@ -1,40 +1,19 @@
 package sample;
 
 import com.jfoenix.controls.*;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static sample.Data.data;
 
