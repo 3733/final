@@ -42,60 +42,49 @@ public class MenuDrawerController implements Initializable{
     //FXML UI Components
 
     @FXML
-    private Label sendLabel;
+    protected Label sendLabel;
     @FXML
-    private JFXButton sendButton;
+    protected JFXButton sendButton;
     @FXML
-    private JFXListView directionSteps;
+    protected JFXListView directionSteps, floorPoints;
 
     @FXML
-    private JFXTextField destination;
+    protected JFXTextField destination;
     // Contains stairs option
 
     @FXML
     private static Label invalidEmailText;
     @FXML
-    private JFXRadioButton start, end;
+    protected JFXRadioButton start, end;
 
     @FXML
-    private JFXTextField startField, endField;
+    protected JFXTextField startField, endField;
 
     @FXML
-    private ToggleGroup points;
+    protected String defaultStart;
 
     @FXML
-    private String defaultStart;
+    protected Label startLabel, endLabel;
 
     @FXML
-    private Label startLabel, endLabel;
+    protected ToggleGroup points;
 
     @FXML
-    private JFXTextField email;
+    protected JFXTextField email;
 
     @FXML
-    private VBox adminBox;
+    protected VBox adminBox;
 
     @FXML
-    private Main mainController;
+    protected Main mainController;
 
     @FXML
-    private JFXListView pointsList;
+    protected JFXListView pointsList;
 
 
-    private Vector<String> floorsVisited = new Vector<>();
+    protected Vector<String> floorsVisited = new Vector<>();
 
-    //popluating list view -- three
-    ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
-    // Second Floor
-    ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
-    // First Floor
-    ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
-    // Ground Floor
-    ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
-    // Lower 1 Floor
-    ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
-    // Lower 2 Floor
-    ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

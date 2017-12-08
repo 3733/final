@@ -33,7 +33,7 @@
                   <VBox prefHeight="108.0" prefWidth="152.0">
                      <children>
                         <JFXBadge prefHeight="25.0" prefWidth="25.0" />
-                        <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" ripplerFill="#8c8c8c" text="Log In">
+                        <JFXButton fx:id="loginButton" contentDisplay="CENTER" ripplerFill="#8c8c8c" text="Log In">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>
@@ -41,7 +41,7 @@
                               <Insets left="25.0" />
                            </VBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="helpButton" contentDisplay="CENTER" onAction="#chat" ripplerFill="#8e8e8e" text="Help">
+                        <JFXButton fx:id="helpButton" contentDisplay="CENTER" ripplerFill="#8e8e8e" text="Help">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>
@@ -49,7 +49,7 @@
                               <Insets left="25.0" />
                            </VBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="aboutButton" contentDisplay="CENTER" onAction="#about" ripplerFill="#8e8e8e" text="About">
+                        <JFXButton fx:id="aboutButton" contentDisplay="CENTER" ripplerFill="#8e8e8e" text="About">
                            <font>
                               <Font name="Montserrat Regular" size="12.0" />
                            </font>
@@ -153,7 +153,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
          <children>
-            <JFXButton buttonType="RAISED" onAction="#reverseNodes" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
+            <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" />
                </HBox.margin>
@@ -161,7 +161,7 @@
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" onAction="#clear" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
+            <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
@@ -196,7 +196,7 @@
                   <Insets left="15.0" right="10.0" />
                </HBox.margin>
             </JFXTextField>
-            <JFXButton fx:id="sendButton" buttonType="RAISED" onAction="#sendMsg" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE" visible="false">
+            <JFXButton fx:id="sendButton" buttonType="RAISED" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE" visible="false">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
