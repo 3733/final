@@ -877,7 +877,8 @@ public class NavigationPageController implements Initializable, Data{
                 System.out.println("This is the selected node: " + selectedNode.getNodeID());
                 data.kiosk = data.graph.getNodes().get(0);
                 try {
-                    findPath(data.kiosk.getLongName(), selectedNode.getLongName());
+                    destination.setText(selectedNode.getLongName().trim());
+                    settingFields();
                 } catch ( IOException e) {
 
                 } catch (InterruptedException e){
