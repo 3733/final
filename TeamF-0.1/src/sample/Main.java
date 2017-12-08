@@ -185,7 +185,7 @@ public class Main extends Application implements Data{
 
 
         stage.setTitle("Team F Hospital GPS");
-        stage.setScene(start);
+        stage.setScene(map);
         stage.setResizable(true);
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();

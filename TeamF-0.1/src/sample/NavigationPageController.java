@@ -273,6 +273,7 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
 
+        startZoom();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +621,13 @@ public class NavigationPageController implements Initializable, Data{
                 turn = "sharply left";
             }
 
-            out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
+            if(turn.equals("straight")) {
+                out = out.concat("Go " + turn + " to " + c.getLongName().trim() + "<br>");
+            }
+            else{
+                out = out.concat("Turn " + turn + " towards " + c.getLongName().trim() + "<br>");
+            }
+            //out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
         }
         return out;
     }
@@ -867,6 +874,37 @@ public class NavigationPageController implements Initializable, Data{
                 }
             }
         });
+    }
+
+    @FXML
+    public void startZoom() {
+        scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
+            }
+        });
+
+        double scaleFactor = (2 > 0) ? 2.03 : 1/1.03;
+        Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
+        if (!(scaleFactor * stackPane.getScaleX() < 1)) {
+            stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
+            stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
+        }
+        repositionScroller(scrollContent, scrollMap, scaleFactor, scrollOffset);
+
+
+        double deltaX = data.kiosk.getxCoordinate() - 3000;
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+        double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
+        double desiredH = scrollMap.getHvalue() - deltaH;
+            scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+        double deltaY = data.kiosk.getyCoordinate() - 1250;
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+        double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
+        double desiredV = scrollMap.getVvalue() - deltaV;
+            scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+
     }
 
     private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
