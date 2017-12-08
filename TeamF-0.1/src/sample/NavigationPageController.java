@@ -13,6 +13,7 @@ import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
@@ -180,17 +181,6 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
-
-        menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
-            if(mainMenu.isShown()){
-                System.out.println("is closed");
-                mainMenu.close();
-            }
-            else {
-                System.out.println("is opened");
-                mainMenu.open();
-            }
-        });
 
         floorButtons.add(floorVisA);
         floorButtons.add(floorVisB);
@@ -1092,6 +1082,26 @@ public class NavigationPageController implements Initializable, Data{
         }
         this.path = reversePath;
         MultiFloorPathDrawing(this.path);
+    }
+
+    @FXML
+    public void initDrawer(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
+            VBox menuBox = loader.load();
+            mainMenu.setSidePane(menuBox);
+            menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
+                if(mainMenu.isShown()){
+                    mainMenu.close();
+                }
+                else {
+                    mainMenu.open();
+                }
+            });
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 }

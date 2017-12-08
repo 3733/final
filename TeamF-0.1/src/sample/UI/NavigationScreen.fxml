@@ -180,180 +180,177 @@
                   </JFXButton>
                </children>
             </HBox>
-            <JFXDrawersStack prefHeight="554.0" prefWidth="233.0">
+            <VBox fx:id="mainMenuBox" layoutX="900.0" prefHeight="671.0" prefWidth="242.0">
                <children>
-                  <JFXDrawer fx:id="mainMenu" prefHeight="554.0" prefWidth="58.0">
+                  <AnchorPane prefHeight="107.0" prefWidth="200.0">
                      <children>
-                        <VBox fx:id="mainMenuBox" prefHeight="671.0" prefWidth="242.0">
+                        <HBox prefHeight="59.0" prefWidth="242.0">
                            <children>
-                              <AnchorPane prefHeight="107.0" prefWidth="200.0">
+                              <VBox prefHeight="25.0" prefWidth="152.0">
                                  <children>
-                                    <HBox prefHeight="59.0" prefWidth="242.0">
-                                       <children>
-                                          <VBox prefHeight="25.0" prefWidth="152.0">
-                                             <children>
-                                                <JFXButton contentDisplay="CENTER" onAction="#emergencyButton" ripplerFill="#8e8e8e" text="Emergency">
-                                                   <font>
-                                                      <Font name="Montserrat Regular" size="12.0" />
-                                                   </font>
-                                                   <VBox.margin>
-                                                      <Insets left="25.0" />
-                                                   </VBox.margin>
-                                                </JFXButton>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <VBox prefHeight="145.0" prefWidth="114.0">
-                                             <children>
-                                                <JFXRadioButton fx:id="start" onAction="#settingSearch" styleClass=".jfx-radio-button" text="Start">
-                                                   <toggleGroup>
-                                                      <ToggleGroup fx:id="points" />
-                                                   </toggleGroup>
-                                                   <font>
-                                                      <Font name="Montserrat Regular" size="12.0" />
-                                                   </font>
-                                                   <padding>
-                                                      <Insets top="10.0" />
-                                                   </padding>
-                                                   <VBox.margin>
-                                                      <Insets bottom="15.0" top="40.0" />
-                                                   </VBox.margin>
-                                                </JFXRadioButton>
-                                                <JFXRadioButton fx:id="end" onAction="#settingSearch" styleClass=".jfx-radio-button" text="End" toggleGroup="$points">
-                                                   <font>
-                                                      <Font name="Montserrat Regular" size="12.0" />
-                                                   </font>
-                                                   <VBox.margin>
-                                                      <Insets top="45.0" />
-                                                   </VBox.margin>
-                                                </JFXRadioButton>
-                                             </children>
-                                             <HBox.margin>
-                                                <Insets right="15.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox prefHeight="145.0" prefWidth="252.0">
-                                             <children>
-                                                <Label fx:id="startLabel" alignment="BOTTOM_CENTER" prefHeight="63.0" prefWidth="134.0" underline="true" />
-                                                <Label fx:id="endLabel" alignment="BOTTOM_CENTER" prefHeight="66.0" prefWidth="160.0" underline="true">
-                                                   <VBox.margin>
-                                                      <Insets top="20.0" />
-                                                   </VBox.margin>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <VBox fx:id="labelBox" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label fx:id="startLabel1" alignment="BOTTOM_LEFT" prefHeight="63.0" prefWidth="100.0" underline="true" />
-                                                <Label fx:id="endLabel1" alignment="BOTTOM_LEFT" prefHeight="66.0" prefWidth="100.0" underline="true">
-                                                   <VBox.margin>
-                                                      <Insets top="15.0" />
-                                                   </VBox.margin>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                              <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="200.0">
-                                 <children>
-                                    <JFXCheckBox fx:id="stairs" checkedColor="#1a479a" onAction="#go" style="-fx-background-color: #f4f4f4;" text="Stairs">
-                                       <HBox.margin>
+                                    <JFXButton contentDisplay="CENTER" onAction="#emergencyButton" ripplerFill="#8e8e8e" text="Emergency">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                       <VBox.margin>
                                           <Insets left="25.0" />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                    </JFXCheckBox>
-                                    <JFXCheckBox fx:id="elevator" checkedColor="#1a479a" onAction="#go" style="-fx-background-color: #f4f4f4;" text="Elevator">
-                                       <HBox.margin>
-                                          <Insets left="25.0" />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                    </JFXCheckBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="25.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
-                                 <children>
-                                    <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
-                                       <HBox.margin>
-                                          <Insets left="15.0" right="15.0" />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                    </JFXButton>
-                                    <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
+                                       </VBox.margin>
                                     </JFXButton>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets top="25.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" prefHeight="29.0" prefWidth="242.0">
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="145.0" prefWidth="114.0">
                                  <children>
-                                    <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email" visible="false">
+                                    <JFXRadioButton fx:id="start" onAction="#settingSearch" styleClass=".jfx-radio-button" text="Start">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="points" />
+                                       </toggleGroup>
                                        <font>
                                           <Font name="Montserrat Regular" size="12.0" />
                                        </font>
-                                       <HBox.margin>
-                                          <Insets bottom="15.0" />
-                                       </HBox.margin>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets bottom="15.0" top="40.0" />
+                                       </VBox.margin>
+                                    </JFXRadioButton>
+                                    <JFXRadioButton fx:id="end" onAction="#settingSearch" styleClass=".jfx-radio-button" text="End" toggleGroup="$points">
+                                       <font>
+                                          <Font name="Montserrat Regular" size="12.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="45.0" />
+                                       </VBox.margin>
+                                    </JFXRadioButton>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox prefHeight="145.0" prefWidth="252.0">
+                                 <children>
+                                    <Label fx:id="startLabel" alignment="BOTTOM_CENTER" prefHeight="63.0" prefWidth="134.0" underline="true" />
+                                    <Label fx:id="endLabel" alignment="BOTTOM_CENTER" prefHeight="66.0" prefWidth="160.0" underline="true">
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
                                     </Label>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets top="15.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox prefHeight="34.0" prefWidth="228.0">
+                              </VBox>
+                              <VBox fx:id="labelBox" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
                                  <children>
-                                    <JFXTextField fx:id="email" unFocusColor="#8e8e8e" visible="false">
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets left="15.0" right="10.0" />
-                                       </HBox.margin>
-                                    </JFXTextField>
-                                    <JFXButton fx:id="sendButton" buttonType="RAISED" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE" visible="false">
-                                       <font>
-                                          <Font name="Montserrat Regular" size="12.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets right="15.0" />
-                                       </HBox.margin>
-                                    </JFXButton>
+                                    <Label fx:id="startLabel1" alignment="BOTTOM_LEFT" prefHeight="63.0" prefWidth="100.0" underline="true" />
+                                    <Label fx:id="endLabel1" alignment="BOTTOM_LEFT" prefHeight="66.0" prefWidth="100.0" underline="true">
+                                       <VBox.margin>
+                                          <Insets top="15.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <JFXListView fx:id="directionSteps" prefHeight="368.0" prefWidth="242.0" visible="false">
-                                 <VBox.margin>
-                                    <Insets top="25.0" />
-                                 </VBox.margin>
-                              </JFXListView>
-                              <JFXListView fx:id="floorPoints" prefHeight="711.0" prefWidth="242.0" visible="false" />
+                              </VBox>
                            </children>
-                        </VBox>
+                        </HBox>
                      </children>
-                  </JFXDrawer>
+                  </AnchorPane>
+                  <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="200.0">
+                     <children>
+                        <JFXCheckBox fx:id="stairs" checkedColor="#1a479a" onAction="#go" style="-fx-background-color: #f4f4f4;" text="Stairs">
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                        </JFXCheckBox>
+                        <JFXCheckBox fx:id="elevator" checkedColor="#1a479a" onAction="#go" style="-fx-background-color: #f4f4f4;" text="Elevator">
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                        </JFXCheckBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
+                     <children>
+                        <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="242.0">
+                     <children>
+                        <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email" visible="false">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="15.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="34.0" prefWidth="228.0">
+                     <children>
+                        <JFXTextField fx:id="email" unFocusColor="#8e8e8e" visible="false">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="15.0" right="10.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="sendButton" buttonType="RAISED" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <JFXListView fx:id="directionSteps" prefHeight="368.0" prefWidth="242.0" visible="false">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </JFXListView>
+                  <JFXListView fx:id="floorPoints" prefHeight="711.0" prefWidth="242.0" visible="false" />
+               </children>
+            </VBox>
+            <JFXDrawersStack prefHeight="554.0" prefWidth="233.0">
+               <children>
+                  <JFXDrawer fx:id="mainMenu" defaultDrawerSize="500.0" prefHeight="554.0" prefWidth="58.0" />
                </children>
             </JFXDrawersStack>
             <JFXButton fx:id="menuButton" contentDisplay="CENTER" layoutX="900.0" layoutY="36.0" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
