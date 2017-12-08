@@ -219,7 +219,6 @@ public class MapEditPageController implements Initializable, Data{
         contextMenu2.getItems().addAll(item3, item4);
 
         scrollMap.setPannable(true);
-
     }
 
     public static void updateNodes() {
@@ -609,7 +608,7 @@ public class MapEditPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-            scrollContent.setOnMousePressed((javafx.scene.input.MouseEvent event) -> {
+            pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent event) -> {
 
                 double newX1 = (event.getX());
                 double newY1 = (event.getY());
@@ -679,7 +678,7 @@ public class MapEditPageController implements Initializable, Data{
                 lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
             });
 
-        scrollContent.setOnMouseDragged(new EventHandler<javafx.scene.input.MouseEvent>() {
+        scrollMap.setOnMouseDragged(new EventHandler<javafx.scene.input.MouseEvent>() {
 
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {

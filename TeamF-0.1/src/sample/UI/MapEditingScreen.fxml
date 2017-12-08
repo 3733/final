@@ -314,15 +314,15 @@
                <content>
                   <Group fx:id="scrollContent">
                      <children>
-                        <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0">
+                        <StackPane fx:id="stackPane" alignment="TOP_LEFT" prefHeight="819.0" prefWidth="1178.0">
                            <children>
                               <ImageView fx:id="map" fitHeight="824.0" fitWidth="1237.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Icons/01_thefirstfloor.png" />
                                  </image>
                               </ImageView>
-                              <Canvas fx:id="pathCanvas" height="812.0" width="1115.0" />
-                              <Canvas fx:id="pathCanvas1" height="812.0" width="1115.0" />
+                              <Canvas fx:id="pathCanvas" height="818.0" width="1136.0" />
+                              <Canvas fx:id="pathCanvas1" height="820.0" width="1137.0" />
                            </children>
                         </StackPane>
                      </children>
