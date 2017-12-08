@@ -3,6 +3,8 @@ package sample;
 import com.jfoenix.controls.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.WeakEventHandler;
@@ -10,14 +12,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 import java.awt.event.MouseEvent;
@@ -31,6 +38,10 @@ import java.util.Vector;
 public class MapEditPageController implements Initializable, Data{
 
     //fxml components
+    @FXML
+    private StackPane stackPane;
+    @FXML
+    private Group scrollContent;
     @FXML
     private JFXToggleButton nodeEdgeEdit;
     @FXML
@@ -57,10 +68,15 @@ public class MapEditPageController implements Initializable, Data{
     private JFXCheckBox allNodes;
     @FXML
     private JFXCheckBox allEdges;
-    
+    @FXML
+    private ContextMenu contextMenu;
+    @FXML
+    private ContextMenu contextMenu2;
+
+   /* public final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
+*/
     //other variables
     private Main mainController;
-
 
     public Node selectedNode; // Used for opening map editing windows
 
@@ -184,11 +200,26 @@ public class MapEditPageController implements Initializable, Data{
             }
         });
 
-        try {
+/*        try {
             clickNearestNodeSelected();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+        zoom();
+
+
+        contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Edit Node");
+        MenuItem item2 = new MenuItem("Add Node");
+        contextMenu.getItems().addAll(item1, item2);
+
+        contextMenu2 = new ContextMenu();
+        MenuItem item3 = new MenuItem("Set Start Node");
+        MenuItem item4 = new MenuItem("Set End Node");
+        contextMenu2.getItems().addAll(item3, item4);
+
+        scrollMap.setPannable(true);
+
     }
 
     public static void updateNodes() {
@@ -349,23 +380,19 @@ public class MapEditPageController implements Initializable, Data{
      * @throws IOException
      */
 
+/*
     public void clickNearestNodeSelected() throws IOException {
-            ContextMenu contextMenu = new ContextMenu();
-            MenuItem item1 = new MenuItem("Edit Node");
-            MenuItem item2 = new MenuItem("Add Node");
-            contextMenu.getItems().addAll(item1, item2);
 
-            ContextMenu contextMenu2 = new ContextMenu();
-            MenuItem item3 = new MenuItem("Set Start Node");
-            MenuItem item4 = new MenuItem("Set End Node");
-            contextMenu2.getItems().addAll(item3, item4);
 
             pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
                 e.consume();
+
+                //lastMouseCoordinates.set(new Point2D(e.getX(), e.getY()));
+                System.out.println("Updated the mouse coordinates: " + e.getX() + " | " + e.getY());
                 Data.data.gc1.clearRect(0, 0, 1143, 783);
 
-                double newX1 = (e.getSceneX());
-                double newY1 = (e.getSceneY());
+                double newX1 = (e.getX());
+                double newY1 = (e.getY());
 
                 double divisionCst = 4.15;
                 int offset = 1;
@@ -383,16 +410,24 @@ public class MapEditPageController implements Initializable, Data{
                     selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
                 }
 
-                if (e.isPrimaryButtonDown()) {
-                    e.consume();
+                if (*/
+/*e.isPrimaryButtonDown()*//*
+ false) {
+                    //e.consume();
                     Data.data.gc1.setStroke(Color.RED);
                     Data.data.gc1.stroke();
 
                     Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
                     Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                    Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+*/
+/*                    Main.nodeEditScreenClick(selectedNode, editNodeBtn); *//*
+
                     drawFloorNodes();
-                } else if (e.isSecondaryButtonDown()) {
+                } */
+/*if (e.isSecondaryButtonDown()) {
+                    e.consume();
+                    Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
                     if(editEdges) {
                         contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
                         contextMenu2.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
@@ -430,10 +465,12 @@ public class MapEditPageController implements Initializable, Data{
                                 drawFloorNodes();
                             }
                         });
-                    }
+                    }*//*
+
                 }
             });
         }
+*/
 
     @FXML
     public void drawFloorNodes(){
@@ -507,4 +544,243 @@ public class MapEditPageController implements Initializable, Data{
         clearCanvas(Data.data.gc1,pathCanvas1);
         clearCanvas(Data.data.gc,pathCanvas);
     }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @FXML
+    public void zoom() {
+        scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
+            }
+        });
+
+        scrollContent.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+
+                if (event.getDeltaY() == 0) {
+                    return;
+                }
+
+                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+                double hScrollProportion = (scrollMap.getHvalue() - scrollMap.getHmin()) / (scrollMap.getHmax() - scrollMap.getHmin());
+                double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+                double vScrollProportion = (scrollMap.getVvalue() - scrollMap.getVmin()) / (scrollMap.getVmax() - scrollMap.getVmin());
+                double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+                Point2D scrollOffset = new Point2D(scrollXOffset, scrollYOffset);
+                if (!(scaleFactor * stackPane.getScaleX() < 1)) {
+                    stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
+                    stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
+                }
+
+                double scrollXOffset2 = scrollOffset.getX();
+
+                double scrollYOffset2 = scrollOffset.getY();
+                double extraWidth2 = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+                if (extraWidth2 > 0) {
+                    double halfWidth = scrollMap.getViewportBounds().getWidth() / 2 ;
+                    double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset2;
+                    scrollMap.setHvalue(scrollMap.getHmin() + newScrollXOffset * (scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth2);
+                } else {
+                    scrollMap.setHvalue(scrollMap.getHmin());
+                }
+                double extraHeight2 = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+                if (extraHeight2 > 0) {
+                    double halfHeight = scrollMap.getViewportBounds().getHeight() / 2 ;
+                    double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset2;
+                    scrollMap.setVvalue(scrollMap.getVmin() + newScrollYOffset * (scrollMap.getVmax() - scrollMap.getVmin()) / extraHeight2);
+                } else {
+                    scrollMap.setHvalue(scrollMap.getHmin());
+                }
+            }
+        });
+
+        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+            scrollContent.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
+                    @Override
+                    public void handle(javafx.scene.input.MouseEvent event) {
+                        lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+
+                        double newX1 = (event.getX());
+                        double newY1 = (event.getY());
+
+                        double divisionCst = 4.15;
+                        int offset = 1;
+                        if (floorLowerTwo.isSelected()) {
+                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                        } else if (floorLowerOne.isSelected()) {
+                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                        } else if (floorGround.isSelected()) {
+                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+                        } else if (floorOne.isSelected()) {
+                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+                        } else if (floorTwo.isSelected()) {
+                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+                        } else if (floorThree.isSelected()) {
+                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+                        }
+
+                        if (event.isSecondaryButtonDown()) {
+                            event.consume();
+                            Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                            Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                            if (editEdges) {
+                                contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
+                                contextMenu2.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+                                        // Event handling for the first item, open the edit edge screen
+                                        Main.edgeStartEditScreen(editEdgeBtn, selectedNode);
+                                        drawFloorEdges();
+                                    }
+                                });
+                                contextMenu2.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+                                        Main.edgeEndEditScreen(editEdgeBtn, selectedNode);
+                                        drawFloorEdges();
+                                    }
+                                });
+                            } else {
+                                contextMenu.show(pathCanvas1, newX1 - 40, newY1);
+                                contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+                                        // Event handling for the first item, open the edit node screen
+                                        Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+                                        drawFloorNodes();
+                                    }
+                                });
+                                contextMenu.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent even) {
+                                        // Event handling for the second item, open add node screen
+                                        calcX = (int) (event.getX() - data.offset) * divisionCst;
+                                        calcY = (event.getY() - data.offset) * divisionCst;
+                                        Main.nodeAddEditScreenClick(editNodeBtn, calcX, calcY);
+                                        drawFloorNodes();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+
+        scrollContent.setOnMouseDragged(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+                double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
+                double desiredH = scrollMap.getHvalue() - deltaH;
+                if(deltaX > 0) {
+                    scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+                }
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+                double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
+                double desiredV = scrollMap.getVvalue() - deltaV;
+                if ( deltaY > 0) {
+                    scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+                }
+            }
+        });
+    }
+
+    public Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
+        double scrollXOffset = hScrollProportion * Math.max(0, extraWidth);
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        double vScrollProportion = (scroller.getVvalue() - scroller.getVmin()) / (scroller.getVmax() - scroller.getVmin());
+        double scrollYOffset = vScrollProportion * Math.max(0, extraHeight);
+        return new Point2D(scrollXOffset, scrollYOffset);
+    }
+
+    public void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
+        double scrollXOffset = scrollOffset.getX();
+        double scrollYOffset = scrollOffset.getY();
+        double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
+        if (extraWidth > 0) {
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
+            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
+            scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+        double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
+        if (extraHeight > 0) {
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
+            double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
+            scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
+        } else {
+            scroller.setHvalue(scroller.getHmin());
+        }
+    }
+
+    // reset to the top left:
+    private void reset(ImageView imageView, double width, double height) {
+        imageView.setViewport(new Rectangle2D(0, 0, width, height));
+    }
+
+    private void resetStack(ScrollPane pane, double width, double height) {
+        pane.setViewportBounds(new BoundingBox(0,0,width,height));
+    }
+
+    // shift the viewport of the imageView by the specified delta, clamping so
+    // the viewport does not move off the actual image:
+    private void shiftMap(ImageView imageView, Point2D delta) {
+        Rectangle2D viewport = imageView.getViewport();
+
+        double width = imageView.getImage().getWidth() ;
+        double height = imageView.getImage().getHeight() ;
+
+        double maxX = width - viewport.getWidth();
+        double maxY = height - viewport.getHeight();
+
+        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
+        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
+
+        imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
+    }
+
+    private void shiftStack(ScrollPane pane, Point2D delta) {
+        Bounds viewport = pane.getViewportBounds();
+
+        double width = pathCanvas.getWidth() ;
+        double height = pathCanvas.getHeight();
+
+        double maxX = width - viewport.getWidth();
+        double maxY = height - viewport.getHeight();
+
+        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
+        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
+
+        pane.setViewportBounds(new BoundingBox(minX, minY, viewport.getWidth(), viewport.getHeight()));
+    }
+
+    private double clamp(double value, double min, double max) {
+        if (value < min)
+            return min;
+        if (value > max)
+            return max;
+        return value;
+    }
+
+    // convert mouse coordinates in the imageView to coordinates in the actual image:
+    private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
+        double xProportion = imageViewCoordinates.getX() / imageView.getBoundsInLocal().getWidth();
+        double yProportion = imageViewCoordinates.getY() / imageView.getBoundsInLocal().getHeight();
+        Rectangle2D viewport = imageView.getViewport();
+        return new Point2D(
+                viewport.getMinX() + xProportion * viewport.getWidth(),
+                viewport.getMinY() + yProportion * viewport.getHeight());
+    }
+
 }
