@@ -70,7 +70,6 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
-        data.kiosk = data.kiosk = data.graph.getNodes().get(0);
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
                 data.kiosk = data.graph.getNodes().get(i);
