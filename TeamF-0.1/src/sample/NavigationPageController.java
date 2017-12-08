@@ -1,6 +1,5 @@
 package sample;
 
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -59,7 +58,11 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXDrawer drawer;
     @FXML
+    private javafx.scene.image.ImageView icon;
+    @FXML
     private Label sendLabel;
+    @FXML
+    private JFXButton menuButton;
     @FXML
     private JFXButton sendButton;
     @FXML
@@ -67,13 +70,18 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXListView directionSteps;
     @FXML
+    private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
+    @FXML
     private JFXListView searchList;
     @FXML
     private ScrollPane scrollMap;
     @FXML
-    private JFXTabPane tabPane;
+    private AnchorPane mainPane;
     @FXML
-    private JFXButton menuButton;
+    private JFXTabPane tabPane;
+
+    @FXML
+    private JFXButton floorVisA, floorVisB, floorVisC, floorVisD, floorVisE, floorVisF;
 
     @FXML
     private VBox labelBox;
@@ -88,30 +96,59 @@ public class NavigationPageController implements Initializable, Data{
     private JFXTextField destination;
     // Contains stairs option
     @FXML
+    private JFXCheckBox stairs;
+    // Contains the elevator option
+    @FXML
+    private JFXCheckBox elevator;
+    // Contains the Invalid email error message
+    @FXML
     private static Label invalidEmailText;
+    @FXML
+    private JFXRadioButton start, end;
+
+    @FXML
+    private JFXTextField startField, endField;
+
+    @FXML
+    private ToggleGroup points;
 
     @FXML
     private String defaultStart;
 
     @FXML
+    private Label startLabel, endLabel;
+
+    @FXML
     private JFXButton helpButton, aboutButton;
+
+    // Email UI Components
+    @FXML
+    private JFXTextField email;
+
+    @FXML
+    private AnchorPane mainAnchor;
+
+    @FXML
+    private VBox adminBox;
+
+    @FXML
+    private VBox mainMenuBox;
+
+    @FXML
+    private JFXDrawer mainMenu;
+
     @FXML
     private JFXButton loginButton;
 
     @FXML
-    private StackPane stackPane;
-    
-    @FXML
-    private JFXButton floorVisA, floorVisB, floorVisC, floorVisD, floorVisE, floorVisF;
+    private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
 
     @FXML
-    private JFXHamburger hamburger;
+    private StackPane stackPane;
 
     //other components
     @FXML
     private Main mainController;
-
-    MenuDrawerController mainMenu = Main.menuDrawerController;
 
     private Vector<Node> path = new Vector<Node>();
 
@@ -129,19 +166,6 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<JFXButton> floorButtons = new Vector<>();
 
-    //popluating list view -- three
-    ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
-    // Second Floor
-    ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
-    // First Floor
-    ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
-    // Ground Floor
-    ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
-    // Lower 1 Floor
-    ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
-    // Lower 2 Floor
-    ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -157,6 +181,17 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
 
+        menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
+            if(mainMenu.isShown()){
+                System.out.println("is closed");
+                mainMenu.close();
+            }
+            else {
+                System.out.println("is opened");
+                mainMenu.open();
+            }
+        });
+
         floorButtons.add(floorVisA);
         floorButtons.add(floorVisB);
         floorButtons.add(floorVisC);
@@ -164,14 +199,6 @@ public class NavigationPageController implements Initializable, Data{
         floorButtons.add(floorVisE);
         floorButtons.add(floorVisF);
 
-        // All entries
-        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
-        searchList.setItems(allEntries);
-
-//      end.setSelected(true);
-        map.setImage(Data.data.firstFloor);
-        tabPane.getSelectionModel().select(floorOne);
-        
         floorVisA.setVisible(false);
         floorVisB.setVisible(false);
         floorVisC.setVisible(false);
@@ -179,7 +206,44 @@ public class NavigationPageController implements Initializable, Data{
         floorVisE.setVisible(false);
         floorVisF.setVisible(false);
 
+        //popluating list view -- three
+        ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
 
+        // Second Floor
+        ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
+
+        // First Floor
+        ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
+
+        // Ground Floor
+        ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
+
+        // Lower 1 Floor
+        ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
+
+        // Lower 2 Floor
+        ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
+
+        // All entries
+        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
+        searchList.setItems(allEntries);
+
+        end.setSelected(true);
+        map.setImage(Data.data.firstFloor);
+        stairs.setSelected(true);
+        elevator.setSelected(true);
+        tabPane.getSelectionModel().select(floorOne);
+
+        //switching admin privs
+        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
+            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
+                adminBox.setVisible(true);
+                loginButton.setText("Log Out");
+            } else {
+                adminBox.setVisible(false);
+                loginButton.setText("Log In");
+            }
+        });
 
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
@@ -194,7 +258,6 @@ public class NavigationPageController implements Initializable, Data{
                     }
                 });
             }});
-
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -230,12 +293,22 @@ public class NavigationPageController implements Initializable, Data{
 
     public JFXTextField getDestination(){return this.destination;}
 
+    public Label getStartLabel(){return this.startLabel;}
+
+    public Label getEndLabel(){return this.endLabel;}
+
+    public JFXRadioButton getRadioStart(){return this.start;}
 
     public void setDestination(String s){destination.setText(s);}
 
+    public JFXRadioButton getRadioEnd(){return this.end;}
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
+    }
+
+    public VBox getAdminBox(){
+        return this.adminBox;
     }
 
     public JFXButton getLoginButton() {
@@ -244,19 +317,19 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void settingSearch(){
-        if (mainMenu.points.getSelectedToggle() == mainMenu.start) {
+        if (points.getSelectedToggle() == start) {
 
-            destination.setText(mainMenu.startLabel.getText());
+            destination.setText(startLabel.getText());
 
         }
         else{
-            destination.setText(mainMenu.endLabel.getText());
+            destination.setText(endLabel.getText());
         }
     }
 
     @FXML
     public void setStart(String t){
-        //startLabel.setText(t);
+        startLabel.setText(t);
     }
 
     public Node getKiosk(){
@@ -268,22 +341,28 @@ public class NavigationPageController implements Initializable, Data{
     public void settingFields() throws IOException, InterruptedException {
         searchList.setVisible(false);
         String destinationText = destination.getText();
-        if (mainMenu.points.getSelectedToggle() == mainMenu.start) {
+        oneArrow.setVisible(false);
+        twoArrow.setVisible(false);
+        threeArrow.setVisible(false);
+        groundArrow.setVisible(false);
+        lowerOneArrow.setVisible(false);
+        lowerTwoArrow.setVisible(false);
+        if (points.getSelectedToggle() == start) {
 
             System.out.println("LABEL!!!!!");
-            mainMenu.startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            if(!destinationText.equals("")&&!mainMenu.startLabel.getText().equals("")) {
+            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
                 go();
             }
         }
         else{
 
             System.out.println("LABEL!!!!!");
-            mainMenu.endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
 
-            System.out.println(mainMenu.endLabel.getText()+"<=============DESTINATION LABEL");
+            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
             destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            mainMenu.endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             if(!destinationText.equals("")) {
                 go();
             }
@@ -315,7 +394,6 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
-        mainMenu.floorPoints.setItems(lowerOneItems);
     }
 
     @FXML
@@ -326,7 +404,6 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
-        mainMenu.floorPoints.setItems(lowerTwoItems);
     }
 
     @FXML
@@ -337,7 +414,6 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
-        mainMenu.floorPoints.setItems(oneItems);
     }
 
     @FXML
@@ -350,7 +426,6 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
-        mainMenu.floorPoints.setItems(twoItems);
     }
 
     @FXML
@@ -363,7 +438,6 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
-        mainMenu.floorPoints.setItems(threeItems);
     }
 
     @FXML
@@ -374,7 +448,6 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
-        mainMenu.floorPoints.setItems(groundItems);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -449,7 +522,7 @@ public class NavigationPageController implements Initializable, Data{
 
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
-        mainMenu.email.setVisible(true);
+        email.setVisible(true);
         sendButton.setVisible(true);
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
@@ -462,11 +535,11 @@ public class NavigationPageController implements Initializable, Data{
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
         sendLabel.setVisible(false);
-        mainMenu.email.setVisible(false);
+        email.setVisible(false);
         sendButton.setVisible(false);
         directionSteps.setVisible(false);
-        mainMenu.endLabel.setText("");
-        mainMenu.startLabel.setText("Lower Pike Hallway Exit Lobby");
+        endLabel.setText("");
+        startLabel.setText("Lower Pike Hallway Exit Lobby");
         destination.setText("");
         directionSteps.getItems().clear();
         reset(map, width, height);
@@ -475,22 +548,21 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
-        findPath(mainMenu.startLabel.getText(),mainMenu.endLabel.getText());
+        findPath(startLabel.getText(),endLabel.getText());
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
                 sendLabel.setVisible(false);
-                mainMenu.email.setVisible(false);
+                email.setVisible(false);
                 sendButton.setVisible(false);
             }
             else{
                 sendLabel.setVisible(true);
-                mainMenu.email.setVisible(true);
+                email.setVisible(true);
                 sendButton.setVisible(true);
             }
         });
         searchList.setVisible(false);
         directionSteps.setVisible(true);
-        mainMenu.floorPoints.setVisible(false);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -612,7 +684,6 @@ public class NavigationPageController implements Initializable, Data{
                 }
             }
         }
-        setFloorButtons();
         setMap("1");
     }
 
@@ -939,9 +1010,6 @@ public class NavigationPageController implements Initializable, Data{
     public void editUsers(){Main.editUsersScreen();}
 
     @FXML
-    public void menuPopUp(){Main.menuDrawerWin(menuButton);}
-
-    @FXML
     public void about(){Main.aboutWindow(aboutButton);}
 
     @FXML
@@ -954,7 +1022,6 @@ public class NavigationPageController implements Initializable, Data{
         } catch (Exception e){
             System.out.println("API ERROR: " + e.getLocalizedMessage());
         }
-
     }
 
     @FXML
@@ -966,7 +1033,7 @@ public class NavigationPageController implements Initializable, Data{
     public void sendMsg() throws Exception{
         //Vector<Node> msgVec = new Vector<Node>(10);
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
-        emailService.sendEmail(NavigationPageController.directions(Data.data.path), mainMenu.email.getText());
+        emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
     }
 
     // Purpose: Find the proper destination when a user types in the search bar
@@ -1026,6 +1093,5 @@ public class NavigationPageController implements Initializable, Data{
         this.path = reversePath;
         MultiFloorPathDrawing(this.path);
     }
-
 
 }
