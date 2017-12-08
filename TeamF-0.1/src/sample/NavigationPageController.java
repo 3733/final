@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -150,6 +151,9 @@ public class NavigationPageController implements Initializable, Data{
     private int currentAlgo = 1;
 
     double scaleValue = 0.7;
+
+    private Node selectedNode;
+
     private Vector<String> floorsVisited = new Vector<>();
 
 
@@ -497,14 +501,17 @@ public class NavigationPageController implements Initializable, Data{
                 System.out.println(data.kiosk.getLongName());
             }
         }
+
         System.out.println("START SEARCH!!!!!!!!!!");
-        Node StartNode = data.kiosk;
+        Node startNode = data.kiosk;
 
         System.out.println("END SEARCH!!!!!!!!!!!!");
-        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
+        Node endNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
 
+        doPath(startNode,endNode);
+    }
 
-
+    public void doPath(Node StartNode, Node EndNode) throws IOException, InterruptedException{
         switch (currentAlgo){
             case 1:
                 PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
@@ -532,7 +539,6 @@ public class NavigationPageController implements Initializable, Data{
                 break;
         }
 
-
         MultiFloorPathDrawing(this.path);
 
         directionSteps.setVisible(true);
@@ -543,8 +549,6 @@ public class NavigationPageController implements Initializable, Data{
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor);
     }
-
-
     @FXML
     public void clearFields(){
         double width = map.getImage().getWidth();
@@ -821,7 +825,7 @@ public class NavigationPageController implements Initializable, Data{
             }
         });
 
-        stackPane.setOnScroll(new EventHandler<ScrollEvent>() {
+        scrollContent.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override
             public void handle(ScrollEvent event) {
                 event.consume();
@@ -841,14 +845,48 @@ public class NavigationPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+        pathCanvas.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+                double divisionCst = 4.15;
+                int offset = 2;
+
+                double newX1 = (event.getX());
+                double newY1 = (event.getY());
+
+//                Data.data.gc.strokeOval(newX1, newY1, 7.0, 7.0);
+//                Data.data.gc.fillOval(newX1, newY1, 7.0, 7.0);
+
+                if (floorLowerTwo.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                } else if (floorLowerOne.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                } else if (floorGround.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.groundFloorNodes);
+                } else if (floorOne.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.firstFloorNodes);
+                } else if (floorTwo.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.secondFloorNodes);
+                } else if (floorThree.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.thirdFloorNodes);
+                }
+
+                Data.data.gc.strokeOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
+                Data.data.gc.fillOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
+                System.out.println("This is the selected node: " + selectedNode.getNodeID());
+                data.kiosk = data.graph.getNodes().get(0);
+                try {
+                    findPath(data.kiosk.getLongName(), selectedNode.getLongName());
+                } catch ( IOException e) {
+
+                } catch (InterruptedException e){
+
+                }
             }
         });
 
-        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+        scrollMap.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 double deltaX = event.getX() - lastMouseCoordinates.get().getX();
@@ -1091,6 +1129,33 @@ public class NavigationPageController implements Initializable, Data{
         }
         this.path = reversePath;
         MultiFloorPathDrawing(this.path);
+    }
+
+    /**
+     * Function to calculate the nearest node depend on the mouse click location.
+     * @param x
+     * @param y
+     * @param NodesOfTheFloor
+     * @return
+     */
+    public Node mousePosition (double x, double y,Vector<Node> NodesOfTheFloor) {
+        double newMouseX = x;
+        double newMouseY = y;
+        Node GoodOne = null;
+        double MinDist = 100000000.0;
+        double dist;
+
+
+
+        for (Node i: NodesOfTheFloor) {
+            dist = data.graph.MouseNodeDist(newMouseX,newMouseY,i);
+            if(dist < MinDist) {
+                MinDist = dist;
+                GoodOne = i;
+            }
+        }
+        return GoodOne;
+
     }
 
 }
