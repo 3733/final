@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -42,50 +43,73 @@ public class MenuDrawerController implements Initializable{
     //FXML UI Components
 
     @FXML
-    protected Label sendLabel;
+    private Label sendLabel;
     @FXML
-    protected JFXButton sendButton;
+    private JFXButton sendButton;
     @FXML
-    protected JFXListView directionSteps, floorPoints;
+    private javafx.scene.canvas.Canvas pathCanvas;
+    @FXML
+    private JFXListView directionSteps, floorPoints;
 
+    // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
-    protected JFXTextField destination;
-    // Contains stairs option
-
+    private javafx.scene.image.ImageView map;
+    // Contains the desired user destination
+    @FXML
+    private JFXTextField destination;
+    // Contains the Invalid email error message
     @FXML
     private static Label invalidEmailText;
     @FXML
-    protected JFXRadioButton start, end;
+    private JFXRadioButton start, end;
 
     @FXML
-    protected JFXTextField startField, endField;
+    private JFXTextField startField, endField;
 
     @FXML
-    protected String defaultStart;
+    private ToggleGroup points;
 
     @FXML
-    protected Label startLabel, endLabel;
+    private String defaultStart;
 
     @FXML
-    protected ToggleGroup points;
+    private Label startLabel, endLabel;
 
+    // Email UI Components
     @FXML
-    protected JFXTextField email;
+    private JFXTextField email;
 
+    //other components
     @FXML
-    protected VBox adminBox;
+    private Main mainController;
 
-    @FXML
-    protected Main mainController;
+    private Vector<Node> path = new Vector<Node>();
 
-    @FXML
-    protected JFXListView pointsList;
+    private Map CurMap;
 
+    private String filePath = "/sample/UI/Icons/";
 
-    protected Vector<String> floorsVisited = new Vector<>();
+    private Vector<String> floorsVisited = new Vector<>();
 
+    private Vector<JFXButton> floorButtons = new Vector<>();
 
+    //popluating list view -- three
+    ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
 
+    // Second Floor
+    ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
+
+    // First Floor
+    ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
+
+    // Ground Floor
+    ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
+
+    // Lower 1 Floor
+    ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
+
+    // Lower 2 Floor
+    ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -93,15 +117,11 @@ public class MenuDrawerController implements Initializable{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        Data.data.gc = pathCanvas.getGraphicsContext2D();
+        map.setImage(Data.data.firstFloor);
 
-        /*groundList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                destination.setText(newValue);
-            }
-        });
-*/
-
+        end.setSelected(true);
+        map.setImage(Data.data.firstFloor);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +131,13 @@ public class MenuDrawerController implements Initializable{
         mainController = in;
     }
 
+    public JFXListView getDirectionSteps(){
+        return this.directionSteps;
+    }
 
+    public Vector<String> getFloorsVisited(){
+        return  this.floorsVisited;
+    }
 
     public void setKiosk(Node k){
         data.kiosk = k;
@@ -147,7 +173,7 @@ public class MenuDrawerController implements Initializable{
 
     @FXML
     public void setStart(String t){
-        //startLabel.setText(t);
+        startLabel.setText(t);
     }
 
     public Node getKiosk(){
@@ -186,19 +212,86 @@ public class MenuDrawerController implements Initializable{
         invalidEmailText.setVisible(true);
     }
 
+    public void setMap(Map m) throws IOException{
+        this.CurMap = m;
+        Data.data.currentMap = "1";
+    }
+
+    public Map getMap(){
+        return this.CurMap;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Change Floor Methods
+    @FXML
+    public void changeFloorL1() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
+        map.setImage(Data.data.L1Floor);
+        Data.data.currentMap = "L1";
+    }
+
+    @FXML
+    public void changeFloorL2() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
+        map.setImage(Data.data.L2Floor);
+        Data.data.currentMap = "L2";
+    }
+
+    @FXML
+    public void changeFloor1() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,x,y);
+        map.setImage(Data.data.firstFloor);
+        Data.data.currentMap = "1";
+    }
+
+    @FXML
+    public void changeFloor2() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        if(Data.data.gc != null){
+            Data.data.gc.clearRect(0, 0, x, y);
+        }
+        map.setImage(Data.data.secondFloor);
+        Data.data.currentMap = "2";
+    }
+
+    @FXML
+    public void changeFloor3() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        if(Data.data.gc != null) {
+            Data.data.gc.clearRect(0, 0, x, y);
+        }
+        map.setImage(Data.data.thirdFloor);
+        Data.data.currentMap = "3";
+    }
+
+    @FXML
+    public void changeFloorG() {
+        double y = pathCanvas.getHeight();
+        double x = pathCanvas.getWidth();
+        Data.data.gc.clearRect(0,0,1000,1000);
+        map.setImage(Data.data.GFloor);
+        Data.data.currentMap = "G";
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Screen Functions
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Finding Functions
 
 
-
-
     @FXML
     public void clearFields(){
+        double width = map.getImage().getWidth();
+        double height = map.getImage().getHeight();
         sendLabel.setVisible(false);
         email.setVisible(false);
         sendButton.setVisible(false);
@@ -207,106 +300,29 @@ public class MenuDrawerController implements Initializable{
         startLabel.setText("Lower Pike Hallway Exit Lobby");
         destination.setText("");
         directionSteps.getItems().clear();
+        reset(map, width, height);
     }
 
+    // reset to the top left:
+    private void reset(ImageView imageView, double width, double height) {
+        imageView.setViewport(new Rectangle2D(0, 0, width, height));
+    }
+
+    // Purpose: Method to clear the path on the map when the user presses clear map
     @FXML
-    public void go() throws IOException,InterruptedException{
-        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-            if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
-                sendLabel.setVisible(false);
-                email.setVisible(false);
-                sendButton.setVisible(false);
-            }
-            else{
-                sendLabel.setVisible(true);
-                email.setVisible(true);
-                sendButton.setVisible(true);
-            }
-        });
-        directionSteps.setVisible(true);
+    public void clear() throws FileNotFoundException{
+        Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
+        Data.data.pathThird = null;
+        Data.data.pathSecond = null;
+        Data.data.pathFirst = null;
+        Data.data.pathL1 = null;
+        Data.data.pathL2 = null;
+        Data.data.pathG = null;
+
+        for(int i = 0; i < Data.data.floorList.size() ; i++){
+            Data.data.floorList.set(i,false);
+        }
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Path Drawing and Directions functions
-
-    // Purpose: Print out directions for a path of nodes
-    public static String directions(Vector<Node> in){
-        String out = "";
-        Node a, b, c;
-        if(in.size()<2){
-            out = out.concat("Path too short");
-        }
-        a = in.get(0);
-        b = in.get(1);
-        out = out.concat("Start at " + a.getLongName().trim()+"<br>");
-        out = out.concat("Go towards " + b.getLongName().trim()+"<br>");
-
-        for(int i = 2; i < in.size(); i++){
-            a = in.get(i-2);
-            b = in.get(i-1);
-            c = in.get(i);
-            String turn = "";
-            double angle = NodeMath.findAngle(a.getxCoordinate(), a.getyCoordinate(), b.getxCoordinate(), b.getyCoordinate(), c.getxCoordinate(), c.getyCoordinate());
-            if(angle<45){
-                turn = "sharply right";
-            }else if(angle < 135){
-                turn = "right";
-            }else if(angle < 225){
-                turn = "straight";
-            }else if(angle <315){
-                turn = "left";
-            }else{
-                turn = "sharply left";
-            }
-
-            out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
-        }
-        return out;
-    }
-
-    public Vector<Vector<Node>> separator(Vector<Node> path){
-        Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        for(int i = 0; i <6; i++){
-            paths.add(new Vector<Node>());
-        }
-        String prev = path.get(0).getFloor().replaceAll("\\s+","");
-        Node blank = new Node("BLANK", -1,-1,"BL", "BLANK","BLANKTYPE","BLANK","BLANK", 'Z');
-        int prevElt = 0;
-        for(Node i: path){
-            String pathFloor = i.getFloor().replaceAll("\\s+","");
-            if(!(pathFloor.equals(prev))){
-                paths.elementAt(prevElt).add(blank);
-                prev = pathFloor;
-            }
-            if(pathFloor.equals("L2")){
-                paths.elementAt(0).add(i);
-                prevElt = 0;
-            } else if (pathFloor.equals("L1")) {
-                prevElt = 1;
-                paths.elementAt(1).add(i);
-            } else if (pathFloor.equals("0G") || pathFloor.equals("G")){
-                prevElt = 2;
-                paths.elementAt(2).add(i);
-            } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
-                prevElt = 3;
-                paths.elementAt(3).add(i);
-            } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
-                prevElt = 4;
-                paths.elementAt(4).add(i);
-            } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
-                prevElt = 5;
-                paths.elementAt(5).add(i);
-            }
-        }
-        return paths;
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Zooming Panning & Dragging functions
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Other Functions
 
     @FXML
     public void emergencyButton() throws IOException, InterruptedException{
@@ -314,25 +330,20 @@ public class MenuDrawerController implements Initializable{
         settingFields();
     }
 
+    @FXML
+    public void edit() throws IOException, InterruptedException{
+        Main.mapEditScreen();
+        clearFields();
+        clear();
+    }
+
     // Purpose: Send an email when user clicks send email button
-    /*@FXML
+    @FXML
     public void sendMsg() throws Exception{
         //Vector<Node> msgVec = new Vector<Node>(10);
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
-        emailService.sendEmail(NavigationPageController.directions(data.path), email.getText());
-    }*/
+        emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
+    }
 
-
-/*
-    public void reverseNodes() throws IOException, InterruptedException {
-        Vector<Node> currentPath = this.path;
-        Vector<Node> reversePath = new Vector<Node>();
-        int z = 0;
-        for(int i = currentPath.size(); i > 0; i--){
-            reversePath.add(currentPath.get(i-1));
-        }
-        this.path = reversePath;
-        MultiFloorPathDrawing(this.path);
-    }*/
 
 }

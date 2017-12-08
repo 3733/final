@@ -57,10 +57,6 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private Group scrollContent;
     @FXML
-    private JFXDrawer drawer;
-    @FXML
-    private javafx.scene.image.ImageView icon;
-    @FXML
     private Label sendLabel;
     @FXML
     private JFXButton menuButton;
@@ -136,7 +132,7 @@ public class NavigationPageController implements Initializable, Data{
     private VBox mainMenuBox;
 
     @FXML
-    private JFXDrawer mainMenu;
+    private JFXDrawer mainMenu, adminMenu;
 
     @FXML
     private JFXButton loginButton;
@@ -175,6 +171,7 @@ public class NavigationPageController implements Initializable, Data{
     @Override
     public void initialize(URL location, ResourceBundle resources){
         mainMenu.setVisible(false);
+        adminMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
 
@@ -1094,6 +1091,20 @@ public class NavigationPageController implements Initializable, Data{
             mainMenu.setSidePane(menuBox);
             mainMenu.setVisible(true);
             mainMenu.toggle();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void initAdmin(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/UI/AdminDrawer.fxml"));
+            VBox menuBox = loader.load();
+            adminMenu.setSidePane(menuBox);
+            adminMenu.setVisible(true);
+            adminMenu.toggle();
         }catch (IOException e){
             e.printStackTrace();
         }
