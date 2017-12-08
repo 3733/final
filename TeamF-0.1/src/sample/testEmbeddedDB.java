@@ -24,11 +24,11 @@ public class testEmbeddedDB {
 
             //these two lines are a last ditch effort to make the database work
             //delete it completely (from the project) and run these lines
-            //final String url = "jdbc:derby:Skynet;create=true";
-            //Connection con = DriverManager.getConnection(url);
-
-            final String url = "jdbc:derby:Skynet";
+            final String url = "jdbc:derby:Skynet;create=true";
             Connection con = DriverManager.getConnection(url);
+
+            //final String url = "jdbc:derby:Skynet";
+            //Connection con = DriverManager.getConnection(url);
 
             //testEmbeddedDB.dropTables();
 

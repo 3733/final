@@ -26,6 +26,11 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Vector;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+
 public class Main extends Application implements Data{
 
     private  static String destination;
@@ -50,6 +55,17 @@ public class Main extends Application implements Data{
     private static Scene editUserWin;
     private static Scene helpRequest;
     private static Scene aboutWin;
+
+
+    // This is for the timeout timer
+    public static Timer timer;
+
+
+    // The memento pattern needs these objects to be created in Main
+    // This is where the states are being set and stored. When a window is initilized, set here.
+    public static Originator originator;
+    // This is the memento saved states array getup. This is only for the start page because that is where the application time-outs to.
+    public static Originator.MementoWindow savedStates;
 
 
 
@@ -186,7 +202,20 @@ public class Main extends Application implements Data{
 
 
         stage.setTitle("Team F Hospital GPS");
+
+
+
+
+
+
+        // Here is where we are setting the scene.
         stage.setScene(start);
+
+
+
+
+
+
         stage.setResizable(true);
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
@@ -398,25 +427,40 @@ public class Main extends Application implements Data{
     public static Staff getLoggedInGuy(){
         return loggedInGuy;
     }
+
+
+
+
+
+
+
+
+
+
+
     public static void main(String[] args) throws IOException{
 
-        //testEmbeddedDB db = new testEmbeddedDB();
-        /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
+        // The memento pattern needs these objects to be created in Main
+        // This is where the states are being set and stored. When a window is initilized, set here.
+        // Originator originator = new Originator();
+        originator = new Originator();
+        // This is the memento saved states array getup. This is only for the start page because that is where the application time-outs to.
+        // Originator.MementoWindow savedStates = new Originator.MementoWindow(start);
+        savedStates = new Originator.MementoWindow(start);
 
-        for(String s : o){
-            System.out.println(s + " trim?");
-        }*/
+        // For memento - Andrew S
+        originator.set(start);
+        // This is the state to revert to.
+        // savedStates.add(originator.saveToMemento());
+        // ates = new ArrayList<Originator.MementoWindow>();
+        //    originator.set(start); // For the memento
 
-        //startMap();
+        // timer.cancel();
+        timer = new Timer();
+        //timer.schedule(AndrewTimer.getNewTimerTask(), 10 * 1000);
 
-        /*HashMap<String, Node> test = new HashMap<>();
 
-        test = testEmbeddedDB.getNodesByFloor(1);
 
-        for (java.util.Map.Entry<String, Node> entry : test.entrySet())
-        {
-            System.out.println(entry.getKey() + " trimmed/" + entry.getValue() + " trimmed");
-        }*/
 
 
 
@@ -426,7 +470,7 @@ public class Main extends Application implements Data{
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
+        /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
         Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
@@ -453,27 +497,21 @@ public class Main extends Application implements Data{
         testEmbeddedDB.addStaff(Nik);
         testEmbeddedDB.addStaff(Andrew);//*/
 
+
         launch(args);
 
         //controller.drawDirections(Vec);
     }
 
+
+
+
+
+
+
     public static Map startMap() throws IOException{
 
         Map CurMap = testEmbeddedDB.dbBuildMap();
-
-/*
-        for (int i =0; i<CurMap.getNodes().size();i++){
-
-            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
-
-            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
-
-                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
-            }
-        }
-*/
-
         return CurMap;
     }
 
