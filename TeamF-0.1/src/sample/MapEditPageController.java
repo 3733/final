@@ -373,10 +373,6 @@ public class MapEditPageController implements Initializable, Data{
 //        }
 
 
-
-
-
-
             pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
                 e.consume();
                 Data.data.gc1.clearRect(0, 0, 1143, 783);
@@ -407,14 +403,13 @@ public class MapEditPageController implements Initializable, Data{
 
                     Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
                     Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                    Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+
+                    if(data.nodeAlign.size()>=3){
+                        data.nodeAlign.remove(2);
+                    }
+                    data.nodeAlign.add(0,selectedNode);
+
                     drawFloorNodes();
-
-
-
-
-                    System.out.println("Node1: "+ Data.data.aligonNode1.getLongName());
-
 
 
                 } else if (e.isSecondaryButtonDown()) {
@@ -460,28 +455,17 @@ public class MapEditPageController implements Initializable, Data{
             });
         }
 
-//    public void alignNodes(){
-//        try{
-//            Node n1 = returnNearestNodeSelected();
-//            Node n2 = returnNearestNodeSelected();
-//            Node n3 = returnNearestNodeSelected();
-//
-//            nodeAlign a = new nodeAlign();
-//
-//            int newx = a.getgoodX(n1, n2, n3);
-//            int newy = a.getgoodY(n1, n2, n3);
-//
-//
-//
-//            n1.setxCoordinate(newx);
-//            n2.setyCoordinate(newy);
-//
-//            System.out.println("new X:" +newx + "new Y: "+newy);
-//
-//        } catch (Exception e){
-//            System.out.println(e.getCause());
-//        }
-//    }
+    public void alignNodes(){
+        //nodeAlign na = new nodeAlign(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
+        System.out.println(data.nodeAlign.get(0).getNodeID());
+        System.out.println(data.nodeAlign.get(1).getNodeID());
+        System.out.println(data.nodeAlign.get(2).getNodeID());
+        //int newX = na.getgoodX();
+        //int newY = na.getgoodY();
+        //testEmbeddedDB.updateNodeXCoord(data.nodeAlign.get(0).getNodeID(), newX);
+        //testEmbeddedDB.updateNodeYCoord(data.nodeAlign.get(0).getNodeID(), newY);
+        drawFloorNodes();
+    }
 
 //    public Node returnNearestNodeSelected() throws IOException {
 //
