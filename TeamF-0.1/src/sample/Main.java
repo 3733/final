@@ -53,6 +53,7 @@ public class Main extends Application implements Data{
     private static Scene aboutWin;
 
     private static Scene menuDrawer;
+    private static Scene adminDrawer;
 
 
 
@@ -70,6 +71,7 @@ public class Main extends Application implements Data{
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
+    public static AdminDrawerController adminDrawerController = new AdminDrawerController();
 
 
     @Override
@@ -168,6 +170,12 @@ public class Main extends Application implements Data{
         menuDrawerController.setMainController(this);
         menuDrawer = new Scene(menuWin);
 
+        FXMLLoader adminWinLoader = new FXMLLoader(getClass().getResource("UI/AdminDrawer.fxml"));
+        Parent adminWin = adminWinLoader.load();
+        adminDrawerController = adminWinLoader.getController();
+        adminDrawerController.setMainController(this);
+        adminDrawer = new Scene(adminWin);
+
 
         stage = primaryStage;
         popUp = new Stage();
@@ -196,6 +204,7 @@ public class Main extends Application implements Data{
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
         menuWin.getStylesheets().add("sample/UI/style.css");
+        adminWin.getStylesheets().add("sample/UI/style.css");
 
 
         stage.setTitle("Team F Hospital GPS");
@@ -396,16 +405,6 @@ public class Main extends Application implements Data{
         editUserWindowController.editingUsers();
         popUp.setScene(editUserWin);
         popUp.setTitle("Edit User");
-        popUp.initModality(Modality.APPLICATION_MODAL);
-        popUp.initOwner(btn1.getScene().getWindow());
-        popUp.showAndWait();
-    }
-
-    public static void menuDrawerWin(JFXButton btn1){
-        Stage popUp = new Stage();
-        editUserWindowController.editingUsers();
-        popUp.setScene(menuDrawer);
-        popUp.setTitle("Menu Drawer");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();
