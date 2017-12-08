@@ -1087,21 +1087,13 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void initDrawer(){
-        mainMenu.setVisible(true);
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
             VBox menuBox = loader.load();
             mainMenu.setSidePane(menuBox);
-            menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
-                if(mainMenu.isShown()){
-                    mainMenu.close();
-                    mainMenu.setVisible(false);
-                }
-                else {
-                    mainMenu.open();
-                }
-            });
+            mainMenu.setVisible(true);
+            mainMenu.toggle();
         }catch (IOException e){
             e.printStackTrace();
         }
