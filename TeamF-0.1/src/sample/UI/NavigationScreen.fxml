@@ -195,6 +195,15 @@
                   </JFXButton>
                </children>
             </HBox>
+            <JFXButton contentDisplay="CENTER" layoutX="900.0" layoutY="36.0" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icons/menu.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
             </children>
         </AnchorPane>
     </center>
