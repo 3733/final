@@ -602,75 +602,75 @@ public class MapEditPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-            scrollContent.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
-                    @Override
-                    public void handle(javafx.scene.input.MouseEvent event) {
-                        lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+            pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent event) -> {
+                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
 
-                        double newX1 = (event.getX());
-                        double newY1 = (event.getY());
+                double newX1 = (event.getX());
+                double newY1 = (event.getY());
 
-                        double divisionCst = 4.15;
-                        int offset = 1;
-                        if (floorLowerTwo.isSelected()) {
-                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
-                        } else if (floorLowerOne.isSelected()) {
-                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
-                        } else if (floorGround.isSelected()) {
-                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
-                        } else if (floorOne.isSelected()) {
-                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
-                        } else if (floorTwo.isSelected()) {
-                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
-                        } else if (floorThree.isSelected()) {
-                            selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
-                        }
+                Data.data.gc1.strokeOval(newX1, newY1, 7.0, 7.0);
+                Data.data.gc1.fillOval(newX1, newY1, 7.0, 7.0);
 
-                        if (event.isSecondaryButtonDown()) {
-                            event.consume();
-                            Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                            Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                            if (editEdges) {
-                                contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
-                                contextMenu2.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        // Event handling for the first item, open the edit edge screen
-                                        Main.edgeStartEditScreen(editEdgeBtn, selectedNode);
-                                        drawFloorEdges();
-                                    }
-                                });
-                                contextMenu2.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        Main.edgeEndEditScreen(editEdgeBtn, selectedNode);
-                                        drawFloorEdges();
-                                    }
-                                });
-                            } else {
-                                contextMenu.show(pathCanvas1, newX1 - 40, newY1);
-                                contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        // Event handling for the first item, open the edit node screen
-                                        Main.nodeEditScreenClick(selectedNode, editNodeBtn);
-                                        drawFloorNodes();
-                                    }
-                                });
-                                contextMenu.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent even) {
-                                        // Event handling for the second item, open add node screen
-                                        calcX = (int) (event.getX() - data.offset) * divisionCst;
-                                        calcY = (event.getY() - data.offset) * divisionCst;
-                                        Main.nodeAddEditScreenClick(editNodeBtn, calcX, calcY);
-                                        drawFloorNodes();
-                                    }
-                                });
+                double divisionCst = 4.15;
+                int offset = 1;
+                if (floorLowerTwo.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                } else if (floorLowerOne.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                } else if (floorGround.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+                } else if (floorOne.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+                } else if (floorTwo.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+                } else if (floorThree.isSelected()) {
+                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+                }
+
+                if (event.isSecondaryButtonDown()) {
+                    event.consume();
+                    Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    if (editEdges) {
+                        contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
+                        contextMenu2.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                // Event handling for the first item, open the edit edge screen
+                                Main.edgeStartEditScreen(editEdgeBtn, selectedNode);
+                                drawFloorEdges();
                             }
-                        }
+                        });
+                        contextMenu2.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                Main.edgeEndEditScreen(editEdgeBtn, selectedNode);
+                                drawFloorEdges();
+                            }
+                        });
+                    } else {
+                        contextMenu.show(pathCanvas1, newX1 - 40, newY1);
+                        contextMenu.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                // Event handling for the first item, open the edit node screen
+                                Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+                                drawFloorNodes();
+                            }
+                        });
+                        contextMenu.getItems().get(1).setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent even) {
+                                // Event handling for the second item, open add node screen
+                                calcX = (int) (event.getX() - data.offset) * divisionCst;
+                                calcY = (event.getY() - data.offset) * divisionCst;
+                                Main.nodeAddEditScreenClick(editNodeBtn, calcX, calcY);
+                                drawFloorNodes();
+                            }
+                        });
                     }
-                });
+                }
+            });
 
         scrollContent.setOnMouseDragged(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
