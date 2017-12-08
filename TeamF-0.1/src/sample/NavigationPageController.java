@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -135,6 +136,9 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private JFXButton floorVisA, floorVisB, floorVisC, floorVisD, floorVisE, floorVisF;
 
+    @FXML
+    private JFXHamburger hamburger;
+
     //other components
     @FXML
     private Main mainController;
@@ -184,6 +188,13 @@ public class NavigationPageController implements Initializable, Data{
 //      end.setSelected(true);
         map.setImage(Data.data.firstFloor);
         tabPane.getSelectionModel().select(floorOne);
+
+        HamburgerBackArrowBasicTransition transition = new HamburgerBackArrowBasicTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
+            transition.setRate(transition.getRate()*-1);
+            transition.play();
+        });
         
         floorVisA.setVisible(false);
         floorVisB.setVisible(false);
@@ -968,6 +979,15 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void chat(){
+        //Main.setHelpScreenServiceRequestScreen();
+        try{
+            messenger.API m = new messenger.API();
+            m.run(6,6,600,600,
+                    "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");
+        } catch (Exception e){
+            System.out.println("API ERROR: " + e.getLocalizedMessage());
+        }
+
     }
 
     @FXML
@@ -1039,5 +1059,6 @@ public class NavigationPageController implements Initializable, Data{
         this.path = reversePath;
         MultiFloorPathDrawing(this.path);
     }
+
 
 }
