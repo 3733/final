@@ -30,13 +30,11 @@ public class testEmbeddedDB {
             final String url = "jdbc:derby:Skynet";
             Connection con = DriverManager.getConnection(url);
 
-            //testEmbeddedDB.dropTables();
+//            testEmbeddedDB.dropTables();
 
             testEmbeddedDB.createTable();
 
             testEmbeddedDB.fillNodesTable();
-
-            //testEmbeddedDB.createPrimKey();
 
             testEmbeddedDB.fillEdgesTable();
 /*

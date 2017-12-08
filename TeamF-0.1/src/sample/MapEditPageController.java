@@ -30,6 +30,8 @@ import java.util.Vector;
 
 public class MapEditPageController implements Initializable, Data{
 
+
+
     //fxml components
     @FXML
     private JFXToggleButton nodeEdgeEdit;
@@ -231,6 +233,12 @@ public class MapEditPageController implements Initializable, Data{
     }
 
     @FXML
+    public void changeFloorL12() {
+        System.out.println("in here");
+        //alignNodes();
+    }
+
+    @FXML
     public void changeFloor1() {
         clearCanvas(data.gc2,pathCanvas);
         clearCanvas(data.gc1,pathCanvas1);
@@ -360,6 +368,11 @@ public class MapEditPageController implements Initializable, Data{
             MenuItem item4 = new MenuItem("Set End Node");
             contextMenu2.getItems().addAll(item3, item4);
 
+//            pathCanvas1.setOnMouseDragEntered(javafx.scene.input.MouseEvent e) -> {
+//                e.consume();
+//        }
+
+
             pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
                 e.consume();
                 Data.data.gc1.clearRect(0, 0, 1143, 783);
@@ -390,8 +403,15 @@ public class MapEditPageController implements Initializable, Data{
 
                     Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
                     Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                    Main.nodeEditScreenClick(selectedNode, editNodeBtn);
+
+                    if(data.nodeAlign.size()>=3){
+                        data.nodeAlign.remove(2);
+                    }
+                    data.nodeAlign.add(0,selectedNode);
+
                     drawFloorNodes();
+
+
                 } else if (e.isSecondaryButtonDown()) {
                     if(editEdges) {
                         contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
@@ -434,6 +454,49 @@ public class MapEditPageController implements Initializable, Data{
                 }
             });
         }
+
+    public void alignNodes(){
+        //nodeAlign na = new nodeAlign(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
+        nodeAlign na = new nodeAlign();
+        int newX = na.setGoodX(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
+        int newY = na.setGoodY(data.nodeAlign.get(0), data.nodeAlign.get(1), data.nodeAlign.get(2));
+        testEmbeddedDB.updateNodeXCoord(data.nodeAlign.get(0).getNodeID(), newX);
+        testEmbeddedDB.updateNodeYCoord(data.nodeAlign.get(0).getNodeID(), newY);
+        MapEditPageController.updateNodes();
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
+
+        drawFloorNodes();
+    }
+
+//    public Node returnNearestNodeSelected() throws IOException {
+//
+//
+//        pathCanvas1.setOnMousePressed((javafx.scene.input.MouseEvent e) -> {
+//            e.consume();
+//            Data.data.gc1.clearRect(0, 0, 1143, 783);
+//
+//            double newX1 = (e.getSceneX());
+//            double newY1 = (e.getSceneY());
+//
+//            double divisionCst = 4.15;
+//            int offset = 1;
+//            if (floorLowerTwo.isSelected()) {
+//                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+//            } else if (floorLowerOne.isSelected()) {
+//                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+//            } else if (floorGround.isSelected()) {
+//                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+//            } else if (floorOne.isSelected()) {
+//                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+//            } else if (floorTwo.isSelected()) {
+//                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+//            } else if (floorThree.isSelected()) {
+//                selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+//            }
+//        });
+//
+//        return selectedNode;
+//    }
 
     @FXML
     public void drawFloorNodes(){
