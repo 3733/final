@@ -42,32 +42,11 @@ public class MenuDrawerController implements Initializable{
     //FXML UI Components
 
     @FXML
-    private Group scrollContent;
-    @FXML
-    private JFXDrawer drawer;
-    @FXML
-    private javafx.scene.image.ImageView icon;
-    @FXML
     private Label sendLabel;
     @FXML
     private JFXButton sendButton;
     @FXML
-    private javafx.scene.canvas.Canvas pathCanvas;
-    @FXML
     private JFXListView directionSteps;
-    @FXML
-    private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
-    @FXML
-    private JFXListView searchList;
-    @FXML
-    private ScrollPane scrollMap;
-    @FXML
-    private AnchorPane mainPane;
-    @FXML
-    private JFXTabPane tabPane;
-
-    @FXML
-    private VBox labelBox;
 
     @FXML
     private JFXTextField destination;
@@ -153,10 +132,6 @@ public class MenuDrawerController implements Initializable{
         this.destination.setText(s);
     }
 
-    public void autoClose(){
-        searchList.setVisible(false);
-    }
-
     public JFXTextField getDestination(){return this.destination;}
 
     public Label getStartLabel(){return this.startLabel;}
@@ -193,7 +168,6 @@ public class MenuDrawerController implements Initializable{
     //setting start and end nodes
     @FXML
     public void settingFields() throws IOException, InterruptedException {
-        searchList.setVisible(false);
         String destinationText = destination.getText();
         if (points.getSelectedToggle() == start) {
 
@@ -260,7 +234,6 @@ public class MenuDrawerController implements Initializable{
                 sendButton.setVisible(true);
             }
         });
-        searchList.setVisible(false);
         directionSteps.setVisible(true);
     }
 
@@ -337,52 +310,6 @@ public class MenuDrawerController implements Initializable{
             }
         }
         return paths;
-    }
-
-    // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
-    @FXML
-    public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
-        ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        ObservableList<String> populateSteps = FXCollections.observableArrayList();
-        //edit later
-        String directions = directions(path);
-        String[] directionParts = directions.split("<br>");
-        for (int i = 0; i < directionParts.length; i++) {
-            populateSteps.add(directionParts[i]);
-        }
-        populateSteps.add("You have arrived at your destination.");
-        directionSteps.setItems(populateSteps);
-
-
-        // Possible floors (in order): L2, L1, 0G, 01, 02, 03
-        Vector<Vector<Node>> paths = separator(path);
-
-        floorsVisited.clear();
-        for(Vector<Node> floorPath: paths){
-            if (floorPath.size() > 0) {
-                String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
-                if (pathFloor.equals("L2")) {
-                    data.pathL2 = floorPath;
-                    floorsVisited.add("L2");
-                } else if (pathFloor.equals("L1")) {
-                    data.pathL1 = floorPath;
-                    floorsVisited.add("L1");
-                } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
-                    data.pathG = floorPath;
-                    floorsVisited.add("G");
-                } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
-                    data.pathFirst = floorPath;
-                    floorsVisited.add("1");
-                } else if (pathFloor.equals("02") || pathFloor.equals("2")) {
-                    data.pathSecond = floorPath;
-                    floorsVisited.add("2");
-                } else if (pathFloor.equals("03") || pathFloor.equals("3")) {
-                    data.pathThird = floorPath;
-                    floorsVisited.add("3");
-                }
-            }
-        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

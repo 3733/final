@@ -53,7 +53,7 @@
                         </ImageView>
                     </graphic>
                 </JFXButton>
-                <JFXTabPane fx:id="tabPane" layoutX="900.0" layoutY="520.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
+                <JFXTabPane fx:id="tabPane" layoutX="1250.0" layoutY="360.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
                     <tabs>
                         <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
                         <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
