@@ -131,6 +131,9 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     private StackPane stackPane;
+    
+    @FXML
+    private JFXButton floorVisA, floorVisB, floorVisC, floorVisD, floorVisE, floorVisF;
 
     //other components
     @FXML
@@ -147,7 +150,10 @@ public class NavigationPageController implements Initializable, Data{
     private int currentAlgo = 1;
 
     double scaleValue = 0.7;
+
     private Vector<String> floorsVisited = new Vector<>();
+
+    private Vector<JFXButton> floorButtons = new Vector<>();
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,6 +170,13 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
 
+        floorButtons.add(floorVisA);
+        floorButtons.add(floorVisB);
+        floorButtons.add(floorVisC);
+        floorButtons.add(floorVisD);
+        floorButtons.add(floorVisE);
+        floorButtons.add(floorVisF);
+
         // All entries
         allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
         searchList.setItems(allEntries);
@@ -171,6 +184,13 @@ public class NavigationPageController implements Initializable, Data{
 //      end.setSelected(true);
         map.setImage(Data.data.firstFloor);
         tabPane.getSelectionModel().select(floorOne);
+        
+        floorVisA.setVisible(false);
+        floorVisB.setVisible(false);
+        floorVisC.setVisible(false);
+        floorVisD.setVisible(false);
+        floorVisE.setVisible(false);
+        floorVisF.setVisible(false);
 
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
@@ -617,7 +637,50 @@ public class NavigationPageController implements Initializable, Data{
                 }
             }
         }
+        setFloorButtons();
         setMap("1");
+    }
+
+    public void setFloorButtons(){
+        for (int i = 0; i < floorsVisited.size(); i++) {
+            JFXButton currentButton = floorButtons.elementAt(i);
+            currentButton.setVisible(true);
+            String currentFloor = floorsVisited.elementAt(i);
+            currentButton.setText(currentFloor);
+            switch (currentFloor){
+                case "L2":
+                    currentButton.setOnAction((event) -> {
+                        changeFloorL2();
+                    });
+                    break;
+                case "L1":
+                    currentButton.setOnAction((event) -> {
+                        changeFloorL1();
+                    });
+                    break;
+                case "G":
+                    currentButton.setOnAction((event) -> {
+                        changeFloorG();
+                    });
+                    break;
+                case "1":
+                    currentButton.setOnAction((event) -> {
+                        changeFloor1();
+                    });
+                    break;
+                case "2":
+                    currentButton.setOnAction((event) -> {
+                        changeFloor2();
+                    });
+                    break;
+                case "3":
+                    currentButton.setOnAction((event) -> {
+                        changeFloor3();
+                    });
+                    break;
+                default: break;
+            }
+        }
     }
 
     public void setMap(String map) {
