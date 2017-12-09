@@ -197,20 +197,21 @@ public class ServiceAcceptController implements Initializable{
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
-        for ( int z = 0; z<tableView.getItems().size(); z++) {
+        int tableSize = tableView.getItems().size();
+
+        for ( int z = 0; z<tableSize; z++) {
             tableView.getItems().clear();
         }
         for ( int u = 0; u<finishedTableView.getItems().size(); u++) {
             finishedTableView.getItems().clear();
         }
 
-
         requestObserve.clear();
         finishedRequestObserve.clear();
 
         //for current requests table
         for (int i = 0; i < arrayOfRequestsFromDatabase.size(); i++) {   //searches through the list from the database
-            boolean alreadyInTable = false;
+    /*        boolean alreadyInTable = false;
             for (int j = 0; j < requestObserve.size(); j++) {        //searches through the list in the table
                 if ((arrayOfRequestsFromDatabase.get(i)).getServiceID() == (requestObserve.get(j)).getServiceID()) {  //if the service is already in the table
                     alreadyInTable = true;
@@ -219,13 +220,13 @@ public class ServiceAcceptController implements Initializable{
                     if (((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim().equals("finished"))
                         requestObserve.remove(j);
                 }
-            }
-            if ( !alreadyInTable && !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) && (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
+            }*/
+            if ( /*!alreadyInTable &&*/ !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) && ((getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
+                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")))) {
                 requestObserve.add(arrayOfRequestsFromDatabase.get(i));
             }
         }
