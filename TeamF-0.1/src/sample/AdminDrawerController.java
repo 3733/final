@@ -45,9 +45,7 @@ public class AdminDrawerController implements Initializable{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        map.setImage(data.firstFloor);
 
-        map.setImage(data.firstFloor);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

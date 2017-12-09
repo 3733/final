@@ -94,7 +94,7 @@
       </AnchorPane>
       <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="200.0">
          <children>
-            <JFXCheckBox fx:id="stairs" checkedColor="#1a479a" onAction="#go" style="-fx-background-color: #f4f4f4;" text="Stairs">
+            <JFXCheckBox fx:id="stairs" checkedColor="#1a479a" style="-fx-background-color: #f4f4f4;" text="Stairs">
                <HBox.margin>
                   <Insets left="25.0" />
                </HBox.margin>
@@ -102,7 +102,7 @@
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
             </JFXCheckBox>
-            <JFXCheckBox fx:id="elevator" checkedColor="#1a479a" onAction="#go" style="-fx-background-color: #f4f4f4;" text="Elevator">
+            <JFXCheckBox fx:id="elevator" checkedColor="#1a479a" style="-fx-background-color: #f4f4f4;" text="Elevator">
                <HBox.margin>
                   <Insets left="25.0" />
                </HBox.margin>

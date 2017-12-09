@@ -1089,8 +1089,14 @@ public class NavigationPageController implements Initializable, Data{
             loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
             VBox menuBox = loader.load();
             mainMenu.setSidePane(menuBox);
-            mainMenu.setVisible(true);
-            mainMenu.toggle();
+            if(mainMenu.visibleProperty().get()){
+                mainMenu.toggle();
+                mainMenu.setVisible(false);
+            }else{
+                mainMenu.setVisible(true);
+                mainMenu.toggle();
+            }
+
         }catch (IOException e){
             e.printStackTrace();
         }

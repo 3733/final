@@ -96,11 +96,9 @@ public class MenuDrawerController implements Initializable{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        Data.data.gc = pathCanvas.getGraphicsContext2D();
-        map.setImage(Data.data.firstFloor);
 
         end.setSelected(true);
-        map.setImage(Data.data.firstFloor);
+
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -168,7 +166,7 @@ public class MenuDrawerController implements Initializable{
             System.out.println("LABEL!!!!!");
             startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
-                go();
+                //go();
             }
         }
         else{
@@ -180,7 +178,7 @@ public class MenuDrawerController implements Initializable{
             destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             if(!destinationText.equals("")) {
-                go();
+                //go();
             }
         }
     }
