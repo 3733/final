@@ -1,5 +1,6 @@
 package sample;
 
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -59,7 +60,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private Label sendLabel;
     @FXML
-    private JFXButton menuButton;
+    private JFXButton menuButton, search;
     @FXML
     private JFXButton sendButton;
     @FXML
@@ -82,6 +83,9 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     private VBox labelBox;
+
+    @FXML
+    private JFXHamburger hamburger;
 
     @FXML
     private Tab floorThree, floorTwo, floorOne, floorLowerTwo, floorLowerOne, floorGround;
@@ -174,6 +178,18 @@ public class NavigationPageController implements Initializable, Data{
         adminMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
+
+        /*HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+        transition.setRate(-1);
+        menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
+            transition.setRate(transition.getRate() * -1);
+            mainMenu.toggle();
+            transition.play();
+
+
+        });*/
+
+        //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
 
         //disables the bars and starts up the zoom function
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -1092,15 +1108,19 @@ public class NavigationPageController implements Initializable, Data{
             if(mainMenu.visibleProperty().get()){
                 mainMenu.toggle();
                 mainMenu.setVisible(false);
+                destination.setVisible(true);
+                search.setVisible(true);
             }else{
                 mainMenu.setVisible(true);
+                destination.setVisible(false);
+                search.setVisible(false);
                 mainMenu.toggle();
             }
-
         }catch (IOException e){
             e.printStackTrace();
         }
     }
+
 
     @FXML
     public void initAdmin(){

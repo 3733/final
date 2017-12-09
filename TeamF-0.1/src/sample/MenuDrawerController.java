@@ -137,6 +137,11 @@ public class MenuDrawerController implements Initializable{
     public JFXRadioButton getRadioEnd(){return this.end;}
 
     @FXML
+    public void closeMenuDrawer(){
+
+    }
+
+    @FXML
     public void settingSearch(){
         if (points.getSelectedToggle() == start) {
 

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="671.0" prefWidth="242.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
+<VBox prefHeight="842.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
    <children>
       <AnchorPane prefHeight="107.0" prefWidth="200.0">
          <children>
@@ -32,6 +32,9 @@
                      </children>
                   </VBox>
                </children>
+               <padding>
+                  <Insets top="25.0" />
+               </padding>
             </HBox>
          </children>
       </AnchorPane>

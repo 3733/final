@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXDrawersStack?>
+<?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
@@ -214,20 +215,6 @@
                         </Group>
                     </content>
                 </ScrollPane>
-                <JFXTextField fx:id="destination" layoutX="287.0" layoutY="37.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="537.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
-                    <font>
-                        <Font name="Montserrat Regular" size="12.0" />
-                    </font>
-                </JFXTextField>
-                <JFXButton fx:id="search" contentDisplay="CENTER" layoutX="845.0" layoutY="36.0" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-                    <graphic>
-                        <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </JFXButton>
                 <JFXTabPane fx:id="tabPane" layoutX="1250.0" layoutY="360.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
                     <tabs>
                         <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
@@ -239,21 +226,7 @@
                     </tabs>
                 </JFXTabPane>
                 <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
-                <HBox alignment="CENTER" layoutX="915.0" layoutY="36.0" prefHeight="31.0" prefWidth="100.0" style="-fx-background-color: #1a479a;" visible="false">
-                    <children>
-                        <JFXCheckBox checkedColor="#1a479a" text="Speak" textFill="WHITE" unCheckedColor="#1a479a">
-                            <font>
-                                <Font name="Montserrat Regular" size="12.0" />
-                            </font>
-                        </JFXCheckBox>
-                    </children>
-                </HBox>
-                <JFXButton contentDisplay="CENTER" layoutX="100.0" layoutY="36.0" onAction="#back" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
-                    <font>
-                        <Font name="Montserrat Regular" size="12.0" />
-                    </font>
-                </JFXButton>
-            <HBox layoutX="100.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
+            <HBox layoutX="425.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
                <children>
                   <JFXButton fx:id="floorVisA" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
                      <font>
@@ -339,12 +312,6 @@
                   </JFXButton>
                </children>
             </HBox>
-            <JFXDrawersStack prefHeight="554.0" prefWidth="233.0">
-               <children>
-                  <JFXDrawer fx:id="mainMenu" />
-                  <JFXDrawer fx:id="adminMenu" />
-               </children>
-            </JFXDrawersStack>
             <HBox alignment="BOTTOM_RIGHT" layoutX="1100.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0">
                <children>
                   <JFXButton fx:id="aboutButton" onAction="#about" text="ⓒ Fuschia Fairies">
@@ -354,15 +321,42 @@
                   </JFXButton>
                </children>
             </HBox>
-            <JFXButton fx:id="menuButton" contentDisplay="CENTER" layoutX="900.0" layoutY="36.0" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icons/menu.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
+            <JFXDrawersStack alignment="TOP_LEFT" prefHeight="810.0" prefWidth="342.0">
+               <children>
+                  <JFXDrawer fx:id="adminMenu" defaultDrawerSize="342.0" direction="RIGHT" prefHeight="810.0" prefWidth="470.0" />
+                  <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />
+                  <JFXDrawer fx:id="mainMenu1" defaultDrawerSize="342.0" layoutX="10.0" layoutY="10.0" prefHeight="810.0" prefWidth="354.0" visible="false" />
+               </children>
+            </JFXDrawersStack>
+            <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="462.0">
+               <children>
+                      <JFXTextField fx:id="destination" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="266.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                          <font>
+                              <Font name="Montserrat Regular" size="12.0" />
+                          </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                      </JFXTextField>
+                      <JFXButton fx:id="search" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                          <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                      </JFXButton>
+                  <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                     <graphic>
+                        <JFXHamburger fx:id="hamburger" prefHeight="16.0" prefWidth="20.0" styleClass=".white-hamburger" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
     </center>
