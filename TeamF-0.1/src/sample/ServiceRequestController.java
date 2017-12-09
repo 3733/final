@@ -130,7 +130,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void assistanceSendRequest() throws MissingFieldException {    //when the Send button is pressed
-        assistanceNode = SearchEngine.SearchPath(assistDestination.getText(), data.graph, data.kiosk);
+        assistanceNode = SearchEngine.SearchClosestNode(assistDestination.getText());
         AssistanceRequest newAssist = new AssistanceRequest(assistanceNode, assistanceDescription.getText(),
                 Integer.parseInt(assistanceID.getText()), assistanceTime.getValue().format(formatter), "",
                 "", 0000, "assistance", "unaccepted",
@@ -346,7 +346,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void foodSendRequest() throws MissingFieldException {
-        foodNode = SearchEngine.SearchPath(foodDestination.getText(), data.graph, data.kiosk);
+        foodNode = SearchEngine.SearchClosestNode(foodDestination.getText());
 
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
                 foodTime.getValue().format(formatter), "", "", 0000, "food",
@@ -411,7 +411,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void transportSendRequest() throws MissingFieldException {
-        transportNode = SearchEngine.SearchPath(transportDestination.getText(), data.graph, data.kiosk);
+        transportNode = SearchEngine.SearchClosestNode(transportDestination.getText());
         ArrayList<Integer> transportingEmployees = new ArrayList<Integer>();
         TransportRequest newTransport = new TransportRequest(transportNode, transportDescription.getText(),
                 Integer.parseInt(transportID.getText()), transportTime.getValue().format(formatter), "",
@@ -470,7 +470,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void cleanSendRequest() throws MissingFieldException {
-        cleanNode = SearchEngine.SearchPath(cleaningDestination.getText(), data.graph, data.kiosk);
+        cleanNode = SearchEngine.SearchClosestNode(cleaningDestination.getText());
         ArrayList<Integer> cleaningEmployees = new ArrayList<Integer>();
         CleaningRequest newClean = new CleaningRequest(cleanNode, cleanDescription.getText(),
                 Integer.parseInt(cleanID.getText()), cleanTime.getValue().format(formatter), "", "",
@@ -529,7 +529,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void securitySendRequest() throws MissingFieldException {
-        securityNode = SearchEngine.SearchPath(securityDestination.getText(), data.graph, data.kiosk);
+        securityNode = SearchEngine.SearchClosestNode(securityDestination.getText());
         SecurityRequest newSecurity = new SecurityRequest(securityNode, securityDescription.getText(),
                 Integer.parseInt(securityID.getText()), securityTime.getValue().format(formatter), "",
                 "", 0000, "security", "unaccepted",

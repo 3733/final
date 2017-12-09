@@ -361,21 +361,26 @@ public class NavigationPageController implements Initializable, Data{
         groundArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
         lowerTwoArrow.setVisible(false);
+
+        Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
+
         if (points.getSelectedToggle() == start) {
 
             //System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destination.getText().trim(),data.graph,data.kiosk).getLongName().trim());
+            startLabel.setText(currNode.getLongName().trim());
+            data.kiosk = currNode;
             destination.setText(startLabel.getText().trim());
         }
         else if(points.getSelectedToggle() == end){
 
             //System.out.println("LABEL!!!!!");
-            endLabel.setText(SearchEngine.SearchPath(destination.getText().trim(),data.graph,data.kiosk).getLongName().trim());
+            endLabel.setText(currNode.getLongName().trim());
+            data.destinationNode = currNode;
             destination.setText(endLabel.getText().trim());
         }
-        if(!destination.getText().equals("")&&!startLabel.getText().equals("")) {
+
             go();
-        }
+
     }
 
     //sets invalid email label when necessary for errorhandling
@@ -482,45 +487,9 @@ public class NavigationPageController implements Initializable, Data{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Finding Functions
 
-    public void findPath(String Start, String End) throws IOException, InterruptedException {
-        //Returns
+    public void findPath() throws IOException, InterruptedException {
 
-        for(int i = 0;i<data.graph.getNodes().size();i++){
-            if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
-                data.kiosk = data.graph.getNodes().get(i);
-            }
-        }
-        Node EndNode = SearchEngine.SearchPath(End,data.graph,data.kiosk);
-
-
-
-        switch (currentAlgo){
-            case 1:
-                PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
-                this.path = pathFinder1.executeStrategy(data.kiosk,EndNode, Data.data.graph);
-                break;
-            case 2:
-                PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
-                this.path = pathFinder2.executeStrategy(data.kiosk,EndNode, Data.data.graph);
-                break;
-            case 3:
-                PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
-                this.path = pathFinder3.executeStrategy(data.kiosk,EndNode, Data.data.graph);
-                break;
-            case 4:
-                PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
-                this.path = pathFinder4.executeStrategy(data.kiosk,EndNode, Data.data.graph);
-                break;
-            case 5:
-                PathAlgorithm pathFinder5 = new PathAlgorithm(new BeamFirstSearch());
-                this.path = pathFinder5.executeStrategy(data.kiosk,EndNode, Data.data.graph);
-                break;
-            case 6:
-                PathAlgorithm pathFinder6 = new PathAlgorithm(new BestFirstSearch());
-                this.path = pathFinder6.executeStrategy(data.kiosk,EndNode, Data.data.graph);
-                break;
-        }
-
+        this.path = SearchEngine.NodeToNode(data.destinationNode,currentAlgo);
 
         MultiFloorPathDrawing(this.path);
 
@@ -559,7 +528,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
-        findPath(startLabel.getText(),endLabel.getText());
+        findPath();
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
                 sendLabel.setVisible(false);

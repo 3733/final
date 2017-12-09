@@ -73,7 +73,7 @@ public class Map {
      * @return  Returns the total
      */
 
-    public double TotalDistance(Vector<Node> Path){
+    public static double TotalDistance(Vector<Node> Path){
 
         double totalDist =0.0;
 
@@ -95,7 +95,7 @@ public class Map {
      * @return  Returns the direct distance between the two points.
      */
 
-    public double HeuristicCost(Node Start, Node End){
+    public static double HeuristicCost(Node Start, Node End){
         return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))));
     }
 

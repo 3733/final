@@ -120,9 +120,12 @@ public class Astar extends AbsAlgorithm {
                 // The distance from start to a neighbor
                 double gScoreT = gScore.get(Current) + HeuristicCost(Current,Current.getNeighbors().get(i));
 
-                if (gScoreT >= gScore.get(Current.getNeighbors().get(i))){
 
-                    continue;		// This is not a better path
+                if(gScore.get(Current.getNeighbors().get(i))!=null) {
+                    if (gScoreT >= gScore.get(Current.getNeighbors().get(i))) {
+
+                        continue;        // This is not a better path
+                    }
                 }
 
 
