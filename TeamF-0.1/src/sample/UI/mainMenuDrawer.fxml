@@ -8,12 +8,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="842.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
+<VBox prefHeight="842.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
    <children>
       <AnchorPane prefHeight="107.0" prefWidth="200.0">
          <children>
@@ -73,12 +75,16 @@
                   </VBox>
                   <VBox prefHeight="145.0" prefWidth="252.0">
                      <children>
-                        <Label fx:id="startLabel" alignment="BOTTOM_CENTER" prefHeight="63.0" prefWidth="134.0" underline="true" />
-                        <Label fx:id="endLabel" alignment="BOTTOM_CENTER" prefHeight="66.0" prefWidth="160.0" underline="true">
+                        <JFXTextField fx:id="startLabel">
                            <VBox.margin>
-                              <Insets top="20.0" />
+                              <Insets top="30.0" />
                            </VBox.margin>
-                        </Label>
+                        </JFXTextField>
+                        <JFXTextField fx:id="endLabel">
+                           <VBox.margin>
+                              <Insets top="60.0" />
+                           </VBox.margin>
+                        </JFXTextField>
                      </children>
                   </VBox>
                   <VBox fx:id="labelBox" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">
@@ -93,6 +99,22 @@
                   </VBox>
                </children>
             </HBox>
+            <VBox alignment="CENTER" layoutX="280.0" layoutY="-11.0" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <JFXButton buttonType="RAISED" contentDisplay="CENTER" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="85.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/reverse-icon-0.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
       <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="200.0">
@@ -120,14 +142,6 @@
       </HBox>
       <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
          <children>
-            <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="71.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Reverse" textFill="WHITE">
-               <HBox.margin>
-                  <Insets left="15.0" right="15.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Montserrat Regular" size="12.0" />
-               </font>
-            </JFXButton>
             <JFXButton buttonType="RAISED" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />

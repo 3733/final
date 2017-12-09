@@ -309,7 +309,7 @@
                   </JFXButton>
                </children>
             </HBox>
-            <JFXDrawersStack alignment="TOP_LEFT" prefHeight="810.0" prefWidth="342.0">
+            <JFXDrawersStack alignment="TOP_LEFT" prefHeight="810.0" prefWidth="346.0">
                <children>
                   <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />
                </children>

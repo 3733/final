@@ -30,6 +30,11 @@
     -fx-background-color: #1a479a;
 }
 
+.jfx-tab-pane .headers-region:selected
+{
+    -fx-background-color: #2865d6;
+}
+
 .jfx-tab-pane .tab-header-area .jfx-rippler
 {
     -jfx-rippler-fill: #e8e8e8;

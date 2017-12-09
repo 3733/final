@@ -52,7 +52,7 @@ public class MenuDrawerController implements Initializable{
     private String defaultStart;
 
     @FXML
-    private Label startLabel, endLabel;
+    private JFXTextField startLabel, endLabel;
 
     // Email UI Components
     @FXML
@@ -126,9 +126,9 @@ public class MenuDrawerController implements Initializable{
 
     public JFXTextField getDestination(){return this.destination;}
 
-    public Label getStartLabel(){return this.startLabel;}
+    public JFXTextField getStartLabel(){return this.startLabel;}
 
-    public Label getEndLabel(){return this.endLabel;}
+    public JFXTextField getEndLabel(){return this.endLabel;}
 
     public JFXRadioButton getRadioStart(){return this.start;}
 
