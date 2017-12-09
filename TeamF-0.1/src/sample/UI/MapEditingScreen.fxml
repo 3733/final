@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDrawer?>
-<?import com.jfoenix.controls.JFXDrawersStack?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <center>
       <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,12 +33,13 @@
                      <children>
                         <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="map" fitHeight="941.0" fitWidth="1587.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                              <ImageView fx:id="map" fitHeight="941.0" fitWidth="1587.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
                                  <image>
                                     <Image url="@Icons/01_thefirstfloor.png" />
                                  </image>
                               </ImageView>
                               <Canvas fx:id="pathCanvas" height="900.0" width="1384.0" StackPane.alignment="TOP_LEFT" />
+                              <Canvas fx:id="pathCanvas1" height="972.0" width="1377.0" />
                            </children>
                         </StackPane>
                      </children>
@@ -52,9 +56,90 @@
                   <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                </tabs>
             </JFXTabPane>
-            <JFXListView fx:id="searchList" layoutX="20.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="266.0" visible="false" />
+            <VBox layoutX="700.0" layoutY="550.0" prefHeight="219.0" prefWidth="210.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="100.0">
+                     <children>
+                        <JFXCheckBox text="Align" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="74.0" prefWidth="228.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="81.0" prefWidth="130.0">
+                           <children>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#drawFloorNodes" text="Draw Nodes" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#drawFloorEdges" text="Draw Edges" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="75.0" prefWidth="193.0">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Node" />
+                                       </children>
+                                    </HBox>
+                                    <JFXToggleButton fx:id="nodeEdgeEdit" onAction="#updateBoolean" text=" " />
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Label text="Edge" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="42.0" prefWidth="210.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="43.0" prefWidth="211.0">
+                           <children>
+                              <SplitMenuButton fx:id="algoMenu" mnemonicParsing="false" text="Choose Pathfinding">
+                                 <items>
+                                    <RadioMenuItem fx:id="chooseAStar" mnemonicParsing="false" text="A*">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="pathOpt" />
+                                       </toggleGroup>
+                                    </RadioMenuItem>
+                                    <RadioMenuItem fx:id="chooseBeam" mnemonicParsing="false" text="Beam First" toggleGroup="$pathOpt" />
+                                    <RadioMenuItem fx:id="chooseBest" mnemonicParsing="false" text="Best First" toggleGroup="$pathOpt" />
+                                    <RadioMenuItem fx:id="chooseBreadth" mnemonicParsing="false" text="Breadth First" toggleGroup="$pathOpt" />
+                                    <RadioMenuItem fx:id="chooseDepth" mnemonicParsing="false" text="Depth First" toggleGroup="$pathOpt" />
+                                    <RadioMenuItem fx:id="chooseDijk" mnemonicParsing="false" text="Dijkstra" toggleGroup="$pathOpt" />
+                                 </items>
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                              </SplitMenuButton>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
             <VBox layoutX="900.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0">
                <children>
+                  <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="222.0">
+                     <children>
+                        <JFXButton contentDisplay="CENTER" onAction="#back" prefHeight="29.0" prefWidth="111.0" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
+                           <font>
+                              <Font name="Montserrat Regular" size="14.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="222.0">
                      <children>
                         <JFXButton fx:id="editNodeBtn" contentDisplay="CENTER" onAction="#editNodes" prefHeight="28.0" prefWidth="98.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Nodes" textFill="WHITE">
@@ -104,7 +189,7 @@
             </VBox>
             <HBox alignment="TOP_RIGHT" layoutX="1100.0" layoutY="36.0" prefHeight="65.0" prefWidth="204.0">
                <children>
-                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" prefHeight="45.0" prefWidth="59.0">
+                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#logout" prefHeight="45.0" prefWidth="59.0">
                      <graphic>
                         <ImageView fx:id="icon" fitHeight="46.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -136,25 +221,20 @@
                   </JFXButton>
                </children>
             </HBox>
-            <JFXDrawersStack alignment="TOP_LEFT" prefHeight="810.0" prefWidth="342.0">
+            <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="501.0">
                <children>
-                  <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />
-               </children>
-            </JFXDrawersStack>
-            <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="462.0">
-               <children>
-                  <JFXButton contentDisplay="CENTER" onAction="#back" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #1a479a;" text="Back" textFill="WHITE">
+                  <JFXTextField prefHeight="26.0" prefWidth="209.0" style="-fx-background-color: #ffffff;">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="152.0" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Set Default Start" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="12.0" />
                      </font>
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
-                     <graphic>
-                        <JFXHamburger fx:id="hamburger" prefHeight="16.0" prefWidth="20.0" />
-                     </graphic>
                   </JFXButton>
                </children>
             </HBox>
