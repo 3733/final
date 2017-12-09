@@ -144,6 +144,19 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
 
+
+    @FXML
+    private JFXButton createServButton;
+
+    @FXML
+    private JFXButton existServButton;
+
+    @FXML
+    private JFXButton editMapButton;
+
+    @FXML
+    private JFXButton editUsersButton;
+
     @FXML
     private StackPane stackPane;
 
@@ -175,7 +188,6 @@ public class NavigationPageController implements Initializable, Data{
     @Override
     public void initialize(URL location, ResourceBundle resources){
         mainMenu.setVisible(false);
-        adminMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
 
@@ -188,6 +200,12 @@ public class NavigationPageController implements Initializable, Data{
             transition.play();
 
         });
+
+        createServButton.setVisible(false);
+        editMapButton.setVisible(false);
+        editUsersButton.setVisible(false);
+        existServButton.setVisible(false);
+
 
         //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
 
@@ -209,6 +227,8 @@ public class NavigationPageController implements Initializable, Data{
         floorVisD.setVisible(false);
         floorVisE.setVisible(false);
         floorVisF.setVisible(false);
+
+
 
         //popluating list view -- three
         ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
@@ -242,7 +262,7 @@ public class NavigationPageController implements Initializable, Data{
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
                 adminBox.setVisible(true);
-                loginButton.setText("Log Out");
+                //loginButton.setText("Log Out");
             } else {
                 adminBox.setVisible(false);
                 loginButton.setText("Log In");
@@ -252,6 +272,12 @@ public class NavigationPageController implements Initializable, Data{
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
+
+                createServButton.setVisible(true);
+                editMapButton.setVisible(true);
+                editUsersButton.setVisible(true);
+                existServButton.setVisible(true);
+
                 loginButton.setOnAction((event) -> {
                     try {
                         logout();
@@ -1100,7 +1126,6 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void initDrawer(){
-
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
@@ -1115,7 +1140,7 @@ public class NavigationPageController implements Initializable, Data{
                 destination.setVisible(false);
                 search.setVisible(false);
             }
-            
+
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -1127,10 +1152,18 @@ public class NavigationPageController implements Initializable, Data{
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/UI/AdminDrawer.fxml"));
-            VBox menuBox = loader.load();
-            adminMenu.setSidePane(menuBox);
-            adminMenu.setVisible(true);
-            adminMenu.toggle();
+            VBox adminBox = loader.load();
+            adminMenu.setSidePane(adminBox);
+            if(adminMenu.visibleProperty().get()){
+                adminMenu.setVisible(false);
+                destination.setVisible(true);
+                search.setVisible(true);
+            }else{
+                adminMenu.setVisible(true);
+                destination.setVisible(false);
+                search.setVisible(false);
+            }
+
         }catch (IOException e){
             e.printStackTrace();
         }
