@@ -92,10 +92,10 @@ public class AboutPageController { //implements Initializable, Data{
     }
 
     public void startTimer()
-    {// URL location, ResourceBundle resources){
-        System.out.println("  I suck a lot.  ");
+    {
+        System.out.println("    I suck a lot.    ");
         atime = new Timer();
-        atime.schedule(AndrewTimer.restoreNavScreen(atime), 5 * 1000);
+        atime.schedule(AndrewTimer.restoreNavScreen(atime, true), AndrewTimer.getDelay() * 1000);
     }
 
     public void setMainController(Main in){

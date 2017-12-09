@@ -240,7 +240,7 @@ public class Main extends Application implements Data{
 
     public static void mapScreen() throws IOException, InterruptedException {
         System.out.println("Nav screen showed up");
-        // closeAbout();
+        // closePopup();
         stage.setScene(map);
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
@@ -400,30 +400,6 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static void aboutWindow(JFXButton btn1){
         popUp = new Stage();
         // editUserWindowController.addingUsers();
@@ -440,7 +416,7 @@ public class Main extends Application implements Data{
     }
 
     // This is called by the thread from the timer.
-    public static void closeAbout()
+    public static void closePopup()
     {
         popUp.close();
         //timer.cancel(); // This is not working for some reason.
