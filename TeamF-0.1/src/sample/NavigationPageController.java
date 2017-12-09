@@ -1000,7 +1000,7 @@ public class NavigationPageController implements Initializable, Data{
     public void logout() throws IOException, InterruptedException{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
-        Main.startScreen();
+        Main.mapScreen();
         loginButton.setOnAction((event) -> {
             try {
                 login();

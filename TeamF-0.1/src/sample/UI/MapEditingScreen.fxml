@@ -23,30 +23,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <center>
       <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="810.0" prefWidth="1386.0">
+            <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="848.0" prefWidth="1558.0">
                <content>
                   <Group fx:id="scrollContent">
                      <children>
                         <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="map" fitHeight="941.0" fitWidth="1587.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                              <ImageView fx:id="map" fitHeight="1057.0" fitWidth="1550.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
                                  <image>
                                     <Image url="@Icons/01_thefirstfloor.png" />
                                  </image>
                               </ImageView>
-                              <Canvas fx:id="pathCanvas" height="900.0" width="1384.0" StackPane.alignment="TOP_LEFT" />
-                              <Canvas fx:id="pathCanvas1" height="972.0" width="1377.0" />
+                              <Canvas fx:id="pathCanvas" height="900.0" width="1552.0" StackPane.alignment="TOP_LEFT" />
+                              <Canvas fx:id="pathCanvas1" height="972.0" width="1555.0" />
                            </children>
                         </StackPane>
                      </children>
                   </Group>
                </content>
             </ScrollPane>
-            <JFXTabPane fx:id="tabPane" layoutX="1250.0" layoutY="360.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
+            <JFXTabPane fx:id="tabPane" layoutX="1400.0" layoutY="400.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
                <tabs>
                   <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
                   <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
@@ -56,7 +56,7 @@
                   <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                </tabs>
             </JFXTabPane>
-            <VBox layoutX="700.0" layoutY="550.0" prefHeight="219.0" prefWidth="210.0" style="-fx-background-color: #ffffff;">
+            <VBox layoutX="800.0" layoutY="550.0" prefHeight="219.0" prefWidth="210.0" style="-fx-background-color: #ffffff;">
                <children>
                   <HBox alignment="TOP_CENTER" prefHeight="27.0" prefWidth="100.0">
                      <children>
@@ -126,7 +126,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox layoutX="900.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0">
+            <VBox layoutX="1050.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0">
                <children>
                   <HBox alignment="TOP_RIGHT" prefHeight="44.0" prefWidth="222.0">
                      <children>
@@ -187,7 +187,7 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="TOP_RIGHT" layoutX="1100.0" layoutY="36.0" prefHeight="65.0" prefWidth="204.0">
+            <HBox alignment="TOP_RIGHT" layoutX="1250.0" layoutY="36.0" prefHeight="65.0" prefWidth="204.0">
                <children>
                   <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#logout" prefHeight="45.0" prefWidth="59.0">
                      <graphic>
@@ -212,7 +212,7 @@
                   </JFXButton>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_RIGHT" layoutX="1100.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0">
+            <HBox alignment="BOTTOM_RIGHT" layoutX="1250.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0">
                <children>
                   <JFXButton fx:id="aboutButton" onAction="#about" text="ⓒ Fuschia Fairies">
                      <HBox.margin>
