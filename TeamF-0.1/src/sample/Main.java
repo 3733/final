@@ -50,7 +50,7 @@ public class Main extends Application implements Data{
     private static Scene editUserWin;
     private static Scene helpRequest;
     private static Scene aboutWin;
-
+    public static Scene welcomeScreen;
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -65,6 +65,9 @@ public class Main extends Application implements Data{
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+
+    //boolean function to see whether load the the startscreen.
+    public static Boolean isSplashLoaded = false;
 
 
     @Override
@@ -102,7 +105,7 @@ public class Main extends Application implements Data{
         map = new Scene(Nav);
         //startMap();
         navigationPageController.setKiosk(data.kiosk);
-        navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
+//        navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
         Parent Service = serviceLoader.load();
@@ -189,6 +192,7 @@ public class Main extends Application implements Data{
         stage.setResizable(true);
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
+
         stage.show();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
@@ -220,6 +224,10 @@ public class Main extends Application implements Data{
             navigationPageController.setSearch(getDestination());
             navigationPageController.settingFields();
         }
+    }
+    //
+    public static void welcomeScreen() {
+
     }
 
     public static void serviceScreen(){

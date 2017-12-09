@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.ObjectProperty;
@@ -13,6 +14,7 @@ import javafx.embed.swing.SwingFXUtils;
 import com.jfoenix.controls.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
@@ -36,6 +38,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +53,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public class NavigationPageController implements Initializable, Data{
+public class NavigationPageController implements Initializable, Data {
 
     //FXML UI Components
 
@@ -158,9 +162,14 @@ public class NavigationPageController implements Initializable, Data{
 
     //Purpose: Initialize all the UI components
     @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
+
+
+
+
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
+
 
         //disables the bars and starts up the zoom function
         scrollMap.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -254,17 +263,18 @@ public class NavigationPageController implements Initializable, Data{
 
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-                    if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
-                        loginButton.setOnAction((event) -> {
-                            try {
-                                logout();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                    }});
+            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
+                loginButton.setOnAction((event) -> {
+                    try {
+                        logout();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
 
         threeArrow.setVisible(false);
         twoArrow.setVisible(false);
@@ -273,57 +283,69 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
 
-        startZoom();
+        // startZoom();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Getters and Setters
 
-    public void setMainController(Main in){
+    public void setMainController(Main in) {
         mainController = in;
     }
 
-    public JFXListView getDirectionSteps(){
+    public JFXListView getDirectionSteps() {
         return this.directionSteps;
     }
 
-    public Vector<String> getFloorsVisited(){
-        return  this.floorsVisited;
+    public Vector<String> getFloorsVisited() {
+        return this.floorsVisited;
     }
 
-    public int getCurrentAlgo(){
+    public int getCurrentAlgo() {
         return this.currentAlgo;
     }
 
-    public void setKiosk(Node k){
+    public void setKiosk(Node k) {
         data.kiosk = k;
     }
 
-    public void setSearch(String s){
+    public void setSearch(String s) {
         this.destination.setText(s);
     }
 
-    public void autoClose(){
+    public void autoClose() {
         searchList.setVisible(false);
     }
 
-    public JFXTextField getDestination(){return this.destination;}
-
-    public Label getStartLabel(){return this.startLabel;}
-
-    public Label getEndLabel(){return this.endLabel;}
-
-    public JFXRadioButton getRadioStart(){return this.start;}
-
-    public void setDestination(String s){destination.setText(s);}
-
-    public JFXRadioButton getRadioEnd(){return this.end;}
-
-    public void setCurrentAlgo(int current){
-        this.currentAlgo =  current;
+    public JFXTextField getDestination() {
+        return this.destination;
     }
 
-    public VBox getAdminBox(){
+    public Label getStartLabel() {
+        return this.startLabel;
+    }
+
+    public Label getEndLabel() {
+        return this.endLabel;
+    }
+
+    public JFXRadioButton getRadioStart() {
+        return this.start;
+    }
+
+    public void setDestination(String s) {
+        destination.setText(s);
+    }
+
+    public JFXRadioButton getRadioEnd() {
+        return this.end;
+    }
+
+    public void setCurrentAlgo(int current) {
+        this.currentAlgo = current;
+    }
+
+    public VBox getAdminBox() {
         return this.adminBox;
     }
 
@@ -332,23 +354,22 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     @FXML
-    public void settingSearch(){
+    public void settingSearch() {
         if (points.getSelectedToggle() == start) {
 
             destination.setText(startLabel.getText());
 
-        }
-        else{
+        } else {
             destination.setText(endLabel.getText());
         }
     }
 
     @FXML
-    public void setStart(String t){
+    public void setStart(String t) {
         startLabel.setText(t);
     }
 
-    public Node getKiosk(){
+    public Node getKiosk() {
         return data.kiosk;
     }
 
@@ -366,20 +387,19 @@ public class NavigationPageController implements Initializable, Data{
         if (points.getSelectedToggle() == start) {
 
             System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
+            startLabel.setText(SearchEngine.SearchPath(destinationText, data.graph, data.kiosk).getLongName().trim());
+            if (!destinationText.equals("") && !startLabel.getText().equals("")) {
                 go();
             }
-        }
-        else{
+        } else {
 
             System.out.println("LABEL!!!!!");
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText, data.graph, data.kiosk).getLongName().trim());
 
-            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
-            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            if(!destinationText.equals("")) {
+            System.out.println(endLabel.getText() + "<=============DESTINATION LABEL");
+            destination.setText(SearchEngine.SearchPath(destinationText, data.graph, data.kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText, data.graph, data.kiosk).getLongName().trim());
+            if (!destinationText.equals("")) {
                 go();
             }
         }
@@ -387,16 +407,16 @@ public class NavigationPageController implements Initializable, Data{
 
     //sets invalid email label when necessary for errorhandling
     @FXML
-    public static void setInvalidEmail(){
+    public static void setInvalidEmail() {
         invalidEmailText.setVisible(true);
     }
 
-    public void setMap(Map m) throws IOException{
+    public void setMap(Map m) throws IOException {
         this.CurMap = m;
         Data.data.currentMap = "1";
     }
 
-    public Map getMap(){
+    public Map getMap() {
         return this.CurMap;
     }
 
@@ -406,7 +426,7 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloorL1() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
+        Data.data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
@@ -416,7 +436,7 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloorL2() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
+        Data.data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
@@ -426,7 +446,7 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloor1() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
+        Data.data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
@@ -436,8 +456,8 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloor2() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        if(Data.data.gc != null){
-             Data.data.gc.clearRect(0, 0, x, y);
+        if (Data.data.gc != null) {
+            Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
@@ -448,7 +468,7 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloor3() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        if(Data.data.gc != null) {
+        if (Data.data.gc != null) {
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.thirdFloor);
@@ -460,7 +480,7 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloorG() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,1000,1000);
+        Data.data.gc.clearRect(0, 0, 1000, 1000);
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
@@ -469,18 +489,20 @@ public class NavigationPageController implements Initializable, Data{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Screen Functions
     @FXML
-    public void login() throws IOException{
+    public void login() throws IOException {
         Main.loginScreen(loginButton);
         clearFields();
         clear();
     }
 
     @FXML
-    public void help(){Main.setHelpScreenServiceRequestScreen();}
+    public void help() {
+        Main.setHelpScreenServiceRequestScreen();
+    }
 
     // Button to return to the welcome screen
     @FXML
-    public void back() throws IOException{
+    public void back() throws IOException {
         Main.startScreen();
         clearFields();
         clear();
@@ -492,8 +514,8 @@ public class NavigationPageController implements Initializable, Data{
     public void findPath(String Start, String End) throws IOException, InterruptedException {
         //Returns
 
-        for(int i = 0;i<data.graph.getNodes().size();i++){
-            if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
+        for (int i = 0; i < data.graph.getNodes().size(); i++) {
+            if (data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())) {
                 data.kiosk = data.graph.getNodes().get(i);
                 System.out.println(data.kiosk.getLongName());
             }
@@ -502,34 +524,33 @@ public class NavigationPageController implements Initializable, Data{
         Node StartNode = data.kiosk;
 
         System.out.println("END SEARCH!!!!!!!!!!!!");
-        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
+        Node EndNode = SearchEngine.SearchPath(End, Data.data.graph, data.kiosk);
 
 
-
-        switch (currentAlgo){
+        switch (currentAlgo) {
             case 1:
                 PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
-                this.path = pathFinder1.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder1.executeStrategy(StartNode, EndNode, Data.data.graph);
                 break;
             case 2:
                 PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
-                this.path = pathFinder2.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder2.executeStrategy(StartNode, EndNode, Data.data.graph);
                 break;
             case 3:
                 PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
-                this.path = pathFinder3.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder3.executeStrategy(StartNode, EndNode, Data.data.graph);
                 break;
             case 4:
                 PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
-                this.path = pathFinder4.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder4.executeStrategy(StartNode, EndNode, Data.data.graph);
                 break;
             case 5:
                 PathAlgorithm pathFinder5 = new PathAlgorithm(new BeamFirstSearch());
-                this.path = pathFinder5.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder5.executeStrategy(StartNode, EndNode, Data.data.graph);
                 break;
             case 6:
                 PathAlgorithm pathFinder6 = new PathAlgorithm(new BestFirstSearch());
-                this.path = pathFinder6.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder6.executeStrategy(StartNode, EndNode, Data.data.graph);
                 break;
         }
 
@@ -547,7 +568,7 @@ public class NavigationPageController implements Initializable, Data{
 
 
     @FXML
-    public void clearFields(){
+    public void clearFields() {
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
         threeArrow.setVisible(false);
@@ -568,16 +589,15 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     @FXML
-    public void go() throws IOException,InterruptedException{
+    public void go() throws IOException, InterruptedException {
         clear();
-        findPath(startLabel.getText(),endLabel.getText());
+        findPath(startLabel.getText(), endLabel.getText());
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-            if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
+            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
                 sendLabel.setVisible(false);
                 email.setVisible(false);
                 sendButton.setVisible(false);
-            }
-            else{
+            } else {
                 sendLabel.setVisible(true);
                 email.setVisible(true);
                 sendButton.setVisible(true);
@@ -592,39 +612,38 @@ public class NavigationPageController implements Initializable, Data{
     // Path Drawing and Directions functions
 
     // Purpose: Print out directions for a path of nodes
-    public static String directions(Vector<Node> in){
+    public static String directions(Vector<Node> in) {
         String out = "";
         Node a, b, c;
-        if(in.size()<2){
+        if (in.size() < 2) {
             out = out.concat("Path too short");
         }
         a = in.get(0);
         b = in.get(1);
-        out = out.concat("Start at " + a.getLongName().trim()+"<br>");
-        out = out.concat("Go towards " + b.getLongName().trim()+"<br>");
+        out = out.concat("Start at " + a.getLongName().trim() + "<br>");
+        out = out.concat("Go towards " + b.getLongName().trim() + "<br>");
 
-        for(int i = 2; i < in.size(); i++){
-            a = in.get(i-2);
-            b = in.get(i-1);
+        for (int i = 2; i < in.size(); i++) {
+            a = in.get(i - 2);
+            b = in.get(i - 1);
             c = in.get(i);
             String turn = "";
             double angle = NodeMath.findAngle(a.getxCoordinate(), a.getyCoordinate(), b.getxCoordinate(), b.getyCoordinate(), c.getxCoordinate(), c.getyCoordinate());
-            if(angle<45){
+            if (angle < 45) {
                 turn = "sharply right";
-            }else if(angle < 135){
+            } else if (angle < 135) {
                 turn = "right";
-            }else if(angle < 225){
+            } else if (angle < 225) {
                 turn = "straight";
-            }else if(angle <315){
+            } else if (angle < 315) {
                 turn = "left";
-            }else{
+            } else {
                 turn = "sharply left";
             }
 
-            if(turn.equals("straight")) {
+            if (turn.equals("straight")) {
                 out = out.concat("Go " + turn + " to " + c.getLongName().trim() + "<br>");
-            }
-            else{
+            } else {
                 out = out.concat("Turn " + turn + " towards " + c.getLongName().trim() + "<br>");
             }
             //out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
@@ -632,27 +651,27 @@ public class NavigationPageController implements Initializable, Data{
         return out;
     }
 
-    public Vector<Vector<Node>> separator(Vector<Node> path){
+    public Vector<Vector<Node>> separator(Vector<Node> path) {
         Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
-        for(int i = 0; i <6; i++){
+        for (int i = 0; i < 6; i++) {
             paths.add(new Vector<Node>());
         }
-        String prev = path.get(0).getFloor().replaceAll("\\s+","");
-        Node blank = new Node("BLANK", -1,-1,"BL", "BLANK","BLANKTYPE","BLANK","BLANK", 'Z');
+        String prev = path.get(0).getFloor().replaceAll("\\s+", "");
+        Node blank = new Node("BLANK", -1, -1, "BL", "BLANK", "BLANKTYPE", "BLANK", "BLANK", 'Z');
         int prevElt = 0;
-        for(Node i: path){
-            String pathFloor = i.getFloor().replaceAll("\\s+","");
-            if(!(pathFloor.equals(prev))){
+        for (Node i : path) {
+            String pathFloor = i.getFloor().replaceAll("\\s+", "");
+            if (!(pathFloor.equals(prev))) {
                 paths.elementAt(prevElt).add(blank);
                 prev = pathFloor;
             }
-            if(pathFloor.equals("L2")){
+            if (pathFloor.equals("L2")) {
                 paths.elementAt(0).add(i);
                 prevElt = 0;
             } else if (pathFloor.equals("L1")) {
                 prevElt = 1;
                 paths.elementAt(1).add(i);
-            } else if (pathFloor.equals("0G") || pathFloor.equals("G")){
+            } else if (pathFloor.equals("0G") || pathFloor.equals("G")) {
                 prevElt = 2;
                 paths.elementAt(2).add(i);
             } else if (pathFloor.equals("01") || pathFloor.equals("1")) {
@@ -689,7 +708,7 @@ public class NavigationPageController implements Initializable, Data{
         Vector<Vector<Node>> paths = separator(path);
 
         floorsVisited.clear();
-        for(Vector<Node> floorPath: paths){
+        for (Vector<Node> floorPath : paths) {
             if (floorPath.size() > 0) {
                 String pathFloor = floorPath.elementAt(0).getFloor().replaceAll("\\s+", "");
                 if (pathFloor.equals("L2")) {
@@ -716,10 +735,10 @@ public class NavigationPageController implements Initializable, Data{
         setMap("1");
     }
 
-    public void setArrows(Vector<String> floorsNeeded){
+    public void setArrows(Vector<String> floorsNeeded) {
         for (int i = 0; i < floorsNeeded.size(); i++) {
             String floorAt = floorsNeeded.elementAt(i);
-            switch (floorAt){
+            switch (floorAt) {
                 case "L2":
                     lowerTwoArrow.setVisible(true);
                     break;
@@ -738,37 +757,39 @@ public class NavigationPageController implements Initializable, Data{
                 case "3":
                     threeArrow.setVisible(true);
                     break;
-                default: break;
+                default:
+                    break;
             }
         }
     }
 
     public void setMap(String map) {
-        map.replaceAll("\\s+","");
-        if(map.equals("L2")) {
+        map.replaceAll("\\s+", "");
+        if (map.equals("L2")) {
             changeFloorL2();
-        } else if(map.equals("L1")) {
+        } else if (map.equals("L1")) {
             changeFloorL1();
-        }else if(map.equals("G")) {
+        } else if (map.equals("G")) {
             changeFloorG();
-        } else if(map.equals("01") || map.equals("1")) {
+        } else if (map.equals("01") || map.equals("1")) {
             changeFloor1();
-        } else if(map.equals("02") || map.equals("2")) {
+        } else if (map.equals("02") || map.equals("2")) {
             changeFloor2();
-        } else if(map.equals("03") || map.equals("3")){
+        } else if (map.equals("03") || map.equals("3")) {
             changeFloor3();
         }
     }
+
     // Purpose: Draw a path of nodes on the map
     @FXML
     public void testDrawDirections(Vector<Node> path) {
-        if(path != null) {
+        if (path != null) {
             int length = path.size();
             String nameDest = path.get(length - 1).getShortName();
             String nameDept = path.get(0).getShortName();
             // Setting up the proper color settings
             Data.data.gc.setLineWidth(3);
-            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
+            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26, 71, 154));
             Data.data.gc.stroke();
             // Iterate through all the path nodes to draw the path
             for (int i = 0; i < length; i++) {
@@ -779,11 +800,11 @@ public class NavigationPageController implements Initializable, Data{
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
+                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst, node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
                     }
                 }
             }
-            String floor = path.get(0).getFloor().replaceAll("\\s+","");
+            String floor = path.get(0).getFloor().replaceAll("\\s+", "");
         }
     }
 
@@ -824,7 +845,7 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
-                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
+                stackPane.setMinSize(newValue.getWidth(), newValue.getHeight());
             }
         });
 
@@ -837,8 +858,8 @@ public class NavigationPageController implements Initializable, Data{
                     return;
                 }
 
-                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
-                Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
+                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1 / 1.03;
+                Point2D scrollOffset = figureScrollOffset(scrollContent, scrollMap);
                 if (!(scaleFactor * stackPane.getScaleX() < 1)) {
                     stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
                     stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
@@ -862,14 +883,14 @@ public class NavigationPageController implements Initializable, Data{
                 double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
                 double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
                 double desiredH = scrollMap.getHvalue() - deltaH;
-                if(deltaX > 0) {
+                if (deltaX > 0) {
                     scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
                 }
                 double deltaY = event.getY() - lastMouseCoordinates.get().getY();
                 double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
                 double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
                 double desiredV = scrollMap.getVvalue() - deltaV;
-                if ( deltaY > 0) {
+                if (deltaY > 0) {
                     scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
                 }
             }
@@ -881,12 +902,12 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
-                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
+                stackPane.setMinSize(newValue.getWidth(), newValue.getHeight());
             }
         });
 
-        double scaleFactor = (2 > 0) ? 2.03 : 1/1.03;
-        Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
+        double scaleFactor = (2 > 0) ? 2.03 : 1 / 1.03;
+        Point2D scrollOffset = figureScrollOffset(scrollContent, scrollMap);
         if (!(scaleFactor * stackPane.getScaleX() < 1)) {
             stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
             stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
@@ -898,12 +919,12 @@ public class NavigationPageController implements Initializable, Data{
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
         double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
         double desiredH = scrollMap.getHvalue() - deltaH;
-            scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+        scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
         double deltaY = data.kiosk.getyCoordinate() - 1250;
         double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
         double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
         double desiredV = scrollMap.getVvalue() - deltaV;
-            scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+        scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
 
     }
 
@@ -922,15 +943,15 @@ public class NavigationPageController implements Initializable, Data{
         double scrollYOffset = scrollOffset.getY();
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
         if (extraWidth > 0) {
-            double halfWidth = scroller.getViewportBounds().getWidth() / 2 ;
-            double newScrollXOffset = (scaleFactor - 1) *  halfWidth + scaleFactor * scrollXOffset;
+            double halfWidth = scroller.getViewportBounds().getWidth() / 2;
+            double newScrollXOffset = (scaleFactor - 1) * halfWidth + scaleFactor * scrollXOffset;
             scroller.setHvalue(scroller.getHmin() + newScrollXOffset * (scroller.getHmax() - scroller.getHmin()) / extraWidth);
         } else {
             scroller.setHvalue(scroller.getHmin());
         }
         double extraHeight = scrollContent.getLayoutBounds().getHeight() - scroller.getViewportBounds().getHeight();
         if (extraHeight > 0) {
-            double halfHeight = scroller.getViewportBounds().getHeight() / 2 ;
+            double halfHeight = scroller.getViewportBounds().getHeight() / 2;
             double newScrollYOffset = (scaleFactor - 1) * halfHeight + scaleFactor * scrollYOffset;
             scroller.setVvalue(scroller.getVmin() + newScrollYOffset * (scroller.getVmax() - scroller.getVmin()) / extraHeight);
         } else {
@@ -944,7 +965,7 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     private void resetStack(ScrollPane pane, double width, double height) {
-        pane.setViewportBounds(new BoundingBox(0,0,width,height));
+        pane.setViewportBounds(new BoundingBox(0, 0, width, height));
     }
 
     // shift the viewport of the imageView by the specified delta, clamping so
@@ -952,8 +973,8 @@ public class NavigationPageController implements Initializable, Data{
     private void shiftMap(ImageView imageView, Point2D delta) {
         Rectangle2D viewport = imageView.getViewport();
 
-        double width = imageView.getImage().getWidth() ;
-        double height = imageView.getImage().getHeight() ;
+        double width = imageView.getImage().getWidth();
+        double height = imageView.getImage().getHeight();
 
         double maxX = width - viewport.getWidth();
         double maxY = height - viewport.getHeight();
@@ -967,7 +988,7 @@ public class NavigationPageController implements Initializable, Data{
     private void shiftStack(ScrollPane pane, Point2D delta) {
         Bounds viewport = pane.getViewportBounds();
 
-        double width = pathCanvas.getWidth() ;
+        double width = pathCanvas.getWidth();
         double height = pathCanvas.getHeight();
 
         double maxX = width - viewport.getWidth();
@@ -1002,8 +1023,8 @@ public class NavigationPageController implements Initializable, Data{
 
     // Purpose: Method to clear the path on the map when the user presses clear map
     @FXML
-    public void clear() throws FileNotFoundException{
-        Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
+    public void clear() throws FileNotFoundException {
+        Data.data.gc.clearRect(0, 0, pathCanvas.getWidth(), pathCanvas.getHeight());
         Data.data.pathThird = null;
         Data.data.pathSecond = null;
         Data.data.pathFirst = null;
@@ -1011,19 +1032,19 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.pathL2 = null;
         Data.data.pathG = null;
 
-        for(int i = 0; i < Data.data.floorList.size() ; i++){
-            Data.data.floorList.set(i,false);
+        for (int i = 0; i < Data.data.floorList.size(); i++) {
+            Data.data.floorList.set(i, false);
         }
     }
 
     @FXML
-    public void emergencyButton() throws IOException, InterruptedException{
+    public void emergencyButton() throws IOException, InterruptedException {
         destination.setText("Exit");
         settingFields();
     }
 
     @FXML
-    public void logout() throws IOException, InterruptedException{
+    public void logout() throws IOException, InterruptedException {
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
         Main.startScreen();
@@ -1040,34 +1061,44 @@ public class NavigationPageController implements Initializable, Data{
 
     //  EDIT LATER
     @FXML
-    public void edit() throws IOException, InterruptedException{
+    public void edit() throws IOException, InterruptedException {
         Main.mapEditScreen();
         clearFields();
         clear();
     }
 
     @FXML
-    public void serviceRequest() {Main.serviceScreen();}
-    @FXML
-    public void acceptRequest() {Main.acceptScreen();}
-
-    @FXML
-    public void editUsers(){Main.editUsersScreen();}
-
-    @FXML
-    public void about(){Main.aboutWindow(aboutButton);}
-
-    @FXML
-    public void chat(){
+    public void serviceRequest() {
+        Main.serviceScreen();
     }
 
     @FXML
-    public void setAlgorithm(){}
+    public void acceptRequest() {
+        Main.acceptScreen();
+    }
+
+    @FXML
+    public void editUsers() {
+        Main.editUsersScreen();
+    }
+
+    @FXML
+    public void about() {
+        Main.aboutWindow(aboutButton);
+    }
+
+    @FXML
+    public void chat() {
+    }
+
+    @FXML
+    public void setAlgorithm() {
+    }
 
 
     // Purpose: Send an email when user clicks send email button
     @FXML
-    public void sendMsg() throws Exception{
+    public void sendMsg() throws Exception {
         //Vector<Node> msgVec = new Vector<Node>(10);
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
         emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
@@ -1075,7 +1106,7 @@ public class NavigationPageController implements Initializable, Data{
 
     // Purpose: Find the proper destination when a user types in the search bar
     @FXML
-    public void autoComplete(){
+    public void autoComplete() {
         searchList.setVisible(true);
         ObservableList<String> filteredEntries = FXCollections.observableArrayList("empty");
         //filtering
@@ -1124,11 +1155,13 @@ public class NavigationPageController implements Initializable, Data{
         Vector<Node> currentPath = this.path;
         Vector<Node> reversePath = new Vector<Node>();
         int z = 0;
-        for(int i = currentPath.size(); i > 0; i--){
-            reversePath.add(currentPath.get(i-1));
+        for (int i = currentPath.size(); i > 0; i--) {
+            reversePath.add(currentPath.get(i - 1));
         }
         this.path = reversePath;
         MultiFloorPathDrawing(this.path);
     }
+
+
 
 }
