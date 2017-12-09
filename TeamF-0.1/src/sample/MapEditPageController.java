@@ -221,7 +221,7 @@ public class MapEditPageController implements Initializable, Data{
         if(gcIn != null)
             gcIn.clearRect(0,0,x,y);
         else {
-            System.out.println("IT WAS NULL" + gcIn);
+            //System.out.println("IT WAS NULL" + gcIn);
         }
     }
 
