@@ -22,6 +22,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
@@ -277,8 +279,6 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
 
-        data.kiosk = data.graph.getNodes().get(0);
-
         startZoom();
     }
 
@@ -371,20 +371,20 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
 
-            System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            //System.out.println("LABEL!!!!!");
+            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
             if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
                 go();
             }
         }
         else{
 
-            System.out.println("LABEL!!!!!");
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+           // System.out.println("LABEL!!!!!");
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
 
-            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
-            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            //System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
+            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
             if(!destinationText.equals("")) {
                 go();
             }
@@ -501,11 +501,10 @@ public class NavigationPageController implements Initializable, Data{
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
                 data.kiosk = data.graph.getNodes().get(i);
-                System.out.println(data.kiosk.getLongName());
+                //System.out.println(data.kiosk.getLongName());
             }
         }
-
-        System.out.println("START SEARCH!!!!!!!!!!");
+        //System.out.println("START SEARCH!!!!!!!!!!");
         Node startNode = data.kiosk;
 
         System.out.println("END SEARCH!!!!!!!!!!!!");
@@ -601,13 +600,14 @@ public class NavigationPageController implements Initializable, Data{
     public static String directions(Vector<Node> in){
         String out = "";
         Node a, b, c;
+        int count = 0;
         if(in.size()<2){
             out = out.concat("Path too short");
         }
         a = in.get(0);
         b = in.get(1);
-        out = out.concat("Start at " + a.getLongName().trim()+"<br>");
-        out = out.concat("Go towards " + b.getLongName().trim()+"<br>");
+        out = out.concat("Start at " + a.getLongName().trim().split("Node")[0].split("Floor")[0]+"<br>");
+        out = out.concat("Go towards " + b.getLongName().trim().split("Node")[0].split("Floor")[0]+"<br>");
 
         for(int i = 2; i < in.size(); i++){
             a = in.get(i-2);
@@ -627,15 +627,75 @@ public class NavigationPageController implements Initializable, Data{
                 turn = "sharply left";
             }
 
-            if(turn.equals("straight")) {
-                out = out.concat("Go " + turn + " to " + c.getLongName().trim() + "<br>");
+            if(!b.getFloor().equals(c.getFloor()) && b.getNodeType().equals("ELEV")){
+                if (count == 1){
+                    out = out.concat("Go straight to " + b.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                    count --;
+                }
+                out = out.concat("Take the elevator to floor " + c.getFloor().trim() + "<br>");
             }
-            else{
-                out = out.concat("Turn " + turn + " towards " + c.getLongName().trim() + "<br>");
+            else if(!b.getFloor().equals(c.getFloor()) && b.getNodeType().equals("STAI")){
+                if (count == 1){
+                    out = out.concat("Go straight to " + b.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                    count --;
+                }
+                out = out.concat("Take the stairs to floor " + c.getFloor().trim() + "<br>");
             }
-            //out = out.concat("When you arrive at " + b.getLongName().trim() + " go " + turn + " towards " + c.getLongName().trim() + "<br>");
+            else if(turn.equals("straight") && count == 0) {
+                count ++;
+            }
+            else if(!turn.equals("straight")){
+                if (count == 1){
+
+                    out = out.concat("Go straight to " + b.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                    count --;
+                }
+                out = out.concat("Turn " + turn + " towards " + c.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+            }
         }
         return out;
+    }
+
+    Image startIMG = new Image(getClass().getResourceAsStream(filePath + "Start.png"));
+    Image straightIMG = new Image(getClass().getResourceAsStream(filePath + "Straight.png"));
+    Image rightIMG = new Image(getClass().getResourceAsStream(filePath + "RightTurn.png"));
+    Image leftIMG = new Image(getClass().getResourceAsStream(filePath + "LeftTurn.png"));
+    Image sharpRightIMG = new Image(getClass().getResourceAsStream(filePath + "SharpRight.png"));
+    Image sharpLeftIMG = new Image(getClass().getResourceAsStream(filePath + "SharpLeft.png"));
+    Image elevIMG = new Image(getClass().getResourceAsStream(filePath + "Elevator.png"));
+    Image stairIMG = new Image(getClass().getResourceAsStream(filePath + "Stairs.png"));
+
+    public LinkedList<Image> directionArrows(String[] path){
+        LinkedList<Image> images = new LinkedList<Image>();
+
+        for(int i = 0; i < path.length; i++){
+            if(path[i].contains("Turn sharply right")){
+                images.add(i, sharpRightIMG);
+            }
+            else if(path[i].contains("Turn right")){
+                images.add(i, rightIMG);
+            }
+            else if(path[i].contains("Turn sharply left")){
+                images.add(i, sharpLeftIMG);
+            }
+            else if(path[i].contains("Turn left")){
+                images.add(i, leftIMG);
+            }
+            else if(path[i].contains("straight") || path[i].contains("towards")){
+                images.add(i, straightIMG);
+            }
+            else if(path[i].contains("elevator")){
+                images.add(i, elevIMG);
+            }
+            else if(path[i].contains("stairs")){
+                images.add(i, stairIMG);
+            }
+            else{
+                images.add(i, startIMG);
+            }
+        }
+
+        return images;
     }
 
     public Vector<Vector<Node>> separator(Vector<Node> path){
@@ -680,14 +740,45 @@ public class NavigationPageController implements Initializable, Data{
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        ObservableList<String> populateSteps = FXCollections.observableArrayList();
+        ObservableList<HBox> populateSteps = FXCollections.observableArrayList();
         //edit later
         String directions = directions(path);
         String[] directionParts = directions.split("<br>");
-        for (int i = 0; i < directionParts.length; i++) {
-            populateSteps.add(directionParts[i]);
+
+        LinkedList<Image> arrows = directionArrows(directionParts);
+        ObservableList<javafx.scene.image.ImageView> images = FXCollections.observableArrayList();
+
+        for(Image arrow : arrows){
+            javafx.scene.image.ImageView directionPointers = new javafx.scene.image.ImageView();
+            directionPointers.setImage(arrow);
+            directionPointers.setFitHeight(25);
+            directionPointers.setFitWidth(25);
+            images.add(directionPointers);
         }
-        populateSteps.add("You have arrived at your destination.");
+
+        for (int i = 0; i < directionParts.length; i++) {
+            HBox entry = new HBox();
+            Label label = new Label();
+            label.setText(directionParts[i]);
+
+            entry.getChildren().addAll(images.get(i), label);
+            entry.setAlignment(Pos.CENTER_LEFT);
+
+            populateSteps.add(entry);
+        }
+        HBox entry = new HBox();
+        String end = "You have arrived at your destination.";
+        Label label = new Label();
+        label.setText(end);
+
+        Image endIMG = new Image(getClass().getResourceAsStream(filePath + "Finish.png"));
+        javafx.scene.image.ImageView finish = new javafx.scene.image.ImageView();
+        finish.setImage(endIMG);
+        finish.setFitHeight(25);
+        finish.setFitWidth(25);
+
+        entry.getChildren().addAll(finish, label);
+        populateSteps.add(entry);
         directionSteps.setItems(populateSteps);
 
 
@@ -1163,10 +1254,14 @@ public class NavigationPageController implements Initializable, Data{
     public void reverseNodes() throws IOException, InterruptedException {
         Vector<Node> currentPath = this.path;
         Vector<Node> reversePath = new Vector<Node>();
+        String begin = startLabel.getText();
+        String dest = endLabel.getText();
         int z = 0;
         for(int i = currentPath.size(); i > 0; i--){
             reversePath.add(currentPath.get(i-1));
         }
+        startLabel.setText(dest);
+        endLabel.setText(begin);
         this.path = reversePath;
         MultiFloorPathDrawing(this.path);
     }
