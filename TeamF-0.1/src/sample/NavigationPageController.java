@@ -179,15 +179,15 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
 
-        /*HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
         transition.setRate(-1);
+
         menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
             transition.setRate(transition.getRate() * -1);
             mainMenu.toggle();
             transition.play();
 
-
-        });*/
+        });
 
         //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
 
@@ -1100,13 +1100,13 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void initDrawer(){
+
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
             VBox menuBox = loader.load();
             mainMenu.setSidePane(menuBox);
             if(mainMenu.visibleProperty().get()){
-                mainMenu.toggle();
                 mainMenu.setVisible(false);
                 destination.setVisible(true);
                 search.setVisible(true);
@@ -1114,8 +1114,8 @@ public class NavigationPageController implements Initializable, Data{
                 mainMenu.setVisible(true);
                 destination.setVisible(false);
                 search.setVisible(false);
-                mainMenu.toggle();
             }
+            
         }catch (IOException e){
             e.printStackTrace();
         }
