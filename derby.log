@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Wed Dec 06 14:12:53 EST 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-2d3e-b86a-0000061375e0 
-on database directory C:\Users\pmwws\Documents\iteration2\Skynet with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
-Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_151/db/lib/derby.jar
+Sat Dec 09 00:07:36 EST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0160-39ab-e6f2-0000099c3f78 
+on database directory /home/nikolaos/Desktop/SoftEng/Project/iteration2/Skynet with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/home/nikolaos/Desktop/SoftEng/jdk1.8.0_151/db/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_151-b12
-user.dir=C:\Users\pmwws\Documents\iteration2
-os.name=Windows 10
+user.dir=/home/nikolaos/Desktop/SoftEng/Project/iteration2
+os.name=Linux
 os.arch=amd64
-os.version=10.0
+os.version=4.13.0-17-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

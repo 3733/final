@@ -355,7 +355,6 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void settingFields() throws IOException, InterruptedException {
         searchList.setVisible(false);
-        String destinationText = destination.getText();
         oneArrow.setVisible(false);
         twoArrow.setVisible(false);
         threeArrow.setVisible(false);
@@ -364,23 +363,18 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
 
-            System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
-                go();
-            }
+            //System.out.println("LABEL!!!!!");
+            startLabel.setText(SearchEngine.SearchPath(destination.getText().trim(),data.graph,data.kiosk).getLongName().trim());
+            destination.setText(startLabel.getText().trim());
         }
-        else{
+        else if(points.getSelectedToggle() == end){
 
-            System.out.println("LABEL!!!!!");
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-
-            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
-            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            if(!destinationText.equals("")) {
-                go();
-            }
+            //System.out.println("LABEL!!!!!");
+            endLabel.setText(SearchEngine.SearchPath(destination.getText().trim(),data.graph,data.kiosk).getLongName().trim());
+            destination.setText(endLabel.getText().trim());
+        }
+        if(!destination.getText().equals("")&&!startLabel.getText().equals("")) {
+            go();
         }
     }
 
@@ -494,41 +488,36 @@ public class NavigationPageController implements Initializable, Data{
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
                 data.kiosk = data.graph.getNodes().get(i);
-                System.out.println(data.kiosk.getLongName());
             }
         }
-        System.out.println("START SEARCH!!!!!!!!!!");
-        Node StartNode = data.kiosk;
-
-        System.out.println("END SEARCH!!!!!!!!!!!!");
-        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
+        Node EndNode = SearchEngine.SearchPath(End,data.graph,data.kiosk);
 
 
 
         switch (currentAlgo){
             case 1:
                 PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
-                this.path = pathFinder1.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder1.executeStrategy(data.kiosk,EndNode, Data.data.graph);
                 break;
             case 2:
                 PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
-                this.path = pathFinder2.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder2.executeStrategy(data.kiosk,EndNode, Data.data.graph);
                 break;
             case 3:
                 PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
-                this.path = pathFinder3.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder3.executeStrategy(data.kiosk,EndNode, Data.data.graph);
                 break;
             case 4:
                 PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
-                this.path = pathFinder4.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder4.executeStrategy(data.kiosk,EndNode, Data.data.graph);
                 break;
             case 5:
                 PathAlgorithm pathFinder5 = new PathAlgorithm(new BeamFirstSearch());
-                this.path = pathFinder5.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder5.executeStrategy(data.kiosk,EndNode, Data.data.graph);
                 break;
             case 6:
                 PathAlgorithm pathFinder6 = new PathAlgorithm(new BestFirstSearch());
-                this.path = pathFinder6.executeStrategy(StartNode,EndNode, Data.data.graph);
+                this.path = pathFinder6.executeStrategy(data.kiosk,EndNode, Data.data.graph);
                 break;
         }
 
@@ -543,6 +532,7 @@ public class NavigationPageController implements Initializable, Data{
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor);
     }
+
 
 
     @FXML

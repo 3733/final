@@ -102,7 +102,7 @@ public class Main extends Application implements Data{
         map = new Scene(Nav);
         //startMap();
         navigationPageController.setKiosk(data.kiosk);
-        navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
+        navigationPageController.setStart(navigationPageController.getKiosk().getLongName().trim());
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
         Parent Service = serviceLoader.load();

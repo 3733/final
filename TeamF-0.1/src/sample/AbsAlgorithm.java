@@ -29,24 +29,22 @@ public abstract class AbsAlgorithm implements IPathFinder {
         return Path;
     }
 
-
-    /**
-     * This is the Euclidean Distance function
-     * </p>
-     * @param   Start  starting point
-     * @param   End   desired location
-     * @return  Returns the direct distance between the two points.
-     */
-
+    
     public double HeuristicCost(Node Start, Node End){
-        return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))));
+
+        if(!Start.getFloor().equals(End.getFloor())){
+            return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))))+100;
+        }else {
+            return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))));
+        }
+
     }
 
 
     /**
      * This is the algorithm to find the path
      * <p>
-     *   Dijkstras is designed so that it finds the most cost efficient path.
+     *   Find path is designed so that it finds the most cost efficient path.
      * </p>
      * @param   Start  starting point
      * @param   End   desired location
