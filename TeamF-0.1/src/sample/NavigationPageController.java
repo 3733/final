@@ -503,7 +503,7 @@ public class NavigationPageController implements Initializable, Data{
         //System.out.println("START SEARCH!!!!!!!!!!");
         Node StartNode = data.kiosk;
 
-        //System.out.println("END SEARCH!!!!!!!!!!!!");
+        System.out.println("END SEARCH!!!!!!!!!!!!");
         Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
 
 
