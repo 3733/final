@@ -225,7 +225,7 @@
                         <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                     </tabs>
                 </JFXTabPane>
-                <JFXListView fx:id="searchList" layoutX="287.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="142.0" prefWidth="538.0" visible="false" />
+                <JFXListView fx:id="searchList" layoutX="20.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="266.0" visible="false" />
             <HBox layoutX="550.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
                <children>
                   <JFXButton fx:id="floorVisA" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
@@ -336,9 +336,9 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                       </JFXButton>
-                  <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                  <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
                      <graphic>
-                        <JFXHamburger fx:id="hamburger" prefHeight="16.0" prefWidth="20.0" styleClass=".white-hamburger" />
+                        <JFXHamburger fx:id="hamburger" prefHeight="16.0" prefWidth="20.0" />
                      </graphic>
                   </JFXButton>
                </children>

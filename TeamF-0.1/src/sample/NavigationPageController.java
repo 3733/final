@@ -261,17 +261,6 @@ public class NavigationPageController implements Initializable, Data{
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
-                adminBox.setVisible(true);
-                //loginButton.setText("Log Out");
-            } else {
-                adminBox.setVisible(false);
-                loginButton.setText("Log In");
-            }
-        });
-
-        //switching admin privs
-        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-            if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
 
                 createServButton.setVisible(true);
                 editMapButton.setVisible(true);
@@ -1137,29 +1126,6 @@ public class NavigationPageController implements Initializable, Data{
                 search.setVisible(true);
             }else{
                 mainMenu.setVisible(true);
-                destination.setVisible(false);
-                search.setVisible(false);
-            }
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    public void initAdmin(){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/UI/AdminDrawer.fxml"));
-            VBox adminBox = loader.load();
-            adminMenu.setSidePane(adminBox);
-            if(adminMenu.visibleProperty().get()){
-                adminMenu.setVisible(false);
-                destination.setVisible(true);
-                search.setVisible(true);
-            }else{
-                adminMenu.setVisible(true);
                 destination.setVisible(false);
                 search.setVisible(false);
             }

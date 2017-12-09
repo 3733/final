@@ -65,7 +65,7 @@
     -fx-border-color: #1a479a;
 }
 
-.white-hamburger > StackPane{
+.jfx-hamburger-icon StackPane {
     -fx-background-color: white;
 }
 
