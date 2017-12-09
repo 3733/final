@@ -39,6 +39,7 @@ public abstract class AbsAlgorithm implements IPathFinder {
      */
 
     public double HeuristicCost(Node Start, Node End){
+
         if(!Start.getFloor().equals(End.getFloor())){
             return (Math.sqrt((Math.abs(Start.getxCoordinate() - End.getxCoordinate())*Math.abs(Start.getxCoordinate() - End.getxCoordinate()) + Math.abs(Start.getyCoordinate() - End.getyCoordinate())*Math.abs(Start.getyCoordinate() - End.getyCoordinate()))))+100;
         }else {
@@ -51,7 +52,7 @@ public abstract class AbsAlgorithm implements IPathFinder {
     /**
      * This is the algorithm to find the path
      * <p>
-     *   Dijkstras is designed so that it finds the most cost efficient path.
+     *   Find path is designed so that it finds the most cost efficient path.
      * </p>
      * @param   Start  starting point
      * @param   End   desired location
