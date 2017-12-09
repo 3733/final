@@ -872,16 +872,16 @@ public class NavigationPageController implements Initializable, Data{
                     selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.thirdFloorNodes);
                 }
 
-                Data.data.gc.strokeOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
-                Data.data.gc.fillOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
-                System.out.println("This is the selected node: " + selectedNode.getNodeID());
-                data.kiosk = data.graph.getNodes().get(0);
-                try {
-                    findPath(data.kiosk.getLongName(), selectedNode.getLongName());
-                } catch ( IOException e) {
-
-                } catch (InterruptedException e){
-
+                if(event.getClickCount() == 2) {
+                    Data.data.gc.strokeOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
+                    Data.data.gc.fillOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
+                    System.out.println("This is the selected node: " + selectedNode.getNodeID());
+                    data.kiosk = data.graph.getNodes().get(0);
+                    try {
+                        findPath(data.kiosk.getLongName(), selectedNode.getLongName());
+                    } catch (IOException e) {
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
         });
