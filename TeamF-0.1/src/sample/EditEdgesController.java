@@ -25,6 +25,10 @@ public class EditEdgesController {
     private JFXButton removeEdgebtn;
     @FXML
     private JFXButton close;
+    @FXML
+    private JFXButton clickStartNode;
+    @FXML
+    private JFXButton clickEndNode;
 
     private Main mainController;
 
@@ -37,7 +41,9 @@ public class EditEdgesController {
         edgeIDField.clear();
         startNodeField.clear();
         endNodeField.clear();
+        MapEditPageController.updateEdges();
         Main.closePopUp(addEdgebtn);
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
     }
     public void editEdgeButton(){
         if(!edgeIDField.getText().equals(null) && testEmbeddedDB.getEdge(edgeIDField.getText())!=null) {
@@ -50,7 +56,9 @@ public class EditEdgesController {
             edgeIDField.clear();
             startNodeField.clear();
             endNodeField.clear();
+            MapEditPageController.updateEdges();
             Main.closePopUp(editEdgebtn);
+            Data.data.graph = testEmbeddedDB.dbBuildMap();
         }
     }
     public void removeEdgeButton(){
@@ -58,11 +66,40 @@ public class EditEdgesController {
         edgeIDField.clear();
         startNodeField.clear();
         endNodeField.clear();
+        MapEditPageController.updateEdges();
         Main.closePopUp(removeEdgebtn);
+        Data.data.graph = testEmbeddedDB.dbBuildMap();
     }
 
     public void openMapEditing() {
         Main.mapEditScreen();
         Main.closePopUp(close);
+    }
+
+    @FXML
+    public void selectStartNode() {
+        Main.mapEditScreen();
+    }
+
+    @FXML
+    public void selectEndNode() {
+        Main.mapEditScreen();
+    }
+
+    @FXML
+    public void setScreenStart(Node start){
+        startNodeField.setText(start.getNodeID());
+    }
+
+    @FXML
+    public void setScreenEnd(Node end){
+        endNodeField.setText(end.getNodeID());
+    }
+
+    @FXML
+    public void clear() {
+        edgeIDField.clear();
+        startNodeField.clear();
+        endNodeField.clear();
     }
 }

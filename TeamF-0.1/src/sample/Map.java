@@ -115,4 +115,8 @@ public class Map {
         }
     }
 
+    public double MouseNodeDist(double x, double y,Node End){
+        return (Math.sqrt((Math.abs(x - End.getxCoordinate())*Math.abs(x - End.getxCoordinate()) + Math.abs(y - End.getyCoordinate())*Math.abs(y - End.getyCoordinate()))));
+    }
+
 }

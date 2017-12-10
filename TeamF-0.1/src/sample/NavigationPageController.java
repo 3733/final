@@ -33,6 +33,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -112,31 +113,35 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private Label startLabel, endLabel;
 
+    @FXML
+    private JFXButton helpButton, aboutButton;
+
     // Email UI Components
     @FXML
     private JFXTextField email;
 
     @FXML
     private AnchorPane mainAnchor;
+
     @FXML
     private VBox adminBox;
+
     @FXML
     private JFXButton loginButton;
+
     @FXML
     private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
-
 
     @FXML
     private StackPane stackPane;
 
     //other components
+    @FXML
     private Main mainController;
 
     private Vector<Node> path = new Vector<Node>();
 
     private Map CurMap;
-
-    private Node Kiosk;
 
     private String filePath = "/sample/UI/Icons/";
 
@@ -277,12 +282,20 @@ public class NavigationPageController implements Initializable, Data{
         mainController = in;
     }
 
+    public JFXListView getDirectionSteps(){
+        return this.directionSteps;
+    }
+
+    public Vector<String> getFloorsVisited(){
+        return  this.floorsVisited;
+    }
+
     public int getCurrentAlgo(){
         return this.currentAlgo;
     }
 
     public void setKiosk(Node k){
-        this.Kiosk = k;
+        data.kiosk = k;
     }
 
     public void setSearch(String s){
@@ -292,6 +305,18 @@ public class NavigationPageController implements Initializable, Data{
     public void autoClose(){
         searchList.setVisible(false);
     }
+
+    public JFXTextField getDestination(){return this.destination;}
+
+    public Label getStartLabel(){return this.startLabel;}
+
+    public Label getEndLabel(){return this.endLabel;}
+
+    public JFXRadioButton getRadioStart(){return this.start;}
+
+    public void setDestination(String s){destination.setText(s);}
+
+    public JFXRadioButton getRadioEnd(){return this.end;}
 
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
@@ -323,7 +348,7 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public Node getKiosk(){
-        return this.Kiosk;
+        return data.kiosk;
     }
 
     //setting start and end nodes
@@ -338,11 +363,21 @@ public class NavigationPageController implements Initializable, Data{
         lowerOneArrow.setVisible(false);
         lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+
+            System.out.println("LABEL!!!!!");
+            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
+                go();
+            }
         }
         else{
-            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,Kiosk).getLongName().trim());
+
+            System.out.println("LABEL!!!!!");
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+
+            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
+            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             if(!destinationText.equals("")) {
                 go();
             }
@@ -358,6 +393,10 @@ public class NavigationPageController implements Initializable, Data{
     public void setMap(Map m) throws IOException{
         this.CurMap = m;
         Data.data.currentMap = "1";
+    }
+
+    public Map getMap(){
+        return this.CurMap;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -451,9 +490,20 @@ public class NavigationPageController implements Initializable, Data{
 
     public void findPath(String Start, String End) throws IOException, InterruptedException {
         //Returns
-        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,Kiosk);
 
-        Node StartNode = SearchEngine.SearchPath(Start,Data.data.graph,Kiosk);
+        for(int i = 0;i<data.graph.getNodes().size();i++){
+            if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
+                data.kiosk = data.graph.getNodes().get(i);
+                System.out.println(data.kiosk.getLongName());
+            }
+        }
+        System.out.println("START SEARCH!!!!!!!!!!");
+        Node StartNode = data.kiosk;
+
+        System.out.println("END SEARCH!!!!!!!!!!!!");
+        Node EndNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
+
+
 
         switch (currentAlgo){
             case 1:
@@ -722,9 +772,7 @@ public class NavigationPageController implements Initializable, Data{
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        double divisionCst = 3.87;
-                        int offset = 2;
-                        Data.data.gc.strokeLine(node.getxCoordinate() / divisionCst + offset, node.getyCoordinate() / divisionCst , node2.getxCoordinate() / divisionCst + offset, node2.getyCoordinate() / divisionCst);
+                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
                     }
                 }
             }
@@ -941,6 +989,13 @@ public class NavigationPageController implements Initializable, Data{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
         Main.startScreen();
+        loginButton.setOnAction((event) -> {
+            try {
+                login();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         clearFields();
         clear();
     }
@@ -960,6 +1015,13 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void editUsers(){Main.editUsersScreen();}
+
+    @FXML
+    public void about(){Main.aboutWindow(aboutButton);}
+
+    @FXML
+    public void chat(){
+    }
 
     @FXML
     public void setAlgorithm(){}
@@ -1018,6 +1080,17 @@ public class NavigationPageController implements Initializable, Data{
             }
         });
 
+    }
+
+    public void reverseNodes() throws IOException, InterruptedException {
+        Vector<Node> currentPath = this.path;
+        Vector<Node> reversePath = new Vector<Node>();
+        int z = 0;
+        for(int i = currentPath.size(); i > 0; i--){
+            reversePath.add(currentPath.get(i-1));
+        }
+        this.path = reversePath;
+        MultiFloorPathDrawing(this.path);
     }
 
 }

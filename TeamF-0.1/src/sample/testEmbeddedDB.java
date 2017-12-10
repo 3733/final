@@ -5,6 +5,7 @@ import com.opencsv.CSVWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.HashMap;
@@ -114,6 +115,8 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.createAssignmentsTable();
 
+            testEmbeddedDB.createFoodTable();
+
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
                     14411, "the Bourgoisies head");
@@ -219,6 +222,87 @@ public class testEmbeddedDB {
 
         } catch (Exception e){
             System.out.println("dropAssignments error: " + e.getMessage());
+        }
+    }
+
+    public static void createFoodTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("CREATE TABLE FOOD (" +
+                    "foodName char(75) PRIMARY KEY ," +
+                    "price INTEGER," +
+                    "photourl CHAR(40))");
+
+        } catch (Exception e){
+            System.out.println("createFoodTable Error: " + e.getMessage());
+        }
+
+    }
+
+    public static void dropFoodTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DROP TABLE FOOD");
+
+
+        } catch (Exception e){
+            System.out.println("dropFoodTable error: " + e.getMessage());
+        }
+    }
+
+    public static void addFood(String foodName, int price, String path){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("INSERT INTO FOOD(foodName, price, photourl) VALUES (" +
+                    "'" + foodName + "', " + price + ", '" + path + "')");
+
+        } catch (Exception e){
+            System.out.println("addFood error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodName(String food, String newfood){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set foodName = '" + newfood + "'");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodPrice(String food, int price){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set price = " + price + "");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodURL(String food, String newURL){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set photourl = '" + newURL + "'");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
         }
     }
 
@@ -1404,8 +1488,8 @@ public class testEmbeddedDB {
         return names;
     }
 
-    public static HashMap<String, Node> getNodesByFloor(int floor){
-        HashMap<String, Node> nodesByFloor = new HashMap<>();
+    public static Vector<Node> getNodesByFloor(int floor){
+        Vector<Node> nodesByFloor = new Vector<Node>();
         Node n;
 
         String dbFloor = testEmbeddedDB.floorIntToString(floor);
@@ -1434,7 +1518,7 @@ public class testEmbeddedDB {
 
                 n = new Node(nodeID, xcord, ycoord, tableFloor, building, nodetype, longname, shortname, team);
 
-                nodesByFloor.put(nodeID, n);
+                nodesByFloor.add(n);
             }
 
 
@@ -1444,6 +1528,53 @@ public class testEmbeddedDB {
 
 
         return nodesByFloor;
+    }
+
+    public static Vector<Edge> getEdgesByFloor(int floor){
+
+        Vector<Node> nodesByFloor = getNodesByFloor(floor);
+
+        HashMap<String, Node> nodeMap = new HashMap<>();
+
+
+
+        for(Node n : nodesByFloor){
+            nodeMap.put(n.getNodeID(), n);
+        }
+
+
+        System.out.println("num Nodes: " + nodeMap.size());
+
+        Vector<Edge> edgesByFloor = new Vector<>();
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
+
+            while(r.next()){
+                String edgeID = r.getString("edgeid").trim();
+                String startNode = r.getString("startnode").trim();
+                String endNode = r.getString("endnode").trim();
+
+                /*System.out.println("start: " + startNode);
+                System.out.println("end: " + endNode);
+                System.out.println("edgeid: " + edgeID);*/
+
+                if(nodeMap.containsKey(startNode) && nodeMap.containsKey(endNode)){
+                    Edge e = new Edge(edgeID, nodeMap.get(startNode), nodeMap.get(endNode));
+                    edgesByFloor.add(e);
+                }
+            }
+
+        } catch (Exception e){
+            System.out.println("getNodesByFloor error: " + e.getMessage());
+        }
+
+        System.out.println(" DB Size: "+edgesByFloor.size());
+        return edgesByFloor;
     }
 
     private static String floorIntToString(int i){
@@ -1467,4 +1598,37 @@ public class testEmbeddedDB {
         }
 
     }
+
+    public static void addStaffTestData(){
+        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
+        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
+        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
+        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
+        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris", "van Rossum", "Admin", "florisvanrossum@gmail.com");
+        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke", "Ludington", "Admin", "Pmwws1@gmail.com");
+        Staff Will = new Staff("William", "Godsey", 4, "William", "Godsey", "Admin", "willgodsey@gmail.com");
+        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin", "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
+        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan", "Wang", "Admin", "WillisWang514@gmail.com");
+        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion", "Patias", "Admin", "Parmenion.Patias@gmail.com");
+        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie", "Raca", "Admin", "stephanie.r.racca@gmail.com");
+        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos", "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
+        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew", "Schueler", "Admin", "andrewtheschueler@gmail.com");
+        addStaff(Gary);
+        addStaff(Eirin);
+        addStaff(Talal);
+        addStaff(Griffin);
+        addStaff(Floris);
+        addStaff(Luke);
+        addStaff(Will);
+        addStaff(Ben);
+        addStaff(Willis);
+        addStaff(Parm);
+        addStaff(Steph);
+        addStaff(Nik);
+        addStaff(Andrew);//*/
+
+    }
+
+
+
 }

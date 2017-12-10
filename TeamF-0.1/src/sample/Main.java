@@ -3,6 +3,7 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.util.Map.Entry;
 
 
@@ -46,6 +49,7 @@ public class Main extends Application implements Data{
     private static Scene genError;
     private static Scene editUserWin;
     private static Scene helpRequest;
+    private static Scene aboutWin;
 
 
 
@@ -66,7 +70,12 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
-        data.kiosk = data.graph.getNodes().get(0);
+        for(int i = 0;i<data.graph.getNodes().size();i++){
+            if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
+                data.kiosk = data.graph.getNodes().get(i);
+            }
+        }
+
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
         startPageController = startLoader.getController();
@@ -137,11 +146,16 @@ public class Main extends Application implements Data{
         genErrorController.setMainController(this);
         genError = new Scene(Error);
 
+        FXMLLoader aboutLoader = new FXMLLoader(getClass().getResource("UI/AboutPage.fxml"));
+        Parent about = aboutLoader.load();
+        aboutWin = new Scene(about);
+
         FXMLLoader editUserWinLoader = new FXMLLoader(getClass().getResource("UI/EditUserWindow.fxml"));
         Parent userWin = editUserWinLoader.load();
         editUserWindowController = editUserWinLoader.getController();
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
+
 
         stage = primaryStage;
         popUp = new Stage();
@@ -166,6 +180,7 @@ public class Main extends Application implements Data{
         //genError = new Scene(FXMLLoader.load(getClass().getResource("UI/GenErrorScreen.fxml")), 600,178);
         genError.getStylesheets().add("sample/UI/style.css");
         editUserWin.getStylesheets().add("sample/UI/style.css");
+        aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
 
@@ -233,6 +248,58 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void nodeEditScreenClick(Node selected, JFXButton btn1) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+
+        editNodesController.clear();
+        editNodesController.setScreen(selected);
+
+        double windowX = 616;
+        double windowY = 440;
+        double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        double x = MouseInfo.getPointerInfo().getLocation().x;
+        double y = MouseInfo.getPointerInfo().getLocation().y;
+
+        if(( x + windowX) > screenWidth) {
+            popUp.setX(screenWidth - windowX);
+        } else {
+            popUp.setX(x);
+        }
+        popUp.setY(y);
+        popUp.showAndWait();
+    }
+
+    public static void nodeAddEditScreenClick(JFXButton btn1, double x, double y) {
+        Stage popUp = new Stage();
+        popUp.setScene(nodeEdit);
+        popUp.setTitle("Edit Node");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+
+        editNodesController.clear();
+        editNodesController.setScreenAdd(x,y);
+
+        double windowX = 616;
+        double windowY = 440;
+        double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        double xClick = MouseInfo.getPointerInfo().getLocation().x;
+        double yClick = MouseInfo.getPointerInfo().getLocation().y;
+
+        if(( xClick + windowX) > screenWidth) {
+            popUp.setX(screenWidth - windowX);
+        } else {
+            popUp.setX(xClick);
+        }
+        popUp.setY(yClick);
+        popUp.showAndWait();
+    }
+
     public static void edgeEditScreen(JFXButton btn1){
         Stage popUp = new Stage();
         popUp.setScene(edgeEdit);
@@ -242,6 +309,25 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
+    public static void edgeStartEditScreen(JFXButton btn1, Node startNode){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editEdgesController.setScreenStart(startNode);
+        popUp.showAndWait();
+    }
+
+    public static void edgeEndEditScreen(JFXButton btn1, Node endNode){
+        Stage popUp = new Stage();
+        popUp.setScene(edgeEdit);
+        popUp.setTitle("Edit Edge");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        editEdgesController.setScreenEnd(endNode);
+        popUp.showAndWait();
+    }
 
     public static void setDestination(String place){
         destination = place;
@@ -271,9 +357,18 @@ public class Main extends Application implements Data{
 
     public static void editUserWindow(JFXButton btn1){
         Stage popUp = new Stage();
+        popUp.setScene(aboutWin);
+        popUp.setTitle("About Team F");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
+    }
+
+    public static void aboutWindow(JFXButton btn1){
+        Stage popUp = new Stage();
         editUserWindowController.addingUsers();
-        popUp.setScene(editUserWin);
-        popUp.setTitle("Add User");
+        popUp.setScene(aboutWin);
+        popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();
@@ -304,7 +399,7 @@ public class Main extends Application implements Data{
     }
     public static void main(String[] args) throws IOException{
 
-        //testEmbeddedDB db = new testEmbeddedDB();
+        testEmbeddedDB db = new testEmbeddedDB();
         /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
 
         for(String s : o){
@@ -323,41 +418,16 @@ public class Main extends Application implements Data{
         }*/
 
 
-        launch(args);
+
 
 //        testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-        /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
-        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
-        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
-        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
-        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris", "van Rossum", "Admin", "florisvanrossum@gmail.com");
-        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke", "Ludington", "Admin", "Pmwws1@gmail.com");
-        Staff Will = new Staff("William", "Godsey", 4, "William", "Godsey", "Admin", "willgodsey@gmail.com");
-        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin", "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
-        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan", "Wang", "Admin", "WillisWang514@gmail.com");
-        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion", "Patias", "Admin", "Parmenion.Patias@gmail.com");
-        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie", "Raca", "Admin", "stephanie.r.racca@gmail.com");
-        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos", "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
-        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew", "Schueler", "Admin", "andrewtheschueler@gmail.com");
-        testEmbeddedDB.addStaff(Gary);
-        testEmbeddedDB.addStaff(Eirin);
-        testEmbeddedDB.addStaff(Talal);
-        testEmbeddedDB.addStaff(Griffin);
-        testEmbeddedDB.addStaff(Floris);
-        testEmbeddedDB.addStaff(Luke);
-        testEmbeddedDB.addStaff(Will);
-        testEmbeddedDB.addStaff(Ben);
-        testEmbeddedDB.addStaff(Willis);
-        testEmbeddedDB.addStaff(Parm);
-        testEmbeddedDB.addStaff(Steph);
-        testEmbeddedDB.addStaff(Nik);
-        testEmbeddedDB.addStaff(Andrew);//*/
+        //testEmbeddedDB.addStaffTestData();
 
-
+        //launch(args);
 
         //controller.drawDirections(Vec);
     }
