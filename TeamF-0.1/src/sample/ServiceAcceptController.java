@@ -197,31 +197,14 @@ public class ServiceAcceptController implements Initializable{
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
-        int tableSize = tableView.getItems().size();
-
-        for ( int z = 0; z<tableSize; z++) {
-            tableView.getItems().clear();
-        }
-        for ( int u = 0; u<finishedTableView.getItems().size(); u++) {
-            finishedTableView.getItems().clear();
-        }
-
         requestObserve.clear();
         finishedRequestObserve.clear();
 
         //for current requests table
         for (int i = 0; i < arrayOfRequestsFromDatabase.size(); i++) {   //searches through the list from the database
-    /*        boolean alreadyInTable = false;
-            for (int j = 0; j < requestObserve.size(); j++) {        //searches through the list in the table
-                if ((arrayOfRequestsFromDatabase.get(i)).getServiceID() == (requestObserve.get(j)).getServiceID()) {  //if the service is already in the table
-                    alreadyInTable = true;
-                    if (((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim().equals("accepted"))   //updates services in table with any possible changes
-                        requestObserve.set(j, arrayOfRequestsFromDatabase.get(i));
-                    if (((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim().equals("finished"))
-                        requestObserve.remove(j);
-                }
-            }*/
-            if ( /*!alreadyInTable &&*/ !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) && ((getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
+
+            if ( !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) &&
+                    ((getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
                     (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||

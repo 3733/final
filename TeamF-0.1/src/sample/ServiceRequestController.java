@@ -394,7 +394,7 @@ public class ServiceRequestController implements Initializable, Data {
         transportID.setText(Integer.toString(ID));
 
         transportMenu.setItems(FXCollections.observableArrayList(
-                "Wheelchair", "Stretcher"));
+                "Wheelchair", "Stretcher", "Helicopter"));
     }
 
     private Node transportNode;
