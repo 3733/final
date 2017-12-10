@@ -81,6 +81,9 @@ public class NavigationPageController implements Initializable, Data{
     private JFXTabPane tabPane;
 
     @FXML
+    private AnchorPane buttonHolder;
+
+    @FXML
     private VBox labelBox;
 
     @FXML
@@ -157,7 +160,7 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<String> floorsVisited = new Vector<>();
 
-    private Vector<AnchorPane> buttonPanes = new Vector<>();
+    private Vector<ImageView> buttonPanes = new Vector<>();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -416,6 +419,7 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
+        clearButtons();
         drawButtons(data.buttonNodes, "L1");
         Data.data.currentMap = "L1";
     }
@@ -427,6 +431,7 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
+        clearButtons();
         drawButtons(data.buttonNodes, "L2");
         Data.data.currentMap = "L2";
     }
@@ -439,6 +444,7 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
+        clearButtons();
         drawButtons(data.buttonNodes, "1");
         Data.data.currentMap = "1";
     }
@@ -451,6 +457,7 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
+        clearButtons();
         drawButtons(data.buttonNodes, "2");
         Data.data.currentMap = "2";
     }
@@ -464,6 +471,7 @@ public class NavigationPageController implements Initializable, Data{
         }
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
+        clearButtons();
         drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
     }
@@ -475,6 +483,7 @@ public class NavigationPageController implements Initializable, Data{
         Data.data.gc.clearRect(0,0,1000,1000);
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
+        clearButtons();
         drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
     }
@@ -884,30 +893,26 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void createFloorChangeButton(double canvasX, double canvasY, String floorTo) {
-        AnchorPane floorChange = new AnchorPane();
+        ImageView floorIcon = new ImageView();
+        floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/Elevator2Up.png")));
         System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
-        floorChange.setPrefSize(20,20);
-        floorChange.setMaxSize(20,20);
-        floorChange.setLayoutX(canvasX);
-        floorChange.setLayoutX(canvasY);
-        floorChange.setStyle("-fx-background-color: #ff2123");
-        floorChange.toFront();
-        floorChange.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        floorIcon.setFitHeight(20);
+        floorIcon.setFitWidth(20);
+        floorIcon.setX(canvasX);
+        floorIcon.setY(canvasY);
+        floorIcon.toFront();
+        floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("TRYING TO CHANGE THE MAP TO: " + floorTo);
                 setMap(floorTo);
             }
         });
-        stackPane.getChildren().add(floorChange);
-        buttonPanes.add(floorChange);
+        buttonHolder.getChildren().add(floorIcon);
     }
 
     public void clearButtons() {
-        for(AnchorPane pane: buttonPanes){
-            stackPane.getChildren().removeIf();
-            buttonPanes.remove(pane);
-        }
+        buttonHolder.getChildren().clear();
     }
 
     @FXML
@@ -963,7 +968,7 @@ public class NavigationPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-        pathCanvas.setOnMousePressed(new EventHandler<MouseEvent>() {
+        buttonHolder.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
@@ -1125,6 +1130,7 @@ public class NavigationPageController implements Initializable, Data{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
+        clearButtons();
     }
 
     @FXML
