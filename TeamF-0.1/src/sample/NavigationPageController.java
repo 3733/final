@@ -69,7 +69,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
-    private JFXListView directionSteps;
+    private JFXListView<HBox> directionSteps;
     @FXML
     private JFXListView threeList, twoList, oneList, lowerTwoList, lowerOneList, groundList;
     @FXML
@@ -289,7 +289,7 @@ public class NavigationPageController implements Initializable, Data{
         mainController = in;
     }
 
-    public JFXListView getDirectionSteps(){
+    public JFXListView<HBox> getDirectionSteps(){
         return this.directionSteps;
     }
 
@@ -416,6 +416,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
+        hierarchicalText("L1");
     }
 
     @FXML
@@ -426,6 +427,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
+        hierarchicalText("L2");
     }
 
     @FXML
@@ -436,6 +438,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
+        hierarchicalText("1");
     }
 
     @FXML
@@ -448,6 +451,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
+        hierarchicalText("2");
     }
 
     @FXML
@@ -460,6 +464,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
+        hierarchicalText("3");
     }
 
     @FXML
@@ -470,6 +475,7 @@ public class NavigationPageController implements Initializable, Data{
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
+        hierarchicalText("G");
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -607,7 +613,9 @@ public class NavigationPageController implements Initializable, Data{
         a = in.get(0);
         b = in.get(1);
         out = out.concat("Start at " + a.getLongName().trim().split("Node")[0].split("Floor")[0]+"<br>");
+        floorSequence(a.getFloor().trim());
         out = out.concat("Go towards " + b.getLongName().trim().split("Node")[0].split("Floor")[0]+"<br>");
+        floorSequence(b.getFloor().trim());
 
         for(int i = 2; i < in.size(); i++){
             a = in.get(i-2);
@@ -630,16 +638,20 @@ public class NavigationPageController implements Initializable, Data{
             if(!b.getFloor().equals(c.getFloor()) && b.getNodeType().equals("ELEV")){
                 if (count == 1){
                     out = out.concat("Go straight to " + b.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                    floorSequence(b.getFloor().trim());
                     count --;
                 }
                 out = out.concat("Take the elevator to floor " + c.getFloor().trim() + "<br>");
+                floorSequence(c.getFloor().trim());
             }
             else if(!b.getFloor().equals(c.getFloor()) && b.getNodeType().equals("STAI")){
                 if (count == 1){
                     out = out.concat("Go straight to " + b.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                    floorSequence(b.getFloor().trim());
                     count --;
                 }
                 out = out.concat("Take the stairs to floor " + c.getFloor().trim() + "<br>");
+                floorSequence(c.getFloor().trim());
             }
             else if(turn.equals("straight") && count == 0) {
                 count ++;
@@ -648,9 +660,11 @@ public class NavigationPageController implements Initializable, Data{
                 if (count == 1){
 
                     out = out.concat("Go straight to " + b.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                    floorSequence(b.getFloor().trim());
                     count --;
                 }
                 out = out.concat("Turn " + turn + " towards " + c.getLongName().trim().split("Node")[0].split("Floor")[0] + "<br>");
+                floorSequence(c.getFloor().trim());
             }
         }
         return out;
@@ -698,6 +712,11 @@ public class NavigationPageController implements Initializable, Data{
         return images;
     }
 
+    static LinkedList<String> sequence = new LinkedList<String>();
+    public static void floorSequence(String floor){
+        sequence.add(floor);
+    }
+
     public Vector<Vector<Node>> separator(Vector<Node> path){
         Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
         for(int i = 0; i <6; i++){
@@ -735,15 +754,27 @@ public class NavigationPageController implements Initializable, Data{
         return paths;
     }
 
+    public void hierarchicalText(String floor){
+        for(int z = 0; z < directionSteps.getItems().size(); z++){
+            if(sequence.get(z).equals(floor)){
+                directionSteps.getItems().get(z).setStyle("-fx-background-color: #d7eef2");
+            }
+            else{
+                directionSteps.getItems().get(z).setStyle("");
+            }
+        }
+    }
+
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        sequence.clear();
         ObservableList<HBox> populateSteps = FXCollections.observableArrayList();
         //edit later
         String directions = directions(path);
         String[] directionParts = directions.split("<br>");
+
 
         LinkedList<Image> arrows = directionArrows(directionParts);
         ObservableList<javafx.scene.image.ImageView> images = FXCollections.observableArrayList();
@@ -761,7 +792,11 @@ public class NavigationPageController implements Initializable, Data{
             Label label = new Label();
             label.setText(directionParts[i]);
 
-            entry.getChildren().addAll(images.get(i), label);
+            Label floorLabel = new Label();
+            floorLabel.setText(sequence.get(i));
+            floorLabel.setVisible(false);
+
+            entry.getChildren().addAll(images.get(i), label, floorLabel);
             entry.setAlignment(Pos.CENTER_LEFT);
 
             populateSteps.add(entry);
@@ -771,16 +806,20 @@ public class NavigationPageController implements Initializable, Data{
         Label label = new Label();
         label.setText(end);
 
+        floorSequence(sequence.get(sequence.size()-1));
+        Label floorLabel = new Label();
+        floorLabel.setText(sequence.get(sequence.size()-1));
+        floorLabel.setVisible(false);
+
         Image endIMG = new Image(getClass().getResourceAsStream(filePath + "Finish.png"));
         javafx.scene.image.ImageView finish = new javafx.scene.image.ImageView();
         finish.setImage(endIMG);
         finish.setFitHeight(25);
         finish.setFitWidth(25);
 
-        entry.getChildren().addAll(finish, label);
+        entry.getChildren().addAll(finish, label, floorLabel);
         populateSteps.add(entry);
         directionSteps.setItems(populateSteps);
-
 
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         Vector<Vector<Node>> paths = separator(path);
