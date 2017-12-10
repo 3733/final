@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.Parent;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.Map.Entry;
 
 
@@ -77,6 +79,9 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
+
+        javafx.geometry.Rectangle2D ScreenBound = Screen.getPrimary().getVisualBounds();
+
 
 
         for(int i = 0;i<data.graph.getNodes().size();i++){
@@ -205,8 +210,20 @@ public class Main extends Application implements Data{
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(map);
-        stage.setResizable(true);
-        stage.setFullScreen(true);
+        //stage.setResizable(true);
+        //stage.setFullScreen(true);
+
+        //stuff Benjamin Added
+        /*stage.setX(ScreenBound.getMinX());
+        stage.setY(ScreenBound.getMinY());
+        stage.setWidth(ScreenBound.getWidth());
+        stage.setHeight(ScreenBound.getHeight());//*/
+
+        /*stage.setX(100);
+        stage.setY(300);
+        stage.setWidth(55);
+        stage.setHeight(250);//*/
+
 
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
