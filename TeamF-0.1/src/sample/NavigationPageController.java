@@ -414,6 +414,7 @@ public class NavigationPageController implements Initializable, Data{
     // Change Floor Methods
     @FXML
     public void changeFloorL1() {
+        System.out.println("Drawn floor L1");
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,x,y);
@@ -426,6 +427,7 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void changeFloorL2() {
+        System.out.println("Drawn floor L2");
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,x,y);
@@ -464,6 +466,7 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void changeFloor3() {
+        System.out.println("Drawn floor 3");
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
         if(Data.data.gc != null) {
@@ -478,6 +481,7 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void changeFloorG() {
+        System.out.println("Drawn floor G");
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
         Data.data.gc.clearRect(0,0,1000,1000);
@@ -523,9 +527,12 @@ public class NavigationPageController implements Initializable, Data{
         sendLabel.setVisible(true);
         email.setVisible(true);
         sendButton.setVisible(true);
+
+        //setMap("1");
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
-        setMap(lastFloor);
+        System.out.println("This is the last floor: " + lastFloor);
+        setMap(lastFloor.trim());
     }
 
 
@@ -788,7 +795,6 @@ public class NavigationPageController implements Initializable, Data{
                 }
             }
         }
-        setMap("1");
     }
 
     public void setArrows(Vector<String> floorsNeeded){
@@ -819,19 +825,24 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public void setMap(String map) {
-        map.replaceAll("\\s+","");
+        if(tabPane.getSelectionModel().isSelected(1)){
+            tabPane.getSelectionModel().select(2);
+        } else {
+            tabPane.getSelectionModel().select(1);
+        }
+
         if(map.equals("L2")) {
-            changeFloorL2();
+            tabPane.getSelectionModel().select(5);
         } else if(map.equals("L1")) {
-            changeFloorL1();
+            tabPane.getSelectionModel().select(4);
         }else if(map.equals("G")) {
-            changeFloorG();
+            tabPane.getSelectionModel().select(3);
         } else if(map.equals("01") || map.equals("1")) {
-            changeFloor1();
+            tabPane.getSelectionModel().select(2);
         } else if(map.equals("02") || map.equals("2")) {
-            changeFloor2();
+            tabPane.getSelectionModel().select(1);
         } else if(map.equals("03") || map.equals("3")){
-            changeFloor3();
+            tabPane.getSelectionModel().select(0);
         }
     }
     // Purpose: Draw a path of nodes on the map
@@ -898,14 +909,14 @@ public class NavigationPageController implements Initializable, Data{
         System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
         floorIcon.setFitHeight(20);
         floorIcon.setFitWidth(20);
-        floorIcon.setX(canvasX);
-        floorIcon.setY(canvasY);
+        floorIcon.setX(canvasX - 10);
+        floorIcon.setY(canvasY - 10);
         floorIcon.toFront();
         floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("TRYING TO CHANGE THE MAP TO: " + floorTo);
-                setMap(floorTo);
+                setMap(floorTo.trim());
             }
         });
         buttonHolder.getChildren().add(floorIcon);
