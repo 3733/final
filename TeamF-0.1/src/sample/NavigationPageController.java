@@ -197,6 +197,9 @@ public class NavigationPageController implements Initializable, Data{
         menuButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) ->{
             transition.setRate(transition.getRate() * -1);
             mainMenu.toggle();
+            if(mainMenu.isShown()&&!mainMenu.visibleProperty().getValue()){
+                mainMenu.setVisible(true);
+            }
             transition.play();
 
         });
@@ -368,7 +371,6 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         if (points.getSelectedToggle() == start) {
 
-            System.out.println("LABEL!!!!!");
             startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
             if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
                 go();

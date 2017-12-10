@@ -205,63 +205,6 @@ public class MenuDrawerController implements Initializable{
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Floor Methods
-    @FXML
-    public void changeFloorL1() {
-        double y = pathCanvas.getHeight();
-        double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
-        map.setImage(Data.data.L1Floor);
-        Data.data.currentMap = "L1";
-    }
-
-    @FXML
-    public void changeFloorL2() {
-        double y = pathCanvas.getHeight();
-        double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
-        map.setImage(Data.data.L2Floor);
-        Data.data.currentMap = "L2";
-    }
-
-    @FXML
-    public void changeFloor1() {
-        double y = pathCanvas.getHeight();
-        double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
-        map.setImage(Data.data.firstFloor);
-        Data.data.currentMap = "1";
-    }
-
-    @FXML
-    public void changeFloor2() {
-        double y = pathCanvas.getHeight();
-        double x = pathCanvas.getWidth();
-        if(Data.data.gc != null){
-            Data.data.gc.clearRect(0, 0, x, y);
-        }
-        map.setImage(Data.data.secondFloor);
-        Data.data.currentMap = "2";
-    }
-
-    @FXML
-    public void changeFloor3() {
-        double y = pathCanvas.getHeight();
-        double x = pathCanvas.getWidth();
-        if(Data.data.gc != null) {
-            Data.data.gc.clearRect(0, 0, x, y);
-        }
-        map.setImage(Data.data.thirdFloor);
-        Data.data.currentMap = "3";
-    }
-
-    @FXML
-    public void changeFloorG() {
-        double y = pathCanvas.getHeight();
-        double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,1000,1000);
-        map.setImage(Data.data.GFloor);
-        Data.data.currentMap = "G";
-    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Screen Functions
@@ -306,11 +249,6 @@ public class MenuDrawerController implements Initializable{
         }
     }
 
-    @FXML
-    public void emergencyButton() throws IOException, InterruptedException{
-        destination.setText("Exit");
-        settingFields();
-    }
 
     @FXML
     public void edit() throws IOException, InterruptedException{
@@ -326,6 +264,7 @@ public class MenuDrawerController implements Initializable{
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
         emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
     }
+
 
 
 }
