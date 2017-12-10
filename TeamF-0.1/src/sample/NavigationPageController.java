@@ -279,6 +279,7 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
 
+
         startZoom();
     }
 
@@ -369,26 +370,26 @@ public class NavigationPageController implements Initializable, Data{
         groundArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
         lowerTwoArrow.setVisible(false);
+
+        Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
+
         if (points.getSelectedToggle() == start) {
 
             //System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
-            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
-                go();
-            }
+            startLabel.setText(currNode.getLongName().trim());
+            data.kiosk = currNode;
+            destination.setText(startLabel.getText().trim());
         }
-        else{
+        else if(points.getSelectedToggle() == end){
 
-           // System.out.println("LABEL!!!!!");
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
-
-            //System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
-            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim().split("Node")[0].split("Floor")[0]);
-            if(!destinationText.equals("")) {
-                go();
-            }
+            //System.out.println("LABEL!!!!!");
+            endLabel.setText(currNode.getLongName().trim());
+            data.destinationNode = currNode;
+            destination.setText(endLabel.getText().trim());
         }
+
+            go();
+
     }
 
     //sets invalid email label when necessary for errorhandling
@@ -495,51 +496,9 @@ public class NavigationPageController implements Initializable, Data{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Finding Functions
 
-    public void findPath(String Start, String End) throws IOException, InterruptedException {
-        //Returns
+    public void findPath() throws IOException, InterruptedException {
 
-        for(int i = 0;i<data.graph.getNodes().size();i++){
-            if(data.graph.getNodes().get(i).getLongName().trim().equals(Start.trim())){
-                data.kiosk = data.graph.getNodes().get(i);
-                //System.out.println(data.kiosk.getLongName());
-            }
-        }
-        //System.out.println("START SEARCH!!!!!!!!!!");
-        Node startNode = data.kiosk;
-
-        System.out.println("END SEARCH!!!!!!!!!!!!");
-        Node endNode = SearchEngine.SearchPath(End,Data.data.graph,data.kiosk);
-
-        doPath(startNode,endNode);
-    }
-
-    public void doPath(Node StartNode, Node EndNode) throws IOException, InterruptedException{
-        switch (currentAlgo){
-            case 1:
-                PathAlgorithm pathFinder1 = new PathAlgorithm(new Astar());
-                this.path = pathFinder1.executeStrategy(StartNode,EndNode, Data.data.graph);
-                break;
-            case 2:
-                PathAlgorithm pathFinder2 = new PathAlgorithm(new BFSearch());
-                this.path = pathFinder2.executeStrategy(StartNode,EndNode, Data.data.graph);
-                break;
-            case 3:
-                PathAlgorithm pathFinder3 = new PathAlgorithm(new DFSearch());
-                this.path = pathFinder3.executeStrategy(StartNode,EndNode, Data.data.graph);
-                break;
-            case 4:
-                PathAlgorithm pathFinder4 = new PathAlgorithm(new Dijkstras());
-                this.path = pathFinder4.executeStrategy(StartNode,EndNode, Data.data.graph);
-                break;
-            case 5:
-                PathAlgorithm pathFinder5 = new PathAlgorithm(new BeamFirstSearch());
-                this.path = pathFinder5.executeStrategy(StartNode,EndNode, Data.data.graph);
-                break;
-            case 6:
-                PathAlgorithm pathFinder6 = new PathAlgorithm(new BestFirstSearch());
-                this.path = pathFinder6.executeStrategy(StartNode,EndNode, Data.data.graph);
-                break;
-        }
+        this.path = SearchEngine.NodeToNode(data.destinationNode,currentAlgo);
 
         MultiFloorPathDrawing(this.path);
 
@@ -551,6 +510,9 @@ public class NavigationPageController implements Initializable, Data{
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor);
     }
+
+
+
     @FXML
     public void clearFields(){
         double width = map.getImage().getWidth();
@@ -575,7 +537,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
-        findPath(startLabel.getText(),endLabel.getText());
+        findPath();
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
                 sendLabel.setVisible(false);
@@ -976,11 +938,19 @@ public class NavigationPageController implements Initializable, Data{
                     Data.data.gc.strokeOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
                     Data.data.gc.fillOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
                     System.out.println("This is the selected node: " + selectedNode.getNodeID());
-                    data.kiosk = data.graph.getNodes().get(0);
-                    try {
-                        findPath(data.kiosk.getLongName(), selectedNode.getLongName());
-                    } catch (IOException e) {
-                    } catch (InterruptedException e) {
+
+                    if (points.getSelectedToggle() == start) {
+                        startLabel.setText(selectedNode.getLongName().trim());
+                        data.kiosk = selectedNode;
+                    }
+                    else if(points.getSelectedToggle() == end){
+                        endLabel.setText(selectedNode.getLongName().trim());
+                        data.destinationNode = selectedNode;
+                        try {
+                            findPath();
+                        } catch (IOException e) {
+                        } catch (InterruptedException e) {
+                        }
                     }
                 }
             }
@@ -1289,7 +1259,14 @@ public class NavigationPageController implements Initializable, Data{
                 GoodOne = i;
             }
         }
-        return GoodOne;
+
+        for(Node n: data.graph.getNodes()){
+            if(n.getNodeID().trim().equals(GoodOne.getNodeID().trim())){
+                return n;
+            }
+        }
+
+        return null;
 
     }
 

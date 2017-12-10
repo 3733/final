@@ -70,9 +70,12 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
+
+
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
                 data.kiosk = data.graph.getNodes().get(i);
+                //System.out.println(data.kiosk.getLongName());
                 break;
             }
         }
@@ -103,7 +106,7 @@ public class Main extends Application implements Data{
         map = new Scene(Nav);
         //startMap();
         navigationPageController.setKiosk(data.kiosk);
-        navigationPageController.setStart(navigationPageController.getKiosk().getLongName());
+        navigationPageController.setStart(navigationPageController.getKiosk().getLongName().trim());
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
         Parent Service = serviceLoader.load();

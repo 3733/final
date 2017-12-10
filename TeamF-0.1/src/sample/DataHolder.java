@@ -51,7 +51,7 @@ public class DataHolder {
     public double YWindow;
 
     public Node kiosk;
-
+    public Node destinationNode;
 
     /**
      * Creating the Vector for the floor nodes.
