@@ -75,6 +75,9 @@ public class MapEditPageController implements Initializable, Data{
 
    /* public final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
 */
+    @FXML
+    private JFXButton helpButton;
+
     //other variables
     private Main mainController;
 
@@ -592,15 +595,32 @@ public class MapEditPageController implements Initializable, Data{
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @FXML
+    public void chat(){
+        //Main.setHelpScreenServiceRequestScreen();
+        try{
+            messenger.API m = new messenger.API();
+            m.run(6,6,600,600,
+                    "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");
+        } catch (Exception e){
+            System.out.println("API ERROR: " + e.getLocalizedMessage());
+        }
+    }
+
+    @FXML
+    public void about(){Main.aboutWindow(helpButton);}
+
     @FXML
     public void zoom() {
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
             @Override
             public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
                 System.out.println("this happened too");
-                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
+                stackPane.setMinSize(newValue.getWidth(), newValue.getHeight());
             }
         });
+
 
         scrollContent.setOnScroll(new EventHandler<ScrollEvent>() {
             @Override

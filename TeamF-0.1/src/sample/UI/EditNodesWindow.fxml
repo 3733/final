@@ -3,8 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -103,14 +101,6 @@
                </font></JFXTextField>
          </children>
       </GridPane>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
-         <menus>
-            <Menu mnemonicParsing="false">
-               <graphic>
-                  <JFXButton fx:id="close" onAction="#openMapEditing" prefHeight="26.0" prefWidth="43.0" ripplerFill="#8e8e8e" text="Back" />
-               </graphic>
-            </Menu>
-         </menus></MenuBar>
       <JFXButton fx:id="editNodeBtn" buttonType="RAISED" layoutX="179.0" layoutY="351.0" onAction="#editNodeButton" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Edit Node">
          <font>
             <Font name="Montserrat Regular" size="12.0" />

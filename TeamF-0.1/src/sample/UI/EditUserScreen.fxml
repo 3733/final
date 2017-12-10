@@ -107,9 +107,9 @@
                <children>
                   <TableView fx:id="tableView" onMousePressed="#enableButtons" prefHeight="785.0" prefWidth="1110.0">
                     <columns>
+                        <TableColumn fx:id="id" prefWidth="177.066650390625" text="ID" />
                       <TableColumn fx:id="lastName" prefWidth="207.1999969482422" text="Last Name" />
                       <TableColumn fx:id="firstName" minWidth="3.73333740234375" prefWidth="242.13336181640625" text="FirstName" />
-                        <TableColumn fx:id="id" prefWidth="177.066650390625" text="ID" />
                         <TableColumn fx:id="position" prefWidth="244.26666259765625" text="Position" />
                         <TableColumn fx:id="email" prefWidth="246.13330078125" text="Email" />
                     </columns>

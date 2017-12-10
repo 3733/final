@@ -33,6 +33,7 @@ public class Main extends Application implements Data{
     private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
+    private static Stage anotherStage;
     private static Stage popUp;
     private static Scene start;
     private static Scene login;
@@ -51,6 +52,9 @@ public class Main extends Application implements Data{
     private static Scene helpRequest;
     private static Scene aboutWin;
 
+    private static Scene menuDrawer;
+
+
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -65,6 +69,9 @@ public class Main extends Application implements Data{
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+
+    public static MenuDrawerController menuDrawerController = new MenuDrawerController();
+
 
 
     @Override
@@ -160,6 +167,12 @@ public class Main extends Application implements Data{
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
 
+        FXMLLoader menuWinLoader = new FXMLLoader(getClass().getResource("UI/mainMenuDrawer.fxml"));
+        Parent menuWin = menuWinLoader.load();
+        menuDrawerController = menuWinLoader.getController();
+        menuDrawerController.setMainController(this);
+        menuDrawer = new Scene(menuWin);
+
 
         stage = primaryStage;
         popUp = new Stage();
@@ -187,10 +200,14 @@ public class Main extends Application implements Data{
         aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
+        menuWin.getStylesheets().add("sample/UI/style.css");
+
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(map);
         stage.setResizable(true);
+        stage.setFullScreen(true);
+
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();

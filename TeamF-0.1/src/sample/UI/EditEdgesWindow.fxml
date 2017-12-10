@@ -1,34 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditEdgesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.EditEdgesController">
    <children>
-      <MenuBar prefHeight="26.0" prefWidth="600.0">
-         <menus>
-            <Menu mnemonicParsing="false">
-               <graphic>
-                  <JFXButton fx:id="close" onAction="#openMapEditing" prefHeight="26.0" prefWidth="49.0" ripplerFill="#8e8e8e" text="Back" />
-               </graphic>
-            </Menu>
-         </menus>
-      </MenuBar>
       <GridPane layoutX="72.0" layoutY="23.0" prefHeight="274.0" prefWidth="482.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.39996337890625" minWidth="10.0" prefWidth="192.199951171875" />
