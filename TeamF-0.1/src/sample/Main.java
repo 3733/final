@@ -30,6 +30,7 @@ public class Main extends Application implements Data{
 
     private  static String destination;
     private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
+    private  static String foodString = "";
     private String filePath = "/sample/UI/Icons/";
 
     private static Stage stage;
@@ -50,6 +51,7 @@ public class Main extends Application implements Data{
     private static Scene editUserWin;
     private static Scene helpRequest;
     private static Scene aboutWin;
+    private static Scene food;
 
 
 
@@ -65,7 +67,7 @@ public class Main extends Application implements Data{
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
-
+    public static FoodController foodController = new FoodController();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -92,8 +94,7 @@ public class Main extends Application implements Data{
         Parent HelpRequest = helpRequestLoader.load();
         helpScreenServiceRequestScreenController = helpRequestLoader.getController();
         helpScreenServiceRequestScreenController.setMainController(this);
-        helpRequest = new Scene(HelpRequest)
-        ;
+        helpRequest = new Scene(HelpRequest);
 
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
@@ -115,6 +116,12 @@ public class Main extends Application implements Data{
         serviceAcceptController = acceptLoader.getController();
         serviceAcceptController.setMainController(this);
         accept = new Scene(Accept);
+
+        FXMLLoader foodLoader = new FXMLLoader(getClass().getResource("UI/FoodMenu.fxml"));
+        Parent Food = foodLoader.load();
+        foodController = foodLoader.getController();
+        foodController.setMainController(this);
+        food = new Scene(Food);
 
         FXMLLoader mapEditLoader = new FXMLLoader(getClass().getResource("UI/MapEditingScreen.fxml"));
         Parent MapEdit = mapEditLoader.load();
@@ -182,6 +189,7 @@ public class Main extends Application implements Data{
         editUserWin.getStylesheets().add("sample/UI/style.css");
         aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
+        food.getStylesheets().add("sample/UI/style.css");
 
 
         stage.setTitle("Team F Hospital GPS");
@@ -390,6 +398,15 @@ public class Main extends Application implements Data{
         popUp.close();
     }
 
+    public static void menuPopUp(JFXButton btn1) {
+        Stage popUp = new Stage();
+        popUp.setScene(food);
+        popUp.setTitle("Kiosk Menu");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
+    }
+
     public static void setLoggedInGuy(Staff user){
         loggedInGuy = user;
     }
@@ -397,9 +414,18 @@ public class Main extends Application implements Data{
     public static Staff getLoggedInGuy(){
         return loggedInGuy;
     }
+
+    public static void setFoodString(String newOrder) {
+        foodString = newOrder;
+    }
+
+    public static String getFoodString() {
+        return foodString;
+    }
+
     public static void main(String[] args) throws IOException{
 
-        testEmbeddedDB db = new testEmbeddedDB();
+        //testEmbeddedDB db = new testEmbeddedDB();
         /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
 
         for(String s : o){
@@ -418,8 +444,6 @@ public class Main extends Application implements Data{
         }*/
 
 
-
-
 //        testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
@@ -427,7 +451,7 @@ public class Main extends Application implements Data{
 
         //testEmbeddedDB.addStaffTestData();
 
-        //launch(args);
+        launch(args);
 
         //controller.drawDirections(Vec);
     }

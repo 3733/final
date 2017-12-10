@@ -41,7 +41,9 @@ import java.text.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static sample.Main.getFoodString;
 import static sample.Main.getLoggedInGuy;
+import static sample.Main.setFoodString;
 
 
 public class ServiceRequestController implements Initializable, Data {
@@ -173,10 +175,13 @@ public class ServiceRequestController implements Initializable, Data {
     private JFXListView foodSearchList;
 
     @FXML
-    private ChoiceBox foodMenu;
+    private TextArea foodDescription;
 
     @FXML
-    private TextArea foodDescription;
+    private JFXButton foodMenu;
+
+    @FXML
+    public void openFoodMenu() { Main.menuPopUp(foodMenu);}
 
     @FXML
     public void autoComplete(){
@@ -325,12 +330,12 @@ public class ServiceRequestController implements Initializable, Data {
     @FXML
     public void updateFood() {
         foodID.setText(Integer.toString(ID));
-
+/*
         foodMenu.setItems(FXCollections.observableArrayList(
                 "Apple pie", "Banana", "Catfish soup", "Chicken parmesan", "Chocolate cake", "Hamburger", "Lasagna",
                 "Loaf of bread", "Lobster casserole", "Mashed potatoes", "Olive pizza", "Orange juice", "Oreos",
                 "Popcorn shrimps", "Sardines", "Smoked salmon", "Steak with lamb sauce", "Tuna potato", "Water"));
-    }
+  */  }
 
     private Node foodNode;
 
@@ -351,7 +356,7 @@ public class ServiceRequestController implements Initializable, Data {
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
                 foodTime.getValue().format(formatter), "", "", 0000, "food",
                 "unaccepted", foodPatient.getText(), foodServingTime.getValue().format(formatter),
-                (String) foodMenu.getValue());
+                getFoodString());
 
         requestList.add(newFood);
         testEmbeddedDB.addFoodRequest(newFood);
@@ -363,6 +368,7 @@ public class ServiceRequestController implements Initializable, Data {
         ID = (int) System.currentTimeMillis();
         foodDestination.clear();
         foodID.setText(Integer.toString(ID));
+        setFoodString("");
 
         refreshTable();
     }

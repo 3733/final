@@ -135,7 +135,7 @@ public class ServiceAcceptController implements Initializable{
         if ((requestSelected.getType().trim()).equals("food")) {
             serviceInformation += "Time to be served: " + ((FoodRequest) requestSelected).getServingTime() + "<br>";
             serviceInformation += "Patient name: " + ((FoodRequest) requestSelected).getPatientName() + "<br>";
-            serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder() + "<br>";
+            serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder().replace("!", ", ") + "<br>";
         }
 
         if ((requestSelected.getType().trim()).equals("transport")) {
@@ -353,7 +353,7 @@ public class ServiceAcceptController implements Initializable{
 
             if((req.getType()).trim().equals("food")) {
                 currentDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
-                currentMenu.setText((((FoodRequest) req).getFoodOrder()).trim());
+                currentMenu.setText((((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim());
                 currentPatient.setText(((((FoodRequest) req).getPatientName())).trim());
             }
 
@@ -410,7 +410,7 @@ public class ServiceAcceptController implements Initializable{
 
             if((req.getType().trim()).equals("food")) {
                 finishDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
-                finishMenu.setText((((FoodRequest) req).getFoodOrder()).trim());
+                finishMenu.setText((((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim());
                 finishPatient.setText(((((FoodRequest) req).getPatientName())).trim());
             }
 

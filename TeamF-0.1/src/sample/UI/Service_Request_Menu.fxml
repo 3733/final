@@ -173,11 +173,6 @@
                                                             <Font name="Montserrat Regular" size="12.0" />
                                                          </font>
                                                       </Label>
-                                                      <Label text="Food Order" GridPane.rowIndex="4">
-                                                         <font>
-                                                            <Font name="Montserrat Regular" size="12.0" />
-                                                         </font>
-                                                      </Label>
                                                       <Label text="Patient Name" GridPane.rowIndex="3">
                                                          <font>
                                                             <Font name="Montserrat Regular" size="12.0" />
@@ -190,9 +185,9 @@
                                                       </Label>
                                                       <Label GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                       <JFXTextField fx:id="foodPatient" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                      <ChoiceBox fx:id="foodMenu" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                       <JFXTimePicker fx:id="foodTime" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                       <JFXTimePicker fx:id="foodServingTime" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <JFXButton fx:id="foodMenu" buttonType="RAISED" onAction="#openFoodMenu" ripplerFill="#8e8e8e" style="-fx-background-color: #ffffff;" text="Choose Food" translateX="130.0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets left="25.0" />
