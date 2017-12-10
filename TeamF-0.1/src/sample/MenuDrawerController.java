@@ -96,7 +96,10 @@ public class MenuDrawerController implements Initializable{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
-
+        startLabel.setText(data.kiosk.getLongName().trim());
+        if(data.destinationNode!=null){
+            endLabel.setText(data.destinationNode.getLongName().trim());
+        }
         end.setSelected(true);
 
     }
@@ -143,7 +146,7 @@ public class MenuDrawerController implements Initializable{
 
     @FXML
     public void settingSearch(){
-        if (points.getSelectedToggle() == start) {
+     /*   if (points.getSelectedToggle() == start) {
 
             destination.setText(startLabel.getText());
 
@@ -151,25 +154,23 @@ public class MenuDrawerController implements Initializable{
         else{
             destination.setText(endLabel.getText());
         }
+        */
     }
 
     @FXML
-    public void setStart(String t){
-        startLabel.setText(t);
+    public void setStart(){
+        startLabel.setText(data.kiosk.getLongName().trim());
     }
 
-    public Node getKiosk(){
-        return data.kiosk;
-    }
 
     //setting start and end nodes
-    @FXML
+    /*@FXML
     public void settingFields() throws IOException, InterruptedException {
         String destinationText = destination.getText();
         if (points.getSelectedToggle() == start) {
 
             System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
+            startLabel.setText(SearchEngine.SearchPath(destinationText).getLongName().trim());
             if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
                 //go();
             }
@@ -186,7 +187,7 @@ public class MenuDrawerController implements Initializable{
                 //go();
             }
         }
-    }
+    }*/
 
     //sets invalid email label when necessary for errorhandling
     @FXML
@@ -263,6 +264,10 @@ public class MenuDrawerController implements Initializable{
         //Vector<Node> msgVec = new Vector<Node>(10);
         EmailService emailService = new EmailService("teamFCS3733@gmail.com", "FuschiaFairiesSoftEng", map);
         emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
+    }
+
+    public void setEnd(){
+        endLabel.setText(data.destinationNode.getLongName().trim());
     }
 
 

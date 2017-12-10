@@ -107,7 +107,7 @@ public class MapEditPageController implements Initializable, Data{
                 "Clinical Trials", "Conference Center","Dialysis,", "Dialysis Waiting Room", "Fetal Med & Genetics", "General Surgical Specialties Suite A",
                 "General Surgical Specialties Suite B", "Gynecology", "Gyencology Oncology MIGS", "Innovation Hub", "Maternal Fetal Practice",
                 "MICU 3B/C Waiting Room", "OB/GYN Blood Lab", "Obstetrics", "The Porch", "Reproductive Endocrine Labs", "Urology", "Watkins Clinic C");
-        threeList.setItems(threeItems);
+        //threeList.setItems(threeItems);
 
         //populating list view -- second
         ObservableList<String> twoItems = FXCollections.observableArrayList("Bridge to Children's", "Brigham Health", "Carrie M. Hall Conference Center",
@@ -116,7 +116,7 @@ public class MapEditPageController implements Initializable, Data{
                 "Medical Surgical Specialties", "MRI Associates", "Oral Medicine and Dentistry", "Orthopedics and Rhematology", "Outpatient Specimen Collection",
                 "Pat's Place", "Patient Financial Services", "Plastic Surgery", "Thoracic Surgery Clinic", "Vascular Diagnostic Lab", "Watkins A", "Watkins B",
                 "Weiner Center for Preoperative Evaluation");
-        twoList.setItems(twoItems);
+        //twoList.setItems(twoItems);
 
         //populating list view -- first
         ObservableList<String> oneItems = FXCollections.observableArrayList("Ambulatory X-Ray", "Asthma Research Center", "Au Bon Pain",
@@ -124,22 +124,22 @@ public class MapEditPageController implements Initializable, Data{
                 "Kessler Library", "MS Waiting", "Multifaith Chapel", "Neuroscience Waiting Room", "Obstetrics Admitting", "Occupational Health", "Partner's Shuttle",
                 "Rehabilitation Services", "Shapiro Board Room", "Sharf Admitting Center", "Spiritual Care Office", "Wound Care Center Ambulatory Treatment Room",
                 "Zinner Breakout Room");
-        oneList.setItems(oneItems);
+        //oneList.setItems(oneItems);
 
         //populating list view -- lower two
         ObservableList<String> lowerTwoItems = FXCollections.observableArrayList("Cardiac Stress Test Lab", "Cardiovascular Imaging Center", "CVRR",
                 "Interpreter Services", "MRI/CT Scan Imaging", "Radiation Oncology", "Radiation Oncology Conference Room", "Radiation Oncology T/X Suite");
-        lowerTwoList.setItems(lowerTwoItems);
+        //lowerTwoList.setItems(lowerTwoItems);
 
         //populating list view -- lower one
         ObservableList<String> lowerOneItems = FXCollections.observableArrayList("Abrams Conference Room", "Anesthesia Conference Room", "CSIR MRI",
                 "Day Surgery Family Waiting", "Helen Hogan Conference Room", "Medical Records Conference Room", "Medical Records Film Library", "Nuclear Medicine",
                 "Outpatient Fluoroscopy", "Pre-OP PACU", "Ultrasound", "Volunteers");
-        lowerOneList.setItems(lowerOneItems);
+        //lowerOneList.setItems(lowerOneItems);
 
         //populating list -- ground
         ObservableList<String> groundItems = FXCollections.observableArrayList("Infusion", "Neuro Testing", "Outpatient Plebotomy");
-        groundList.setItems(groundItems);
+        //groundList.setItems(groundItems);
         tabPane.getSelectionModel().select(floorOne);
         map.setImage(data.firstFloor);//new Image(getClass().getResourceAsStream("/sample/UI/Icons/01_thefirstfloor.png")));
 

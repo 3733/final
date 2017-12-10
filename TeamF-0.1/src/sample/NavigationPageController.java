@@ -210,7 +210,6 @@ public class NavigationPageController implements Initializable, Data{
                 mainMenu.setVisible(true);
             }
             transition.play();
-
         });
 
         createServButton.setVisible(false);
@@ -378,21 +377,21 @@ public class NavigationPageController implements Initializable, Data{
     //setting start and end nodes
     @FXML
     public void settingFields() throws IOException, InterruptedException {
-        searchList.setVisible(false);
-        String destinationText = destination.getText();
+        /*searchList.setVisible(false);
         oneArrow.setVisible(false);
         twoArrow.setVisible(false);
         threeArrow.setVisible(false);
         groundArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
-        lowerTwoArrow.setVisible(false);
+        lowerTwoArrow.setVisible(false);*/
 
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
-
+        data.destinationNode = currNode;
+/*
         if (points.getSelectedToggle() == start) {
 
             //System.out.println("LABEL!!!!!");
-            startLabel.setText(currNode.getLongName().trim());
+
             data.kiosk = currNode;
             destination.setText(startLabel.getText().trim());
         }
@@ -403,7 +402,7 @@ public class NavigationPageController implements Initializable, Data{
             data.destinationNode = currNode;
             destination.setText(endLabel.getText().trim());
         }
-
+*/
             go();
 
     }
@@ -523,11 +522,11 @@ public class NavigationPageController implements Initializable, Data{
         this.path = SearchEngine.NodeToNode(data.destinationNode,currentAlgo);
 
         MultiFloorPathDrawing(this.path);
-
+/*
         directionSteps.setVisible(true);
         sendLabel.setVisible(true);
         email.setVisible(true);
-        sendButton.setVisible(true);
+        sendButton.setVisible(true);*/
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor);
@@ -539,7 +538,7 @@ public class NavigationPageController implements Initializable, Data{
     public void clearFields(){
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
-        sendLabel.setVisible(false);
+        /*sendLabel.setVisible(false);
         email.setVisible(false);
         sendButton.setVisible(false);
         directionSteps.setVisible(false);
@@ -547,13 +546,14 @@ public class NavigationPageController implements Initializable, Data{
         startLabel.setText("Lower Pike Hallway Exit Lobby");
         destination.setText("");
         directionSteps.getItems().clear();
-        reset(map, width, height);
+        reset(map, width, height);*/
     }
 
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
         findPath();
+        /*
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
                 sendLabel.setVisible(false);
@@ -568,7 +568,7 @@ public class NavigationPageController implements Initializable, Data{
         });
         //setArrows(floorsVisited);
         searchList.setVisible(false);
-        directionSteps.setVisible(true);
+        directionSteps.setVisible(true);*/
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

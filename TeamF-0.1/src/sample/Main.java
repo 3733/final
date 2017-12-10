@@ -231,6 +231,10 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
+    public void search(){
+        menuDrawerController.setStart();
+        menuDrawerController.setEnd();
+    }
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
         stage.centerOnScreen();
