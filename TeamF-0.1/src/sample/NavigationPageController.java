@@ -845,6 +845,7 @@ public class NavigationPageController implements Initializable, Data{
             tabPane.getSelectionModel().select(0);
         }
     }
+
     // Purpose: Draw a path of nodes on the map
     @FXML
     public void testDrawDirections(Vector<Node> path) {
@@ -905,13 +906,14 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void createFloorChangeButton(double canvasX, double canvasY, String floorTo) {
         ImageView floorIcon = new ImageView();
-        floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/Elevator2Up.png")));
+        floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp2.png")));
         System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
-        floorIcon.setFitHeight(20);
-        floorIcon.setFitWidth(20);
-        floorIcon.setX(canvasX - 10);
-        floorIcon.setY(canvasY - 10);
+        floorIcon.setFitHeight(30);
+        floorIcon.setFitWidth(30);
+        floorIcon.setX(canvasX - 15);
+        floorIcon.setY(canvasY - 15);
         floorIcon.toFront();
+        floorIcon.setPickOnBounds(true);
         floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
