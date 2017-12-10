@@ -938,11 +938,19 @@ public class NavigationPageController implements Initializable, Data{
                     Data.data.gc.strokeOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
                     Data.data.gc.fillOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
                     System.out.println("This is the selected node: " + selectedNode.getNodeID());
-                    data.kiosk = data.graph.getNodes().get(0);
-                    try {
-                        findPath();
-                    } catch (IOException e) {
-                    } catch (InterruptedException e) {
+
+                    if (points.getSelectedToggle() == start) {
+                        startLabel.setText(selectedNode.getLongName().trim());
+                        data.kiosk = selectedNode;
+                    }
+                    else if(points.getSelectedToggle() == end){
+                        endLabel.setText(selectedNode.getLongName().trim());
+                        data.destinationNode = selectedNode;
+                        try {
+                            findPath();
+                        } catch (IOException e) {
+                        } catch (InterruptedException e) {
+                        }
                     }
                 }
             }
@@ -1251,7 +1259,14 @@ public class NavigationPageController implements Initializable, Data{
                 GoodOne = i;
             }
         }
-        return GoodOne;
+
+        for(Node n: data.graph.getNodes()){
+            if(n.getNodeID().trim().equals(GoodOne.getNodeID().trim())){
+                return n;
+            }
+        }
+
+        return null;
 
     }
 
