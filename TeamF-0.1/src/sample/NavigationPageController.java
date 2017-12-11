@@ -874,6 +874,11 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
+    /**
+     *  Draw the all the buttons of a current floor on the navigation screen
+     * @param changeFloorNodes The vector of nodes that change to other floors for the current path
+     * @param currentFloor String of the current floor that is being displayed
+     */
     @FXML
     public void drawButtons(Vector<Node> changeFloorNodes, String currentFloor) {
         if(changeFloorNodes != null) {
@@ -906,7 +911,7 @@ public class NavigationPageController implements Initializable, Data{
      * Create a floor change button stored inside one big anchorpane in the navigation page controller
      * @param canvasX The canvas x location
      * @param canvasY The canvas y location
-     * @param floorTo The floor that the node is going to
+     * @param floorIn The floor that the node is going to
      */
     @FXML
     private void createFloorChangeButton(double canvasX, double canvasY, String floorIn) {
@@ -992,10 +997,9 @@ public class NavigationPageController implements Initializable, Data{
         buttonHolder.getChildren().clear();
     }
 
-
     /**
      * Analyze the current path in order to determine where to put floor change buttons
-     * @param Vector<Node> path The current path drawn on the map
+     * @param path The current path drawn on the map
      * @return Vector<Node> Vector containing all the nodes which connect to another floor
      * for the current path
      */
