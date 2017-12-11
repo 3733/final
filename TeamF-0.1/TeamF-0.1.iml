@@ -9,12 +9,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="resouces" level="project" />
-    <orderEntry type="library" name="common-lang3" level="application" />
     <orderEntry type="library" name="derby" level="application" />
-    <orderEntry type="library" name="opencsv-4.0" level="application" />
     <orderEntry type="library" name="jfoenix" level="application" />
-    <orderEntry type="library" name="mail" level="application" />
-    <orderEntry type="library" name="javax.mail" level="application" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -25,7 +21,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="cmu_us_kal" level="application" />
-    <orderEntry type="library" name="helpAPI" level="application" />
+    <orderEntry type="library" name="Jar files2" level="application" />
   </component>
 </module>

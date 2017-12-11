@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.Parent;
@@ -51,6 +52,7 @@ public class Main extends Application implements Data{
     private static Scene editUserWin;
     private static Scene helpRequest;
     private static Scene aboutWin;
+    private static Scene welcomeScreen;
 
     private static Scene menuDrawer;
 
@@ -69,8 +71,17 @@ public class Main extends Application implements Data{
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+    public static SplashWelcomeController splashWelcomeController = new SplashWelcomeController();
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
+
+    public static Boolean isSplashLoaded = Boolean.FALSE;
+
+
+    int screenWidth = (int) Screen.getPrimary().getBounds().getWidth();
+    int screenHeight = (int) Screen.getPrimary().getBounds().getHeight();
+
+
 
 
 
@@ -111,9 +122,17 @@ public class Main extends Application implements Data{
         navigationPageController = navLoader.getController();
         navigationPageController.setMainController(this);
         map = new Scene(Nav);
-        //startMap();
+
         navigationPageController.setKiosk(data.kiosk);
         navigationPageController.setStart(navigationPageController.getKiosk().getLongName().trim());
+
+
+
+        FXMLLoader welLoader = new FXMLLoader(getClass().getResource("UI/SplashWelcome.fxml"));
+        Parent Wel = welLoader.load();
+        splashWelcomeController = welLoader.getController();
+        splashWelcomeController.setMainController(this);
+        welcomeScreen =  new Scene(Wel);
 
         FXMLLoader serviceLoader = new FXMLLoader(getClass().getResource("UI/Service_Request_Menu.fxml"));
         Parent Service = serviceLoader.load();
@@ -175,7 +194,18 @@ public class Main extends Application implements Data{
 
 
         stage = primaryStage;
+
+        //GraphicsDevice gd =  new GraphicsEnvironment().getDe
+       // primaryStage.setResizable(true);
+//        primaryStage.minWidthProperty().bind(stage.heightProperty().multiply(1));
+//        primaryStage.maxHeightProperty().bind(stage.widthProperty().divide(1));
+//        primaryStage.show();
+
+
+
+
         popUp = new Stage();
+
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
         //login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 600, 344);
@@ -201,6 +231,10 @@ public class Main extends Application implements Data{
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
         menuWin.getStylesheets().add("sample/UI/style.css");
+
+//        primaryStage.minWidthProperty().bind(stage.heightProperty().multiply(2));
+//        primaryStage.maxHeightProperty().bind(stage.widthProperty().divide(2));
+
 
 
         stage.setTitle("Team F Hospital GPS");

@@ -2,11 +2,10 @@ package sample;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -41,6 +40,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +52,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -167,6 +169,7 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private StackPane stackPane;
 
+
     //other components
     @FXML
     private Main mainController;
@@ -196,6 +199,10 @@ public class NavigationPageController implements Initializable, Data{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+        if (!Main.isSplashLoaded) {
+            loadSplashScreen();
+        }
         mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
@@ -651,6 +658,8 @@ public class NavigationPageController implements Initializable, Data{
     Image elevIMG = new Image(getClass().getResourceAsStream(filePath + "Elevator.png"));
     Image stairIMG = new Image(getClass().getResourceAsStream(filePath + "Stairs.png"));
 
+
+
     public LinkedList<Image> directionArrows(String[] path){
         LinkedList<Image> images = new LinkedList<Image>();
 
@@ -971,7 +980,7 @@ public class NavigationPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-        pathCanvas.setOnMousePressed(new EventHandler<MouseEvent>() {
+            pathCanvas.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
@@ -1361,6 +1370,53 @@ public class NavigationPageController implements Initializable, Data{
         }
 
         return null;
+
+    }
+
+    /**
+     * load welcome screen
+     */
+    private void loadSplashScreen() {
+        try {
+
+            Main.isSplashLoaded = true;
+
+            StackPane pane = FXMLLoader.load(getClass().getResource(("UI/SplashWelcome.fxml")));
+
+            System.out.println("HI");
+
+            stackPane.getChildren().setAll(pane);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(4), pane);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.setCycleCount(1);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(4), pane);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            fadeOut.setCycleCount(1);
+
+            fadeIn.play();
+
+            fadeIn.setOnFinished((javafx.event.ActionEvent e) -> {
+                fadeOut.play();
+            });
+
+            fadeOut.setOnFinished((e) -> {
+                try {
+                    BorderPane parentContent = FXMLLoader.load(getClass().getResource(("UI/NavigationScreen.fxml")));
+                    stackPane.getChildren().setAll(parentContent);
+
+                } catch (IOException ex) {
+                    Logger.getLogger(NavigationPageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+
+        } catch (IOException ex) {
+            Logger.getLogger(NavigationPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }
 
