@@ -869,6 +869,73 @@ public class NavigationPageController implements Initializable, Data{
         });
     }
 
+    // This is for the route creator to find the correct zoom
+    public void autoZoom()
+    {
+        scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
+            @Override
+            public void changed(ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) {
+                stackPane.setMinSize(newValue.getWidth(),newValue.getHeight());
+            }
+        });
+
+//        stackPane.setOnScroll(new EventHandler<ScrollEvent>() {
+//            @Override
+//            public void handle(ScrollEvent event) {
+//                event.consume();
+//
+//                if (event.getDeltaY() == 0) {
+//                    return;
+//                }
+//
+//                double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
+//                Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
+//                if (!(scaleFactor * stackPane.getScaleX() < 1)) {
+//                    stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
+//                    stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
+//                }
+//                repositionScroller(scrollContent, scrollMap, scaleFactor, scrollOffset);
+//            }
+//        });
+
+//        final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
+//        scrollContent.setOnMousePressed(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
+//            }
+//        });
+
+
+
+        /*
+
+        scrollContent.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double deltaX = event.getX() - lastMouseCoordinates.get().getX();
+                double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
+                double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
+                double desiredH = scrollMap.getHvalue() - deltaH;
+                if(deltaX > 0) {
+                    scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+                }
+                double deltaY = event.getY() - lastMouseCoordinates.get().getY();
+                double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
+                double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
+                double desiredV = scrollMap.getVvalue() - deltaV;
+                if ( deltaY > 0) {
+                    scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+                }
+            }
+        });
+
+
+        */
+
+
+    }
+
     private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
         double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
