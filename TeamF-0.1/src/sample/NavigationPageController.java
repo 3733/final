@@ -902,16 +902,54 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
-
+    /**
+     * Create a floor change button stored inside one big anchorpane in the navigation page controller
+     * @param canvasX The canvas x location
+     * @param canvasY The canvas y location
+     * @param floorTo The floor that the node is going to
+     */
     @FXML
-    public void createFloorChangeButton(double canvasX, double canvasY, String floorTo) {
+    private void createFloorChangeButton(double canvasX, double canvasY, String floorIn) {
         ImageView floorIcon = new ImageView();
-        floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp2.png")));
+
+        int fromFloor = currentFloor();
+        String floorTo = floorIn.trim();
+
+        if(floorTo.equals("L2")) {
+            floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDownL2.png")));
+        } else if (floorTo.equals("L1")) {
+            if(fromFloor < 1){
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUpL1.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDownL2.png")));
+            }
+        } else if (floorTo.equals("G")) {
+            if(fromFloor < 2) {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUpG.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDownG.png")));
+            }
+        } else if (floorTo.equals("1")) {
+            if(fromFloor < 3) {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp1.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDown1.png")));
+            }
+        } else if (floorTo.equals("2")) {
+            if(fromFloor < 4) {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp2.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDown2.png")));
+            }
+        } else if (floorTo.equals("3")) {
+            floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp3.png")));
+        }
+
         System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
-        floorIcon.setFitHeight(30);
-        floorIcon.setFitWidth(30);
-        floorIcon.setX(canvasX - 15);
-        floorIcon.setY(canvasY - 15);
+        floorIcon.setFitHeight(20);
+        floorIcon.setFitWidth(20);
+        floorIcon.setX(canvasX - 10);
+        floorIcon.setY(canvasY - 10);
         floorIcon.toFront();
         floorIcon.setPickOnBounds(true);
         floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -924,11 +962,43 @@ public class NavigationPageController implements Initializable, Data{
         buttonHolder.getChildren().add(floorIcon);
     }
 
+    /**
+     * @return int The current floor, from 0 = L2 to 5 = third floor
+     */
+    public int currentFloor() {
+        int selected = tabPane.getSelectionModel().getSelectedIndex();
+        switch (selected){
+            case 5:
+                return 0;
+            case 4:
+                return 1;
+            case 3:
+                return 2;
+            case 2:
+                return 3;
+            case 1:
+                return 4;
+            case 0:
+                return 5;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Clear all the current floor change buttons on the navigation page
+     */
     public void clearButtons() {
         buttonHolder.getChildren().clear();
     }
 
-    @FXML
+
+    /**
+     * Analyze the current path in order to determine where to put floor change buttons
+     * @param Vector<Node> path The current path drawn on the map
+     * @return Vector<Node> Vector containing all the nodes which connect to another floor
+     * for the current path
+     */
     public Vector<Node> findFloorHyperLinks(Vector<Node> path) {
         Vector<Node> returnVector = new Vector<Node>();
         int length = path.size();
