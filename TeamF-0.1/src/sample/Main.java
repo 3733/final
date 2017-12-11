@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -413,6 +414,10 @@ public class Main extends Application implements Data{
     public static void closePopUp(Button btn2){
         popUp=(Stage)btn2.getScene().getWindow();
         popUp.close();
+    }
+
+    public static void sendDirections(){
+        menuDrawerController.setDirectionSteps();
     }
 
     public static void setLoggedInGuy(Staff user){

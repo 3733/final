@@ -3,18 +3,15 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <VBox prefHeight="898.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
    <children>
@@ -23,30 +20,10 @@
          <children>
             <HBox prefHeight="142.0" prefWidth="301.0">
                <children>
-                  <VBox prefHeight="145.0" prefWidth="114.0">
+                  <VBox minWidth="60.0" prefHeight="175.0" prefWidth="32.0">
                      <children>
-                        <JFXRadioButton fx:id="start" onAction="#settingSearch" styleClass=".jfx-radio-button" text="Start">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="points" />
-                           </toggleGroup>
-                           <font>
-                              <Font name="Montserrat Regular" size="12.0" />
-                           </font>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                           <VBox.margin>
-                              <Insets bottom="50.0" top="40.0" />
-                           </VBox.margin>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="end" onAction="#settingSearch" styleClass=".jfx-radio-button" text="End" toggleGroup="$points">
-                           <font>
-                              <Font name="Montserrat Regular" size="12.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets top="45.0" />
-                           </VBox.margin>
-                        </JFXRadioButton>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="88.0" prefWidth="61.0" text="Start" />
+                        <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" prefHeight="88.0" prefWidth="61.0" text="End" />
                      </children>
                      <HBox.margin>
                         <Insets right="15.0" />
@@ -172,7 +149,11 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <JFXListView fx:id="floorPoints" prefHeight="469.0" prefWidth="425.0" visible="false" />
-      <JFXListView fx:id="directionSteps" prefHeight="469.0" prefWidth="425.0" visible="false" />
+      <AnchorPane prefHeight="200.0" prefWidth="378.0">
+         <children>
+            <JFXListView fx:id="directionSteps" prefHeight="469.0" prefWidth="425.0" visible="false" />
+            <JFXListView fx:id="floorPoints" prefHeight="469.0" prefWidth="425.0" visible="false" />
+         </children>
+      </AnchorPane>
    </children>
 </VBox>

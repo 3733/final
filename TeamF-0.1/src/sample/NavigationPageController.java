@@ -727,12 +727,12 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public void hierarchicalText(String floor){
-        for(int z = 0; z < directionSteps.getItems().size(); z++){
+        for(int z = 0; z < data.directions.size(); z++){
             if(sequence.get(z).equals(floor)){
-                directionSteps.getItems().get(z).setStyle("-fx-background-color: #d7eef2");
+                data.directions.get(z).setStyle("-fx-background-color: #d7eef2");
             }
             else{
-                directionSteps.getItems().get(z).setStyle("");
+                data.directions.get(z).setStyle("");
             }
         }
     }
@@ -742,7 +742,8 @@ public class NavigationPageController implements Initializable, Data{
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         sequence.clear();
-        ObservableList<HBox> populateSteps = FXCollections.observableArrayList();
+        data.directions.clear();
+        //ObservableList<HBox> populateSteps = FXCollections.observableArrayList();
         //edit later
         String directions = directions(path);
         String[] directionParts = directions.split("<br>");
@@ -771,7 +772,7 @@ public class NavigationPageController implements Initializable, Data{
             entry.getChildren().addAll(images.get(i), label, floorLabel);
             entry.setAlignment(Pos.CENTER_LEFT);
 
-            populateSteps.add(entry);
+            data.directions.add(entry);
         }
         HBox entry = new HBox();
         String end = "You have arrived at your destination.";
@@ -790,8 +791,9 @@ public class NavigationPageController implements Initializable, Data{
         finish.setFitWidth(25);
 
         entry.getChildren().addAll(finish, label, floorLabel);
-        populateSteps.add(entry);
-        directionSteps.setItems(populateSteps);
+        data.directions.add(entry);
+        Main.sendDirections();
+
 
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         Vector<Vector<Node>> paths = separator(path);

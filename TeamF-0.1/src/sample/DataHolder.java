@@ -1,9 +1,12 @@
 package sample;
 
 //import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -75,4 +78,6 @@ public class DataHolder {
     public int offset = 2;
 
     public Vector<Node> nodeAlign = new Vector<Node>();
+
+    public ObservableList<HBox> directions =  FXCollections.observableArrayList();
 }

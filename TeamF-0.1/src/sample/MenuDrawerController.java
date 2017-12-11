@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javafx.scene.layout.HBox;
 
 import static sample.Data.data;
 
@@ -28,7 +29,7 @@ public class MenuDrawerController implements Initializable{
     @FXML
     private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
-    private JFXListView directionSteps, floorPoints;
+    private JFXListView<HBox> directionSteps, floorPoints;
 
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
@@ -39,8 +40,9 @@ public class MenuDrawerController implements Initializable{
     // Contains the Invalid email error message
     @FXML
     private static Label invalidEmailText;
-    @FXML
-    private JFXRadioButton start, end;
+
+    //@FXML
+    //private JFXRadioButton start, end;
 
     @FXML
     private JFXTextField startField, endField;
@@ -100,8 +102,8 @@ public class MenuDrawerController implements Initializable{
         if(data.destinationNode!=null){
             endLabel.setText(data.destinationNode.getLongName().trim());
         }
-        end.setSelected(true);
 
+        setDirectionSteps();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,11 +135,11 @@ public class MenuDrawerController implements Initializable{
 
     public JFXTextField getEndLabel(){return this.endLabel;}
 
-    public JFXRadioButton getRadioStart(){return this.start;}
+    //public JFXRadioButton getRadioStart(){return this.start;}
 
     public void setDestination(String s){destination.setText(s);}
 
-    public JFXRadioButton getRadioEnd(){return this.end;}
+    //public JFXRadioButton getRadioEnd(){return this.end;}
 
     @FXML
     public void closeMenuDrawer(){
@@ -270,6 +272,9 @@ public class MenuDrawerController implements Initializable{
         endLabel.setText(data.destinationNode.getLongName().trim());
     }
 
-
+    public void setDirectionSteps(){
+        directionSteps.setVisible(true);
+        directionSteps.setItems(data.directions);
+    }
 
 }
