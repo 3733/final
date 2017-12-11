@@ -228,7 +228,7 @@
                 <JFXListView fx:id="searchList" layoutX="20.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="266.0" visible="false" />
             <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
                <children>
-                  <JFXButton fx:id="floorVisA" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
+                  <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>
@@ -236,7 +236,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="floorVisB" style="-fx-background-color: #1a479a;" text="L1" textFill="WHITE">
+                  <JFXButton fx:id="floorVisB" onAction="#changeFloorL1" style="-fx-background-color: #1a479a;" text="L1" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>
@@ -244,7 +244,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="floorVisC" style="-fx-background-color: #1a479a;" text="G" textFill="WHITE">
+                  <JFXButton fx:id="floorVisC" onAction="#changeFloorG" style="-fx-background-color: #1a479a;" text="G" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>
@@ -252,7 +252,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="floorVisD" style="-fx-background-color: #1a479a;" text="1" textFill="WHITE">
+                  <JFXButton fx:id="floorVisD" onAction="#changeFloor1" style="-fx-background-color: #1a479a;" text="1" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>
@@ -260,7 +260,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="floorVisE" style="-fx-background-color: #1a479a;" text="2" textFill="WHITE">
+                  <JFXButton fx:id="floorVisE" onAction="#changeFloor2" style="-fx-background-color: #1a479a;" text="2" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>
@@ -268,7 +268,7 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="floorVisF" style="-fx-background-color: #1a479a;" text="3" textFill="WHITE">
+                  <JFXButton fx:id="floorVisF" onAction="#changeFloor3" style="-fx-background-color: #1a479a;" text="3" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>

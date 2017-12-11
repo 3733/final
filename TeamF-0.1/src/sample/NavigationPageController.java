@@ -34,6 +34,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.Line;
 
 import java.awt.*;
+import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -295,7 +296,34 @@ public class NavigationPageController implements Initializable, Data{
                         e.printStackTrace();
                     }
                 });
-            }});
+            }
+            else if(after.getPriv().equals(AuthenticationInfo.Privilege.STAFF)){
+                createServButton.setVisible(true);
+                existServButton.setVisible(true);
+                loginButton.setOnAction((event) -> {
+                    try {
+                        logout();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            else{
+                createServButton.setVisible(false);
+                editMapButton.setVisible(false);
+                editUsersButton.setVisible(false);
+                existServButton.setVisible(false);
+                loginButton.setOnAction((event) -> {
+                    try {
+                        login();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -737,9 +765,165 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
+    public void displayFloorButtons(){
+
+        String a = sequence.get(0);
+        int b = 0;
+        floorVisA.setText(a);
+        floorVisA.setVisible(true);
+        floorVisA.setOnAction((event) -> {
+            if(floorVisA.getText().equals("3")){
+                changeFloor3();
+            }
+            if(floorVisA.getText().equals("2")){
+                changeFloor2();
+            }
+            if(floorVisA.getText().equals("1")){
+                changeFloor1();
+            }
+            if(floorVisA.getText().equals("G")){
+                changeFloorG();
+            }
+            if(floorVisA.getText().equals("L1")){
+                changeFloorL1();
+            }
+            if(floorVisA.getText().equals("L2")){
+                changeFloorL2();
+            }});
+
+        for(int i = 1; i < sequence.size(); i++){
+            if(!sequence.get(i).equals(a)){
+                if(b == 0) {
+                    floorVisB.setVisible(true);
+                    floorVisB.setText(sequence.get(i));
+                    floorVisB.setOnAction((event) -> {
+                        if(floorVisB.getText().equals("3")){
+                            changeFloor3();
+                        }
+                        if(floorVisB.getText().equals("2")){
+                            changeFloor2();
+                        }
+                        if(floorVisB.getText().equals("1")){
+                            changeFloor1();
+                        }
+                        if(floorVisB.getText().equals("G")){
+                            changeFloorG();
+                        }
+                        if(floorVisB.getText().equals("L1")){
+                            changeFloorL1();
+                        }
+                        if(floorVisB.getText().equals("L2")){
+                            changeFloorL2();
+                        }});
+                }
+                else if(b==1){
+                    floorVisC.setVisible(true);
+                    floorVisC.setText(sequence.get(i));
+                    floorVisC.setOnAction((event) -> {
+                        if(floorVisC.getText().equals("3")){
+                            changeFloor3();
+                        }
+                        if(floorVisC.getText().equals("2")){
+                            changeFloor2();
+                        }
+                        if(floorVisC.getText().equals("1")){
+                            changeFloor1();
+                        }
+                        if(floorVisC.getText().equals("G")){
+                            changeFloorG();
+                        }
+                        if(floorVisC.getText().equals("L1")){
+                            changeFloorL1();
+                        }
+                        if(floorVisC.getText().equals("L2")){
+                            changeFloorL2();
+                        }});
+                }
+                else if(b==2){
+                    floorVisD.setVisible(true);
+                    floorVisD.setText(sequence.get(i));
+                    floorVisD.setOnAction((event) -> {
+                        if(floorVisD.getText().equals("3")){
+                            changeFloor3();
+                        }
+                        if(floorVisD.getText().equals("2")){
+                            changeFloor2();
+                        }
+                        if(floorVisD.getText().equals("1")){
+                            changeFloor1();
+                        }
+                        if(floorVisD.getText().equals("G")){
+                            changeFloorG();
+                        }
+                        if(floorVisD.getText().equals("L1")){
+                            changeFloorL1();
+                        }
+                        if(floorVisD.getText().equals("L2")){
+                            changeFloorL2();
+                        }});
+                }
+                else if(b==3){
+                    floorVisE.setVisible(true);
+                    floorVisE.setText(sequence.get(i));
+                    floorVisE.setOnAction((event) -> {
+                        if(floorVisE.getText().equals("3")){
+                            changeFloor3();
+                        }
+                        if(floorVisE.getText().equals("2")){
+                            changeFloor2();
+                        }
+                        if(floorVisE.getText().equals("1")){
+                            changeFloor1();
+                        }
+                        if(floorVisE.getText().equals("G")){
+                            changeFloorG();
+                        }
+                        if(floorVisE.getText().equals("L1")){
+                            changeFloorL1();
+                        }
+                        if(floorVisE.getText().equals("L2")){
+                            changeFloorL2();
+                        }});
+                }
+                else if(b==4){
+                    floorVisF.setVisible(true);
+                    floorVisF.setText(sequence.get(i));
+                    floorVisF.setOnAction((event) -> {
+                        if(floorVisF.getText().equals("3")){
+                            changeFloor3();
+                        }
+                        if(floorVisF.getText().equals("2")){
+                            changeFloor2();
+                        }
+                        if(floorVisF.getText().equals("1")){
+                            changeFloor1();
+                        }
+                        if(floorVisF.getText().equals("G")){
+                            changeFloorG();
+                        }
+                        if(floorVisF.getText().equals("L1")){
+                            changeFloorL1();
+                        }
+                        if(floorVisF.getText().equals("L2")){
+                            changeFloorL2();
+                        }});
+                }
+                b++;
+            }
+            a = sequence.get(i);
+        }
+
+    }
+
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
+        floorVisA.setVisible(false);
+        floorVisB.setVisible(false);
+        floorVisC.setVisible(false);
+        floorVisD.setVisible(false);
+        floorVisE.setVisible(false);
+        floorVisF.setVisible(false);
         ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         sequence.clear();
         data.directions.clear();
@@ -794,6 +978,7 @@ public class NavigationPageController implements Initializable, Data{
         data.directions.add(entry);
         Main.sendDirections();
 
+        displayFloorButtons();
 
         // Possible floors (in order): L2, L1, 0G, 01, 02, 03
         Vector<Vector<Node>> paths = separator(path);
@@ -1193,14 +1378,8 @@ public class NavigationPageController implements Initializable, Data{
     public void logout() throws IOException, InterruptedException{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
+        Main.logOutUser();
         Main.mapScreen();
-        loginButton.setOnAction((event) -> {
-            try {
-                login();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         clearFields();
         clear();
     }

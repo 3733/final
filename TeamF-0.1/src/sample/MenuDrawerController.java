@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
@@ -29,7 +30,11 @@ public class MenuDrawerController implements Initializable{
     @FXML
     private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
-    private JFXListView<HBox> directionSteps, floorPoints;
+    private JFXListView<HBox> directionSteps;
+    @FXML
+    private JFXListView floorPoints;
+    @FXML
+    private JFXButton reverseButton;
 
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
@@ -74,23 +79,9 @@ public class MenuDrawerController implements Initializable{
 
     private Vector<JFXButton> floorButtons = new Vector<>();
 
-    //popluating list view -- three
-    ObservableList<String> threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
+    ObservableList<String> allEntries;
 
-    // Second Floor
-    ObservableList<String> twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
-
-    // First Floor
-    ObservableList<String> oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
-
-    // Ground Floor
-    ObservableList<String> groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
-
-    // Lower 1 Floor
-    ObservableList<String> lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
-
-    // Lower 2 Floor
-    ObservableList<String> lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
+    ObservableList<String> threeItems, twoItems, oneItems, groundItems, lowerOneItems, lowerTwoItems;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -102,8 +93,40 @@ public class MenuDrawerController implements Initializable{
         if(data.destinationNode!=null){
             endLabel.setText(data.destinationNode.getLongName().trim());
         }
+        floorPoints = new JFXListView();
 
-        setDirectionSteps();
+        //popluating list view -- three
+        threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
+
+        // Second Floor
+        twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
+
+        // First Floor
+        oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
+
+        // Ground Floor
+        groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
+
+        // Lower 1 Floor
+        lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
+
+        // Lower 2 Floor
+        lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
+
+        // All entries
+        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
+
+
+        if(!data.directions.isEmpty()){
+            floorPoints.setVisible(false);
+            directionSteps.setVisible(true);
+            setDirectionSteps();
+        }
+        else{
+            floorPoints.setVisible(true);
+            directionSteps.setVisible(false);
+            showPOI();
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,9 +295,62 @@ public class MenuDrawerController implements Initializable{
         endLabel.setText(data.destinationNode.getLongName().trim());
     }
 
+    public void showPOI(){
+        ObservableList<HBox> fuckThis = FXCollections.observableArrayList();
+        for(int i = 0; i<allEntries.size(); i++){
+            HBox goddammit = new HBox();
+            Label label = new Label();
+            label.setText(allEntries.get(i));
+
+            goddammit.getChildren().addAll(label);
+            goddammit.setAlignment(Pos.CENTER_LEFT);
+
+            fuckThis.add(goddammit);
+        }
+
+        floorPoints.setVisible(true);
+        floorPoints.setItems(fuckThis);
+        /*if(data.currentMap.equals("3")) {
+            floorPoints.setItems(threeItems);
+        }
+        else if(data.currentMap.equals("2")) {
+            floorPoints.setItems(twoItems);
+        }
+        else if(data.currentMap.equals("1")) {
+            floorPoints.setItems(oneItems);
+        }
+        else if(data.currentMap.equals("G")) {
+            floorPoints.setItems(groundItems);
+        }
+        else if(data.currentMap.equals("L1")) {
+            floorPoints.setItems(lowerOneItems);
+        }
+        else if(data.currentMap.equals("L2")) {
+            floorPoints.setItems(lowerTwoItems);
+        }*/
+    }
+
+    //Displays the list of directions
     public void setDirectionSteps(){
         directionSteps.setVisible(true);
         directionSteps.setItems(data.directions);
+    }
+
+    public void reverseDirections() throws IOException, InterruptedException {
+        System.out.println("WUT????");
+        /*String begin = startLabel.getText();
+        String dest = endLabel.getText();
+        startLabel.setText(dest);
+        endLabel.setText(begin);
+        ObservableList<HBox> current = FXCollections.observableArrayList();
+        for(int i = data.directions.size(); i >0; i--){
+            current.add(data.directions.get(i-1));
+        }
+        data.directions.clear();
+        for (HBox h : current){
+            data.directions.add(h);
+        }
+        setDirectionSteps();*/
     }
 
 }

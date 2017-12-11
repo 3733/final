@@ -30,8 +30,8 @@ import java.util.Vector;
 public class Main extends Application implements Data{
 
     private  static String destination;
-    private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private String filePath = "/sample/UI/Icons/";
+    private Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "A2@yorha.net");
 
     private static Stage stage;
     private static Stage anotherStage;
@@ -78,7 +78,7 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
-
+        data.loggedInGuy = guest;
 
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
@@ -420,13 +420,20 @@ public class Main extends Application implements Data{
         menuDrawerController.setDirectionSteps();
     }
 
+    public static void logOutUser(){
+        Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "z@yorha.net");
+        data.loggedInGuy = guest;
+    }
+
     public static void setLoggedInGuy(Staff user){
-        loggedInGuy = user;
+        data.loggedInGuy = user;
     }
 
     public static Staff getLoggedInGuy(){
-        return loggedInGuy;
+        return data.loggedInGuy;
     }
+
+
     public static void main(String[] args) throws IOException{
 
         //testEmbeddedDB db = new testEmbeddedDB();

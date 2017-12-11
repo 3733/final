@@ -80,4 +80,5 @@ public class DataHolder {
     public Vector<Node> nodeAlign = new Vector<Node>();
 
     public ObservableList<HBox> directions =  FXCollections.observableArrayList();
+    public Staff loggedInGuy;
 }

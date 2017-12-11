@@ -57,7 +57,7 @@ public class MapEditPageController implements Initializable, Data{
     @FXML
     private SplitMenuButton algoMenu;
     @FXML
-    private JFXButton editNodeBtn, editEdgeBtn;
+    private JFXButton editNodeBtn, editEdgeBtn, loginButton;
     @FXML
     private Canvas pathCanvas;
     @FXML
@@ -326,7 +326,14 @@ public class MapEditPageController implements Initializable, Data{
     public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     @FXML
-    public void logout(){Main.startScreen();}
+    public void logout() throws IOException, InterruptedException{
+        AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+        SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
+
+        Main.logOutUser();
+        Main.mapScreen();
+        clear();
+    }
 
     @FXML
     public void back() throws IOException, InterruptedException{Main.mapScreen();}
