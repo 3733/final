@@ -23,7 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
@@ -39,6 +39,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,9 +47,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
@@ -80,6 +79,9 @@ public class NavigationPageController implements Initializable, Data{
     private AnchorPane mainPane;
     @FXML
     private JFXTabPane tabPane;
+
+    @FXML
+    private AnchorPane buttonHolder;
 
     @FXML
     private VBox labelBox;
@@ -158,6 +160,7 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<String> floorsVisited = new Vector<>();
 
+    private Vector<ImageView> buttonPanes = new Vector<>();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -413,9 +416,11 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloorL1() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
+        data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
         testDrawDirections(Data.data.pathL1);
+        clearButtons();
+        drawButtons(data.buttonNodes, "L1");
         Data.data.currentMap = "L1";
         hierarchicalText("L1");
     }
@@ -424,9 +429,11 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloorL2() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
+        data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
         testDrawDirections(Data.data.pathL2);
+        clearButtons();
+        drawButtons(data.buttonNodes,"L2");
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
     }
@@ -435,9 +442,11 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloor1() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,x,y);
+        data.gc.clearRect(0,0, x, y);
         map.setImage(Data.data.firstFloor);
         testDrawDirections(Data.data.pathFirst);
+        clearButtons();
+        drawButtons(data.buttonNodes, "1");
         Data.data.currentMap = "1";
         hierarchicalText("1");
     }
@@ -446,11 +455,11 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloor2() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        if(Data.data.gc != null){
-             Data.data.gc.clearRect(0, 0, x, y);
-        }
+        data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.secondFloor);
         testDrawDirections(Data.data.pathSecond);
+        clearButtons();
+        drawButtons(data.buttonNodes, "2");
         Data.data.currentMap = "2";
         hierarchicalText("2");
     }
@@ -459,11 +468,11 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloor3() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        if(Data.data.gc != null) {
-            Data.data.gc.clearRect(0, 0, x, y);
-        }
+        data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.thirdFloor);
         testDrawDirections(Data.data.pathThird);
+        clearButtons();
+        drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
         hierarchicalText("3");
     }
@@ -472,9 +481,11 @@ public class NavigationPageController implements Initializable, Data{
     public void changeFloorG() {
         double y = pathCanvas.getHeight();
         double x = pathCanvas.getWidth();
-        Data.data.gc.clearRect(0,0,1000,1000);
+        data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.GFloor);
         testDrawDirections(Data.data.pathG);
+        clearButtons();
+        drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
         hierarchicalText("G");
     }
@@ -503,8 +514,10 @@ public class NavigationPageController implements Initializable, Data{
     // Path Finding Functions
 
     public void findPath() throws IOException, InterruptedException {
-
+        clear();
         this.path = SearchEngine.NodeToNode(data.destinationNode,currentAlgo);
+
+        data.buttonNodes = findFloorHyperLinks(this.path);
 
         MultiFloorPathDrawing(this.path);
 
@@ -514,7 +527,8 @@ public class NavigationPageController implements Initializable, Data{
         sendButton.setVisible(true);
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
-        setMap(lastFloor);
+        System.out.println("This is the last floor: " + lastFloor);
+        setMap(lastFloor.trim());
     }
 
 
@@ -730,7 +744,6 @@ public class NavigationPageController implements Initializable, Data{
     // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
-        ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         sequence.clear();
         ObservableList<HBox> populateSteps = FXCollections.observableArrayList();
         //edit later
@@ -811,7 +824,6 @@ public class NavigationPageController implements Initializable, Data{
                 }
             }
         }
-        setMap("1");
     }
 
     public void setArrows(Vector<String> floorsNeeded){
@@ -842,21 +854,27 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     public void setMap(String map) {
-        map.replaceAll("\\s+","");
+        if(tabPane.getSelectionModel().isSelected(1)){
+            tabPane.getSelectionModel().select(2);
+        } else {
+            tabPane.getSelectionModel().select(1);
+        }
+
         if(map.equals("L2")) {
-            changeFloorL2();
+            tabPane.getSelectionModel().select(5);
         } else if(map.equals("L1")) {
-            changeFloorL1();
+            tabPane.getSelectionModel().select(4);
         }else if(map.equals("G")) {
-            changeFloorG();
+            tabPane.getSelectionModel().select(3);
         } else if(map.equals("01") || map.equals("1")) {
-            changeFloor1();
+            tabPane.getSelectionModel().select(2);
         } else if(map.equals("02") || map.equals("2")) {
-            changeFloor2();
+            tabPane.getSelectionModel().select(1);
         } else if(map.equals("03") || map.equals("3")){
-            changeFloor3();
+            tabPane.getSelectionModel().select(0);
         }
     }
+
     // Purpose: Draw a path of nodes on the map
     @FXML
     public void testDrawDirections(Vector<Node> path) {
@@ -885,33 +903,153 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
-    //Purpose: This draws all the nodes and edges currently in the database
-    //Used for debugging and admin
-    /*@FXML
-    public void drawAll() throws IOException{
-        BufferedImage firstFloor = ImageIO.read(getClass().getResource("/sample/UI/Icons/01_thefirstfloor.png"));
-        Graphics2D pathImage = firstFloor.createGraphics();
-        Vector<Edge> edges = testEmbeddedDB.getAllEdges();
-        Vector<Node> nodes = testEmbeddedDB.getAllNodes();
-        int edgeLength = edges.size();
-        int nodeLength = nodes.size();
-        pathImage.setStroke(new BasicStroke(10)); // Controlling the width of the shapes drawn
-        for(int i = 0; i < edgeLength; i++ ) {
-            Node nodeStart = edges.get(i).getStart();
-            System.out.println("Start: " + nodeStart.getShortName());
-            Node nodeEnd = edges.get(i).getEnd();
-            System.out.println("Stop: " + nodeEnd.getShortName());
-            pathImage.setColor( new java.awt.Color(0,0,0)); // This color is black
-            pathImage.drawLine(nodeStart.getxCoordinate(), nodeStart.getyCoordinate(),nodeEnd.getxCoordinate() ,nodeEnd.getyCoordinate());
+    /**
+     * Draw the all the buttons of a current floor on the navigation screen
+     * @param changeFloorNodes The vector of nodes that change to other floors for the current path
+     * @param currentFloor String of the current floor that is being displayed
+     */
+    @FXML
+    public void drawButtons(Vector<Node> changeFloorNodes, String currentFloor) {
+        if(changeFloorNodes != null) {
+            int length = changeFloorNodes.size();
+            for (int i = 0; i < length; i += 2) {
+                System.out.println("This is the floor node: " + changeFloorNodes.get(i).getNodeID());
+                System.out.println("This is the other floor node: " + changeFloorNodes.get(i + 1).getNodeID());
+                Node floor1Node = changeFloorNodes.get(i);
+                Node floor2Node = changeFloorNodes.get(i);
+                if(i + 1 < length) {
+                    floor2Node = changeFloorNodes.get(i + 1);
+                }
+                int x = floor1Node.getxCoordinate();
+                int y = floor1Node.getyCoordinate();
+                System.out.println("This is currentFloor: " + currentFloor + " This is the changefloor: " + floor1Node.getFloor());
+                if (floor1Node.getFloor().trim().equals(currentFloor.trim())) {
+                    System.out.println("This happened");
+                    createFloorChangeButton(x / data.divisionCst + data.offset, y / data.divisionCst + data.offset, floor2Node.getFloor());
+                } else if (floor2Node.getFloor().trim().equals(currentFloor.trim())) {
+                    System.out.println("This happened too");
+                    x = floor2Node.getxCoordinate();
+                    y = floor2Node.getyCoordinate();
+                    createFloorChangeButton(x / data.divisionCst + data.offset, y / data.divisionCst + data.offset, floor1Node.getFloor());
+                }
+            }
         }
-        for(int i = 0; i < nodeLength; i++){
-            Node node = nodes.get(i);
-            pathImage.setColor( new java.awt.Color(236,4,4)); // This color is black
-            pathImage.drawOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
-            pathImage.fillOval(node.getxCoordinate() - 10,node.getyCoordinate() - 10,15,15);
+    }
+
+    /**
+     * Create a floor change button stored inside one big anchorpane in the navigation page controller
+     * @param canvasX The canvas x location
+     * @param canvasY The canvas y location
+     * @param floorIn The floor that the node is going to
+     */
+    @FXML
+    private void createFloorChangeButton(double canvasX, double canvasY, String floorIn) {
+        ImageView floorIcon = new ImageView();
+
+        int fromFloor = currentFloor();
+        String floorTo = floorIn.trim();
+
+        if(floorTo.equals("L2")) {
+            floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDownL2.png")));
+        } else if (floorTo.equals("L1")) {
+            if(fromFloor < 1){
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUpL1.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDownL2.png")));
+            }
+        } else if (floorTo.equals("G")) {
+            if(fromFloor < 2) {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUpG.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDownG.png")));
+            }
+        } else if (floorTo.equals("1")) {
+            if(fromFloor < 3) {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp1.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDown1.png")));
+            }
+        } else if (floorTo.equals("2")) {
+            if(fromFloor < 4) {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp2.png")));
+            } else {
+                floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevDown2.png")));
+            }
+        } else if (floorTo.equals("3")) {
+            floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp3.png")));
         }
-        map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
-    } */
+
+        System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
+        floorIcon.setFitHeight(20);
+        floorIcon.setFitWidth(20);
+        floorIcon.setX(canvasX - 10);
+        floorIcon.setY(canvasY - 10);
+        floorIcon.toFront();
+        floorIcon.setPickOnBounds(true);
+        floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("TRYING TO CHANGE THE MAP TO: " + floorTo);
+                setMap(floorTo.trim());
+            }
+        });
+        buttonHolder.getChildren().add(floorIcon);
+    }
+
+    /**
+     * @return int The current floor, from 0 = L2 to 5 = third floor
+     */
+    public int currentFloor() {
+        int selected = tabPane.getSelectionModel().getSelectedIndex();
+        switch (selected){
+            case 5:
+                return 0;
+            case 4:
+                return 1;
+            case 3:
+                return 2;
+            case 2:
+                return 3;
+            case 1:
+                return 4;
+            case 0:
+                return 5;
+            default:
+                return -1;
+        }
+    }
+
+    /**
+     * Clear all the current floor change buttons on the navigation page
+     */
+    public void clearButtons() {
+        buttonHolder.getChildren().clear();
+    }
+
+    /**
+     * Analyze the current path in order to determine where to put floor change buttons
+     * @param path The current path drawn on the map
+     * @return Vector<Node> Vector containing all the nodes which connect to another floor
+     * for the current path
+     */
+    public Vector<Node> findFloorHyperLinks(Vector<Node> path) {
+        Vector<Node> returnVector = new Vector<Node>();
+        int length = path.size();
+        String floor = path.get(0).getFloor();
+        for(int i = 0; i < length; i++){
+            Node n = path.get(i);
+            if(!n.getFloor().equals(floor)) {
+                if (i < length) {
+                    System.out.println("Added: " + path.get(i).getNodeID());
+                    System.out.println("Added: " + path.get(i-1).getNodeID());
+                    returnVector.add(path.get(i-1));
+                    returnVector.add(path.get(i));
+                    floor = path.get(i).getFloor();
+                }
+            }
+        }
+        return returnVector;
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
@@ -946,7 +1084,7 @@ public class NavigationPageController implements Initializable, Data{
         });
 
         final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<Point2D>();
-        pathCanvas.setOnMousePressed(new EventHandler<MouseEvent>() {
+        buttonHolder.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 lastMouseCoordinates.set(new Point2D(event.getX(), event.getY()));
@@ -1083,58 +1221,12 @@ public class NavigationPageController implements Initializable, Data{
         imageView.setViewport(new Rectangle2D(0, 0, width, height));
     }
 
-    private void resetStack(ScrollPane pane, double width, double height) {
-        pane.setViewportBounds(new BoundingBox(0,0,width,height));
-    }
-
-    // shift the viewport of the imageView by the specified delta, clamping so
-    // the viewport does not move off the actual image:
-    private void shiftMap(ImageView imageView, Point2D delta) {
-        Rectangle2D viewport = imageView.getViewport();
-
-        double width = imageView.getImage().getWidth() ;
-        double height = imageView.getImage().getHeight() ;
-
-        double maxX = width - viewport.getWidth();
-        double maxY = height - viewport.getHeight();
-
-        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
-        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
-
-        imageView.setViewport(new Rectangle2D(minX, minY, viewport.getWidth(), viewport.getHeight()));
-    }
-
-    private void shiftStack(ScrollPane pane, Point2D delta) {
-        Bounds viewport = pane.getViewportBounds();
-
-        double width = pathCanvas.getWidth() ;
-        double height = pathCanvas.getHeight();
-
-        double maxX = width - viewport.getWidth();
-        double maxY = height - viewport.getHeight();
-
-        double minX = clamp(viewport.getMinX() - delta.getX(), 0, maxX);
-        double minY = clamp(viewport.getMinY() - delta.getY(), 0, maxY);
-
-        pane.setViewportBounds(new BoundingBox(minX, minY, viewport.getWidth(), viewport.getHeight()));
-    }
-
     private double clamp(double value, double min, double max) {
         if (value < min)
             return min;
         if (value > max)
             return max;
         return value;
-    }
-
-    // convert mouse coordinates in the imageView to coordinates in the actual image:
-    private Point2D imageViewToImage(ImageView imageView, Point2D imageViewCoordinates) {
-        double xProportion = imageViewCoordinates.getX() / imageView.getBoundsInLocal().getWidth();
-        double yProportion = imageViewCoordinates.getY() / imageView.getBoundsInLocal().getHeight();
-        Rectangle2D viewport = imageView.getViewport();
-        return new Point2D(
-                viewport.getMinX() + xProportion * viewport.getWidth(),
-                viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1154,6 +1246,8 @@ public class NavigationPageController implements Initializable, Data{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
+        data.buttonNodes = null;
+        clearButtons();
     }
 
     @FXML
