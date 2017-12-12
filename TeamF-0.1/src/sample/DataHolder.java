@@ -3,6 +3,7 @@ package sample;
 //import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -79,6 +80,7 @@ public class DataHolder {
     public double divisionCst = 3.87;
     public int offset = 2;
 
+    public PathTransition animation;
     /**
      * This holds all the current numbers of the screen sized
      */

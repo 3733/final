@@ -1,5 +1,7 @@
 package sample;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import javafx.animation.*;
 //import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
@@ -51,6 +53,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -83,6 +87,10 @@ public class NavigationPageController implements Initializable, Data{
     private ScrollPane scrollMap;
     @FXML
     private AnchorPane mainPane;
+
+    @FXML
+    private AnchorPane animationPane;
+
     @FXML
     private JFXTabPane tabPane;
 
@@ -196,6 +204,8 @@ public class NavigationPageController implements Initializable, Data{
     private MenuDrawerController menuDrawerController;
 
     private Vector<ImageView> buttonPanes = new Vector<>();
+
+    private Vector<TranslateTransition> animations = new Vector<>();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -466,10 +476,12 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
-        testDrawDirections(Data.data.pathL1);
+        clearAnimations();
+        drawAnimation(data.pathL1);
         clearButtons();
         drawButtons(data.buttonNodes, "L1");
         Data.data.currentMap = "L1";
+        data.animation.play();
         hierarchicalText("L1");
         update();
     }
@@ -480,9 +492,11 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
-        testDrawDirections(Data.data.pathL2);
+        clearAnimations();
+        drawAnimation(data.pathL2);
         clearButtons();
         drawButtons(data.buttonNodes,"L2");
+        data.animation.play();
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
         update();
@@ -494,9 +508,12 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0, x, y);
         map.setImage(Data.data.firstFloor);
-        testDrawDirections(Data.data.pathFirst);
+        clearAnimations();
+        drawAnimation(data.pathFirst);
         clearButtons();
         drawButtons(data.buttonNodes, "1");
+        if(data.animation != null)
+            data.animation.play();
         Data.data.currentMap = "1";
         hierarchicalText("1");
         update();
@@ -510,9 +527,12 @@ public class NavigationPageController implements Initializable, Data{
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.secondFloor);
-        testDrawDirections(Data.data.pathSecond);
+        clearAnimations();
+        drawAnimation(data.pathSecond);
         clearButtons();
         drawButtons(data.buttonNodes, "2");
+        if(data.animation != null)
+            data.animation.play();
         Data.data.currentMap = "2";
         hierarchicalText("2");
         update();
@@ -526,7 +546,10 @@ public class NavigationPageController implements Initializable, Data{
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.thirdFloor);
-        testDrawDirections(Data.data.pathThird);
+        clearAnimations();
+        drawAnimation(data.pathThird);
+        if(data.animation != null)
+            data.animation.play();
         clearButtons();
         drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
@@ -540,7 +563,8 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.GFloor);
-        testDrawDirections(Data.data.pathG);
+        clearAnimations();
+        drawAnimation(data.pathG);
         clearButtons();
         drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
@@ -1113,17 +1137,20 @@ public class NavigationPageController implements Initializable, Data{
             String nameDept = path.get(0).getShortName();
             // Setting up the proper color settings
             Data.data.gc.setLineWidth(3);
-            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
             Data.data.gc.stroke();
             // Iterate through all the path nodes to draw the path
             for (int i = 0; i < length; i++) {
                 Node node = path.get(i);
+                Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
                 //System.out.println("This is node: " + node.getNodeID());
                 if (i + 1 < length) {
                     Node node2 = path.get(i + 1);
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
+                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst
+                                , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
+                        Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(255,0,0));
                         Point2D calcPoint = convertFromImage(node.getxCoordinate(),node.getyCoordinate());
                         Point2D calcPoint2 = convertFromImage(node2.getxCoordinate(), node2.getyCoordinate());
                         Data.data.gc.strokeLine(calcPoint.getX(), calcPoint.getY(), calcPoint2.getX(), calcPoint2.getY());
@@ -1134,6 +1161,106 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
+    public void drawAnimation( Vector<Node> path) {
+        if (path != null) {
+            System.out.println("This is animation");
+            int length = path.size();
+            Path animationPath = new Path();
+            Vector<PathElement> holder = new Vector<>();
+            int j = 0;
+            int totalDistance = 0;
+            for (int i = 0; i < length; i++) {
+                Node node = path.get(i);
+
+                if (i + 1 < length) {
+                    Node node2 = path.get(i + 1);
+                    System.out.println(node2.getNodeID());
+                    if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
+                        Point2D point = convertFromCanvas(node.getxCoordinate(), node.getyCoordinate());
+                        Point2D point2 = convertFromCanvas(node2.getxCoordinate(), node2.getyCoordinate());
+                        MoveTo to = new MoveTo(point.getX(), point.getY());
+                        LineTo toLine = new LineTo(point2.getX(), point2.getY());
+                        int x1 = node.getxCoordinate();
+                        int x2 = node2.getxCoordinate();
+                        int y1 = node.getyCoordinate();
+                        int y2 = node2.getyCoordinate();
+                        totalDistance += Math.sqrt(((x2 * x2) - (x1*x1)) + ((y2 * y2) - (y1 * y1)));
+                        holder.add(2 * j, to);
+                        holder.add(2 * j + 1, toLine);
+                        j++;
+                    }
+                }
+            }
+            //holder.remove(holder.size()-1);
+            //holder.add(new ClosePath());
+            int length2 = holder.size();
+            PathElement[] pathEl = new PathElement[length2];
+            for(int i = 0; i < length2; i++){
+                pathEl[i] = holder.get(i);
+            }
+            animationPath.setStroke(Color.rgb(26,71,154));
+            animationPath.setStrokeWidth(3);
+            //animationPath.setStrokeType();
+            animationPath.getElements().addAll(pathEl);
+
+            ImageView person = new ImageView();
+            person.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/stick_fig_png.png")));
+
+            person.setPreserveRatio(true);
+            person.setX(20);
+
+            Rectangle rect = new Rectangle(0,0,200,200);
+
+            Circle rectangle = new Circle(3, 0,3);
+            rectangle.setFill(Color.LIGHTBLUE);
+            rect.setFill(Color.BLUE);
+            PathTransition animation = new PathTransition();
+            animation.setNode(rectangle);
+            animation.setRate(5);
+            animation.setPath(animationPath);
+            animation.setInterpolator(Interpolator.LINEAR);
+            animation.setDuration(new Duration(5000));
+            animation.setCycleCount(Timeline.INDEFINITE);
+            animation.play();
+            data.animation = animation;
+            animationPane.getChildren().addAll(animationPath,rectangle);
+
+            /*// Iterate through all the path nodes to draw the path
+            for (int i = 0; i < length; i++) {
+                Node node = path.get(i);
+                //System.out.println("This is node: " + node.getNodeID());
+                if (i + 1 < length) {
+                    Node node2 = path.get(i + 1);
+                    //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
+                    // Lines are drawn offset,
+                    if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
+                        Rectangle rectSeq = new Rectangle(node.getxCoordinate() / data.divisionCst + data.offset,node.getyCoordinate() / data.divisionCst + data.offset,3,3);
+                        rectSeq.setFill(Color.RED);
+                        TranslateTransition animation = new TranslateTransition(Duration.millis(1000), rectSeq);
+                        animation.setFromX(node.getxCoordinate() / data.divisionCst + data.offset);
+                        animation.setToX(node2.getxCoordinate() / data.divisionCst + data.offset);
+                        animation.setFromY(node.getyCoordinate() / data.divisionCst + data.offset);
+                        animation.setToY(node2.getxCoordinate() / data.divisionCst + data.offset);
+                        animation.setAutoReverse(true);
+                        animations.add(animation);
+                        animationPane.getChildren().add(rectSeq);
+
+                        animationPane.getChildren().add(new Rectangle(200,200,100,100));
+                    }
+                }
+            }
+            int length2 = animations.size();
+            for (int i = 0; i < length2; i++) {
+                animations.get(i).play();
+            }
+            String floor = path.get(0).getFloor().replaceAll("\\s+","");
+        }*/
+        }
+    }
+
+    public void clearAnimations() {
+        animationPane.getChildren().clear();
+    }
     /**
      * Draw the all the buttons of a current floor on the navigation screen
      * @param changeFloorNodes The vector of nodes that change to other floors for the current path
@@ -1346,11 +1473,10 @@ public class NavigationPageController implements Initializable, Data{
             @Override
             public void handle(ScrollEvent event) {
                 event.consume();
-
+                data.animation.play();
                 if (event.getDeltaY() == 0) {
                     return;
                 }
-
                 double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
                 Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
                 if (!(scaleFactor * stackPane.getScaleX() < 1)) {
