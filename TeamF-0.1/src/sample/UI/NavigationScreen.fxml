@@ -227,7 +227,7 @@
                </tabs>
             </JFXTabPane>
             <JFXListView fx:id="searchList" layoutX="445.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="618.0" visible="false" />
-            <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
+            <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="891.0">
                <children>
                   <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
                      <font>
@@ -274,6 +274,14 @@
                         <Font name="Montserrat Regular" size="14.0" />
                      </font>
                   </JFXButton>
+                  <JFXButton fx:id="insuranceButton" contentDisplay="CENTER" onAction="#insurance" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Insurance Info" textFill="WHITE">
+                     <font>
+                        <Font name="Montserrat Regular" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="417.0" top="68.0" />
+                     </HBox.margin>
+                  </JFXButton>
                </children>
             </HBox>
             <HBox alignment="TOP_RIGHT" layoutX="1250.0" layoutY="30.0" prefHeight="65.0" prefWidth="204.0">
@@ -301,15 +309,7 @@
                   </JFXButton>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_RIGHT" layoutX="1250.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0">
-               <children>
-                  <JFXButton fx:id="aboutButton" onAction="#about" text="ⓒ Fuschia Fairies">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </JFXButton>
-               </children>
-            </HBox>
+            <HBox alignment="BOTTOM_RIGHT" layoutX="1250.0" layoutY="720.0" prefHeight="45.0" prefWidth="200.0" />
             <JFXDrawersStack alignment="TOP_LEFT" prefHeight="838.0" prefWidth="346.0">
                <children>
                   <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />

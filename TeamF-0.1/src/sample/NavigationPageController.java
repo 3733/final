@@ -1,6 +1,7 @@
 package sample;
 
 //import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -1717,6 +1718,8 @@ public class NavigationPageController implements Initializable, Data{
         return null;
 
     }
+
+
     private void update(){
         FXMLLoader menuLoader = new FXMLLoader();
         menuLoader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
@@ -1728,7 +1731,22 @@ public class NavigationPageController implements Initializable, Data{
         }
 
 
-        mainMenu.setSidePane(menuBox);
+        if(mainMenu!=null){
+            mainMenu.setSidePane(menuBox);
+        }
+
     }
+
+
+    @FXML
+    public void insurance(){
+        HealthCareRun health = new HealthCareRun();
+        try {
+            health.run(0,0,600,350,"view/stylesheets/default.css","","");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
