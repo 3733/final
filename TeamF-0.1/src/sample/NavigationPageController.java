@@ -282,7 +282,7 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
 
-        data.startEndNodes = null;
+        data.startEndNodes = new Vector<>();
 
         startZoom();
     }
@@ -419,7 +419,7 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
-        testDrawDirections(Data.data.pathL1);
+        drawDirections(Data.data.pathL1);
         clearButtons();
         drawButtons(data.buttonNodes, "L1");
         Data.data.currentMap = "L1";
@@ -433,7 +433,7 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
-        testDrawDirections(Data.data.pathL2);
+        drawDirections(Data.data.pathL2);
         clearButtons();
         drawButtons(data.buttonNodes,"L2");
         Data.data.currentMap = "L2";
@@ -447,7 +447,7 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0, x, y);
         map.setImage(Data.data.firstFloor);
-        testDrawDirections(Data.data.pathFirst);
+        drawDirections(Data.data.pathFirst);
         clearButtons();
         drawButtons(data.buttonNodes, "1");
         Data.data.currentMap = "1";
@@ -461,7 +461,7 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.secondFloor);
-        testDrawDirections(Data.data.pathSecond);
+        drawDirections(Data.data.pathSecond);
         clearButtons();
         drawButtons(data.buttonNodes, "2");
         Data.data.currentMap = "2";
@@ -475,7 +475,7 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0, 0, x, y);
         map.setImage(Data.data.thirdFloor);
-        testDrawDirections(Data.data.pathThird);
+        drawDirections(Data.data.pathThird);
         clearButtons();
         drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
@@ -489,7 +489,7 @@ public class NavigationPageController implements Initializable, Data{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.GFloor);
-        testDrawDirections(Data.data.pathG);
+        drawDirections(Data.data.pathG);
         clearButtons();
         drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
@@ -834,6 +834,7 @@ public class NavigationPageController implements Initializable, Data{
         Vector<Node> startEnd = new Vector<Node>();
         startEnd.add(path.get(0));
         startEnd.add(path.get(path.size() - 1));
+        data.startEndNodes = startEnd;
     }
 
     public void setArrows(Vector<String> floorsNeeded){
@@ -885,9 +886,12 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
-    // Purpose: Draw a path of nodes on the map
+    /**
+     * This function draws the directions on the canvas
+     * @param path
+     */
     @FXML
-    public void testDrawDirections(Vector<Node> path) {
+    public void drawDirections(Vector<Node> path) {
         if(path != null) {
             int length = path.size();
             String nameDest = path.get(length - 1).getShortName();
@@ -989,7 +993,6 @@ public class NavigationPageController implements Initializable, Data{
             floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp3.png")));
         }
 
-        System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
         floorIcon.setFitHeight(20);
         floorIcon.setFitWidth(20);
         floorIcon.setX(canvasX - 10);
@@ -999,7 +1002,6 @@ public class NavigationPageController implements Initializable, Data{
         floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("TRYING TO CHANGE THE MAP TO: " + floorTo);
                 setMap(floorTo.trim());
             }
         });
@@ -1064,11 +1066,10 @@ public class NavigationPageController implements Initializable, Data{
     /**
      * This draws start and end icons if it is the right floor
      */
-    public void     drawStartFinish() {
-        System.out.println("Drawn the start or finish");
+    public void drawStartFinish() {
+        //System.out.println("Drawn the start or finish");
         int fromFloor = currentFloor();
-        System.out.println("This is the current floor int: " + currentFloor());
-        String startFloor;
+        //System.out.println("This is the current floor int: " + currentFloor());
         if(data.startEndNodes != null) {
             if (data.startEndNodes.get(0).getFloor().trim().equals("L2")) {
                 if (fromFloor == 0) {
@@ -1098,29 +1099,29 @@ public class NavigationPageController implements Initializable, Data{
         }
 
         if (data.startEndNodes != null) {
-            if (data.startEndNodes.get(1).getFloor().equals("L2")) {
+            if (data.startEndNodes.get(1).getFloor().trim().equals("L2")) {
                 if (fromFloor == 0) {
-                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate(), data.startEndNodes.get(1).getyCoordinate());
+                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate() / data.divisionCst, data.startEndNodes.get(1).getyCoordinate() / data.divisionCst);
                 }
-            } else if (data.startEndNodes.get(1).getFloor().equals("L1")) {
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("L1")) {
                 if (fromFloor == 1) {
-                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate(), data.startEndNodes.get(1).getyCoordinate());
+                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate() / data.divisionCst, data.startEndNodes.get(1).getyCoordinate() / data.divisionCst);
                 }
-            } else if (data.startEndNodes.get(1).getFloor().equals("G")) {
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("G")) {
                 if (fromFloor == 2) {
-                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate(), data.startEndNodes.get(1).getyCoordinate());
+                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate() / data.divisionCst, data.startEndNodes.get(1).getyCoordinate() / data.divisionCst);
                 }
-            } else if (data.startEndNodes.get(1).getFloor().equals("1")) {
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("1")) {
                 if (fromFloor == 3) {
-                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate(), data.startEndNodes.get(1).getyCoordinate());
+                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate() / data.divisionCst, data.startEndNodes.get(1).getyCoordinate() / data.divisionCst);
                 }
-            } else if (data.startEndNodes.get(1).getFloor().equals("2")) {
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("2")) {
                 if (fromFloor == 4) {
-                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate(), data.startEndNodes.get(1).getyCoordinate());
+                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate() / data.divisionCst, data.startEndNodes.get(1).getyCoordinate() / data.divisionCst);
                 }
-            } else if (data.startEndNodes.get(1).getFloor().equals("3")) {
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("3")) {
                 if (fromFloor == 5) {
-                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate(), data.startEndNodes.get(1).getyCoordinate());
+                    drawFinishIcon(data.startEndNodes.get(1).getxCoordinate() / data.divisionCst, data.startEndNodes.get(1).getyCoordinate() / data.divisionCst);
                 }
             }
         }
@@ -1129,11 +1130,11 @@ public class NavigationPageController implements Initializable, Data{
     public void drawStartIcon(double canvasX, double canvasY) {
         ImageView floorIcon = new ImageView();
         floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/you-are-here-icon.png")));
-        System.out.println("Printing a starting pane at: (" + canvasX + ", " + canvasY + ")");
+        //System.out.println("Printing a starting pane at: (" + canvasX + ", " + canvasY + ")");
         floorIcon.setFitHeight(20);
         floorIcon.setFitWidth(20);
         floorIcon.setX(canvasX - 10);
-        floorIcon.setY(canvasY - 10);
+        floorIcon.setY(canvasY - 20);
         floorIcon.toFront();
         buttonHolder.getChildren().add(floorIcon);
     }
@@ -1141,11 +1142,11 @@ public class NavigationPageController implements Initializable, Data{
     public void drawFinishIcon(double canvasX, double canvasY) {
         ImageView floorIcon = new ImageView();
         floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/Finish.png")));
-        System.out.println("Printing a finish pane at: (" + canvasX + ", " + canvasY + ")");
+        //System.out.println("Printing a finish pane at: (" + canvasX + ", " + canvasY + ")");
         floorIcon.setFitHeight(20);
         floorIcon.setFitWidth(20);
-        floorIcon.setX(canvasX - 10);
-        floorIcon.setY(canvasY - 10);
+        floorIcon.setX(canvasX);
+        floorIcon.setY(canvasY - 20);
         floorIcon.toFront();
         buttonHolder.getChildren().add(floorIcon);
     }
