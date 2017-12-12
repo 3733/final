@@ -122,7 +122,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void assistanceThisLocation() {
-        assistanceNode = n1;
+        assistanceNode = data.kiosk;
         assistDestination.setText(n1.getLongName());
     }
 
@@ -341,8 +341,8 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void foodThisLocation() {
-        foodNode = n1;
-        foodDestination.setText(foodNode.getLongName());
+        foodNode = data.kiosk;
+        foodDestination.setText(n1.getLongName());
     }
 
     @FXML
@@ -407,7 +407,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void transportThisLocation() {
-        transportNode = n1;
+        transportNode = data.kiosk;
         transportDestination.setText(n1.getLongName());
     }
 
@@ -466,7 +466,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void cleanThisLocation() {
-        cleanNode = n1;
+        cleanNode = data.kiosk;
         cleaningDestination.setText(n1.getLongName());
     }
 
@@ -525,7 +525,7 @@ public class ServiceRequestController implements Initializable, Data {
 
     @FXML
     public void securityThisLocation() {
-        securityNode = n1;
+        securityNode = data.kiosk;
         securityDestination.setText(n1.getLongName());
     }
 
@@ -581,7 +581,7 @@ public class ServiceRequestController implements Initializable, Data {
     @FXML
     public void itSendRequest() throws MissingFieldException {
         ArrayList<Integer> itEmployees = new ArrayList<Integer>();
-        ItRequest newIt = new ItRequest(n1, itDescription.getText(),
+        ItRequest newIt = new ItRequest(data.kiosk, itDescription.getText(),
                 Integer.parseInt(itID.getText()), itTime.getValue().format(formatter), "", "",
                 0000, "it", "unaccepted", Integer.parseInt(itUrgency.getText()));
 
