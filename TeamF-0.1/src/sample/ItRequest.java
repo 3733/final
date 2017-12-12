@@ -2,6 +2,12 @@ package sample;
 
 import java.util.ArrayList;
 
+/** This is the ITRequest Class
+ * <p>
+ *     The ITRequest class extends the abstract class ServiceRequest
+ * </p>
+ */
+
 public class ItRequest extends ServiceRequest{
 
     private int urgency;

@@ -1,5 +1,9 @@
 package sample;
 
+/**This is the invalid email exception
+ *
+ */
+
 public class InvalidEmailException extends Exception{
     String invalidEmail;
     public InvalidEmailException(String invalidEmail){

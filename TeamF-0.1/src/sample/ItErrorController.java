@@ -6,6 +6,11 @@ import sample.Main;
 
 import java.util.Timer;
 
+/**This is the IT error page controller
+ * this controller allows the user to send IT help requests
+ *
+ */
+
 public class ItErrorController implements ITimed{
 
     private TimeoutController timeoutController;
