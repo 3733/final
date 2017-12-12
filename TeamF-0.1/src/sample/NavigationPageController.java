@@ -33,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Line;
+import controllers.API.APIApp;
 
 import java.awt.*;
 import java.awt.Button;
@@ -227,6 +228,7 @@ public class NavigationPageController implements Initializable, Data{
         editMapButton.setVisible(false);
         editUsersButton.setVisible(false);
         existServButton.setVisible(false);
+        timeoutButton.setVisible(false);
 
 
         //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
@@ -289,6 +291,7 @@ public class NavigationPageController implements Initializable, Data{
                 editMapButton.setVisible(true);
                 editUsersButton.setVisible(true);
                 existServButton.setVisible(true);
+                timeoutButton.setVisible(true);
 
                 loginButton.setOnAction((event) -> {
                     try {
@@ -1758,6 +1761,17 @@ public class NavigationPageController implements Initializable, Data{
 
     @FXML
     public void runVoice(){
+
+    }
+
+    public void transportRequest(){
+        APIApp api = new APIApp();
+        try{
+            APIApp.run(300, 400,600,500,"","","");
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
