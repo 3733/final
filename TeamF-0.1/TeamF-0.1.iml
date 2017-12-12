@@ -26,5 +26,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="cmu_us_kal" level="application" />
+    <orderEntry type="library" name="helpAPI" level="application" />
   </component>
 </module>

@@ -1,9 +1,12 @@
 package sample;
 
 //import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -76,5 +79,18 @@ public class DataHolder {
     public double divisionCst = 3.87;
     public int offset = 2;
 
+    /**
+     * This holds all the current numbers of the screen sized
+     */
+    public int MapX = 5000;
+    public int MapY = 3400;
+    public double imageViewX;
+    public double imageViewY;
+    public double canvasX;
+    public double canvasY;
+
     public Vector<Node> nodeAlign = new Vector<Node>();
+
+    public ObservableList<HBox> directions =  FXCollections.observableArrayList();
+    public Staff loggedInGuy;
 }

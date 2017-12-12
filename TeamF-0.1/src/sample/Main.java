@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -29,10 +30,11 @@ import java.util.Vector;
 public class Main extends Application implements Data{
 
     private  static String destination;
-    private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private String filePath = "/sample/UI/Icons/";
+    private Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "A2@yorha.net");
 
     private static Stage stage;
+    private static Stage anotherStage;
     private static Stage popUp;
     private static Scene start;
     private static Scene login;
@@ -51,6 +53,9 @@ public class Main extends Application implements Data{
     private static Scene helpRequest;
     private static Scene aboutWin;
 
+    private static Scene menuDrawer;
+
+
 
 
     public static StartPageController  startPageController = new StartPageController();
@@ -66,11 +71,14 @@ public class Main extends Application implements Data{
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
 
+    public static MenuDrawerController menuDrawerController = new MenuDrawerController();
+
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
-
+        data.loggedInGuy = guest;
 
         for(int i = 0;i<data.graph.getNodes().size();i++){
             if(data.graph.getNodes().get(i).getLongName().trim().equals("Lower Pike Hallway Exit Lobby")){
@@ -160,6 +168,12 @@ public class Main extends Application implements Data{
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
 
+        FXMLLoader menuWinLoader = new FXMLLoader(getClass().getResource("UI/mainMenuDrawer.fxml"));
+        Parent menuWin = menuWinLoader.load();
+        menuDrawerController = menuWinLoader.getController();
+        menuDrawerController.setMainController(this);
+        menuDrawer = new Scene(menuWin);
+
 
         stage = primaryStage;
         popUp = new Stage();
@@ -187,10 +201,14 @@ public class Main extends Application implements Data{
         aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
 
+        menuWin.getStylesheets().add("sample/UI/style.css");
+
 
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(map);
         stage.setResizable(true);
+        stage.setFullScreen(true);
+
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
@@ -214,6 +232,10 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
+    public void search(){
+        menuDrawerController.setStart();
+        menuDrawerController.setEnd();
+    }
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
         stage.centerOnScreen();
@@ -394,13 +416,24 @@ public class Main extends Application implements Data{
         popUp.close();
     }
 
+    public static void sendDirections(){
+        menuDrawerController.setDirectionSteps();
+    }
+
+    public static void logOutUser(){
+        Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "z@yorha.net");
+        data.loggedInGuy = guest;
+    }
+
     public static void setLoggedInGuy(Staff user){
-        loggedInGuy = user;
+        data.loggedInGuy = user;
     }
 
     public static Staff getLoggedInGuy(){
-        return loggedInGuy;
+        return data.loggedInGuy;
     }
+
+
     public static void main(String[] args) throws IOException{
 
         //testEmbeddedDB db = new testEmbeddedDB();

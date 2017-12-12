@@ -44,10 +44,18 @@ public class LoginPageController {
     public void login() throws IOException, InterruptedException{
 
         if(checkUser(username.getText(), password.getText())){
-            AuthenticationInfo newUser = new AuthenticationInfo(username.getText(),AuthenticationInfo.Privilege.ADMIN);
-            SettingSingleton.getSettingSingleton().setAuthProperty(newUser);
-            Main.mapScreen();
-            Main.closePopUp(loginButton);
+            if(Main.getLoggedInGuy().getEmployeeType().trim().equals("Admin")) {
+                AuthenticationInfo newUser = new AuthenticationInfo(username.getText(), AuthenticationInfo.Privilege.ADMIN);
+                SettingSingleton.getSettingSingleton().setAuthProperty(newUser);
+                Main.mapScreen();
+                Main.closePopUp(loginButton);
+            }
+            else if(!Main.getLoggedInGuy().getEmployeeType().trim().equals("User")){
+                AuthenticationInfo newUser = new AuthenticationInfo(username.getText(), AuthenticationInfo.Privilege.STAFF);
+                SettingSingleton.getSettingSingleton().setAuthProperty(newUser);
+                Main.mapScreen();
+                Main.closePopUp(loginButton);
+            }
         }else {
             invalidLoginText.setVisible(true);
             PauseTransition visiblePause = new PauseTransition(
@@ -61,6 +69,8 @@ public class LoginPageController {
         username.clear();
         password.clear();
     }
+
+
 
     private boolean checkUser(String name, String pass){
 
