@@ -54,6 +54,7 @@ public class Main extends Application implements Data{
         stage.setScene(map);
     }
     private static Scene menuDrawer;
+    private static Scene timeEdit;
 
 
 
@@ -73,6 +74,7 @@ public class Main extends Application implements Data{
     public static AboutPageController aboutPageController = new AboutPageController();
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
+    public static TimeoutController timeoutController = new TimeoutController();
 
 
     // private static AboutPageController aboutcontroller;
@@ -88,7 +90,6 @@ public class Main extends Application implements Data{
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
-        //data.kiosk = data.graph.getNodes().get(0);
         data.loggedInGuy = guest;
 
         for(int i = 0;i<data.graph.getNodes().size();i++){
@@ -149,6 +150,12 @@ public class Main extends Application implements Data{
         editNodesController = nodeEditLoader.getController();
         editNodesController.setMainController(this);
         nodeEdit = new Scene(NodeEdit);
+
+        FXMLLoader timeoutLoader = new FXMLLoader(getClass().getResource("UI/TimeoutWindow.fxml"));
+        Parent TimeOut = timeoutLoader.load();
+        timeoutController = timeoutLoader.getController();
+        timeoutController.setMainController(this);
+        timeEdit = new Scene(TimeOut);
 
         FXMLLoader edgeEditLoader = new FXMLLoader(getClass().getResource("UI/EditEdgesWindow.fxml"));
         Parent EdgeEdit = edgeEditLoader.load();
@@ -212,8 +219,8 @@ public class Main extends Application implements Data{
         editUserWin.getStylesheets().add("sample/UI/style.css");
         aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
-
         menuWin.getStylesheets().add("sample/UI/style.css");
+        timeEdit.getStylesheets().add("sample/UI/style.css");
 
 
         stage.setTitle("Team F Hospital GPS");
@@ -432,6 +439,15 @@ public class Main extends Application implements Data{
         editUserWindowController.someAction();
         popUp.setScene(editUserWin);
         popUp.setTitle("Edit User");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
+    }
+
+    public static void timeOutWindow(JFXButton btn1){
+        Stage popUp = new Stage();
+        popUp.setScene(timeEdit);
+        popUp.setTitle("Change Timeout");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();

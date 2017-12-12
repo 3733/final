@@ -177,6 +177,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     @FXML
     private StackPane stackPane;
 
+    @FXML
+    private JFXButton timeoutButton;
+
     //other components
     @FXML
     private Main mainController;
@@ -260,6 +263,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         editMapButton.setVisible(false);
         editUsersButton.setVisible(false);
         existServButton.setVisible(false);
+        timeoutButton.setVisible(false);
 
 
         //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
@@ -322,6 +326,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 editMapButton.setVisible(true);
                 editUsersButton.setVisible(true);
                 existServButton.setVisible(true);
+                timeoutButton.setVisible(true);
 
                 loginButton.setOnAction((event) -> {
                     try {
@@ -608,6 +613,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         Main.startScreen();
         clearFields();
         clear();
+    }
+
+    @FXML
+    public void changeTimeout(){
+        Main.timeOutWindow(timeoutButton);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
