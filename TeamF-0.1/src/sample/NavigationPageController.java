@@ -2,6 +2,7 @@ package sample;
 
 //import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 //import Healthcare.HealthCareRun;
+import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -701,6 +702,13 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor.trim());
+
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+        transition.setRate(-1);
+        transition.setRate(transition.getRate() * -1);
+        mainMenu.open();
+        mainMenu.setVisible(true);
+        transition.play();
     }
 
 
@@ -2043,10 +2051,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     @FXML
     public void insurance(){
-        //HealthCareRun health = new HealthCareRun();
+        HealthCareRun health = new HealthCareRun();
         int i;
         try {
-            //health.run(0,0,600,350,"view/stylesheets/default.css","","");
+            health.run(0,0,600,350,"view/stylesheets/default.css","","");
         } catch (Exception e) {
             e.printStackTrace();
         }
