@@ -92,6 +92,8 @@ public class DataHolder {
 
     public Vector<Node> nodeAlign = new Vector<Node>();
 
+    public Vector<Node> startEndNodes;
+
     public PathTransition animation;
     public ObservableList<HBox> directions =  FXCollections.observableArrayList();
     public Staff loggedInGuy;

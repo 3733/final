@@ -519,6 +519,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         Data.data.currentMap = "L1";
         hierarchicalText("L1");
         //AutoZoom(data.pathL1);
+        drawStartFinish();
         update();
     }
 
@@ -535,6 +536,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         drawButtons(data.buttonNodes,"L2");
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
+        drawStartFinish();
         //AutoZoom(data.pathL2);
         update();
     }
@@ -552,6 +554,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         drawButtons(data.buttonNodes, "1");
         Data.data.currentMap = "1";
         hierarchicalText("1");
+        drawStartFinish();
         //AutoZoom(data.pathFirst);
         update();
     }
@@ -571,6 +574,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         drawButtons(data.buttonNodes, "2");
         Data.data.currentMap = "2";
         hierarchicalText("2");
+        drawStartFinish();
         //AutoZoom(data.pathSecond);
         update();
     }
@@ -590,6 +594,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
         hierarchicalText("3");
+        drawStartFinish();
         //AutoZoom(data.pathThird);
         update();
     }
@@ -607,6 +612,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
         hierarchicalText("G");
+        drawStartFinish();
         //AutoZoom(data.pathG);
         update();
     }
@@ -1106,6 +1112,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 }
             }
         }
+
+        Vector<Node> startEnd = new Vector<Node>();
+        startEnd.add(path.get(0));
+        startEnd.add(path.get(path.size() - 1));
+        data.startEndNodes = startEnd;
     }
 
     public void setFloorButtons(){
@@ -1452,6 +1463,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         animationPane.getChildren().clear();
     }
 
+
     public Point2D convertFromImage(double x, double y){
         updateImageCoordinates();
         updateCanvasCoordinates();
@@ -1498,6 +1510,96 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     public void updateCanvasCoordinates() {
         data.canvasX = pathCanvas.getWidth();
         data.canvasY = pathCanvas.getHeight();
+    }
+
+    /**
+     * This draws start and end icons if it is the right floor
+     */
+    public void drawStartFinish() {
+        //System.out.println("Drawn the start or finish");
+        int fromFloor = currentFloor();
+        //System.out.println("This is the current floor int: " + currentFloor());
+        if(data.startEndNodes != null) {
+            Point2D point = convertFromImage(data.startEndNodes.get(0).getxCoordinate(), data.startEndNodes.get(0).getyCoordinate());
+            if (data.startEndNodes.get(0).getFloor().trim().equals("L2")) {
+                if (fromFloor == 0) {
+                    drawStartIcon(point.getX(), point.getY());
+                }
+            } else if (data.startEndNodes.get(0).getFloor().trim().equals("L1")) {
+                if (fromFloor == 1) {
+                    drawStartIcon(point.getX(), point.getY());
+                }
+            } else if (data.startEndNodes.get(0).getFloor().trim().equals("G")) {
+                if (fromFloor == 2) {
+                    drawStartIcon(point.getX(), point.getY());
+                }
+            } else if (data.startEndNodes.get(0).getFloor().trim().equals("1")) {
+                if (fromFloor == 3) {
+                    drawStartIcon(point.getX(), point.getY());
+                }
+            } else if (data.startEndNodes.get(0).getFloor().trim().equals("2")) {
+                if (fromFloor == 4) {
+                    drawStartIcon(point.getX(), point.getY());
+                }
+            } else if (data.startEndNodes.get(0).getFloor().trim().equals("3")) {
+                if (fromFloor == 5) {
+                    drawStartIcon(point.getX(), point.getY());
+                }
+            }
+        }
+
+        if (data.startEndNodes != null) {
+            Point2D point2 = convertFromImage(data.startEndNodes.get(1).getxCoordinate(),data.startEndNodes.get(1).getyCoordinate());
+            if (data.startEndNodes.get(1).getFloor().trim().equals("L2")) {
+                if (fromFloor == 0) {
+                    drawFinishIcon(point2.getX(), point2.getY());
+                }
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("L1")) {
+                if (fromFloor == 1) {
+                    drawFinishIcon(point2.getX(), point2.getY());
+                }
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("G")) {
+                if (fromFloor == 2) {
+                    drawFinishIcon(point2.getX(), point2.getY());
+                }
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("1")) {
+                if (fromFloor == 3) {
+                    drawFinishIcon(point2.getX(), point2.getY());
+                }
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("2")) {
+                if (fromFloor == 4) {
+                    drawFinishIcon(point2.getX(), point2.getY());
+                }
+            } else if (data.startEndNodes.get(1).getFloor().trim().equals("3")) {
+                if (fromFloor == 5) {
+                    drawFinishIcon(point2.getX(), point2.getY());
+                }
+            }
+        }
+    }
+
+    public void drawStartIcon(double canvasX, double canvasY) {
+        ImageView floorIcon = new ImageView();
+        floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/you-are-here-icon.png")));
+        //System.out.println("Printing a starting pane at: (" + canvasX + ", " + canvasY + ")");
+        floorIcon.setFitHeight(20);
+        floorIcon.setFitWidth(20);
+        floorIcon.setX(canvasX - 10);
+        floorIcon.setY(canvasY - 20);
+        floorIcon.toFront();
+        buttonHolder.getChildren().add(floorIcon);
+    }
+
+    public void drawFinishIcon(double canvasX, double canvasY) {
+        ImageView floorIcon = new ImageView();
+        floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/Finish.png")));
+        //System.out.println("Printing a finish pane at: (" + canvasX + ", " + canvasY + ")");
+        floorIcon.setFitHeight(20);
+        floorIcon.setFitWidth(20);
+        floorIcon.setX(canvasX);
+        floorIcon.setY(canvasY - 20);
+        floorIcon.toFront();
+        buttonHolder.getChildren().add(floorIcon);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
@@ -1749,10 +1851,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     public void chat(){
         //Main.setHelpScreenServiceRequestScreen();
         try{
-            messenger.API m = new messenger.API();
+           /* messenger.API m = new messenger.API();
             m.run(6,6,600,600,
                     "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");
-        } catch (Exception e){
+       */ } catch (Exception e){
             System.out.println("API ERROR: " + e.getLocalizedMessage());
         }
     }
