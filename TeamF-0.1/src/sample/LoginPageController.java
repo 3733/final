@@ -12,8 +12,14 @@ import sample.Main;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Timer;
 
-public class LoginPageController {
+public class LoginPageController implements ITimed{
+
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
+
     @FXML
     private JFXTextField username;
 
@@ -34,6 +40,28 @@ public class LoginPageController {
 
     public void setMainController(Main main){
         this.mainController = main;
+    }
+
+    public void initialize()
+    {
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimer(atimer, true);
+    }
+
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
     }
 
     @FXML

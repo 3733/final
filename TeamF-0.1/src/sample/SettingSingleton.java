@@ -6,11 +6,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import java.util.ArrayList;
+
 public class SettingSingleton {
 
     private volatile static SettingSingleton settingSingleton;
 
     private Property<AuthenticationInfo> authProperty = new SimpleObjectProperty<>();
+
+    // private static ArrayList<TimeoutController> observers =
 
     private SettingSingleton() { }
 
@@ -45,4 +49,8 @@ public class SettingSingleton {
         }
         return settingSingleton;
     }
+
+
+
+
 }

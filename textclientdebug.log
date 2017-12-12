@@ -6663,3 +6663,19 @@ DEBUG - gov.nist.javax.sip.SipProviderImpl.addSipListener(SipProviderImpl.java:2
 DEBUG - gov.nist.javax.sip.SipStackImpl.stop(SipStackImpl.java:875) [stopStack -- stoppping the stack]
 DEBUG - gov.nist.javax.sip.stack.UDPMessageProcessor.run(UDPMessageProcessor.java:251) [UDPMessageProcessor: Stopping]
 DEBUG - gov.nist.javax.sip.EventScanner.run(EventScanner.java:455) [Stopped event scanner!!]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.74.1, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.74.1" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@170f3d98 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@e2b02ca]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
