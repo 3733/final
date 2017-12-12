@@ -131,6 +131,8 @@ public class testEmbeddedDB {
 
             //testEmbeddedDB.writeToCSV();
 
+            testEmbeddedDB.addStaffTestData();
+
             con.close();
 
             System.out.println("done.");
