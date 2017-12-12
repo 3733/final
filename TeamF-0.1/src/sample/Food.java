@@ -5,11 +5,13 @@ public class Food {
     String name;
     Double price;
     String fileLocation;
+    boolean defaultFood;
 
-    public Food(String name, Double price, String fileLocation) {
+    public Food(String name, Double price, String fileLocation, boolean defaultFood) {
         this.name = name;
         this.price = price;
         this.fileLocation = fileLocation;
+        this.defaultFood = defaultFood;
     }
 
     public String getName() {
@@ -35,4 +37,8 @@ public class Food {
     public void setFileLocation(String fileLocation) {
         this.fileLocation = fileLocation;
     }
+
+    public boolean getDefaultFood() {return defaultFood; }
+
+    public void setDefaultFood(boolean defaultFood) { this.defaultFood = defaultFood; }
 }

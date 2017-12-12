@@ -193,7 +193,7 @@
                                                       <Insets left="25.0" />
                                                    </HBox.margin>
                                                 </GridPane>
-                                                <TextArea fx:id="foodDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here...">
+                                                <TextArea fx:id="foodDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here..." wrapText="true">
                                                    <HBox.margin>
                                                       <Insets left="25.0" top="25.0" />
                                                    </HBox.margin>
@@ -284,7 +284,7 @@
                                                       <Insets left="15.0" />
                                                    </HBox.margin>
                                                 </GridPane>
-                                                <TextArea fx:id="assistanceDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here...">
+                                                <TextArea fx:id="assistanceDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here..." wrapText="true">
                                                    <HBox.margin>
                                                       <Insets left="25.0" top="25.0" />
                                                    </HBox.margin>
@@ -382,7 +382,7 @@
                                                       <Insets left="25.0" />
                                                    </HBox.margin>
                                                 </GridPane>
-                                                <TextArea fx:id="transportDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here...">
+                                                <TextArea fx:id="transportDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here..." wrapText="true">
                                                    <HBox.margin>
                                                       <Insets left="25.0" top="25.0" />
                                                    </HBox.margin>
@@ -473,7 +473,7 @@
                                                       <Insets left="25.0" />
                                                    </HBox.margin>
                                                 </GridPane>
-                                                <TextArea fx:id="cleanDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here...">
+                                                <TextArea fx:id="cleanDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here..." wrapText="true">
                                                    <HBox.margin>
                                                       <Insets left="25.0" top="25.0" />
                                                    </HBox.margin>
@@ -564,7 +564,7 @@
                                                       <Insets left="25.0" />
                                                    </HBox.margin>
                                                 </GridPane>
-                                                <TextArea fx:id="securityDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here...">
+                                                <TextArea fx:id="securityDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here..." wrapText="true">
                                                    <HBox.margin>
                                                       <Insets left="25.0" top="25.0" />
                                                    </HBox.margin>
@@ -651,7 +651,7 @@
                                                       <Insets left="25.0" />
                                                    </HBox.margin>
                                                 </GridPane>
-                                                <TextArea fx:id="itDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here...">
+                                                <TextArea fx:id="itDescription" prefHeight="400.0" prefWidth="402.0" promptText="Describe your request here..." wrapText="true">
                                                    <HBox.margin>
                                                       <Insets left="25.0" top="25.0" />
                                                    </HBox.margin>

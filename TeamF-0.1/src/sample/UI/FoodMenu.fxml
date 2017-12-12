@@ -15,36 +15,67 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FoodController">
+<BorderPane prefHeight="700.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FoodController">
    <top>
-      <AnchorPane maxWidth="-Infinity" prefHeight="86.0" prefWidth="530.0" translateX="-100.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxWidth="-Infinity" prefHeight="85.0" prefWidth="830.0" translateX="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="86.0" prefWidth="576.0" text="Please select the food you'd like (ctrl and click for multiple selections), then press submit" textAlignment="CENTER" textFill="#573d26" wrapText="true">
+            <Label prefHeight="34.0" prefWidth="294.0" text="Please select the food you'd like " textAlignment="CENTER" textFill="#573d26" translateX="220.0" wrapText="true">
                <font>
                   <Font name="System Bold Italic" size="19.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="114.0" layoutY="55.0" prefHeight="30.0" prefWidth="103.0" text="Hospital Menu" textFill="#573d26">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="462.0" layoutY="55.0" prefHeight="30.0" prefWidth="103.0" text="My Order" textFill="#573d26">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
    </top>
    <left>
-      <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="297.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="622.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="foodMenu" layoutX="10.0" prefHeight="547.0" prefWidth="285.0" style="-fx-background-color: #FFE182;">
+            <TableView fx:id="foodMenu" layoutX="6.0" prefHeight="611.0" prefWidth="338.0" style="-fx-background-color: #FFE182;">
                <columns>
-                  <TableColumn fx:id="names" editable="false" prefWidth="86.39999103546143" />
-                  <TableColumn fx:id="prices" editable="false" prefWidth="48.79998779296875" />
-                  <TableColumn fx:id="pictures" editable="false" prefWidth="149.60000000000002" />
+                  <TableColumn fx:id="names" editable="false" prefWidth="150.40004920959473" style="-fx-alignment: CENTER-LEFT;" />
+                  <TableColumn fx:id="prices" editable="false" prefWidth="51.2000732421875" />
+                  <TableColumn fx:id="pictures" editable="false" prefWidth="134.4000305175781" />
                </columns>
             </TableView>
-            <JFXButton fx:id="submit" buttonType="RAISED" layoutX="243.0" layoutY="571.0" onAction="#foodSubmit" prefHeight="26.0" prefWidth="114.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="Submit" />
+            <JFXButton fx:id="submit" buttonType="RAISED" layoutX="588.0" layoutY="367.0" onAction="#foodSubmit" prefHeight="26.0" prefWidth="114.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="Submit" translateX="-125.0" />
+            <TableView fx:id="yourMenu" layoutX="419.0" prefHeight="312.0" prefWidth="202.0" style="-fx-background-color: #FFE182;">
+               <columns>
+                  <TableColumn fx:id="yourNames" editable="false" prefWidth="150.40004920959473" style="-fx-alignment: CENTER-LEFT;" />
+                  <TableColumn fx:id="yourPrices" editable="false" prefWidth="51.2000732421875" />
+               </columns>
+            </TableView>
+            <JFXButton buttonType="RAISED" layoutX="358.0" layoutY="71.0" onAction="#addToInvoice" prefHeight="66.0" prefWidth="51.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="&gt;&gt; Add &gt;&gt;" textAlignment="CENTER" wrapText="true" />
+            <GridPane layoutX="440.0" layoutY="330.0" prefHeight="18.0" prefWidth="154.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="136.0" text="Total Cost:" />
+                  <Label fx:id="totalCost" alignment="CENTER" prefHeight="18.0" prefWidth="91.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+            <JFXButton buttonType="RAISED" layoutX="358.0" layoutY="174.0" onAction="#removeFromInvoice" prefHeight="66.0" prefWidth="51.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="&lt;&lt; Rem &lt;&lt;" textAlignment="CENTER" wrapText="true" />
          </children>
       </AnchorPane>
    </left>
    <right>
-      <VBox alignment="TOP_CENTER" prefHeight="684.0" prefWidth="212.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="614.0" prefWidth="206.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="edit" buttonType="RAISED" onAction="#startEdit" style="-fx-background-color: #abcdef;" text="Edit Menu" />
+            <JFXButton fx:id="edit" buttonType="RAISED" onAction="#startEdit" prefHeight="26.0" prefWidth="117.0" style="-fx-background-color: #abcdef;" text="Edit Hospital Menu" />
             <JFXTextField fx:id="name" maxWidth="-Infinity" prefHeight="26.0" prefWidth="208.0" promptText="Food name" translateX="7.0" translateY="60.0" visible="false" />
             <GridPane fx:id="priceBox" prefHeight="30.0" prefWidth="263.0" translateY="80.0" visible="false">
                <columnConstraints>
@@ -79,6 +110,9 @@
             </HBox>
             <JFXButton fx:id="done" buttonType="RAISED" onAction="#finishEdit" style="-fx-background-color: #abcdef;" text="Done Editing" translateY="180.0" visible="false" />
          </children>
+         <BorderPane.margin>
+            <Insets right="5.0" />
+         </BorderPane.margin>
       </VBox>
    </right>
 </BorderPane>
