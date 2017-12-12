@@ -1,6 +1,8 @@
 package sample;
 
 import com.jfoenix.controls.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,8 +39,6 @@ public class MenuDrawerController implements Initializable{
     @FXML
     private JFXButton reverseButton;
 
-    private NavigationPageController navigationPageController;
-
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
     private javafx.scene.image.ImageView map;
@@ -51,9 +51,6 @@ public class MenuDrawerController implements Initializable{
 
     //@FXML
     //private JFXRadioButton start, end;
-
-    @FXML
-    private JFXTextField startField, endField;
 
     @FXML
     private ToggleGroup points;
@@ -82,9 +79,9 @@ public class MenuDrawerController implements Initializable{
 
     private Vector<JFXButton> floorButtons = new Vector<>();
 
-    ObservableList<String> allEntries;
+    private ObservableList<String> allEntries;
 
-    ObservableList<String> threeItems, twoItems, oneItems, groundItems, lowerOneItems, lowerTwoItems;
+    private ObservableList<String> threeItems, twoItems, oneItems, groundItems, lowerOneItems, lowerTwoItems;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -164,10 +161,6 @@ public class MenuDrawerController implements Initializable{
     }
 
 
-    public void setNavController(NavigationPageController in){
-        navigationPageController = in;
-    }
-
 
     //setting start and end nodes
     /*@FXML
@@ -243,7 +236,7 @@ public class MenuDrawerController implements Initializable{
     // Purpose: Method to clear the path on the map when the user presses clear map
     @FXML
     public void clear() throws FileNotFoundException{
-        Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
+        /*Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
         Data.data.pathThird = null;
         Data.data.pathSecond = null;
         Data.data.pathFirst = null;
@@ -252,10 +245,8 @@ public class MenuDrawerController implements Initializable{
         Data.data.pathG = null;
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
-        }
-        directionSteps.setVisible(false);
+        }*/
         showPOI();
-        floorPoints.setVisible(true);
     }
 
 
@@ -279,20 +270,17 @@ public class MenuDrawerController implements Initializable{
     }
 
     public void showPOI(){
-        ObservableList<HBox> fuckThis = FXCollections.observableArrayList();
-        for(int i = 0; i<allEntries.size(); i++){
-            HBox goddammit = new HBox();
-            Label label = new Label();
-            label.setText(allEntries.get(i));
+        floorPoints.setVisible(true);
+        directionSteps.setVisible(false);
+        ObservableList<HBox> boxList = FXCollections.observableArrayList();
+        HBox point = new HBox();
+        Label label = new Label();
+        point.getChildren().addAll(label);
+        point.setAlignment(Pos.CENTER_LEFT);
+        boxList.add(point);
 
-            goddammit.getChildren().addAll(label);
-            goddammit.setAlignment(Pos.CENTER_LEFT);
-
-            fuckThis.add(goddammit);
-        }
-
-        floorPoints.setItems(fuckThis);
-        /*if(data.currentMap.equals("3")) {
+        floorPoints.setItems(boxList);
+        if(data.currentMap.equals("3")) {
             floorPoints.setItems(threeItems);
         }
         else if(data.currentMap.equals("2")) {
@@ -309,7 +297,7 @@ public class MenuDrawerController implements Initializable{
         }
         else if(data.currentMap.equals("L2")) {
             floorPoints.setItems(lowerTwoItems);
-        }*/
+        }
     }
 
     //Displays the list of directions
@@ -345,7 +333,9 @@ public class MenuDrawerController implements Initializable{
         if(data.destinationNode!=null){
             endLabel.setText(data.destinationNode.getLongName().trim());
         }
-        floorPoints = new JFXListView();
+
+        directionSteps.setVisible(false);
+        floorPoints.setVisible(true);
 
         //popluating list view -- three
         threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
@@ -367,6 +357,14 @@ public class MenuDrawerController implements Initializable{
 
         // All entries
         allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
+
+        floorPoints.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                endLabel.setText(newValue);
+                //searchEnd goes here
+            }
+        });
 
 
         if(!data.directions.isEmpty()){

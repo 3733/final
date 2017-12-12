@@ -190,6 +190,8 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<JFXButton> floorButtons = new Vector<>();
 
+    private MenuDrawerController menuDrawerController;
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -197,6 +199,7 @@ public class NavigationPageController implements Initializable, Data{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        menuDrawerController = mainController.menuDrawerController;
         mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
@@ -432,7 +435,7 @@ public class NavigationPageController implements Initializable, Data{
             destination.setText(endLabel.getText().trim());
         }
 */
-            go();
+        go();
 
     }
 
@@ -462,6 +465,7 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
         hierarchicalText("L1");
+        update();
     }
 
     @FXML
@@ -473,6 +477,7 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
+        update();
     }
 
     @FXML
@@ -484,6 +489,7 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
         hierarchicalText("1");
+        update();
     }
 
     @FXML
@@ -497,6 +503,7 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
         hierarchicalText("2");
+        update();
     }
 
     @FXML
@@ -510,6 +517,7 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
         hierarchicalText("3");
+        update();
     }
 
     @FXML
@@ -521,6 +529,7 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
         hierarchicalText("G");
+        update();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1308,12 +1317,12 @@ public class NavigationPageController implements Initializable, Data{
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scrollMap.getViewportBounds().getWidth();
         double deltaH = deltaX * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraWidth);
         double desiredH = scrollMap.getHvalue() - deltaH;
-            scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
+        scrollMap.setHvalue(Math.max(0, Math.min(scrollMap.getHmax(), desiredH)));
         double deltaY = data.kiosk.getyCoordinate() - 1250;
         double extraHeight = scrollContent.getLayoutBounds().getHeight() - scrollMap.getViewportBounds().getHeight();
         double deltaV = deltaY * ((scrollMap.getHmax() - scrollMap.getHmin()) / extraHeight);
         double desiredV = scrollMap.getVvalue() - deltaV;
-            scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
+        scrollMap.setVvalue(Math.max(0, Math.min(scrollMap.getVmax(), desiredV)));
 
     }
 
@@ -1555,9 +1564,11 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void initDrawer(){
         try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
-            VBox menuBox = loader.load();
+            FXMLLoader menuLoader = new FXMLLoader();
+            menuLoader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
+            VBox menuBox = menuLoader.load();
+
+
             mainMenu.setSidePane(menuBox);
             if(mainMenu.visibleProperty().get()){
                 mainMenu.setVisible(false);
@@ -1606,6 +1617,19 @@ public class NavigationPageController implements Initializable, Data{
 
         return null;
 
+    }
+    private void update(){
+        FXMLLoader menuLoader = new FXMLLoader();
+        menuLoader.setLocation(getClass().getResource("/sample/UI/mainMenuDrawer.fxml"));
+        VBox menuBox = null;
+        try {
+            menuBox = menuLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        mainMenu.setSidePane(menuBox);
     }
 
 }
