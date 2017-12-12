@@ -227,6 +227,7 @@ public class NavigationPageController implements Initializable, Data{
         editMapButton.setVisible(false);
         editUsersButton.setVisible(false);
         existServButton.setVisible(false);
+        timeoutButton.setVisible(false);
 
 
         //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
@@ -289,6 +290,7 @@ public class NavigationPageController implements Initializable, Data{
                 editMapButton.setVisible(true);
                 editUsersButton.setVisible(true);
                 existServButton.setVisible(true);
+                timeoutButton.setVisible(true);
 
                 loginButton.setOnAction((event) -> {
                     try {

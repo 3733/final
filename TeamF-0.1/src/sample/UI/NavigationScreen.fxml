@@ -414,6 +414,11 @@
                   </HBox>
                </children>
             </VBox>
+            <JFXButton fx:id="aboutButton" contentDisplay="CENTER" layoutX="1325.0" layoutY="725.0" onAction="#about" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" text="©  Fuschia Fairies">
+               <font>
+                  <Font name="Montserrat Regular" size="12.0" />
+               </font>
+            </JFXButton>
          </children>
       </AnchorPane>
    </center>

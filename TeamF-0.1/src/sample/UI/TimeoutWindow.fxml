@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.TimeoutController">
    <children>
       <HBox alignment="CENTER" prefHeight="36.0" prefWidth="600.0">
          <children>
@@ -71,7 +70,7 @@
       </HBox>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <JFXButton fx:id="submit" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
+            <JFXButton fx:id="submit" onAction="#submit" style="-fx-background-color: #1a479a;" text="Submit" textFill="WHITE">
                <HBox.margin>
                   <Insets right="25.0" />
                </HBox.margin>
