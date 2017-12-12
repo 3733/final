@@ -203,12 +203,12 @@
                      <children>
                         <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="map" fitHeight="1052.0" fitWidth="1691.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                              <ImageView fx:id="map" fitHeight="1060.0" fitWidth="1547.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
                                  <image>
                                     <Image url="@Icons/01_thefirstfloor.png" />
                                  </image>
                               </ImageView>
-                              <Canvas fx:id="pathCanvas" height="900.0" width="1544.0" StackPane.alignment="TOP_LEFT" />
+                              <Canvas fx:id="pathCanvas" height="1050.0" width="1544.0" StackPane.alignment="TOP_LEFT" />
                            </children>
                         </StackPane>
                      </children>
