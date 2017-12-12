@@ -72,6 +72,7 @@ public class DataHolder {
     public Vector<Edge> lower2FloorEdges;
 
     public Vector<Node> buttonNodes;
+    public Vector<Node> startEndNodes;
 
     public double divisionCst = 3.87;
     public int offset = 2;
