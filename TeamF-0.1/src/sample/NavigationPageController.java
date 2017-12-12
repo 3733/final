@@ -7,9 +7,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Line;
+import controllers.API.APIApp;
 
 import java.awt.*;
 import java.awt.Button;
@@ -91,13 +90,14 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     private JFXListView searchList;
     @FXML
     private ScrollPane scrollMap;
-    @FXML
-    private AnchorPane mainPane;
+
     @FXML
     private JFXTabPane tabPane;
 
     @FXML
     private AnchorPane buttonHolder;
+    @FXML
+    private AnchorPane mainPane;
 
     @FXML
     private JFXButton floorVisA, floorVisB, floorVisC, floorVisD, floorVisE, floorVisF;
@@ -432,6 +432,24 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     public JFXButton getLoginButton() {
         return this.loginButton;
     }
+
+
+    final ChangeListener<Number> paneChanged = new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            ReadOnlyDoubleProperty prop = (ReadOnlyDoubleProperty) observable;
+            String name = prop.getName();
+            Double val = prop.getValue();
+            if(name == "width"){
+                map.setFitWidth(val);
+                pathCanvas.setWidth(val);
+            }else if(name == "height"){
+                map.setFitHeight(val);
+                pathCanvas.setHeight(val);
+            }
+        }
+    };
+
 
     @FXML
     public void settingSearch(){
@@ -2023,6 +2041,17 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     @FXML
     public void runVoice(){
+
+    }
+
+    public void transportRequest(){
+        APIApp api = new APIApp();
+        try{
+            APIApp.run(300, 400,600,500,"","","");
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 

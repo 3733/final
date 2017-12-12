@@ -2,11 +2,18 @@ package sample;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -99,6 +106,7 @@ public class Main extends Application implements Data{
                 break;
             }
         }
+
 
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
@@ -233,6 +241,8 @@ public class Main extends Application implements Data{
         stage.show();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
+        stage.setResizable(true);
+        stage.setMaximized(true);
         destination = "";
     }
 
@@ -257,8 +267,6 @@ public class Main extends Application implements Data{
         menuDrawerController.setEnd();
     }
     public static void mapScreen() throws IOException, InterruptedException {
-        System.out.println("Nav screen showed up");
-        // closePopup();
         stage.setScene(map);
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
@@ -284,7 +292,7 @@ public class Main extends Application implements Data{
 
     public static void mapEditScreen(){
         stage.setScene(mapEdit);
-        mapEditPageController.someAction();
+        //mapEditPageController.someAction();
         // The timeout thing needs to go here
         stage.centerOnScreen();
     }
@@ -390,7 +398,7 @@ public class Main extends Application implements Data{
 
     public static void editUsersScreen(){
         stage.setScene(editUsers);
-        editUsersController.someAction();
+        //editUsersController.someAction();
         stage.centerOnScreen();
         editUsersController.disableButtons();
         editUsersController.refreshTable();
@@ -408,7 +416,7 @@ public class Main extends Application implements Data{
 
     public static void editUserWindow(JFXButton btn1){ // for adding users
         popUp = new Stage();
-        editUserWindowController.someAction();
+        //editUserWindowController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -418,7 +426,7 @@ public class Main extends Application implements Data{
 
     public static void aboutWindow(JFXButton btn1){
         popUp = new Stage();
-        aboutPageController.someAction();
+        //aboutPageController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -436,7 +444,7 @@ public class Main extends Application implements Data{
         popUp = new Stage();
         editUserWindowController.fillFields(staff);
         editUserWindowController.editingUsers();
-        editUserWindowController.someAction();
+        //editUserWindowController.someAction();
         popUp.setScene(editUserWin);
         popUp.setTitle("Edit User");
         popUp.initModality(Modality.APPLICATION_MODAL);

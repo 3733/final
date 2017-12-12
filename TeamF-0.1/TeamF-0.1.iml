@@ -27,5 +27,7 @@
     </orderEntry>
     <orderEntry type="library" name="cmu_us_kal" level="application" />
     <orderEntry type="library" name="helpAPI" level="application" />
+    <orderEntry type="library" name="HealthcareAPI-all-3.2" level="application" />
+    <orderEntry type="library" name="TeamBApi-4.0-sources" level="project" />
   </component>
 </module>
