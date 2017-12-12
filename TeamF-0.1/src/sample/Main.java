@@ -2,6 +2,8 @@ package sample;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -87,6 +92,7 @@ public class Main extends Application implements Data{
                 break;
             }
         }
+
 
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
@@ -213,13 +219,14 @@ public class Main extends Application implements Data{
         stage.setTitle("Team F Hospital GPS");
         stage.setScene(map);
         stage.setResizable(true);
-        stage.setFullScreen(true);
 
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
+        stage.setResizable(true);
+        stage.setMaximized(true);
         destination = "";
     }
 
