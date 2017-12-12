@@ -27,5 +27,7 @@
     </orderEntry>
     <orderEntry type="library" name="cmu_us_kal" level="application" />
     <orderEntry type="library" name="helpAPI" level="application" />
+    <orderEntry type="library" name="com.jfoenix:jfoenix:1.10.0" level="application" />
+    <orderEntry type="library" name="freetts" level="application" />
   </component>
 </module>
