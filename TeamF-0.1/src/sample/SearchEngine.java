@@ -27,6 +27,7 @@ public class SearchEngine {
         food.add("au bon pain");
         food.add("restaurant");
         food.add("drinks");
+        food.add("food");
         food.add("cafe");
         food.add("beverage");
         TagMap.put("food",food);
@@ -36,6 +37,7 @@ public class SearchEngine {
         drinks.add("restaurant");
         drinks.add("food");
         drinks.add("cafe");
+        drinks.add("drinks");
         drinks.add("beverage");
         TagMap.put("drinks",drinks);
 
@@ -43,6 +45,7 @@ public class SearchEngine {
         cafe.add("au bon pain");
         cafe.add("restaurant");
         cafe.add("drinks");
+        cafe.add("cafe");
         cafe.add("food");
         cafe.add("beverage");
         TagMap.put("cafe",cafe);
@@ -52,52 +55,63 @@ public class SearchEngine {
         beverage.add("restaurant");
         beverage.add("drinks");
         beverage.add("cafe");
+        beverage.add("beverage");
         beverage.add("food");
         TagMap.put("beverage",beverage);
 
         Vector<String> lab = new Vector<>();
         lab.add("laboratory");
+        lab.add("lab");
         TagMap.put("lab",lab);
 
         Vector<String> laboratory = new Vector<>();
         laboratory.add("lab");
+        laboratory.add("laboratory");
         TagMap.put("laboratory",laboratory);
 
         Vector<String> mri = new Vector<>();
         mri.add("magnetic resonance imaging");
+        mri.add("mri");
         TagMap.put("mri",mri);
 
         Vector<String> catScan = new Vector<>();
         catScan.add("ct scan");
         catScan.add("computer tomography");
+        catScan.add("cat Scan");
         TagMap.put("cat Scan",catScan);
 
         Vector<String> computerTomography = new Vector<>();
         computerTomography.add("ct scan");
         computerTomography.add("cat scan");
+        computerTomography.add("computerTomography");
         TagMap.put("computer tomography",computerTomography);
 
         Vector<String> ctScan = new Vector<>();
         ctScan.add("cat scan");
+        ctScan.add("ctScan");
         ctScan.add("computer tomography");
         TagMap.put("ct Scan",ctScan);
 
         Vector<String> legDoctor = new Vector<>();
-        mri.add("podiatrist");
+        legDoctor.add("podiatrist");
+        legDoctor.add("legDoctor");
         TagMap.put("leg doctor",legDoctor);
 
         Vector<String> childDoctor = new Vector<>();
-        mri.add("pediatrist");
+        childDoctor.add("pediatrist");
+        childDoctor.add("childDoctor");
         TagMap.put("child Doctor",childDoctor);
 
         Vector<String> police = new Vector<>();
         police.add("security");
         police.add("safety");
+        police.add("police");
         TagMap.put("police",police);
 
         Vector<String> security = new Vector<>();
         security.add("police");
         security.add("safety");
+        security.add("security");
         TagMap.put("security",security);
 
         Vector<String> safety = new Vector<>();
@@ -107,80 +121,98 @@ public class SearchEngine {
 
         Vector<String> garage = new Vector<>();
         garage.add("parking");
+        garage.add("garage");
         garage.add("parking garage");
         TagMap.put("garage",garage);
 
         Vector<String> parking = new Vector<>();
         parking.add("garage");
         parking.add("parking garage");
+        parking.add("parking");
         TagMap.put("parking",parking);
 
         Vector<String> parkingGarage = new Vector<>();
         parkingGarage.add("garage");
         parkingGarage.add("parking");
+        parkingGarage.add("parking garage");
         TagMap.put("parkingGarage",parkingGarage);
 
         Vector<String> wc = new Vector<>();
         wc.add("bathroom");
         wc.add("restroom");
+        wc.add("wc");
         TagMap.put("wc",wc);
 
         Vector<String> bathroom = new Vector<>();
         bathroom.add("wc");
         bathroom.add("restroom");
+        bathroom.add("bathroom");
         TagMap.put("bathroom",bathroom);
 
         Vector<String> restroom = new Vector<>();
         restroom.add("bathroom");
+        restroom.add("restroom");
         restroom.add("wc");
         TagMap.put("restroom",restroom);
 
         Vector<String> cash = new Vector<>();
         cash.add("atm");
+        cash.add("cash");
         TagMap.put("cash",cash);
 
         Vector<String> money = new Vector<>();
         money.add("atm");
+        money.add("money");
         TagMap.put("money",money);
 
         Vector<String> egress = new Vector<>();
         egress.add("exit");
+        egress.add("egress");
         TagMap.put("egress",egress);
 
         Vector<String> escape = new Vector<>();
         escape.add("exit");
+        escape.add("escape");
         TagMap.put("escape",escape);
 
         Vector<String> wayOut = new Vector<>();
         wayOut.add("exit");
+        wayOut.add("way out");
         TagMap.put("wayOut",wayOut);
 
         Vector<String> escalator = new Vector<>();
         escalator.add("stairs");
+        escalator.add("escalator");
         TagMap.put("escalator",escalator);
 
         Vector<String> entry = new Vector<>();
         entry.add("entrance");
+        entry.add("entry");
         TagMap.put("entry",entry);
 
         Vector<String> entryway = new Vector<>();
         entryway.add("entrance");
+        entryway.add("entryway");
         TagMap.put("entryway",entryway);
 
         Vector<String> admission = new Vector<>();
         admission.add("entrance");
+        admission.add("admission");
         TagMap.put("admission",admission);
 
         Vector<String> noEnglish = new Vector<>();
         noEnglish.add("international patient center");
+        noEnglish.add("no english");
         TagMap.put("no English",noEnglish);
 
         Vector<String> noAnglais = new Vector<>();
         noAnglais.add("international patient center");
+        noAnglais.add("no anglais");
         TagMap.put("no Anglais",noAnglais);
 
         Vector<String> noIngles = new Vector<>();
         noIngles.add("international patient center");
+        noIngles.add("no ingles");
         TagMap.put("no Ingles",noIngles);
 
 

@@ -471,6 +471,7 @@ public class NavigationPageController implements Initializable, Data{
         drawButtons(data.buttonNodes, "L1");
         Data.data.currentMap = "L1";
         hierarchicalText("L1");
+        AutoZoom(data.pathL1);
         update();
     }
 
@@ -485,6 +486,7 @@ public class NavigationPageController implements Initializable, Data{
         drawButtons(data.buttonNodes,"L2");
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
+        AutoZoom(data.pathL2);
         update();
     }
 
@@ -499,6 +501,7 @@ public class NavigationPageController implements Initializable, Data{
         drawButtons(data.buttonNodes, "1");
         Data.data.currentMap = "1";
         hierarchicalText("1");
+        AutoZoom(data.pathFirst);
         update();
     }
 
@@ -515,6 +518,7 @@ public class NavigationPageController implements Initializable, Data{
         drawButtons(data.buttonNodes, "2");
         Data.data.currentMap = "2";
         hierarchicalText("2");
+        AutoZoom(data.pathSecond);
         update();
     }
 
@@ -531,6 +535,7 @@ public class NavigationPageController implements Initializable, Data{
         drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
         hierarchicalText("3");
+        AutoZoom(data.pathThird);
         update();
     }
 
@@ -545,6 +550,7 @@ public class NavigationPageController implements Initializable, Data{
         drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
         hierarchicalText("G");
+        AutoZoom(data.pathG);
         update();
     }
 
@@ -1752,6 +1758,44 @@ public class NavigationPageController implements Initializable, Data{
     public void runVoice(){
 
     }
+
+
+
+   @FXML
+   public void AutoZoom(Vector<Node> path){
+        /*if(path==null){
+            return;
+        }
+
+       Vector<Double> ZoomArea = AutoZoom.AutoZoom(path,200);
+
+
+       double Xmove = ZoomArea.get(0)+1000;
+       double Ymove = ZoomArea.get(1)+1000;
+       double scale = ZoomArea.get(2);
+
+
+       System.out.println(scale+"=================================================");
+       System.out.println(Xmove+"=================================================");
+       System.out.println(Ymove+"=================================================");
+
+       System.out.println(stackPane.getHeight()+"    <==============HEIGHT");
+       System.out.println(stackPane.getWidth() +"    <==============WIDTH");
+
+
+       stackPane.setScaleX(stackPane.getScaleX() * scale);
+       stackPane.setScaleY(stackPane.getScaleY() * scale);
+
+
+
+       // ----------------- WORKS UNTIL HERE ALMOST ----------------------//
+
+       //I DONT KNOW HOW TO PANE TO THE NEW LOCATIONS Xmove - Ymove
+       stackPane.setLayoutX(Xmove);
+       stackPane.setLayoutY(Ymove);
+*/
+
+   }
 
 
 }
