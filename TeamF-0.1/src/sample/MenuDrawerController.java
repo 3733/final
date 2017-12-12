@@ -16,8 +16,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javafx.scene.layout.HBox;
 
 import static sample.Data.data;
@@ -48,6 +52,8 @@ public class MenuDrawerController implements Initializable{
     // Contains the Invalid email error message
     @FXML
     private static Label invalidEmailText;
+    @FXML
+    private JFXListView startAuto, endAuto;
 
     //@FXML
     //private JFXRadioButton start, end;
@@ -82,6 +88,7 @@ public class MenuDrawerController implements Initializable{
     private ObservableList<String> allEntries;
 
     private ObservableList<String> threeItems, twoItems, oneItems, groundItems, lowerOneItems, lowerTwoItems;
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -308,6 +315,92 @@ public class MenuDrawerController implements Initializable{
     }
 
     @FXML
+    public void startAutoComplete(){
+        startAuto.setVisible(true);
+        ObservableList<String> filteredEntries = FXCollections.observableArrayList("empty");
+        //filtering
+        startLabel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = startLabel.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                startAuto.setItems(filteredEntries);
+            }
+        });
+
+        startAuto.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                startLabel.setText(newValue);
+            }
+        });
+    }
+
+    @FXML
+    public void endAutoComplete(){
+        endAuto.setVisible(true);
+        ObservableList<String> filteredEntries = FXCollections.observableArrayList("empty");
+        //filtering
+        endLabel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = endLabel.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                endAuto.setItems(filteredEntries);
+            }
+        });
+
+        endAuto.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                endLabel.setText(newValue);
+            }
+        });
+    }
+
+    @FXML
+    public void startAutoClose(){
+        startAuto.setVisible(false);
+    }
+
+    @FXML
+    public void  endAutoClose(){
+        endAuto.setVisible(false);
+    }
+
+    @FXML
     public void reverseDirections() throws IOException, InterruptedException {
         //System.out.println("WUT????");
         String begin = startLabel.getText();
@@ -336,6 +429,8 @@ public class MenuDrawerController implements Initializable{
 
         directionSteps.setVisible(false);
         floorPoints.setVisible(true);
+        startAuto.setVisible(false);
+        endAuto.setVisible(false);
 
         //popluating list view -- three
         threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
