@@ -427,7 +427,7 @@ public class Main extends Application implements Data{
 
         //testEmbeddedDB.addStaffTestData();
 
-        //launch(args);
+        launch(args);
 
         //controller.drawDirections(Vec);
     }
