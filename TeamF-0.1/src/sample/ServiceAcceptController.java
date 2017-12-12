@@ -42,7 +42,7 @@ public class ServiceAcceptController implements Initializable, ITimed{
     public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     @FXML
-    public void logout(){Main.startScreen();}
+    public void logout() throws IOException, InterruptedException {Main.mapScreen();}
 
     @FXML
     public void toServiceRequest() {
@@ -80,12 +80,26 @@ public class ServiceAcceptController implements Initializable, ITimed{
     private TableColumn<ServiceRequest, String> finishedRequests;
 
     @FXML
-    private  TableColumn<ServiceRequest, Integer> requestIDs;
+    private  TableColumn<ServiceRequest, String> requestIDs;
 
 
     //formatted list of requests that go into table
     private ObservableList<ServiceRequest> finishedRequestObserve = FXCollections.observableArrayList();
 
+
+    //for your started service requests
+    @FXML
+    private TableView<ServiceRequest> acceptedTableView;
+
+    @FXML
+    private TableColumn<ServiceRequest, String> acceptedRequests;
+
+    @FXML
+    private  TableColumn<ServiceRequest, String> acceptedIDs;
+
+
+    //formatted list of requests that go into table
+    private ObservableList<ServiceRequest> acceptededRequestObserve = FXCollections.observableArrayList();
 
 
 
@@ -120,9 +134,11 @@ public class ServiceAcceptController implements Initializable, ITimed{
         timeoutController.setTimer(atimer, false);
 
         requests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
-        status.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getStatus()).trim()));   //sets service status in column
+        status.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getServiceTime()).trim()));   //sets service status in column
         finishedRequests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
-        requestIDs.setCellValueFactory(cellData -> intToObsValue(cellData.getValue().getServiceID()));
+        requestIDs.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getFinishTime().trim()));
+        acceptedRequests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
+        acceptedIDs.setCellValueFactory(cellData -> stringToStringProperty(cellData.getValue().getAcceptTime().trim()));
         refreshTable();
     }
 
@@ -156,7 +172,8 @@ public class ServiceAcceptController implements Initializable, ITimed{
         if ((requestSelected.getType().trim()).equals("food")) {
             serviceInformation += "Time to be served: " + ((FoodRequest) requestSelected).getServingTime() + "<br>";
             serviceInformation += "Patient name: " + ((FoodRequest) requestSelected).getPatientName() + "<br>";
-            serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder() + "<br>";
+            String order = ((FoodRequest) requestSelected).getFoodOrder().replace("!", ", ").trim();
+            serviceInformation += "Meal ordered: " + order.substring(0, order.length()-1) + "<br>";
         }
 
         if ((requestSelected.getType().trim()).equals("transport")) {
@@ -188,10 +205,10 @@ public class ServiceAcceptController implements Initializable, ITimed{
     public void deleteRequest()
     {
         ObservableList<ServiceRequest> selectedRows, allrequests;
-        allrequests = tableView.getItems();
+        allrequests = acceptedTableView.getItems();
 
         //this gives us the rows that were selected
-        selectedRows = tableView.getSelectionModel().getSelectedItems();
+        selectedRows = acceptedTableView.getSelectionModel().getSelectedItems();
 
         //loop over the selected rows and remove the ServiceRequest objects from the table
         for (ServiceRequest req: selectedRows)
@@ -218,35 +235,21 @@ public class ServiceAcceptController implements Initializable, ITimed{
         Vector requestsFromDatabase = testEmbeddedDB.getAllServiceRequests();
         ArrayList<ServiceRequest> arrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(requestsFromDatabase);
 
-        for ( int z = 0; z<tableView.getItems().size(); z++) {
-            tableView.getItems().clear();
-        }
-        for ( int u = 0; u<finishedTableView.getItems().size(); u++) {
-            finishedTableView.getItems().clear();
-        }
-
-
         requestObserve.clear();
         finishedRequestObserve.clear();
+        acceptededRequestObserve.clear();
 
         //for current requests table
         for (int i = 0; i < arrayOfRequestsFromDatabase.size(); i++) {   //searches through the list from the database
-            boolean alreadyInTable = false;
-            for (int j = 0; j < requestObserve.size(); j++) {        //searches through the list in the table
-                if ((arrayOfRequestsFromDatabase.get(i)).getServiceID() == (requestObserve.get(j)).getServiceID()) {  //if the service is already in the table
-                    alreadyInTable = true;
-                    if (((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim().equals("accepted"))   //updates services in table with any possible changes
-                        requestObserve.set(j, arrayOfRequestsFromDatabase.get(i));
-                    if (((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim().equals("finished"))
-                        requestObserve.remove(j);
-                }
-            }
-            if ( !alreadyInTable && !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) && (getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse"))) {
+
+            if ( ((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("unaccepted")) &&
+                    ((getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Helper")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Cleaning")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Medical")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Medical")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("it") && getLoggedInGuy().getEmployeeType().trim().equals("IT")))) {
                 requestObserve.add(arrayOfRequestsFromDatabase.get(i));
             }
         }
@@ -268,6 +271,24 @@ public class ServiceAcceptController implements Initializable, ITimed{
 
         finishedTableView.setItems(finishedRequestObserve);
 
+
+        Vector myRequestsFromDatabase = testEmbeddedDB.getEmployeesFromServiceRequest(getLoggedInGuy().getEmployeeID());
+        ArrayList<ServiceRequest> myArrayOfRequestsFromDatabase = new ArrayList<ServiceRequest>(myRequestsFromDatabase);
+
+        //for accepted requests table
+        for (int i = 0; i < myArrayOfRequestsFromDatabase.size(); i++) {   //searches through the list from the database
+            boolean alreadyInTable = false;
+            for (int j = 0; j < acceptededRequestObserve.size(); j++) {        //searches through the list in the table
+                if ((myArrayOfRequestsFromDatabase.get(i)).getServiceID() == (acceptededRequestObserve.get(j)).getServiceID()) {  //if the service is already in the table
+                    alreadyInTable = true;
+                }
+            }
+            if ( !alreadyInTable && (((myArrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("accepted"))
+                acceptededRequestObserve.add(myArrayOfRequestsFromDatabase.get(i));
+        }
+
+        acceptedTableView.setItems(acceptededRequestObserve);
+
     }
 
 
@@ -282,9 +303,6 @@ public class ServiceAcceptController implements Initializable, ITimed{
 
     @FXML
     private Label currentCreatedTime;
-
-    @FXML
-    private Label currentAcceptTime;
 
     @FXML
     private Label currentUrgency;
@@ -346,6 +364,42 @@ public class ServiceAcceptController implements Initializable, ITimed{
     @FXML
     private Label finishFinishTime;
 
+    @FXML
+    private Label acceptType;
+
+    @FXML
+    private Label acceptStatus;
+
+    @FXML
+    private Label acceptID;
+
+    @FXML
+    private Label acceptCreatedTime;
+
+    @FXML
+    private Label acceptAcceptTime;
+
+    @FXML
+    private Label acceptUrgency;
+
+    @FXML
+    private Label acceptDestination;
+
+    @FXML
+    private Label acceptDeliveryTime;
+
+    @FXML
+    private Label acceptMenu;
+
+    @FXML
+    private Label acceptPatient;
+
+    @FXML
+    private Label acceptTransportation;
+
+    @FXML
+    private Label acceptDescription;
+
 
     @FXML
     public void currentViewRequest() {
@@ -353,7 +407,6 @@ public class ServiceAcceptController implements Initializable, ITimed{
         currentStatus.setText("");
         currentID.setText("");
         currentCreatedTime.setText("");
-        currentAcceptTime.setText("");
         currentDestination.setText("");
         currentDescription.setText("");
         currentUrgency.setText("");
@@ -372,7 +425,6 @@ public class ServiceAcceptController implements Initializable, ITimed{
             currentStatus.setText((req.getStatus()).trim());
             currentID.setText((Integer.toString(req.getServiceID())).trim());
             currentCreatedTime.setText((req.getServiceTime()).trim());
-            currentAcceptTime.setText((req.getAcceptTime()).trim());
             currentDestination.setText((req.getDestination().getLongName()).trim());
             currentDescription.setText((req.getDescription()).trim());
 
@@ -390,7 +442,8 @@ public class ServiceAcceptController implements Initializable, ITimed{
 
             if((req.getType()).trim().equals("food")) {
                 currentDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
-                currentMenu.setText((((FoodRequest) req).getFoodOrder()).trim());
+                String order = (((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim();
+                currentMenu.setText(order.substring(0, order.length()-1));
                 currentPatient.setText(((((FoodRequest) req).getPatientName())).trim());
             }
 
@@ -447,7 +500,8 @@ public class ServiceAcceptController implements Initializable, ITimed{
 
             if((req.getType().trim()).equals("food")) {
                 finishDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
-                finishMenu.setText((((FoodRequest) req).getFoodOrder()).trim());
+                String order = (((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim();
+                finishMenu.setText(order.substring(0, order.length()-1));
                 finishPatient.setText(((((FoodRequest) req).getPatientName())).trim());
             }
 
@@ -459,6 +513,60 @@ public class ServiceAcceptController implements Initializable, ITimed{
         }
     }
 
+    @FXML
+    public void acceptedViewRequest() {
+        acceptType.setText("");
+        acceptStatus.setText("");
+        acceptID.setText("");
+        acceptCreatedTime.setText("");
+        acceptAcceptTime.setText("");
+        acceptDestination.setText("");
+        acceptDescription.setText("");
+        acceptUrgency.setText("");
+        acceptDeliveryTime.setText("");
+        acceptMenu.setText("");
+        acceptPatient.setText("");
+        acceptTransportation.setText("");
 
+        //this gives us the rows that were selected
+        ObservableList<ServiceRequest> selectedRows = acceptedTableView.getSelectionModel().getSelectedItems();
+
+        //loop over the selected rows and display properties
+        for (ServiceRequest req: selectedRows)
+        {
+            acceptType.setText((req.getType()).trim());
+            acceptStatus.setText((req.getStatus()).trim());
+            acceptID.setText((Integer.toString(req.getServiceID())).trim());
+            acceptCreatedTime.setText((req.getServiceTime()).trim());
+            acceptAcceptTime.setText((req.getAcceptTime()).trim());
+            acceptDestination.setText((req.getDestination().getLongName()).trim());
+            acceptDescription.setText((req.getDescription()).trim());
+
+            if((req.getType().trim()).equals("cleaning"))
+                acceptUrgency.setText((Integer.toString(((CleaningRequest)req).getUrgency())).trim());
+
+            if((req.getType().trim()).equals("assistance"))
+                acceptUrgency.setText((Integer.toString(((AssistanceRequest)req).getUrgency())).trim());
+
+            if((req.getType().trim()).equals("security"))
+                acceptUrgency.setText((Integer.toString(((SecurityRequest)req).getUrgency())).trim());
+
+            if((req.getType()).trim().equals("it"))
+                acceptUrgency.setText((Integer.toString(((ItRequest)req).getUrgency())).trim());
+
+            if((req.getType().trim()).equals("food")) {
+                acceptDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
+                String order = (((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim();
+                acceptMenu.setText(order.substring(0, order.length()-1));
+                acceptPatient.setText(((((FoodRequest) req).getPatientName())).trim());
+            }
+
+            if((req.getType().trim()).equals("transport")) {
+                acceptTransportation.setText((((TransportRequest) req).getTypeOfTransport()).trim());
+                acceptPatient.setText(((((TransportRequest) req).getPatientName())).trim());
+            }
+
+        }
+    }
 }
 

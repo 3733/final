@@ -41,7 +41,9 @@ import java.text.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static sample.Main.getFoodString;
 import static sample.Main.getLoggedInGuy;
+import static sample.Main.setFoodString;
 
 
 public class ServiceRequestController implements Initializable, Data, ITimed {
@@ -52,10 +54,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
 
     ObservableList<String> allEntries;
     //top menu bar
-    @FXML
-    public void backToStart() {
-        Main.startScreen();
-    }
+
 
     @FXML
     public void backToAdmin() throws IOException, InterruptedException{
@@ -74,8 +73,8 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
     }
 
     @FXML
-    public void logout() {
-        Main.startScreen();
+    public void logout() throws IOException, InterruptedException {
+        Main.mapScreen();
     }
 
     @FXML
@@ -124,7 +123,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
 
     @FXML
     public void assistanceThisLocation() {
-        assistanceNode = n1;
+        assistanceNode = data.kiosk;
         assistDestination.setText(n1.getLongName());
     }
 
@@ -177,10 +176,13 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
     private JFXListView foodSearchList;
 
     @FXML
-    private ChoiceBox foodMenu;
+    private TextArea foodDescription;
 
     @FXML
-    private TextArea foodDescription;
+    private JFXButton foodMenu;
+
+    @FXML
+    public void openFoodMenu() { Main.menuPopUp(foodMenu);}
 
     @FXML
     public void autoComplete(){
@@ -329,19 +331,19 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
     @FXML
     public void updateFood() {
         foodID.setText(Integer.toString(ID));
-
+/*
         foodMenu.setItems(FXCollections.observableArrayList(
                 "Apple pie", "Banana", "Catfish soup", "Chicken parmesan", "Chocolate cake", "Hamburger", "Lasagna",
                 "Loaf of bread", "Lobster casserole", "Mashed potatoes", "Olive pizza", "Orange juice", "Oreos",
                 "Popcorn shrimps", "Sardines", "Smoked salmon", "Steak with lamb sauce", "Tuna potato", "Water"));
-    }
+  */  }
 
     private Node foodNode;
 
     @FXML
     public void foodThisLocation() {
-        foodNode = n1;
-        foodDestination.setText(foodNode.getLongName());
+        foodNode = data.kiosk;
+        foodDestination.setText(n1.getLongName());
     }
 
     @FXML
@@ -355,7 +357,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
         FoodRequest newFood = new FoodRequest(foodNode, foodDescription.getText(), Integer.parseInt(foodID.getText()),
                 foodTime.getValue().format(formatter), "", "", 0000, "food",
                 "unaccepted", foodPatient.getText(), foodServingTime.getValue().format(formatter),
-                (String) foodMenu.getValue());
+                getFoodString());
 
         requestList.add(newFood);
         testEmbeddedDB.addFoodRequest(newFood);
@@ -367,6 +369,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
         ID = (int) System.currentTimeMillis();
         foodDestination.clear();
         foodID.setText(Integer.toString(ID));
+        setFoodString("");
 
         refreshTable();
     }
@@ -398,14 +401,14 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
         transportID.setText(Integer.toString(ID));
 
         transportMenu.setItems(FXCollections.observableArrayList(
-                "Wheelchair", "Stretcher"));
+                "Wheelchair", "Stretcher", "Helicopter"));
     }
 
     private Node transportNode;
 
     @FXML
     public void transportThisLocation() {
-        transportNode = n1;
+        transportNode = data.kiosk;
         transportDestination.setText(n1.getLongName());
     }
 
@@ -464,7 +467,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
 
     @FXML
     public void cleanThisLocation() {
-        cleanNode = n1;
+        cleanNode = data.kiosk;
         cleaningDestination.setText(n1.getLongName());
     }
 
@@ -523,7 +526,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
 
     @FXML
     public void securityThisLocation() {
-        securityNode = n1;
+        securityNode = data.kiosk;
         securityDestination.setText(n1.getLongName());
     }
 
@@ -579,7 +582,7 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
     @FXML
     public void itSendRequest() throws MissingFieldException {
         ArrayList<Integer> itEmployees = new ArrayList<Integer>();
-        ItRequest newIt = new ItRequest(n1, itDescription.getText(),
+        ItRequest newIt = new ItRequest(data.kiosk, itDescription.getText(),
                 Integer.parseInt(itID.getText()), itTime.getValue().format(formatter), "", "",
                 0000, "it", "unaccepted", Integer.parseInt(itUrgency.getText()));
 

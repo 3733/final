@@ -5,6 +5,7 @@ import com.opencsv.CSVWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.HashMap;
@@ -37,12 +38,12 @@ public class testEmbeddedDB {
             testEmbeddedDB.fillNodesTable();
 
             testEmbeddedDB.fillEdgesTable();
-/*
-            Node test = new Node("dickbutt", 4, 4,
-                    4, "test", "test", "test",
-                    "test",'t');
 
-            Staff bob = new Staff("bob", "larkson", 1111, "boblrksn",
+            /*Node test = new Node("dickbutt", 4, 4,
+                    4, "test", "test", "test",
+                    "test",'t');*/
+
+            /*Staff bob = new Staff("bob", "larkson", 1111, "boblrksn",
                     "test", "assistance", "bob@bob.com");
 
             Staff tom = new Staff("tom", "larkson", 2222, "tomlrksn",
@@ -73,8 +74,8 @@ public class testEmbeddedDB {
 
             SecurityRequest s = new SecurityRequest(test, "test", 5555, "test",
                     "tetst", "test", 5,"security",
-                    "security", 4);
-*/
+                    "security", 4);//*/
+
             /*testEmbeddedDB.addFoodRequest(f);
 
             testEmbeddedDB.addAssistanceRequest(a);
@@ -100,17 +101,23 @@ public class testEmbeddedDB {
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            /*testEmbeddedDB.dropAssignmentsTable();
+            testEmbeddedDB.dropAssignmentsTable();
 
-            testEmbeddedDB.dropServiceRequestsTable();*/
+            testEmbeddedDB.dropServiceRequestsTable();
 
-            //testEmbeddedDB.dropStaffTable();
+            testEmbeddedDB.dropStaffTable();
+
+            testEmbeddedDB.dropFoodTable();
+
+            testEmbeddedDB.createFoodTable();
 
             testEmbeddedDB.createServiceRequestTable();
 
             testEmbeddedDB.createStaffTable();
 
             testEmbeddedDB.createAssignmentsTable();
+
+           // testEmbeddedDB.createFoodTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -220,6 +227,132 @@ public class testEmbeddedDB {
         }
     }
 
+    public static void createFoodTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("CREATE TABLE FOOD (" +
+                    "foodName char(75) PRIMARY KEY ," +
+                    "price FLOAT ," +
+                    "photourl CHAR(200)," +
+                    "defaultImage BOOLEAN DEFAULT FALSE )");
+
+        } catch (Exception e){
+            System.out.println("createFoodTable Error: " + e.getMessage());
+        }
+
+    }
+
+    public static void deleteFood(String foodName){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DELETE FROM Food WHERE foodNAME = '" + foodName + "'");
+
+        } catch (Exception e){
+            System.out.println("deleteFood error: " + e.getMessage());
+        }
+    }
+
+    public static Vector<Food> getAllFoods(){
+        Vector<Food> allFood = new Vector<>();
+
+        try{
+
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT * from FOOD");
+
+            while(r.next()){
+                Food f;
+                String name = r.getString("foodname");
+                float price = r.getInt("price");
+                String path = r.getString("photourl");
+                boolean defimg = r.getBoolean("defaultImage");
+
+                f = new Food(name, (double) price, path, defimg);
+
+                allFood.add(f);
+
+            }
+
+
+
+        } catch (Exception e){
+            System.out.println("getAllFood error: " + e.getMessage());
+        }
+
+        return allFood;
+    }
+
+    public static void dropFoodTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DROP TABLE FOOD");
+
+
+        } catch (Exception e){
+            System.out.println("dropFoodTable error: " + e.getMessage());
+        }
+    }
+
+    public static void addFood(String foodName, double price, String path, boolean defaultImage){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("INSERT INTO FOOD(foodName, price, photourl, defaultImage) VALUES (" +
+                    "'" + foodName + "', " + (float) price + ", '" + path + "', " + defaultImage + ")");
+
+        } catch (Exception e){
+            System.out.println("addFood error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodName(String food, String newfood){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set foodName = '" + newfood + "'");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodPrice(String food, double price){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set price = " + (float) price + "");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodURL(String food, String newURL){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set photourl = '" + newURL + "'");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
     //Talal wants to work on this
 
     public static void createServiceRequestTable(){
@@ -231,14 +364,14 @@ public class testEmbeddedDB {
             //remove the servieceEmployee ID from this table!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             s.execute("CREATE TABLE ServiceRequests (" +
-                    "destination CHAR(25) NOT NULL ," +
-                    "description CHAR(60) NOT NULL ," +
+                    "destination CHAR(30) NOT NULL ," +
+                    "description CHAR(150) NOT NULL ," +
                     "serviceID BIGINT NOT NULL," +
                     "serviceTime CHAR(20) NOT NULL ," +
                     "typeOfRequest CHAR(30) NOT NULL ," +
                     "patientName CHAR(40) DEFAULT NULL ," +
                     "timeToBeServed CHAR(20) DEFAULT NULL ," +
-                    "foodOrder CHAR(30) DEFAULT NULL ," +
+                    "foodOrder CHAR(50) DEFAULT NULL ," +
                     "urgency INTEGER DEFAULT NULL ," +
                     "arrival BOOLEAN DEFAULT FALSE ," +
                     "typeOfTransport CHAR(60) DEFAULT NULL," +
@@ -326,27 +459,33 @@ public class testEmbeddedDB {
                 n = testEmbeddedDB.getNode(dest);
 
                 if(typeofreq.contains("food")){
-                    req = new FoodRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
-                            typeofreq, completionStatus, patName, timeToBeServed, order);
+                    req = new FoodRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID, typeofreq,
+                            completionStatus, patName, timeToBeServed, order);
 
                 } else if(typeofreq.contains("assistance")){
-                    req = new AssistanceRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new AssistanceRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
 
                 } else if(typeofreq.contains("transport")){
-                    req = new TransportRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
-                            typeofreq, completionStatus, arrival, patName, typeOfTransport);
+                    req = new TransportRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID, typeofreq,
+                            completionStatus, arrival, patName, typeOfTransport);
 
                 } else if(typeofreq.contains("cleaning")){
-                    req = new CleaningRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new CleaningRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
 
                 } else if(typeofreq.contains("security")){
-                    req = new SecurityRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new SecurityRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
 
                 } else if(typeofreq.contains("it")){
-                    req = new ItRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new ItRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
                 }
 
@@ -1511,6 +1650,144 @@ public class testEmbeddedDB {
                 return "oh no";
         }
 
+    }
+
+    public static void addStaffTestData(){
+        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago",
+                "Kaguya", "Medical", "eyago@yagokorolab.net");
+        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel",
+                "Oak", "Cleaning", "gary@droak.com");
+        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal",
+                "Jaber", "Admin", "tjaber15@gmail.com");
+        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin",
+                "Roth", "Admin", "rothgr16@gmail.com");
+        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris",
+                "van Rossum", "Admin", "florisvanrossum@gmail.com");
+        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke",
+                "Ludington", "Admin", "Pmwws1@gmail.com");
+        Staff Will = new Staff("William", "Godsey", 4, "William",
+                "Godsey", "Admin", "willgodsey@gmail.com");
+        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin",
+                "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
+        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan",
+                "Wang", "Admin", "WillisWang514@gmail.com");
+        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion",
+                "Patias", "Admin", "Parmenion.Patias@gmail.com");
+        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie",
+                "Raca", "Admin", "stephanie.r.racca@gmail.com");
+        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos",
+                "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
+        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew",
+                "Schueler", "Admin", "andrewtheschueler@gmail.com");
+        addStaff(Gary);
+        addStaff(Eirin);
+        addStaff(Talal);
+        addStaff(Griffin);
+        addStaff(Floris);
+        addStaff(Luke);
+        addStaff(Will);
+        addStaff(Ben);
+        addStaff(Willis);
+        addStaff(Parm);
+        addStaff(Steph);
+        addStaff(Nik);
+        addStaff(Andrew);//*/
+
+    }
+
+    public static void defaultMenu() {
+        testEmbeddedDB.addFood("apple pie", 8.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thN0HD2MIW.jpg", true);
+        testEmbeddedDB.addFood("banana", 0.58, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/banana.png", true);
+        testEmbeddedDB.addFood("sardines", 2.50, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/sardines.png", true);
+        testEmbeddedDB.addFood("smoked salmon", 2.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/smoked_salmon.png", true);
+        testEmbeddedDB.addFood("steak with lamb sauce", 15.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thR6E02SIM.jpg", true);
+        testEmbeddedDB.addFood("oreos", 3.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/th5MUPYTVT.jpg", true);
+        testEmbeddedDB.addFood("water", 1.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/th6FB1GCKJ.jpg", true);
+        testEmbeddedDB.addFood("catfish soup", 8.59, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/th6W9F71G7.jpg", true);
+        testEmbeddedDB.addFood("olive pizza", 13.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thB0H4P1OS.jpg", true);
+        testEmbeddedDB.addFood("chocolate cake", 4.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thFUUOROA2.jpg", true);
+        testEmbeddedDB.addFood("orange juice", 3.59, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thI21VG95P.jpg", true);
+        testEmbeddedDB.addFood("mashed potatoes", 3.99, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thIIS9OC4M.jpg", true);
+        testEmbeddedDB.addFood("loaf of bread", 2.40, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thJHMODTJX.jpg", true);
+        testEmbeddedDB.addFood("hamburger", 1.25, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thOM2SZM21.jpg", true);
+        testEmbeddedDB.addFood("lobster casserole", 18.95, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thQC8LHS8B.jpg", true);
+        testEmbeddedDB.addFood("chicken parmesan", 7.99, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thS1391HVZ.jpg", true);
+        testEmbeddedDB.addFood("tuna potato", 5.52, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thT0K5P8SP.jpg", true);
+        testEmbeddedDB.addFood("popcorn shrimps", 8.10, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thT9IF11RU.jpg", true);
+    }
+
+    public static Vector<ServiceRequest> getEmployeesFromServiceRequest(long employeeID){
+        Vector<ServiceRequest> reqs = new Vector<>();
+
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM " +
+                    "(SERVICEREQUESTS JOIN ASSIGNMENTS ON " +
+                    "SERVICEREQUESTS.SERVICEID = ASSIGNMENTS.SERVICEID) " +
+                    "WHERE EMPLOYEEID = " + employeeID);
+
+            while(r.next()) {
+                ServiceRequest req = null;
+                Node n;
+                String dest = r.getString("destination");
+                String desc = r.getString("description");
+                String serviceTime = r.getString("servicetime");
+                String acceptTime = r.getString("accepttime");
+                String finishTime = r.getString("finishtime");
+                String typeofreq = r.getString("typeofrequest");
+                String patName = r.getString("patientname");
+                String timeToBeServed = r.getString("timetobeserved");
+                String order = r.getString("foodorder");
+                int urgency = r.getInt("urgency");
+                boolean arrival = r.getBoolean("arrival");
+                String typeOfTransport = r.getString("typeoftransport");
+                String completionStatus = r.getString("completionstatus");
+                int serviceID = r.getInt("serviceid");
+                int serviceEmployeeID = r.getInt("serviceemployeeid");
+
+                n = testEmbeddedDB.getNode(dest);
+
+                if (typeofreq.contains("food")) {
+                    req = new FoodRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID, typeofreq, completionStatus,
+                            patName, timeToBeServed, order);
+
+                } else if (typeofreq.contains("assistance")) {
+                    req = new AssistanceRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+
+                } else if (typeofreq.contains("transport")) {
+                    req = new TransportRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID, typeofreq, completionStatus,
+                            arrival, patName, typeOfTransport);
+
+                } else if (typeofreq.contains("cleaning")) {
+                    req = new CleaningRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+
+                } else if (typeofreq.contains("security")) {
+                    req = new SecurityRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+
+                } else if (typeofreq.contains("it")) {
+                    req = new ItRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+                }
+
+                reqs.add(req);
+            }
+
+        } catch (Exception e){
+            System.out.println("getEmployeesByServicerequest error: " + e.getMessage());
+        }
+        return reqs;
     }
 
 

@@ -32,6 +32,7 @@ public class Main extends Application implements Data{
 
     private  static String destination;
     private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
+    private  static String foodString = "";
     private String filePath = "/sample/UI/Icons/";
     private Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "A2@yorha.net");
 
@@ -54,6 +55,7 @@ public class Main extends Application implements Data{
     private static Scene editUserWin;
     private static Scene helpRequest;
     private static Scene aboutWin;
+    private static Scene food;
 
     // This is a  setter for the scene for the momento-timeout.
     public static void setStartScene()
@@ -78,6 +80,7 @@ public class Main extends Application implements Data{
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+    public static FoodController foodController = new FoodController();
     public static AboutPageController aboutPageController = new AboutPageController();
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
@@ -106,7 +109,6 @@ public class Main extends Application implements Data{
                 break;
             }
         }
-
 
         FXMLLoader startLoader = new FXMLLoader(getClass().getResource("UI/StartPage.fxml"));
         Parent Start = startLoader.load();
@@ -146,6 +148,12 @@ public class Main extends Application implements Data{
         serviceAcceptController = acceptLoader.getController();
         serviceAcceptController.setMainController(this);
         accept = new Scene(Accept);
+
+        FXMLLoader foodLoader = new FXMLLoader(getClass().getResource("UI/FoodMenu.fxml"));
+        Parent Food = foodLoader.load();
+        foodController = foodLoader.getController();
+        foodController.setMainController(this);
+        food = new Scene(Food);
 
         FXMLLoader mapEditLoader = new FXMLLoader(getClass().getResource("UI/MapEditingScreen.fxml"));
         Parent MapEdit = mapEditLoader.load();
@@ -229,6 +237,7 @@ public class Main extends Application implements Data{
         helpRequest.getStylesheets().add("sample/UI/style.css");
         menuWin.getStylesheets().add("sample/UI/style.css");
         timeEdit.getStylesheets().add("sample/UI/style.css");
+        food.getStylesheets().add("sample/UI/style.css");
 
 
         stage.setTitle("Team F Hospital GPS");
@@ -414,11 +423,11 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
-    public static void editUserWindow(JFXButton btn1){ // for adding users
-        popUp = new Stage();
-        //editUserWindowController.someAction();
-        popUp.setScene(aboutWin);
-        popUp.setTitle("About Team F");
+    public static void editUserWindow(JFXButton btn1){
+        Stage popUp = new Stage();
+        editUserWindowController.addingUsers();
+        popUp.setScene(editUserWin);
+        popUp.setTitle("Add User");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();
@@ -466,6 +475,15 @@ public class Main extends Application implements Data{
         popUp.close();
     }
 
+    public static void menuPopUp(JFXButton btn1) {
+        Stage popUp = new Stage();
+        popUp.setScene(food);
+        popUp.setTitle("Kiosk Menu");
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.initOwner(btn1.getScene().getWindow());
+        popUp.showAndWait();
+    }
+
     public static void sendDirections(){
         menuDrawerController.setDirectionSteps();
     }
@@ -483,6 +501,13 @@ public class Main extends Application implements Data{
         return data.loggedInGuy;
     }
 
+    public static void setFoodString(String newOrder) {
+        foodString = newOrder;
+    }
+
+    public static String getFoodString() {
+        return foodString;
+    }
 
     public static void main(String[] args) throws IOException{
 
@@ -528,38 +553,10 @@ public class Main extends Application implements Data{
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-        /*Staff admin = new Staff("Admin", "Admin", 11, "Admin", "Admin", "Admin", "Admin@gmail.com");
-        Staff staff = new Staff("Staff", "Staff", 12, "Staff", "Staff", "IT", "Staff@gmail.com");
 
-        testEmbeddedDB.addStaff(admin);
-        testEmbeddedDB.addStaff(staff);
 
-        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
-        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
-        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
-        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
-        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris", "van Rossum", "Admin", "florisvanrossum@gmail.com");
-        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke", "Ludington", "Admin", "Pmwws1@gmail.com");
-        Staff Will = new Staff("William", "Godsey", 4, "William", "Godsey", "Admin", "willgodsey@gmail.com");
-        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin", "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
-        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan", "Wang", "Admin", "WillisWang514@gmail.com");
-        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion", "Patias", "Admin", "Parmenion.Patias@gmail.com");
-        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie", "Raca", "Admin", "stephanie.r.racca@gmail.com");
-        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos", "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
-        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew", "Schueler", "Admin", "andrewtheschueler@gmail.com");
-        testEmbeddedDB.addStaff(Gary);
-        testEmbeddedDB.addStaff(Eirin);
-        testEmbeddedDB.addStaff(Talal);
-        testEmbeddedDB.addStaff(Griffin);
-        testEmbeddedDB.addStaff(Floris);
-        testEmbeddedDB.addStaff(Luke);
-        testEmbeddedDB.addStaff(Will);
-        testEmbeddedDB.addStaff(Ben);
-        testEmbeddedDB.addStaff(Willis);
-        testEmbeddedDB.addStaff(Parm);
-        testEmbeddedDB.addStaff(Steph);
-        testEmbeddedDB.addStaff(Nik);
-        testEmbeddedDB.addStaff(Andrew);//*/
+        /*testEmbeddedDB.addStaffTestData();
+        testEmbeddedDB.defaultMenu();//*/
 
         launch(args);
 
