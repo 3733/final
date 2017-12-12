@@ -13,8 +13,6 @@ import java.util.Timer;
 
 public class EditUserWindowController implements ITimed{
 
-    private TimeoutController timeoutController;
-
     private Timer atimer;
 
     private Main mainController;
@@ -47,23 +45,10 @@ public class EditUserWindowController implements ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction() //  throws IOException, InterruptedException
     {
-        try
-        {
-            timeoutController.doTimer();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("Could not start timer.");
-        }
     }
 
     public void initialize()
     {
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(30); // 30 per steph request.
-        timeoutController.setTimer(atimer, false);
     }
 
     //When going back, clears the text fields

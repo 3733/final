@@ -55,8 +55,6 @@ import static com.jfoenix.svg.SVGGlyphLoader.clear;
 
 public class AboutPageController implements ITimed{ //implements Initializable, Data{
 
-    private TimeoutController timeoutController;
-
     private Timer atimer;
 
     @FXML
@@ -68,15 +66,6 @@ public class AboutPageController implements ITimed{ //implements Initializable, 
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction()//  throws IOException, InterruptedException
     {
-        try
-        {
-            timeoutController.doTimer();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("Could not start timer.");
-        }
     }
 
     public void setMainController(Main in){
@@ -85,10 +74,6 @@ public class AboutPageController implements ITimed{ //implements Initializable, 
 
     public void initialize()
     {
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(10); // per steph request.
-        timeoutController.setTimer(atimer, true);
     }
 
 }
