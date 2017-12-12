@@ -55,7 +55,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public class NavigationPageController implements Initializable, Data{
+public class NavigationPageController implements Initializable, Data, ITimed{
+
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
 
     //FXML UI Components
 
@@ -155,7 +159,6 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
 
-
     @FXML
     private JFXButton createServButton;
 
@@ -197,12 +200,42 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<ImageView> buttonPanes = new Vector<>();
 
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+
+        if ()
+        {
+
+        }
+        else
+        {
+
+        }
+        try
+        {
+            timeoutController.doNavTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
 
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimer(atimer, false);
+
         menuDrawerController = mainController.menuDrawerController;
         mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();

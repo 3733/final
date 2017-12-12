@@ -38,6 +38,44 @@ public class AndrewTimer {
         return timerTask;
     }
 
+    public static TimerTask restoreNavFromNav(Timer atime) {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    atime.cancel();
+                    timeoutNav();
+                    System.out.println("This is the end of timer thread.");
+                    // atime.cancel(); // have to cancel the thread
+                } catch (Exception e) {
+                    System.out.println("The timeout thing broke.");
+                    e.printStackTrace();
+                }
+            }
+        };
+        return timerTask;
+    }
+
+    public static void timeoutNav() throws IOException, InterruptedException
+    {
+        Platform.runLater(new Runnable() {
+            public void run()  {
+                System.out.println("This is the start of the timer thread.");
+                    try {
+                        // Before setting the UI, auto logout the person.
+                        AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+                        SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
+                        Main.mapScreen();
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println("I derped out. No switch to Nav screen.");
+                        e.printStackTrace();
+                    }
+            }
+        });
+    }
+
     public static void timeoutAbout(boolean closePop) throws IOException, InterruptedException
     {
         Platform.runLater(new Runnable() {

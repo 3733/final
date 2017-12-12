@@ -37,11 +37,26 @@ public class TimeoutController {
         startTimer();
     }
 
+    public void doNavTimer()
+    {
+        System.out.println("   1_1_1   ");
+        atime.cancel();
+        System.out.println("   2_2_2   ");
+        startNavTimer();
+    }
+
     public void startTimer()
     {
-        System.out.println("    I suck a lot.    ");
+        System.out.println(" I am restarting timer. ");
         atime = new Timer();
         atime.schedule(AndrewTimer.restoreNavScreen(atime, isPopUp), this.delayTime * 1000); // AndrewTimer.getDelay() * 1000);
+    }
+
+    public void startNavTimer()
+    {
+        System.out.println(" I am restarting timer. ");
+        atime = new Timer();
+        atime.schedule(AndrewTimer.restoreNavFromNav(atime), this.delayTime * 1000); // AndrewTimer.getDelay() * 1000);
     }
 
     public void updateDelay(long inputTime)

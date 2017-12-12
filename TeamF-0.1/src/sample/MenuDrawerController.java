@@ -24,6 +24,8 @@ import static sample.Data.data;
 
 public class MenuDrawerController implements Initializable{
 
+
+
     //FXML UI Components
 
     @FXML
