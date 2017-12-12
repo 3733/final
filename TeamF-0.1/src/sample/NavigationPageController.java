@@ -339,8 +339,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             else if(after.getPriv().equals(AuthenticationInfo.Privilege.STAFF)){
                 createServButton.setVisible(true);
                 existServButton.setVisible(true);
-                //editMapButton.setVisible(true);
-                //editUsersButton.setVisible(true);
                 Image logoutPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/f61b5f54.png"));
                 ImageView logoutIMG = new ImageView(logoutPNG);
                 logoutIMG.setFitHeight(25);
@@ -370,35 +368,63 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 });
             }
         });
+        startZoom();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Getters and Setters
 
+    /**
+     * Set the map controller
+     * @param in The main screen controller
+     */
     public void setMainController(Main in){
         mainController = in;
     }
 
+    /**
+     * Get the current direction steps
+     * @return Return the JFX HBox direction steps
+     */
     public JFXListView<HBox> getDirectionSteps(){
         return this.directionSteps;
     }
 
+    /**
+     * Return a vector with all the floors visited
+     * @return Vector<String> contains all the floors visited
+     */
     public Vector<String> getFloorsVisited(){
         return  this.floorsVisited;
     }
 
+    /**
+     * Get the currently selected algorithm
+     * @return A number representing the current algorithm
+     */
     public int getCurrentAlgo(){
         return this.currentAlgo;
     }
 
+    /**
+     * Set the current kiosk in the dataholder class
+     * @param k Node representing the kiosk
+     */
     public void setKiosk(Node k){
         data.kiosk = k;
     }
 
+    /**
+     * Set the destination text box string
+     * @param s The string to put inside the textbox
+     */
     public void setSearch(String s){
         this.destination.setText(s);
     }
 
+    /**
+     * Close the search list
+     */
     public void autoClose(){
         searchList.setVisible(false);
     }
@@ -415,6 +441,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     public JFXRadioButton getRadioEnd(){return this.end;}
 
+    /**
+     * Set the current pathfinding algorithm
+     * @param current An integer represent to represent the current pathfinding algorithm
+     */
     public void setCurrentAlgo(int current){
         this.currentAlgo =  current;
     }
@@ -445,6 +475,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     };
 
 
+    /**
+     * Set the search field text fields
+     */
     @FXML
     public void settingSearch(){
         if (points.getSelectedToggle() == start) {
@@ -457,6 +490,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
+    /**
+     * Set the starting text field
+     * @param t String representing the starting text field
+     */
     @FXML
     public void setStart(String t){
         startLabel.setText(t);
@@ -466,22 +503,33 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return data.kiosk;
     }
 
-    //setting start and end nodes
+    /**
+     * Function that uses the search in order to properly gauge what destination node is meant by the user,
+     * called by the search button, starts the pathfinding function with go()
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void settingFields() throws IOException, InterruptedException {
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
         data.destinationNode = currNode;
         destination.setText(currNode.getLongName().trim());
         go();
-
     }
 
-    //sets invalid email label when necessary for errorhandling
+    /**
+     * Display invalid email message
+     */
     @FXML
     public static void setInvalidEmail(){
         invalidEmailText.setVisible(true);
     }
 
+    /**
+     * Set the current map of nodes
+     * @param m Map to be stored
+     * @throws IOException
+     */
     public void setMap(Map m) throws IOException{
         this.CurMap = m;
         Data.data.currentMap = "1";
@@ -499,14 +547,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
-        clearAnimations();
+        onFloorChange();
         drawAnimation(data.pathL1);
-        clearButtons();
         drawButtons(data.buttonNodes, "L1");
         Data.data.currentMap = "L1";
         hierarchicalText("L1");
         //AutoZoom(data.pathL1);
-        drawStartFinish();
         update();
     }
 
@@ -516,13 +562,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
-        clearAnimations();
+        onFloorChange();
         drawAnimation(data.pathL2);
-        clearButtons();
         drawButtons(data.buttonNodes,"L2");
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
-        drawStartFinish();
         //AutoZoom(data.pathL2);
         update();
     }
@@ -533,13 +577,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0, x, y);
         map.setImage(Data.data.firstFloor);
-        clearAnimations();
+        onFloorChange();
         drawAnimation(data.pathFirst);
-        clearButtons();
         drawButtons(data.buttonNodes, "1");
         Data.data.currentMap = "1";
         hierarchicalText("1");
-        drawStartFinish();
         //AutoZoom(data.pathFirst);
         update();
     }
@@ -552,13 +594,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.secondFloor);
-        clearAnimations();
+        onFloorChange();
         drawAnimation(data.pathSecond);
-        clearButtons();
         drawButtons(data.buttonNodes, "2");
         Data.data.currentMap = "2";
         hierarchicalText("2");
-        drawStartFinish();
         //AutoZoom(data.pathSecond);
         update();
     }
@@ -571,13 +611,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.thirdFloor);
-        clearAnimations();
+        onFloorChange();
         drawAnimation(data.pathThird);
-        clearButtons();
         drawButtons(data.buttonNodes, "3");
         Data.data.currentMap = "3";
         hierarchicalText("3");
-        drawStartFinish();
         //AutoZoom(data.pathThird);
         update();
     }
@@ -588,20 +626,30 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.GFloor);
-        //testDrawDirections(Data.data.pathG);
-        clearAnimations();
+        onFloorChange();
         drawAnimation(data.pathG);
-        clearButtons();
         drawButtons(data.buttonNodes, "G");
         Data.data.currentMap = "G";
         hierarchicalText("G");
-        drawStartFinish();
         //AutoZoom(data.pathG);
         update();
     }
 
+    /**
+     * This calls all the functions necessary for a floor change
+     */
+    public void onFloorChange() {
+        clearAnimations();
+        clearButtons();
+        drawStartFinish();
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Change Screen Functions
+
+    /**
+     * Call the login screen, clear the navigationpage controller and its fields
+     * @throws IOException
+     */
     @FXML
     public void login() throws IOException{
         Main.loginScreen(loginButton);
@@ -609,10 +657,16 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         clear();
     }
 
+    /**
+     * Call the help screen
+     */
     @FXML
     public void help(){Main.setHelpScreenServiceRequestScreen();}
 
-    // Button to return to the welcome screen
+    /**
+     * Return to the start screen and clear all the navigation fields and map
+     * @throws IOException
+     */
     @FXML
     public void back() throws IOException{
         Main.startScreen();
@@ -620,6 +674,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         clear();
     }
 
+    /**
+     * Show the timeout settings window
+     */
     @FXML
     public void changeTimeout(){
         Main.timeOutWindow(timeoutButton);
@@ -628,6 +685,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Finding Functions
 
+    /**
+     * Find a path, utilizes the nodes stored inside the dataholder class to find the shortest path
+     * MultiFloor actually draws the path
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void findPath() throws IOException, InterruptedException {
         clear();
         this.path = SearchEngine.NodeToNode(data.destinationNode,currentAlgo);
@@ -641,13 +704,20 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     }
 
 
-
+    /**
+     * clear the fields of the ImageView map object
+     */
     @FXML
     public void clearFields(){
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
     }
 
+    /**
+     * clear the screen and use findPath() to find the path
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
@@ -657,7 +727,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Path Drawing and Directions functions
 
-    // Purpose: Print out directions for a path of nodes
+    /**
+     * Find a string of directions corresponding to the path on the screen
+     * @param in Pass in a path of nodes
+     * @return String of directions
+     */
     public static String directions(Vector<Node> in){
         String out = "";
         Node a, b, c;
@@ -725,6 +799,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return out;
     }
 
+    /**
+     * Find all the proper images for the directions
+     */
     Image startIMG = new Image(getClass().getResourceAsStream(filePath + "Start.png"));
     Image straightIMG = new Image(getClass().getResourceAsStream(filePath + "Straight.png"));
     Image rightIMG = new Image(getClass().getResourceAsStream(filePath + "RightTurn.png"));
@@ -734,6 +811,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     Image elevIMG = new Image(getClass().getResourceAsStream(filePath + "Elevator.png"));
     Image stairIMG = new Image(getClass().getResourceAsStream(filePath + "Stairs.png"));
 
+    /**
+     * Return a linked list of all the images for each of the directions
+     * @param path A path of nodes
+     * @return Linked list of all the images corresponding to each direction
+     */
     public LinkedList<Image> directionArrows(String[] path){
         LinkedList<Image> images = new LinkedList<Image>();
 
@@ -772,6 +854,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         sequence.add(floor);
     }
 
+    /**
+     * Separates one path from the pathfinding algorithm into paths by floor
+     * @param path A path of nodes from pathfinding algorithm
+     * @return A vector of vectors of nodes representing paths for each floor
+     */
     public Vector<Vector<Node>> separator(Vector<Node> path){
         Vector<Vector<Node>> paths = new Vector<Vector<Node>>();
         for(int i = 0; i <6; i++){
@@ -809,6 +896,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return paths;
     }
 
+    /**
+     * Create hierarchical text for every floor
+     * @param floor The current floor
+     */
     public void hierarchicalText(String floor){
         for(int z = 0; z < data.directions.size(); z++){
             if(sequence.get(z).equals(floor)){
@@ -820,8 +911,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
+    /**
+     * Show all the floor buttons that have to be visible for the current floor
+     */
     public void displayFloorButtons(){
-
         String a = sequence.get(0);
         int b = 0;
         floorVisA.setText(a);
@@ -970,7 +1063,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     }
 
-    // Purpose: Insert a path of nodes that are only on ONE floor, draws the path on that floor
+    /**
+     * Calls the necessary functions to store the path into data holder and which buttons to display
+     * @param path A vector of nodes of the current path
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void MultiFloorPathDrawing(Vector<Node> path) throws IOException, InterruptedException {
         floorVisA.setVisible(false);
@@ -1068,6 +1166,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         data.startEndNodes = startEnd;
     }
 
+    /**
+     * Set the floor buttons for the current floor
+     */
     public void setFloorButtons(){
         for (int i = 0; i < floorsVisited.size(); i++) {
             JFXButton currentButton = floorButtons.elementAt(i);
@@ -1110,6 +1211,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
+    /**
+     * Set the currently displayed map floor based on a string that is passed in
+     * @param map String representing the floor to be changed to
+     */
     public void setMap(String map) {
         if(tabPane.getSelectionModel().isSelected(1)){
             tabPane.getSelectionModel().select(2);
@@ -1281,6 +1386,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return returnVector;
     }
 
+    /**
+     * Draw the current path and animation, takes in a vector of nodes to draw the path and call the animation
+     * @param path Current path of nodes
+     */
     public void drawAnimation( Vector<Node> path) {
         if (path != null) {
             int length = path.size();
@@ -1335,11 +1444,20 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
+    /**
+     * Clear all the currently displayed animations
+     */
     public void clearAnimations() {
         animationPane.getChildren().clear();
     }
 
-
+    /**
+     * Convert from the map image (5000x3400) to the anchorpane drawing/ canvas pathcanvas
+     * All the constants and window sizes are stored inside data holder
+     * @param x X coordinate to be converted
+     * @param y Y coordinate to be converted
+     * @return A point representing the two converted values as a point
+     */
     public Point2D convertFromImage(double x, double y){
         updateImageCoordinates();
         updateCanvasCoordinates();
@@ -1352,6 +1470,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return new Point2D(returnX,returnY);
     }
 
+    /**
+     * Convert an input point from the anchorpane / canvas to the image (5000x3400)
+     * @param x Input from anchorpane or canvas
+     * @param y Input from anchorpane or canvas
+     * @return return a point representing the converted point
+     */
     public Point2D convertToImage(double x, double y){
         updateImageCoordinates();
         updateCanvasCoordinates();
@@ -1364,25 +1488,17 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return new Point2D(returnX,returnY);
     }
 
-    public Point2D convertToCanvas(double x, double y) {
-        double returnX = x * (data.MapX / data.canvasX);
-        double returnY = y * (data.MapX / data.canvasY);
-        //System.out.println("This is the point: " + returnX + " ," + returnY);
-        return new Point2D(returnX,returnY);
-    }
-
-    public Point2D convertFromCanvas(double x, double y) {
-        double returnX = x / (data.MapX / data.canvasX) ;
-        double returnY = y / (data.MapX / data.canvasY);
-        //System.out.println("This is the point: " + returnX + " ," + returnY);
-        return new Point2D(returnX,returnY);
-    }
-
+    /**
+     * Update the stored sizes for the image view object
+     */
     public void updateImageCoordinates() {
         data.imageViewX = map.getLayoutBounds().getWidth();
         data.imageViewY = map.getLayoutBounds().getHeight();
     }
 
+    /**
+     * Update the stored sizes for the pathcanvs object
+     */
     public void updateCanvasCoordinates() {
         data.canvasX = pathCanvas.getWidth();
         data.canvasY = pathCanvas.getHeight();
@@ -1454,6 +1570,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
+    /**
+     * Draw a start icon ("you are here") onto the anchorpane buttonholder
+     * @param canvasX the x position of the image
+     * @param canvasY the y position of the image
+     */
     public void drawStartIcon(double canvasX, double canvasY) {
         ImageView floorIcon = new ImageView();
         floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/you-are-here-icon.png")));
@@ -1466,10 +1587,14 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         buttonHolder.getChildren().add(floorIcon);
     }
 
+    /**
+     * Draw a destination icon onto the anchorpane button holder
+     * @param canvasX the x position of the image
+     * @param canvasY the y position of the image
+     */
     public void drawFinishIcon(double canvasX, double canvasY) {
         ImageView floorIcon = new ImageView();
         floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/Finish.png")));
-        //System.out.println("Printing a finish pane at: (" + canvasX + ", " + canvasY + ")");
         floorIcon.setFitHeight(20);
         floorIcon.setFitWidth(20);
         floorIcon.setX(canvasX);
@@ -1480,7 +1605,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
 
-    // Purpose: Zoom the map when the user zooms
+    /**
+     * Zoom and pan the screen based on listeners for user input events, obtains all user input mouse information
+     */
     @FXML
     public void zoom() {
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -1501,9 +1628,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
                 double scaleFactor = (event.getDeltaY() > 0) ? 1.03 : 1/1.03;
                 Point2D scrollOffset = figureScrollOffset(scrollContent,scrollMap);
-                if (!(scaleFactor * stackPane.getScaleX() < 1)) {
+                if (!(scaleFactor * stackPane.getScaleX() < 1.0)) {
                     stackPane.setScaleX(stackPane.getScaleX() * scaleFactor);
                     stackPane.setScaleY(stackPane.getScaleY() * scaleFactor);
+                } else {
+                    System.out.println("This happened");
                 }
                 repositionScroller(scrollContent, scrollMap, scaleFactor, scrollOffset);
             }
@@ -1587,6 +1716,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         });
     }
 
+    /**
+     * Set the navigation page controller in a certain zoom or location for clarity
+     */
     @FXML
     public void startZoom() {
         scrollMap.viewportBoundsProperty().addListener(new ChangeListener<Bounds>() {
@@ -1618,6 +1750,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     }
 
+    /**
+     * Calculate the scroll ofsett after a zoom
+     * @param scrollContent FXML scroll content group
+     * @param scroller Scrollpane which holds the scroll content
+     * @return A point representing the scroll offset
+     */
     private Point2D figureScrollOffset(Group scrollContent, ScrollPane scroller) {
         double extraWidth = scrollContent.getLayoutBounds().getWidth() - scroller.getViewportBounds().getWidth();
         double hScrollProportion = (scroller.getHvalue() - scroller.getHmin()) / (scroller.getHmax() - scroller.getHmin());
@@ -1628,6 +1766,13 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         return new Point2D(scrollXOffset, scrollYOffset);
     }
 
+    /**
+     * Reposition the scrollbars of the scroll window
+     * @param scrollContent FXML Scroll content group
+     * @param scroller FXML Scroll pane holding the scroll content
+     * @param scaleFactor FXML Scale factor
+     * @param scrollOffset The offset point as calculated by figure scroll offset
+     */
     private void repositionScroller(Group scrollContent, ScrollPane scroller, double scaleFactor, Point2D scrollOffset) {
         double scrollXOffset = scrollOffset.getX();
         double scrollYOffset = scrollOffset.getY();
@@ -1649,23 +1794,15 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
-    // reset to the top left:
-    private void reset(ImageView imageView, double width, double height) {
-        imageView.setViewport(new Rectangle2D(0, 0, width, height));
-    }
-
-    private double clamp(double value, double min, double max) {
-        if (value < min)
-            return min;
-        if (value > max)
-            return max;
-        return value;
-    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Other Functions
 
     // Purpose: Method to clear the path on the map when the user presses clear map
+
+    /**
+     * Clear the current stored items for the path and buttons, clear the canvas
+     * @throws FileNotFoundException
+     */
     @FXML
     public void clear() throws FileNotFoundException{
         Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
@@ -1683,12 +1820,22 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         clearButtons();
     }
 
+    /**
+     * Emergency button for showing the nearest exit
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void emergencyButton() throws IOException, InterruptedException{
         destination.setText("Exit");
         settingFields();
     }
 
+    /**
+     * Logout the program
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void logout() throws IOException, InterruptedException{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
@@ -1704,7 +1851,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         clear();
     }
 
-    //  EDIT LATER
+    /**
+     * Show the map edit screen
+     * @throws IOException
+     * @throws InterruptedException
+     */
     @FXML
     public void edit() throws IOException, InterruptedException{
         Main.mapEditScreen();
@@ -1723,6 +1874,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     @FXML
     public void about(){Main.aboutWindow(aboutButton);}
 
+    /**
+     * Use the chat API when the help button is pressed
+     */
    @FXML
     public void chat(){
         //Main.setHelpScreenServiceRequestScreen();
@@ -1735,10 +1889,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
-    @FXML
-    public void setAlgorithm(){}
-
-
     // Purpose: Send an email when user clicks send email button
     @FXML
     public void sendMsg() throws Exception{
@@ -1747,7 +1897,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         emailService.sendEmail(NavigationPageController.directions(Data.data.path), email.getText());
     }
 
-    // Purpose: Find the proper destination when a user types in the search bar
+    /**
+     * Use the searchbar and the search engine to predict user searches
+     */
     @FXML
     public void autoComplete(){
         searchList.setVisible(true);
@@ -1794,6 +1946,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     }
 
+    /**
+     * Reverse the nodes to path find
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void reverseNodes() throws IOException, InterruptedException {
         Vector<Node> currentPath = this.path;
         Vector<Node> reversePath = new Vector<Node>();
@@ -1809,6 +1966,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         MultiFloorPathDrawing(this.path);
     }
 
+    /**
+     * Draw the necessary FXML Components
+     */
     @FXML
     public void initDrawer(){
         try{
@@ -1835,10 +1995,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     /**
      * Function to calculate the nearest node depend on the mouse click location.
-     * @param x
-     * @param y
-     * @param NodesOfTheFloor
-     * @return
+     * @param x  X position of the mouse click
+     * @param y Y Position of the mouse click
+     * @param NodesOfTheFloor Nodes of the currenly displayed floor
+     * @return Node closest to the given x and y point
      */
     public Node mousePosition (double x, double y,Vector<Node> NodesOfTheFloor) {
         double newMouseX = x;
@@ -1846,8 +2006,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         Node GoodOne = null;
         double MinDist = 100000000.0;
         double dist;
-
-
 
         for (Node i: NodesOfTheFloor) {
             dist = data.graph.MouseNodeDist(newMouseX,newMouseY,i);
@@ -1862,9 +2020,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 return n;
             }
         }
-
         return null;
-
     }
 
 
@@ -1877,7 +2033,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         if(mainMenu!=null){
             mainMenu.setSidePane(menuBox);
