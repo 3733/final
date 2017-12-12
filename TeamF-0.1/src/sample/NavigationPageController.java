@@ -1131,32 +1131,51 @@ public class NavigationPageController implements Initializable, Data{
 
     public Point2D convertFromImage(double x, double y){
         updateImageCoordinates();
-        System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
-        System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
-        System.out.println("This is the input point: " + x + ", " + y);
-        double returnX = x/(data.MapX / data.imageViewX);
-        double returnY = y/(data.MapX / data.imageViewY);
-        System.out.println("This is the point: " + returnX + " ," + returnY);
+        updateCanvasCoordinates();
+        //System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
+        //System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
+        //System.out.println("This is the input point: " + x + ", " + y);
+        double returnX = x / ((data.MapX / data.canvasX));
+        double returnY = y / ((data.MapX / data.canvasY));
+        //System.out.println("This is the point: " + returnX + " ," + returnY);
         return new Point2D(returnX,returnY);
     }
 
     public Point2D convertToImage(double x, double y){
         updateImageCoordinates();
-        System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
+        updateCanvasCoordinates();
+        System.out.println("This is the image view: " + data.canvasX + ", " + data.canvasY);
         System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
         System.out.println("This is the input point: " + x + ", " + y);
-        double returnX = x * (data.imageViewX / data.MapX);
-        double returnY = y * (data.MapY/ data.imageViewY);
+        double returnX = x * ((data.MapX / data.canvasX));
+        double returnY = (y) * ((data.MapX / data.canvasY));
         System.out.println("This is the point: " + returnX + " ," + returnY);
         return new Point2D(returnX,returnY);
-
     }
 
-    public void updateImageCoordinates(){
-        data.imageViewX = map.getFitWidth();
-        data.imageViewY = map.getFitWidth();
+    public Point2D convertToCanvas(double x, double y) {
+        double returnX = x * (data.MapX / data.canvasX);
+        double returnY = y * (data.MapX / data.canvasY);
+        //System.out.println("This is the point: " + returnX + " ," + returnY);
+        return new Point2D(returnX,returnY);
     }
 
+    public Point2D convertFromCanvas(double x, double y) {
+        double returnX = x / (data.MapX / data.canvasX) ;
+        double returnY = y / (data.MapX / data.canvasY);
+        //System.out.println("This is the point: " + returnX + " ," + returnY);
+        return new Point2D(returnX,returnY);
+    }
+
+    public void updateImageCoordinates() {
+        data.imageViewX = map.getLayoutBounds().getWidth();
+        data.imageViewY = map.getLayoutBounds().getHeight();
+    }
+
+    public void updateCanvasCoordinates() {
+        data.canvasX = pathCanvas.getWidth();
+        data.canvasY = pathCanvas.getHeight();
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
 
