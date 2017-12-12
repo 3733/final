@@ -1,6 +1,7 @@
 package sample;
 
 //import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.animation.PathTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -76,5 +77,6 @@ public class DataHolder {
     public double divisionCst = 3.87;
     public int offset = 2;
 
+    public PathTransition animation;
     public Vector<Node> nodeAlign = new Vector<Node>();
 }

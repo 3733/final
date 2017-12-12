@@ -304,6 +304,7 @@
                                             </image>
                                         </ImageView>
                                         <Canvas fx:id="pathCanvas" height="883.0" width="1302.0" StackPane.alignment="TOP_LEFT" />
+                              <AnchorPane fx:id="animationPane" prefHeight="200.0" prefWidth="200.0" />
                               <AnchorPane fx:id="buttonHolder" prefHeight="883.0" prefWidth="1302.0" />
                                     </children>
                                 </StackPane>
