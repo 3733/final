@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Port;
 
+import com.jfoenix.controls.JFXTextField;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import edu.cmu.sphinx.api.SpeechResult;
@@ -18,9 +19,14 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXML;
+
 
 
 public class SpeechRecognizer {
+
+    @FXML
+    private JFXTextField destination;
 
     // Necessary
     private LiveSpeechRecognizer recognizer;
@@ -164,6 +170,10 @@ public class SpeechRecognizer {
                     logger.log(Level.WARNING, null, ex);
                     Platform.runLater(() -> speechRecognizerThreadRunning.set(false));
                 }
+
+
+                speechRecognizerThreadRunning.set(false);
+//                destination.textProperty().unbind();
 
                 logger.log(Level.INFO, "SpeechThread has exited...");
 

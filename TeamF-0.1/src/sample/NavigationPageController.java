@@ -427,7 +427,8 @@ public class NavigationPageController implements Initializable, Data{
         groundArrow.setVisible(false);
         lowerOneArrow.setVisible(false);
         lowerTwoArrow.setVisible(false);*/
-
+        System.out.println("RESULTS  text" + destination.getText());
+        System.out.println("RESULTS trim " + destination.getText().trim());
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
         System.out.println("RESULTS " + destination.getText());
         data.destinationNode = currNode;
@@ -1643,6 +1644,7 @@ public class NavigationPageController implements Initializable, Data{
         searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.textProperty().unbind();
                 destination.setText(newValue);
                 try {
                     settingFields();
@@ -1771,25 +1773,23 @@ public class NavigationPageController implements Initializable, Data{
 
         //mic.disableProperty().bind(speechRecognition.speechRecognizerThreadRunningProperty());
 
-        mic.setOnAction(a -> {
-            speechRecognition.startSpeechRecognition();
-        });
-
-
-
+        speechRecognition.startSpeechRecognition();
         destination.textProperty().bind(Bindings.createStringBinding(() -> speechRecognition.getSpeechRecognitionResultProperty().get(),
                 speechRecognition.getSpeechRecognitionResultProperty()));
-        Bindings.createStringBinding( () -> speechRecognition.getSpeechRecognitionResultProperty().get(), speechRecognition.getSpeechRecognitionResultProperty());
-        String tempDestination = destination.getText();
-        System.out.println("This is the stored string: " + tempDestination);
-        destination.textProperty().unbind();
 
         //System.out.println("Speech result: " + speechRecognition.speechRecognitionResult);
         //destination.setText(speechRecognition.speechRecognitionResult);
         //autoComplete();
         //destination.setText(sound.getText());
         //destination.textProperty().setValue(speechRecognition.getSpeechRecognitionResultProperty().getValue());
-
+        destination.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (newPropertyValue == true) {
+                    destination.textProperty().unbind();
+                }
+            }
+        });
 //        destination.setText(speechRecognition.getSpeechRecognitionResultProperty().getValue());
 
 //        System.out.println("Result:" + destination.getText());
@@ -1809,6 +1809,7 @@ public class NavigationPageController implements Initializable, Data{
         });
 
     }
+
 
 
 }
