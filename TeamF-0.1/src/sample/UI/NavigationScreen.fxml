@@ -372,6 +372,15 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton fx:id="timeoutButton" contentDisplay="CENTER" onAction="#changeTimeout" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Change Timeout" textFill="WHITE">
+                           <font>
+                              <Font name="Montserrat Regular" size="14.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="16.0" prefWidth="222.0">
                      <children>
                         <JFXButton fx:id="editMapButton" contentDisplay="CENTER" onAction="#edit" prefHeight="23.0" prefWidth="156.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Map" textFill="WHITE">
