@@ -702,6 +702,13 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor.trim());
+
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+        transition.setRate(-1);
+        transition.setRate(transition.getRate() * -1);
+        mainMenu.open();
+        mainMenu.setVisible(true);
+        transition.play();
     }
 
 
