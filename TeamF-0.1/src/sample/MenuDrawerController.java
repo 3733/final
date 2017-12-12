@@ -79,9 +79,9 @@ public class MenuDrawerController implements Initializable{
 
     private Vector<JFXButton> floorButtons = new Vector<>();
 
-    ObservableList<String> allEntries;
+    private ObservableList<String> allEntries;
 
-    ObservableList<String> threeItems, twoItems, oneItems, groundItems, lowerOneItems, lowerTwoItems;
+    private ObservableList<String> threeItems, twoItems, oneItems, groundItems, lowerOneItems, lowerTwoItems;
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -93,7 +93,9 @@ public class MenuDrawerController implements Initializable{
         if(data.destinationNode!=null){
             endLabel.setText(data.destinationNode.getLongName().trim());
         }
-        floorPoints = new JFXListView();
+
+        directionSteps.setVisible(false);
+        floorPoints.setVisible(true);
 
         //popluating list view -- three
         threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
@@ -262,7 +264,7 @@ public class MenuDrawerController implements Initializable{
     // Purpose: Method to clear the path on the map when the user presses clear map
     @FXML
     public void clear() throws FileNotFoundException{
-        Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
+       /*Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
         Data.data.pathThird = null;
         Data.data.pathSecond = null;
         Data.data.pathFirst = null;
@@ -271,10 +273,8 @@ public class MenuDrawerController implements Initializable{
         Data.data.pathG = null;
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
-        }
-        directionSteps.setVisible(false);
+        }*/
         showPOI();
-        floorPoints.setVisible(true);
     }
 
 
@@ -298,20 +298,22 @@ public class MenuDrawerController implements Initializable{
     }
 
     public void showPOI(){
-        ObservableList<HBox> fuckThis = FXCollections.observableArrayList();
+        floorPoints.setVisible(true);
+        directionSteps.setVisible(false);
+        ObservableList<HBox> boxList = FXCollections.observableArrayList();
         for(int i = 0; i<allEntries.size(); i++){
-            HBox goddammit = new HBox();
+            HBox point = new HBox();
             Label label = new Label();
             label.setText(allEntries.get(i));
 
-            goddammit.getChildren().addAll(label);
-            goddammit.setAlignment(Pos.CENTER_LEFT);
+            point.getChildren().addAll(label);
+            point.setAlignment(Pos.CENTER_LEFT);
 
-            fuckThis.add(goddammit);
+            boxList.add(point);
         }
 
-        floorPoints.setItems(fuckThis);
-        /*if(data.currentMap.equals("3")) {
+        floorPoints.setItems(boxList);
+        if(data.currentMap.equals("3")) {
             floorPoints.setItems(threeItems);
         }
         else if(data.currentMap.equals("2")) {
@@ -328,7 +330,7 @@ public class MenuDrawerController implements Initializable{
         }
         else if(data.currentMap.equals("L2")) {
             floorPoints.setItems(lowerTwoItems);
-        }*/
+        }
     }
 
     //Displays the list of directions
