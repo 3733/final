@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="850.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
+<VBox prefHeight="825.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -149,7 +149,7 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <StackPane prefHeight="150.0" prefWidth="200.0">
+      <StackPane prefHeight="306.0" prefWidth="426.0">
          <children>
             <JFXListView fx:id="directionSteps" prefHeight="469.0" prefWidth="425.0" visible="false" />
             <JFXListView fx:id="floorPoints" prefHeight="469.0" prefWidth="425.0" visible="false" />

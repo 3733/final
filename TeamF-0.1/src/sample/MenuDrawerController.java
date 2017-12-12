@@ -269,10 +269,12 @@ public class MenuDrawerController implements Initializable{
         Data.data.pathL1 = null;
         Data.data.pathL2 = null;
         Data.data.pathG = null;
-
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
+        directionSteps.setVisible(false);
+        showPOI();
+        floorPoints.setVisible(true);
     }
 
 
@@ -308,7 +310,6 @@ public class MenuDrawerController implements Initializable{
             fuckThis.add(goddammit);
         }
 
-        floorPoints.setVisible(true);
         floorPoints.setItems(fuckThis);
         /*if(data.currentMap.equals("3")) {
             floorPoints.setItems(threeItems);
@@ -333,12 +334,13 @@ public class MenuDrawerController implements Initializable{
     //Displays the list of directions
     public void setDirectionSteps(){
         directionSteps.setVisible(true);
+        floorPoints.setVisible(false);
         directionSteps.setItems(data.directions);
     }
 
     public void reverseDirections() throws IOException, InterruptedException {
-        System.out.println("WUT????");
-        /*String begin = startLabel.getText();
+        //System.out.println("WUT????");
+        String begin = startLabel.getText();
         String dest = endLabel.getText();
         startLabel.setText(dest);
         endLabel.setText(begin);
@@ -350,7 +352,8 @@ public class MenuDrawerController implements Initializable{
         for (HBox h : current){
             data.directions.add(h);
         }
-        setDirectionSteps();*/
+        setDirectionSteps();
     }
+
 
 }
