@@ -10,12 +10,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="898.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
+<VBox prefHeight="850.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuDrawerController">
    <children>
-      <AnchorPane prefHeight="107.0" prefWidth="200.0" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
             <HBox prefHeight="142.0" prefWidth="301.0">
@@ -72,6 +72,9 @@
                </children>
             </VBox>
          </children>
+         <VBox.margin>
+            <Insets top="90.0" />
+         </VBox.margin>
       </AnchorPane>
       <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="200.0">
          <children>
@@ -146,11 +149,11 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <AnchorPane prefHeight="200.0" prefWidth="378.0">
+      <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
             <JFXListView fx:id="directionSteps" prefHeight="469.0" prefWidth="425.0" visible="false" />
             <JFXListView fx:id="floorPoints" prefHeight="469.0" prefWidth="425.0" visible="false" />
          </children>
-      </AnchorPane>
+      </StackPane>
    </children>
 </VBox>

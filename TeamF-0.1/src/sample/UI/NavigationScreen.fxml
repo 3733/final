@@ -26,9 +26,9 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
-    <center>
-        <AnchorPane prefHeight="810.0" prefWidth="1518.0" BorderPane.alignment="CENTER">
-            <children>
+   <center>
+      <AnchorPane prefHeight="810.0" prefWidth="1518.0" BorderPane.alignment="CENTER">
+         <children>
             <VBox layoutX="900.0" prefHeight="671.0" prefWidth="242.0">
                <children>
                   <AnchorPane prefHeight="107.0" prefWidth="200.0">
@@ -197,35 +197,35 @@
                   <JFXListView fx:id="floorPoints" prefHeight="711.0" prefWidth="242.0" visible="false" />
                </children>
             </VBox>
-                <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="848.0" prefWidth="1557.0">
-                    <content>
-                        <Group fx:id="scrollContent">
-                            <children>
-                                <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
-                                    <children>
-                                        <ImageView fx:id="map" fitHeight="1052.0" fitWidth="1691.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
-                                            <image>
-                                                <Image url="@Icons/01_thefirstfloor.png" />
-                                            </image>
-                                        </ImageView>
-                                        <Canvas fx:id="pathCanvas" height="900.0" width="1544.0" StackPane.alignment="TOP_LEFT" />
-                                    </children>
-                                </StackPane>
-                            </children>
-                        </Group>
-                    </content>
-                </ScrollPane>
-                <JFXTabPane fx:id="tabPane" layoutX="1400.0" layoutY="400.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
-                    <tabs>
-                        <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
-                        <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
-                        <Tab fx:id="floorOne" onSelectionChanged="#changeFloor1" style="-fx-rotate: 90;" text="1" />
-                        <Tab fx:id="floorGround" onSelectionChanged="#changeFloorG" style="-fx-rotate: 90;" text="G" />
-                        <Tab fx:id="floorLowerOne" onSelectionChanged="#changeFloorL1" style="-fx-rotate: 90;" text="L1" />
-                        <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
-                    </tabs>
-                </JFXTabPane>
-                <JFXListView fx:id="searchList" layoutX="20.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="266.0" visible="false" />
+            <ScrollPane fx:id="scrollMap" pannable="true" prefHeight="848.0" prefWidth="1557.0">
+               <content>
+                  <Group fx:id="scrollContent">
+                     <children>
+                        <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="map" fitHeight="1052.0" fitWidth="1691.0" onKeyPressed="#autoComplete" onKeyTyped="#autoComplete" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_LEFT">
+                                 <image>
+                                    <Image url="@Icons/01_thefirstfloor.png" />
+                                 </image>
+                              </ImageView>
+                              <Canvas fx:id="pathCanvas" height="900.0" width="1544.0" StackPane.alignment="TOP_LEFT" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </Group>
+               </content>
+            </ScrollPane>
+            <JFXTabPane fx:id="tabPane" layoutX="1400.0" layoutY="400.0" prefHeight="215.0" prefWidth="99.0" side="LEFT">
+               <tabs>
+                  <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
+                  <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
+                  <Tab fx:id="floorOne" onSelectionChanged="#changeFloor1" style="-fx-rotate: 90;" text="1" />
+                  <Tab fx:id="floorGround" onSelectionChanged="#changeFloorG" style="-fx-rotate: 90;" text="G" />
+                  <Tab fx:id="floorLowerOne" onSelectionChanged="#changeFloorL1" style="-fx-rotate: 90;" text="L1" />
+                  <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
+               </tabs>
+            </JFXTabPane>
+            <JFXListView fx:id="searchList" layoutX="20.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="266.0" visible="false" />
             <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
                <children>
                   <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
@@ -275,18 +275,18 @@
                   </JFXButton>
                </children>
             </HBox>
-            <HBox alignment="TOP_RIGHT" layoutX="1250.0" layoutY="36.0" prefHeight="65.0" prefWidth="204.0">
+            <HBox alignment="TOP_RIGHT" layoutX="1250.0" layoutY="30.0" prefHeight="65.0" prefWidth="204.0">
                <children>
-                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" prefHeight="45.0" prefWidth="59.0">
+                  <JFXButton fx:id="loginButton" contentDisplay="CENTER" onAction="#login" prefHeight="27.0" prefWidth="58.0">
                      <graphic>
-                        <ImageView fx:id="icon" fitHeight="46.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="icon" fitHeight="30.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Icons/Brigham_and_Womens_Hospital_logo.svg.png" />
+                              <Image url="@Icons/user-login-icon-14.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="helpButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#chat" prefHeight="32.0" prefWidth="32.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" textAlignment="CENTER">
+                  <JFXButton fx:id="helpButton" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="2.0" onAction="#chat" prefHeight="32.0" prefWidth="32.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" textAlignment="CENTER">
                      <graphic>
                         <ImageView fitHeight="29.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -295,7 +295,7 @@
                         </ImageView>
                      </graphic>
                      <HBox.margin>
-                        <Insets left="15.0" top="10.0" />
+                        <Insets left="15.0" top="3.0" />
                      </HBox.margin>
                   </JFXButton>
                </children>
@@ -316,26 +316,26 @@
             </JFXDrawersStack>
             <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="462.0">
                <children>
-                      <JFXTextField fx:id="destination" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="266.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
-                          <font>
-                              <Font name="Montserrat Regular" size="12.0" />
-                          </font>
+                  <JFXTextField fx:id="destination" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="266.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                     <font>
+                        <Font name="Montserrat Regular" size="12.0" />
+                     </font>
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
-                      </JFXTextField>
-                      <JFXButton fx:id="search" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-                          <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                      <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
-                                  </image>
-                              </ImageView>
-                          </graphic>
+                  </JFXTextField>
+                  <JFXButton fx:id="search" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
-                      </JFXButton>
+                  </JFXButton>
                   <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
                      <graphic>
                         <JFXHamburger fx:id="hamburger" prefHeight="16.0" prefWidth="20.0" />
@@ -392,7 +392,7 @@
                   </HBox>
                </children>
             </VBox>
-            </children>
-        </AnchorPane>
-    </center>
+         </children>
+      </AnchorPane>
+   </center>
 </BorderPane>
