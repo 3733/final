@@ -365,8 +365,9 @@ public class Main extends Application implements Data{
 
     public static void editUserWindow(JFXButton btn1){
         Stage popUp = new Stage();
-        popUp.setScene(aboutWin);
-        popUp.setTitle("About Team F");
+        editUserWindowController.addingUsers();
+        popUp.setScene(editUserWin);
+        popUp.setTitle("Add User");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();

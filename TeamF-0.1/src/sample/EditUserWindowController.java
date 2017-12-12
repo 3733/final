@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import sample.Main;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class EditUserWindowController {
     @FXML
     private JFXTextField idBox;
     @FXML
-    private JFXTextField posBox;
+    private ComboBox posBox;
     @FXML
     private JFXTextField emailBox;
     @FXML
@@ -43,7 +44,7 @@ public class EditUserWindowController {
         lNameBox.clear();
         fNameBox.clear();
         idBox.clear();
-        posBox.clear();
+        posBox.setValue("");
         emailBox.clear();
         usernameBox.clear();
         pwBox.clear();
@@ -69,12 +70,16 @@ public class EditUserWindowController {
     public void addingUsers(){
         editButton.setDisable(true);
         editButton.setVisible(false);
+        posBox.setItems(FXCollections.observableArrayList(
+                "Admin", "Helper", "Cleaning", "Medical", "Security", "IT"));
     }
 
     //If editing users, disables the add users button
     public void editingUsers(){
         addButton.setDisable(true);
         addButton.setVisible(false);
+        posBox.setItems(FXCollections.observableArrayList(
+                "Admin","Helper", "Cleaning", "Medical", "Security", "IT"));
     }
 
     //Fills the Text Fields when editing a user
@@ -83,7 +88,7 @@ public class EditUserWindowController {
         fNameBox.setText(staff.getFirstName().trim());
         idBox.setText(Long.toString(staff.getEmployeeID()));
         idBox.setDisable(true);
-        posBox.setText(staff.getEmployeeType().trim());
+        posBox.setValue(staff.getEmployeeType().trim());
         emailBox.setText(staff.getEmployeeEmail().trim());
         usernameBox.setText(staff.getUsername().trim());
         pwBox.setText(staff.getPassword().trim());
@@ -92,7 +97,7 @@ public class EditUserWindowController {
     //Adds a user based on information in the text fields
     public void addUserButton(){
         Staff addMe = new Staff(fNameBox.getText(), lNameBox.getText(), getID(),
-                usernameBox.getText(), pwBox.getText(), posBox.getText(), emailBox.getText());
+                usernameBox.getText(), pwBox.getText(), (String)posBox.getValue(), emailBox.getText());
         testEmbeddedDB.addStaff(addMe);
         back(addButton);
     }
@@ -107,8 +112,8 @@ public class EditUserWindowController {
             if (!fNameBox.getText().trim().equals(null)) {
                 testEmbeddedDB.updateStaffFName(getID(), fNameBox.getText());
             }
-            if (!posBox.getText().trim().equals(null)) {
-                testEmbeddedDB.updateStaffEType(getID(), posBox.getText());
+            if (!((String)posBox.getValue()).trim().equals(null)) {
+                testEmbeddedDB.updateStaffEType(getID(), (String)posBox.getValue());
             }
             if (!emailBox.getText().trim().equals(null)) {
                 testEmbeddedDB.updateStaffEmail(getID(), emailBox.getText());

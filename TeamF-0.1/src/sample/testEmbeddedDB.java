@@ -103,11 +103,11 @@ public class testEmbeddedDB {
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            /*testEmbeddedDB.dropAssignmentsTable();
+            testEmbeddedDB.dropAssignmentsTable();
 
-            testEmbeddedDB.dropServiceRequestsTable();*/
+            testEmbeddedDB.dropServiceRequestsTable();
 
-            //testEmbeddedDB.dropStaffTable();
+            testEmbeddedDB.dropStaffTable();
 
             testEmbeddedDB.createServiceRequestTable();
 
@@ -115,7 +115,7 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.createAssignmentsTable();
 
-            testEmbeddedDB.createFoodTable();
+           // testEmbeddedDB.createFoodTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -318,13 +318,13 @@ public class testEmbeddedDB {
 
             s.execute("CREATE TABLE ServiceRequests (" +
                     "destination CHAR(25) NOT NULL ," +
-                    "description CHAR(60) NOT NULL ," +
+                    "description CHAR(150) NOT NULL ," +
                     "serviceID BIGINT NOT NULL," +
                     "serviceTime CHAR(20) NOT NULL ," +
                     "typeOfRequest CHAR(30) NOT NULL ," +
                     "patientName CHAR(40) DEFAULT NULL ," +
                     "timeToBeServed CHAR(20) DEFAULT NULL ," +
-                    "foodOrder CHAR(30) DEFAULT NULL ," +
+                    "foodOrder CHAR(50) DEFAULT NULL ," +
                     "urgency INTEGER DEFAULT NULL ," +
                     "arrival BOOLEAN DEFAULT FALSE ," +
                     "typeOfTransport CHAR(60) DEFAULT NULL," +

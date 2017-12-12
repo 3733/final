@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -81,7 +82,7 @@ public class FoodController implements Initializable {
     Food oreos = new Food("oreos", 3.00, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/th5MUPYTVT.jpg");
     Food water = new Food("water", 1.00, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/th6FB1GCKJ.jpg");
     Food soup = new Food("catfish soup", 8.59, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/th6W9F71G7.jpg");
-    Food pizza = new Food("pizza", 13.00, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/thB0H4P1OS.jpg");
+    Food pizza = new Food("olive pizza", 13.00, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/thB0H4P1OS.jpg");
     Food cake = new Food("chocolate cake", 4.00, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/thFUUOROA2.jpg");
     Food orangeJuice = new Food("orange juice", 3.59, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/thI21VG95P.jpg");
     Food mashedPotatoes = new Food("mashed potatoes", 3.99, "C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src/sample/UI/Icons/foodpics/thIIS9OC4M.jpg");
@@ -111,10 +112,11 @@ public class FoodController implements Initializable {
     public SimpleObjectProperty<ImageView> fileLocationToObsValue(String cellEntry) throws FileNotFoundException {
         FileInputStream apath = new FileInputStream(cellEntry);
         Image foodImage = new Image(apath);
+        //Image foodImage = new Image(getClass().getResourceAsStream(cellEntry));
         ImageView foodPic = new ImageView();
         foodPic.setImage(foodImage);
-        foodPic.setPreserveRatio(true);
-        foodPic.setFitWidth(300);
+        foodPic.setFitHeight(100);
+        foodPic.setFitWidth(100);
         return new SimpleObjectProperty<ImageView>(foodPic);
     }
 
@@ -131,6 +133,9 @@ public class FoodController implements Initializable {
                 return null;
             }
         });
+
+        names.setCellFactory(TextFieldTableCell.forTableColumn());
+        prices.setCellFactory(TextFieldTableCell.forTableColumn());
 
         refresh();
     }
@@ -160,12 +165,13 @@ public class FoodController implements Initializable {
         newFood.setName(name.getText());
         newFood.setPrice(Double.parseDouble(price.getText()));
         newFood.setFileLocation(fileLocation);
-        FileInputStream apath = new FileInputStream(fileLocation);
+        /*FileInputStream apath = new FileInputStream(fileLocation);
         foodImage = new Image(apath);
+        //foodImage = new Image(getClass().getResourceAsStream(fileLocation));
         foodPic.setImage(foodImage);
-        foodPic.setPreserveRatio(true);
-        foodPic.setFitWidth(500);
-
+        foodPic.setFitHeight(100);
+        foodPic.setFitWidth(100);
+*/
         foodObserve.add(newFood);
         foodMenu.setItems(foodObserve);
 
@@ -201,7 +207,7 @@ public class FoodController implements Initializable {
         final FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(plsEnd);
         if (file != null) {
-            fileLocation = file.getAbsolutePath();
+            fileLocation = file.getCanonicalPath();
         }
     }
 

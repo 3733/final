@@ -135,7 +135,8 @@ public class ServiceAcceptController implements Initializable{
         if ((requestSelected.getType().trim()).equals("food")) {
             serviceInformation += "Time to be served: " + ((FoodRequest) requestSelected).getServingTime() + "<br>";
             serviceInformation += "Patient name: " + ((FoodRequest) requestSelected).getPatientName() + "<br>";
-            serviceInformation += "Meal ordered: " + ((FoodRequest) requestSelected).getFoodOrder().replace("!", ", ") + "<br>";
+            String order = ((FoodRequest) requestSelected).getFoodOrder().replace("!", ", ").trim();
+            serviceInformation += "Meal ordered: " + order.substring(0, order.length()-1) + "<br>";
         }
 
         if ((requestSelected.getType().trim()).equals("transport")) {
@@ -205,11 +206,12 @@ public class ServiceAcceptController implements Initializable{
 
             if ( !((((arrayOfRequestsFromDatabase.get(i)).getStatus()).trim()).equals("finished")) &&
                     ((getLoggedInGuy().getEmployeeType().trim().equals("Admin")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Interpreter")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Janitor")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security guard")) ||
-                    (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Nurse")))) {
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("assistance") && getLoggedInGuy().getEmployeeType().trim().equals("Helper")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("cleaning") && getLoggedInGuy().getEmployeeType().trim().equals("Cleaning")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("food") && getLoggedInGuy().getEmployeeType().trim().equals("Medical")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("security") && getLoggedInGuy().getEmployeeType().trim().equals("Security")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("transport") && getLoggedInGuy().getEmployeeType().trim().equals("Medical")) ||
+                            (arrayOfRequestsFromDatabase.get(i).getType().trim().equals("it") && getLoggedInGuy().getEmployeeType().trim().equals("IT")))) {
                 requestObserve.add(arrayOfRequestsFromDatabase.get(i));
             }
         }
@@ -353,7 +355,8 @@ public class ServiceAcceptController implements Initializable{
 
             if((req.getType()).trim().equals("food")) {
                 currentDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
-                currentMenu.setText((((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim());
+                String order = (((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim();
+                currentMenu.setText(order.substring(0, order.length()-1));
                 currentPatient.setText(((((FoodRequest) req).getPatientName())).trim());
             }
 
@@ -410,7 +413,8 @@ public class ServiceAcceptController implements Initializable{
 
             if((req.getType().trim()).equals("food")) {
                 finishDeliveryTime.setText((((FoodRequest) req).getServingTime()).trim());
-                finishMenu.setText((((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim());
+                String order = (((FoodRequest) req).getFoodOrder()).replace("!", ", ").trim();
+                finishMenu.setText(order.substring(0, order.length()-1));
                 finishPatient.setText(((((FoodRequest) req).getPatientName())).trim());
             }
 

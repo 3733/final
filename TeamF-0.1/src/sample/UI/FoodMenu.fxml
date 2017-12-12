@@ -15,12 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane prefHeight="700.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FoodController">
    <top>
       <AnchorPane maxWidth="-Infinity" prefHeight="86.0" prefWidth="530.0" translateX="-100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="86.0" prefWidth="576.0" text="Please select the food you'd like (ctrl and click for multiple selections) and press submit" textAlignment="CENTER" textFill="#573d26" wrapText="true">
+            <Label prefHeight="86.0" prefWidth="576.0" text="Please select the food you'd like (ctrl and click for multiple selections), then press submit" textAlignment="CENTER" textFill="#573d26" wrapText="true">
                <font>
                   <Font name="System Bold Italic" size="19.0" />
                </font>
@@ -29,13 +28,13 @@
       </AnchorPane>
    </top>
    <left>
-      <AnchorPane maxWidth="-Infinity" prefHeight="650.0" prefWidth="599.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="297.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="foodMenu" layoutX="10.0" prefHeight="547.0" prefWidth="588.0" style="-fx-background-color: #FFE182;">
+            <TableView fx:id="foodMenu" layoutX="10.0" prefHeight="547.0" prefWidth="285.0" style="-fx-background-color: #FFE182;">
                <columns>
-                  <TableColumn fx:id="names" editable="false" prefWidth="181.59997272491455" />
-                  <TableColumn fx:id="prices" prefWidth="55.199951171875" />
-                  <TableColumn fx:id="pictures" prefWidth="552.0000396728516" />
+                  <TableColumn fx:id="names" editable="false" prefWidth="86.39999103546143" />
+                  <TableColumn fx:id="prices" editable="false" prefWidth="48.79998779296875" />
+                  <TableColumn fx:id="pictures" editable="false" prefWidth="149.60000000000002" />
                </columns>
             </TableView>
             <JFXButton fx:id="submit" buttonType="RAISED" layoutX="243.0" layoutY="571.0" onAction="#foodSubmit" prefHeight="26.0" prefWidth="114.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="Submit" />
