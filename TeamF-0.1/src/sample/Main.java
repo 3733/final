@@ -81,7 +81,6 @@ public class Main extends Application implements Data{
     public static AboutPageController aboutPageController = new AboutPageController();
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
-    public static TimeoutController timeoutController = new TimeoutController();
 
 
     // private static AboutPageController aboutcontroller;
@@ -159,11 +158,6 @@ public class Main extends Application implements Data{
         editNodesController.setMainController(this);
         nodeEdit = new Scene(NodeEdit);
 
-        FXMLLoader timeoutLoader = new FXMLLoader(getClass().getResource("UI/TimeoutWindow.fxml"));
-        Parent TimeOut = timeoutLoader.load();
-        timeoutController = timeoutLoader.getController();
-        timeoutController.setMainController(this);
-        timeEdit = new Scene(TimeOut);
 
         FXMLLoader edgeEditLoader = new FXMLLoader(getClass().getResource("UI/EditEdgesWindow.fxml"));
         Parent EdgeEdit = edgeEditLoader.load();
@@ -228,7 +222,6 @@ public class Main extends Application implements Data{
         aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
         menuWin.getStylesheets().add("sample/UI/style.css");
-        timeEdit.getStylesheets().add("sample/UI/style.css");
 
 
         stage.setTitle("Team F Hospital GPS");

@@ -61,7 +61,6 @@ import static sample.Main.getLoggedInGuy;
 
 public class NavigationPageController implements Initializable, Data, ITimed{
 
-    private TimeoutController timeoutController;
 
     private Timer atimer;
 
@@ -223,7 +222,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         {
             try
             {
-                timeoutController.doNavTimer();
+                //timeoutController.doNavTimer();
             }
             catch (Exception e)
             {
@@ -240,11 +239,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
-
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(30); // per steph request.
-        timeoutController.setTimerNav(atimer);
 
         menuDrawerController = mainController.menuDrawerController;
         mainMenu.setVisible(false);
