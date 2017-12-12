@@ -1653,6 +1653,12 @@ public class testEmbeddedDB {
     }
 
     public static void addStaffTestData(){
+        Staff admin = new Staff("Admin", "Admin", 11, "Admin",
+                "Admin", "Admin", "Admin");
+        Staff staff = new Staff("Staff", "Staff", 12, "Staff",
+                "Staff", "Staff", "Staff");
+        addStaff(admin);
+        addStaff(staff);
         Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago",
                 "Kaguya", "Medical", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel",
