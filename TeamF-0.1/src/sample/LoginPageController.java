@@ -14,6 +14,12 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Timer;
 
+/**This is the Login Page Controller
+ * <P>
+ *this controller is designed to control login page
+ * </P>
+ */
+
 public class LoginPageController implements ITimed{
 
     private TimeoutController timeoutController;
