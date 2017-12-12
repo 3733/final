@@ -5,6 +5,7 @@ import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -71,6 +72,9 @@ public class NavigationPageController implements Initializable, Data{
     private JFXButton menuButton, search;
     @FXML
     private JFXButton sendButton;
+
+    @FXML
+    private  JFXButton mic;
     @FXML
     private javafx.scene.canvas.Canvas pathCanvas;
     @FXML
@@ -196,6 +200,10 @@ public class NavigationPageController implements Initializable, Data{
     private MenuDrawerController menuDrawerController;
 
     private Vector<ImageView> buttonPanes = new Vector<>();
+
+
+
+    private SpeechRecognizer speechRecognition = new SpeechRecognizer();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -1739,7 +1747,8 @@ public class NavigationPageController implements Initializable, Data{
 
 
     @FXML
-    public void insurance(){
+    public void insurance()
+    {
         HealthCareRun health = new HealthCareRun();
         try {
             health.run(0,0,600,350,"view/stylesheets/default.css","","");
@@ -1749,7 +1758,20 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     @FXML
-    public void runVoice(){
+    public void runVoice()
+    {
+
+        mic.disableProperty().bind(speechRecognition.speechRecognizerThreadRunningProperty());
+
+        mic.setOnAction(a -> {
+            speechRecognition.startSpeechRecognition();
+        });
+
+
+
+        destination.textProperty().bind(Bindings.createStringBinding(() -> destination.getText() + " \n " + speechRecognition.getSpeechRecognitionResultProperty().get(),
+                speechRecognition.getSpeechRecognitionResultProperty()));
+
 
     }
 

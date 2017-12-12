@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
    <center>
       <AnchorPane prefHeight="810.0" prefWidth="1518.0" BorderPane.alignment="CENTER">
          <children>
@@ -347,7 +347,7 @@
                   </JFXButton>
                   <JFXButton fx:id="mic" contentDisplay="CENTER" onAction="#runVoice" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                        <ImageView fx:id="micButton" fitHeight="20.0" fitWidth="20.0">
                            <image>
                               <Image url="@Icons/mic.png" />
                            </image>

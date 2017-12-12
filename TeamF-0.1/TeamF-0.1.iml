@@ -27,5 +27,9 @@
     </orderEntry>
     <orderEntry type="library" name="cmu_us_kal" level="application" />
     <orderEntry type="library" name="helpAPI" level="application" />
+    <orderEntry type="library" name="Jar files2" level="project" />
+    <orderEntry type="library" name="HealthcareAPI-all-3.2" level="project" />
+    <orderEntry type="library" name="derby2" level="project" />
+    <orderEntry type="library" name="sphinx4-core-5prealpha-20160628.232526-10" level="project" />
   </component>
 </module>
