@@ -960,6 +960,7 @@ public class NavigationPageController implements Initializable, Data{
 
             data.directions.add(entry);
         }
+
         HBox entry = new HBox();
         String end = "You have arrived at your destination.";
         Label label = new Label();
@@ -1135,8 +1136,8 @@ public class NavigationPageController implements Initializable, Data{
         //System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
         //System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
         //System.out.println("This is the input point: " + x + ", " + y);
-        double returnX = x / ((data.MapX / data.canvasX));
-        double returnY = y / ((data.MapX / data.canvasY));
+        double returnX = x / ((data.imageViewX / data.canvasX) * (data.MapX/data.imageViewX));
+        double returnY = y / ((data.imageViewY / data.canvasY) * (data.MapY/data.imageViewY));
         //System.out.println("This is the point: " + returnX + " ," + returnY);
         return new Point2D(returnX,returnY);
     }
@@ -1147,8 +1148,8 @@ public class NavigationPageController implements Initializable, Data{
         System.out.println("This is the image view: " + data.canvasX + ", " + data.canvasY);
         System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
         System.out.println("This is the input point: " + x + ", " + y);
-        double returnX = x * ((data.MapX / data.canvasX));
-        double returnY = (y) * ((data.MapX / data.canvasY));
+        double returnX = x * ((data.imageViewX / data.canvasX) * (data.MapX/data.imageViewX));
+        double returnY = (y) * ((data.imageViewY / data.canvasY) * (data.MapY/data.imageViewY));
         System.out.println("This is the point: " + returnX + " ," + returnY);
         return new Point2D(returnX,returnY);
     }
@@ -1461,16 +1462,16 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void about(){Main.aboutWindow(aboutButton);}
 
-    @FXML
+   @FXML
     public void chat(){
-        //Main.setHelpScreenServiceRequestScreen();
+/*        //Main.setHelpScreenServiceRequestScreen();
         try{
             messenger.API m = new messenger.API();
             m.run(6,6,600,600,
                     "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");
         } catch (Exception e){
             System.out.println("API ERROR: " + e.getLocalizedMessage());
-        }
+        }*/
     }
 
     @FXML

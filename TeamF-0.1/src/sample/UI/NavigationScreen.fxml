@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXDrawer?>
@@ -25,7 +34,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
     <center>
         <AnchorPane prefHeight="810.0" prefWidth="1518.0" BorderPane.alignment="CENTER">
             <children>
@@ -208,7 +217,7 @@
                                                 <Image url="@Icons/01_thefirstfloor.png" />
                                             </image>
                                         </ImageView>
-                                        <Canvas fx:id="pathCanvas" height="838.0" width="1544.0" StackPane.alignment="TOP_LEFT" />
+                                        <Canvas fx:id="pathCanvas" height="1050.0" width="1544.0" StackPane.alignment="TOP_LEFT" />
                                     </children>
                                 </StackPane>
                             </children>
