@@ -115,8 +115,7 @@ public class Main extends Application implements Data{
         Parent HelpRequest = helpRequestLoader.load();
         helpScreenServiceRequestScreenController = helpRequestLoader.getController();
         helpScreenServiceRequestScreenController.setMainController(this);
-        helpRequest = new Scene(HelpRequest)
-        ;
+        helpRequest = new Scene(HelpRequest);
 
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
@@ -218,7 +217,7 @@ public class Main extends Application implements Data{
 
 
         stage.setTitle("Team F Hospital GPS");
-        stage.setScene(start);
+        stage.setScene(map);
         stage.setResizable(true);
         stage.setFullScreen(true);
 

@@ -6679,3 +6679,89 @@ DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:7
 DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@170f3d98 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@e2b02ca]
 DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
 ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.74.1, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.74.1" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@4cc35447 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@4aa8fbfe]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.74.1, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.74.1" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@58ea602e listeningPoint = gov.nist.javax.sip.ListeningPointImpl@4cc35447]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.74.1, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.74.1" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@1a4fb459 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@6667e1ce]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.74.1, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.74.1" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@70a043a6 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@38621b27]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.74.1, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.74.1" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.74.1 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@3a1c46fb listeningPoint = gov.nist.javax.sip.ListeningPointImpl@77983967]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.74.1 port = 6000 transport = udp]
+ERROR - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:716) [Invalid argument address = 192.168.74.1 port = 6000 transport = udp]

@@ -1577,14 +1577,14 @@ public class NavigationPageController implements Initializable, Data{
 
    @FXML
     public void chat(){
-/*        //Main.setHelpScreenServiceRequestScreen();
+        Main.setHelpScreenServiceRequestScreen();
         try{
             messenger.API m = new messenger.API();
             m.run(6,6,600,600,
                     "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");
         } catch (Exception e){
             System.out.println("API ERROR: " + e.getLocalizedMessage());
-        }*/
+        }
     }
 
     @FXML
