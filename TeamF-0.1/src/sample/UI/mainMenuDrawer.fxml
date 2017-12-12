@@ -18,29 +18,34 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <HBox prefHeight="142.0" prefWidth="301.0">
+            <HBox prefHeight="294.0" prefWidth="302.0">
                <children>
                   <VBox minWidth="60.0" prefHeight="175.0" prefWidth="32.0">
                      <children>
                         <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="88.0" prefWidth="61.0" text="Start" />
-                        <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" prefHeight="88.0" prefWidth="61.0" text="End" />
+                        <Label alignment="BOTTOM_RIGHT" contentDisplay="CENTER" prefHeight="88.0" prefWidth="61.0" text="End">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin></Label>
                      </children>
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="142.0" prefWidth="368.0">
+                  <VBox prefHeight="222.0" prefWidth="342.0">
                      <children>
-                        <JFXTextField fx:id="startLabel" onAction="#searchStart" style="-fx-background-color: #e8e8e8;">
+                        <JFXTextField fx:id="startLabel" onAction="#searchStart" onKeyTyped="#startAutoComplete" style="-fx-background-color: #e8e8e8;">
                            <VBox.margin>
                               <Insets top="30.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="endLabel" onAction="#searchEnd" prefHeight="26.0" prefWidth="172.0" style="-fx-background-color: #e8e8e8;">
+                        <JFXListView fx:id="startAuto" onMouseExited="#startAutoClose" prefHeight="93.0" prefWidth="228.0" />
+                        <JFXTextField fx:id="endLabel" onAction="#searchEnd" onKeyTyped="#endAutoComplete" prefHeight="26.0" prefWidth="172.0" style="-fx-background-color: #e8e8e8;">
                            <VBox.margin>
-                              <Insets top="95.0" />
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
+                        <JFXListView fx:id="endAuto" onMouseExited="#endAutoClose" prefHeight="91.0" prefWidth="228.0" />
                      </children>
                   </VBox>
                   <VBox fx:id="labelBox" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="100.0">

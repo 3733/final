@@ -171,6 +171,9 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     private StackPane stackPane;
 
+    @FXML
+    private JFXButton timeoutButton;
+
     //other components
     @FXML
     private Main mainController;
@@ -566,6 +569,11 @@ public class NavigationPageController implements Initializable, Data{
         Main.startScreen();
         clearFields();
         clear();
+    }
+
+    @FXML
+    public void changeTimeout(){
+        Main.timeOutWindow(timeoutButton);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
