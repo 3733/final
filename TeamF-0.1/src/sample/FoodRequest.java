@@ -2,6 +2,13 @@ package sample;
 
 import java.util.ArrayList;
 
+/**This is the public class FoodRequest
+ * <p>
+ *     The class FoodRequest extends the abstract class ServiceRequest
+ * </p>
+ * @param String patientName, String timeToBeServed, String foodOrder
+ */
+
 public class FoodRequest extends ServiceRequest {
 
     private String patientName;

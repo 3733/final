@@ -34,6 +34,10 @@ import java.util.Vector;
 
 import static sample.Main.setFoodString;
 
+/**This is the controller for the service request food menu
+ *
+ */
+
 public class FoodController implements Initializable {
 
     private Main mainController;

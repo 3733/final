@@ -1,5 +1,10 @@
 package sample;
 
+/**This is the public class food
+ * Food is related to the service requests
+ * @param String name, Double price, String fileLocation, boolean defaultFood
+ */
+
 public class Food {
 
     String name;
