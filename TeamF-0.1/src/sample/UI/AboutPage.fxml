@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="aboutPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onZoom="#someAction" onZoomFinished="#someAction" onZoomStarted="#someAction" prefHeight="497.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AboutPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.AboutPageController">
    <top>
       <Label text="About" BorderPane.alignment="CENTER">
          <font>
@@ -32,7 +32,7 @@
       </Label>
    </bottom>
    <center>
-      <VBox prefHeight="386.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="370.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="600.0">
                <children>
@@ -46,7 +46,7 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </HBox>
-            <GridPane>
+            <GridPane prefHeight="313.0" prefWidth="600.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -213,6 +213,8 @@
                   </HBox>
                </children>
             </GridPane>
+            <Label prefHeight="28.0" prefWidth="600.0" text="&quot;The Brigham &amp; Women's Hospital maps and data used in this application are copyrighted and provided for " translateX="10.0" />
+            <Label text="the sole  use of educational purposes&quot;" textAlignment="CENTER" translateX="190.0" />
          </children>
       </VBox>
    </center>
