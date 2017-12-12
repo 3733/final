@@ -547,7 +547,7 @@ public class Main extends Application implements Data{
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-
+        //testEmbeddedDB.createFoodTable();
 
         /*testEmbeddedDB.addStaffTestData();
         testEmbeddedDB.defaultMenu();//*/

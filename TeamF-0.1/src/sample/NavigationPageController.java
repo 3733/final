@@ -2,6 +2,7 @@ package sample;
 
 //import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 //import Healthcare.HealthCareRun;
+import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -2043,10 +2044,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     @FXML
     public void insurance(){
-        //HealthCareRun health = new HealthCareRun();
+        HealthCareRun health = new HealthCareRun();
         int i;
         try {
-            //health.run(0,0,600,350,"view/stylesheets/default.css","","");
+            health.run(0,0,600,350,"view/stylesheets/default.css","","");
         } catch (Exception e) {
             e.printStackTrace();
         }
