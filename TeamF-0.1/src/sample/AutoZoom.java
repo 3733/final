@@ -2,6 +2,13 @@ package sample;
 
 import java.util.Vector;
 
+/** This is the AutoZoom function
+ * <p>
+ *     The AutoZoom function allows the program to zoom when required
+ * </p>
+ * @param Vector<Node> path, int scale
+ */
+
 public class AutoZoom {
 
 

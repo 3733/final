@@ -14,6 +14,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
+/**This is the public class DataHolder
+ * <p>
+ *     This class serve to hold data that is currently in use or has been previously used by the program
+ * </p>
+ *
+ */
+
 public class DataHolder {
     // Current map stored, old
     public javafx.scene.image.Image map;

@@ -2,6 +2,13 @@ package sample;
 
 import java.util.ArrayList;
 
+/** This is the CleaningRequest class
+ * <p>
+ *     The CleaningRequest class extends the abstract class ServiceRequest
+ * </p>
+ * @param int urgency
+ */
+
 public class CleaningRequest extends ServiceRequest {
     private int urgency;
 

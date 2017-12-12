@@ -10,7 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.opencsv.*;
 
-/**
+/**This is the CSVLoader class
+ * This class allows the program to load the csv files from the database
  * 
  * @author viralpatel.net
  * 
