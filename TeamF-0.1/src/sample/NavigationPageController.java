@@ -273,15 +273,6 @@ public class NavigationPageController implements Initializable, Data{
         //switching admin privs
         SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
             if (after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)) {
-///make a thing
-/*                adminBox.setVisible(true);
-                loginButton.setText("Log Out");
-            } else {
-                adminBox.setVisible(false);
-                loginButton.setText("Log In");
-            }
-        });*/
-
                 createServButton.setVisible(true);
                 editMapButton.setVisible(true);
                 editUsersButton.setVisible(true);
@@ -300,6 +291,13 @@ public class NavigationPageController implements Initializable, Data{
             else if(after.getPriv().equals(AuthenticationInfo.Privilege.STAFF)){
                 createServButton.setVisible(true);
                 existServButton.setVisible(true);
+                editMapButton.setVisible(true);
+                editUsersButton.setVisible(true);
+                Image logoutPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/f61b5f54.png"));
+                ImageView logoutIMG = new ImageView(logoutPNG);
+                logoutIMG.setFitHeight(25);
+                logoutIMG.setFitWidth(25);
+                loginButton.setGraphic(logoutIMG);
                 loginButton.setOnAction((event) -> {
                     try {
                         logout();
@@ -1378,6 +1376,11 @@ public class NavigationPageController implements Initializable, Data{
     public void logout() throws IOException, InterruptedException{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
         SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
+        Image loginPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/user-login-icon-14.png"));
+        ImageView loginIMG = new ImageView(loginPNG);
+        loginIMG.setFitHeight(25);
+        loginIMG.setFitWidth(25);
+        loginButton.setGraphic(loginIMG);
         Main.logOutUser();
         Main.mapScreen();
         clearFields();
