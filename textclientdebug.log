@@ -6687,3 +6687,51 @@ DEBUG - gov.nist.javax.sip.SipProviderImpl.addSipListener(SipProviderImpl.java:2
 DEBUG - gov.nist.javax.sip.SipStackImpl.stop(SipStackImpl.java:875) [stopStack -- stoppping the stack]
 DEBUG - gov.nist.javax.sip.stack.UDPMessageProcessor.run(UDPMessageProcessor.java:251) [UDPMessageProcessor: Stopping]
 DEBUG - gov.nist.javax.sip.EventScanner.run(EventScanner.java:455) [Stopped event scanner!!]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.1.16, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.1.16" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.1.16 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.1.16 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@76fd5ada listeningPoint = gov.nist.javax.sip.ListeningPointImpl@591919c7]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.1.16 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.1.16 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.UDPMessageProcessor@6b37b443 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@47e3a453]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createSipProvider(SipStackImpl.java:734) [createSipProvider: gov.nist.javax.sip.ListeningPointImpl@591919c7]
+DEBUG - gov.nist.javax.sip.SipProviderImpl.addSipListener(SipProviderImpl.java:203) [add SipListener messenger.SipLayer@e38135d]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createSipProvider(SipStackImpl.java:734) [createSipProvider: gov.nist.javax.sip.ListeningPointImpl@47e3a453]
+DEBUG - gov.nist.javax.sip.SipProviderImpl.addSipListener(SipProviderImpl.java:203) [add SipListener messenger.SipLayer@e38135d]
+DEBUG - gov.nist.javax.sip.SipStackImpl.stop(SipStackImpl.java:875) [stopStack -- stoppping the stack]
+DEBUG - gov.nist.javax.sip.stack.UDPMessageProcessor.run(UDPMessageProcessor.java:251) [UDPMessageProcessor: Stopping]
+DEBUG - gov.nist.javax.sip.EventScanner.run(EventScanner.java:455) [Stopped event scanner!!]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:273) [Here are the stack configuration properties 
+{gov.nist.javax.sip.TRACE_LEVEL=32, javax.sip.STACK_NAME=TextClient, gov.nist.javax.sip.SERVER_LOG=textclient.txt, javax.sip.IP_ADDRESS=192.168.1.16, gov.nist.javax.sip.DEBUG_LOG=textclientdebug.log}
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:276) [ ]]>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:277) [</debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:278) [<description
+ logDescription="TextClient"
+ name="192.168.1.16" />
+]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:284) [<debug>]
+DEBUG - gov.nist.javax.sip.stack.ServerLog.checkLogFile(ServerLog.java:285) [<![CDATA[ ]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.1.16 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.1.16 port = 6000 transport = tcp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.TCPMessageProcessor@6d4d1b92 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@7f1a3fdd]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:666) [createListeningPoint : address = 192.168.1.16 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createListeningPoint(SipStackImpl.java:703) [Created Message Processor: 192.168.1.16 port = 6000 transport = udp]
+DEBUG - gov.nist.javax.sip.stack.MessageProcessor.setListeningPoint(MessageProcessor.java:179) [setListeningPointgov.nist.javax.sip.stack.UDPMessageProcessor@2f2a82a9 listeningPoint = gov.nist.javax.sip.ListeningPointImpl@595c9c1f]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createSipProvider(SipStackImpl.java:734) [createSipProvider: gov.nist.javax.sip.ListeningPointImpl@7f1a3fdd]
+DEBUG - gov.nist.javax.sip.SipProviderImpl.addSipListener(SipProviderImpl.java:203) [add SipListener messenger.SipLayer@24c09053]
+DEBUG - gov.nist.javax.sip.SipStackImpl.createSipProvider(SipStackImpl.java:734) [createSipProvider: gov.nist.javax.sip.ListeningPointImpl@595c9c1f]
+DEBUG - gov.nist.javax.sip.SipProviderImpl.addSipListener(SipProviderImpl.java:203) [add SipListener messenger.SipLayer@24c09053]
+DEBUG - gov.nist.javax.sip.SipStackImpl.stop(SipStackImpl.java:875) [stopStack -- stoppping the stack]
+DEBUG - gov.nist.javax.sip.stack.UDPMessageProcessor.run(UDPMessageProcessor.java:251) [UDPMessageProcessor: Stopping]
+DEBUG - gov.nist.javax.sip.EventScanner.run(EventScanner.java:455) [Stopped event scanner!!]

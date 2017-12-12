@@ -75,9 +75,6 @@ public class Main extends Application implements Data{
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
 
-    public static Boolean isSplashLoaded = Boolean.FALSE;
-
-
     int screenWidth = (int) Screen.getPrimary().getBounds().getWidth();
     int screenHeight = (int) Screen.getPrimary().getBounds().getHeight();
 
@@ -238,9 +235,12 @@ public class Main extends Application implements Data{
 
 
         stage.setTitle("Team F Hospital GPS");
-        stage.setScene(map);
+
+        stage.setScene(welcomeScreen);
         stage.setResizable(true);
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
+
+
 
         //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
@@ -270,6 +270,7 @@ public class Main extends Application implements Data{
         menuDrawerController.setEnd();
     }
     public static void mapScreen() throws IOException, InterruptedException {
+        stage.setFullScreen(true);
         stage.setScene(map);
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
@@ -280,6 +281,8 @@ public class Main extends Application implements Data{
             navigationPageController.settingFields();
         }
     }
+
+
 
     public static void serviceScreen(){
         serviceRequestController.refreshTable();

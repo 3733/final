@@ -200,9 +200,6 @@ public class NavigationPageController implements Initializable, Data{
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
-        if (!Main.isSplashLoaded) {
-            loadSplashScreen();
-        }
         mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
         map.setImage(Data.data.firstFloor);
@@ -1373,51 +1370,6 @@ public class NavigationPageController implements Initializable, Data{
 
     }
 
-    /**
-     * load welcome screen
-     */
-    private void loadSplashScreen() {
-        try {
 
-            Main.isSplashLoaded = true;
-
-            StackPane pane = FXMLLoader.load(getClass().getResource(("UI/SplashWelcome.fxml")));
-
-            System.out.println("HI");
-
-            stackPane.getChildren().setAll(pane);
-
-            FadeTransition fadeIn = new FadeTransition(Duration.seconds(4), pane);
-            fadeIn.setFromValue(0);
-            fadeIn.setToValue(1);
-            fadeIn.setCycleCount(1);
-
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(4), pane);
-            fadeOut.setFromValue(1);
-            fadeOut.setToValue(0);
-            fadeOut.setCycleCount(1);
-
-            fadeIn.play();
-
-            fadeIn.setOnFinished((javafx.event.ActionEvent e) -> {
-                fadeOut.play();
-            });
-
-            fadeOut.setOnFinished((e) -> {
-                try {
-                    BorderPane parentContent = FXMLLoader.load(getClass().getResource(("UI/NavigationScreen.fxml")));
-                    stackPane.getChildren().setAll(parentContent);
-
-                } catch (IOException ex) {
-                    Logger.getLogger(NavigationPageController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-
-        } catch (IOException ex) {
-            Logger.getLogger(NavigationPageController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }
 
 }
