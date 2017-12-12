@@ -9,24 +9,6 @@ import java.util.TimerTask;
 
 public class AndrewTimer {
 
-    private static long timeDelay = 6; // This is set to by the Admin controller singleton.
-
-    public static long getDelay()
-    {
-        return timeDelay;
-    }
-
-    public static void setDelay(long input)
-    {
-        if (input <= 0)
-        {
-            timeDelay = 30;
-        }
-        else {
-            timeDelay = input;
-        }
-    }
-
     // Test thread
     public static TimerTask testNewTask() {
         TimerTask timerTask = new TimerTask() {
@@ -63,11 +45,14 @@ public class AndrewTimer {
                 System.out.println("This is the start of the timer thread.");
                 if (closePop)
                 {
-                    Main.closePopup(); // not happening
+                    Main.closePopup();
                 }
                 else
                 {
                     try {
+                        // Before setting the UI, auto logout the person.
+                        AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+                        SettingSingleton.getSettingSingleton().setAuthProperty(clearAuth);
                         Main.mapScreen();
                     }
                     catch (Exception e)

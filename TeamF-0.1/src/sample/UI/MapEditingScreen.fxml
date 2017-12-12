@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
@@ -16,6 +8,7 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Label?>
@@ -33,7 +26,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMouseExited="#someAction" onMouseMoved="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onZoom="#someAction" prefHeight="810.0" prefWidth="1386.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <right>
       <JFXDrawer defaultDrawerSize="50.0" direction="RIGHT" prefHeight="778.0" prefWidth="242.0" style="-fx-background-color: #f4f4f4;" BorderPane.alignment="CENTER">
          <children>

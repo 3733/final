@@ -53,7 +53,6 @@ public class Main extends Application implements Data{
         stage.setScene(map);
     }
 
-
     public static StartPageController  startPageController = new StartPageController();
     public static LoginPageController loginPageController = new LoginPageController();
     public static NavigationPageController navigationPageController = new NavigationPageController();
@@ -221,6 +220,7 @@ public class Main extends Application implements Data{
     public static void loginScreen(JFXButton btn1){
         //SingletonTTS.getInstance().say("Hey Sexy?");
         popUp = new Stage();
+        loginPageController.someAction();
         popUp.setScene(login);
         popUp.setTitle("Log In");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -232,11 +232,6 @@ public class Main extends Application implements Data{
         stage.setScene(start);
         stage.centerOnScreen();
     }
-
-
-
-
-
 
     public static void mapScreen() throws IOException, InterruptedException {
         System.out.println("Nav screen showed up");
@@ -252,12 +247,6 @@ public class Main extends Application implements Data{
         }
     }
 
-
-
-
-
-
-
     public static void serviceScreen(){
         serviceRequestController.refreshTable();
         stage.setScene(service);
@@ -272,6 +261,7 @@ public class Main extends Application implements Data{
 
     public static void mapEditScreen(){
         stage.setScene(mapEdit);
+        // The timeout thing needs to go here
         stage.centerOnScreen();
     }
 
@@ -393,6 +383,7 @@ public class Main extends Application implements Data{
 
     public static void editUserWindow(JFXButton btn1){
         popUp = new Stage();
+        // editUsersController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -403,7 +394,8 @@ public class Main extends Application implements Data{
     public static void aboutWindow(JFXButton btn1){
         popUp = new Stage();
         // editUserWindowController.addingUsers();
-        aboutPageController.startTimer();
+        // aboutPageController.startTimer();
+        aboutPageController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);

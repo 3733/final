@@ -53,23 +53,11 @@ import javafx.util.Duration;
 
 import static com.jfoenix.svg.SVGGlyphLoader.clear;
 
-public class AboutPageController { //implements Initializable, Data{
+public class AboutPageController implements ITimed{ //implements Initializable, Data{
 
-    volatile boolean isshowing;
+    private TimeoutController timeoutController;
 
-    Timer atime;
-
-    // AboutPageController()     {       isshowing = false;    }
-
-    public void setShowing(boolean in)
-    {
-        isshowing = in;
-    }
-
-    public boolean getShowing()
-    {
-        return isshowing;
-    }
+    private Timer atimer;
 
     @FXML
     private Main mainController;
@@ -77,29 +65,30 @@ public class AboutPageController { //implements Initializable, Data{
     @FXML
     public BorderPane aboutPane;
 
-    @FXML
-    public void someAction() throws IOException, InterruptedException
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
     {
-        doTimer();
-    }
-
-    public void doTimer()
-    {
-        System.out.println("   1   ");
-        atime.cancel();
-        System.out.println("   2   ");
-        startTimer();
-    }
-
-    public void startTimer()
-    {
-        System.out.println("    I suck a lot.    ");
-        atime = new Timer();
-        atime.schedule(AndrewTimer.restoreNavScreen(atime, true), AndrewTimer.getDelay() * 1000);
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
     }
 
     public void setMainController(Main in){
         mainController = in;
+    }
+
+    public void initialize()
+    {
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(10); // per steph request.
+        timeoutController.setTimer(atimer, true);
     }
 
 }
