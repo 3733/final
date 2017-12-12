@@ -4,6 +4,12 @@ package sample;
 import java.util.HashMap;
 import java.util.Vector;
 
+/**This is the public class Map that holds the map info
+ * <p>
+ * @param Vector<Node> Nodes, Vector<Edge> Edges, Vector<Node> DisabledNodes
+ * <p>
+ */
+
 public class Map {
 
 

@@ -36,6 +36,13 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.Vector;
 
+/**This is the MapEditPageController
+ * <p>
+ *     This coontroller allows the user to edit the map page
+ * </p>
+ *
+ */
+
 public class MapEditPageController implements Initializable, Data, ITimed{
 
     private TimeoutController timeoutController;
