@@ -31,7 +31,7 @@ public class SpeechRecognizer {
     /**
      * This String contains the Result that is coming back from SpeechRecognizer
      */
-    private String speechRecognitionResult;
+    public String speechRecognitionResult;
 
     /**
      * A simple property to bind the current SpeechRecognitionResult
@@ -138,13 +138,22 @@ public class SpeechRecognizer {
                                 //Get the hypothesis
                                 speechRecognitionResult = speechResult.getHypothesis();
 
+
+
                                 //You said?
                                 System.out.println("You said: [" + speechRecognitionResult + "]\n");
 
                                 Platform.runLater(() -> speechRecognitionResultProperty.set(speechRecognitionResult));
 
                                 //Call the appropriate method
-                                makeDecision(speechRecognitionResult, speechResult.getWords());
+
+                                //recognizer.stopRecognition();
+                                break;
+
+                                //return startResourcesThread();
+
+
+                               //makeDecision(speechRecognitionResult, speechResult.getWords());
 
                             }
                         } else
@@ -216,16 +225,16 @@ public class SpeechRecognizer {
             });
     }
 
-    /**
-     * Takes a decision based on the given result
-     *
-     * @param speechWords
-     */
-    public void makeDecision(String speech , List<WordResult> speechWords) {
-
-        System.out.println(speech);
-
-    }
+//    /**
+//     * Takes a decision based on the given result
+//     *
+//     * @param speechWords
+//     */
+//    public void makeDecision(String speech , List<WordResult> speechWords) {
+//
+//        System.out.println(speech);
+//
+//    }
 
     public SimpleBooleanProperty ignoreSpeechRecognitionResultsProperty() {
         return ignoreSpeechRecognitionResults;

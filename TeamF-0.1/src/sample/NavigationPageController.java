@@ -429,7 +429,9 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);*/
 
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
+        System.out.println("RESULTS " + destination.getText());
         data.destinationNode = currNode;
+        destination.textProperty().unbind();
         destination.setText(currNode.getLongName().trim());
 /*
         if (points.getSelectedToggle() == start) {
@@ -1758,10 +1760,16 @@ public class NavigationPageController implements Initializable, Data{
     }
 
     @FXML
+    private JFXButton micStop;
+
+//    @FXML
+//    private JFXTextField sound = new JFXTextField();
+
+    @FXML
     public void runVoice()
     {
 
-        mic.disableProperty().bind(speechRecognition.speechRecognizerThreadRunningProperty());
+        //mic.disableProperty().bind(speechRecognition.speechRecognizerThreadRunningProperty());
 
         mic.setOnAction(a -> {
             speechRecognition.startSpeechRecognition();
@@ -1769,9 +1777,36 @@ public class NavigationPageController implements Initializable, Data{
 
 
 
-        destination.textProperty().bind(Bindings.createStringBinding(() -> destination.getText() + " \n " + speechRecognition.getSpeechRecognitionResultProperty().get(),
+        destination.textProperty().bind(Bindings.createStringBinding(() -> speechRecognition.getSpeechRecognitionResultProperty().get(),
                 speechRecognition.getSpeechRecognitionResultProperty()));
+        Bindings.createStringBinding( () -> speechRecognition.getSpeechRecognitionResultProperty().get(), speechRecognition.getSpeechRecognitionResultProperty());
+        String tempDestination = destination.getText();
+        System.out.println("This is the stored string: " + tempDestination);
+        destination.textProperty().unbind();
 
+        //System.out.println("Speech result: " + speechRecognition.speechRecognitionResult);
+        //destination.setText(speechRecognition.speechRecognitionResult);
+        //autoComplete();
+        //destination.setText(sound.getText());
+        //destination.textProperty().setValue(speechRecognition.getSpeechRecognitionResultProperty().getValue());
+
+//        destination.setText(speechRecognition.getSpeechRecognitionResultProperty().getValue());
+
+//        System.out.println("Result:" + destination.getText());
+        //stopVoice();
+
+    }
+
+    @FXML
+    public void stopVoice(){
+        mic.setDisable(false);
+        mic.setVisible(true);
+        micStop.setDisable(true);
+        micStop.setVisible(false);
+
+        micStop.setOnAction(a -> {
+            speechRecognition.ignoreSpeechRecognitionResults();
+        });
 
     }
 

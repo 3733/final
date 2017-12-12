@@ -345,15 +345,28 @@
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="mic" contentDisplay="CENTER" onAction="#runVoice" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-                     <graphic>
-                        <ImageView fx:id="micButton" fitHeight="20.0" fitWidth="20.0">
-                           <image>
-                              <Image url="@Icons/mic.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <JFXButton fx:id="mic" contentDisplay="CENTER" onAction="#runVoice" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                           <graphic>
+                              <ImageView fx:id="micButton" fitHeight="20.0" fitWidth="20.0">
+                                 <image>
+                                    <Image url="@Icons/mic.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="micStop" contentDisplay="CENTER" disable="true" onAction="#stopVoice" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;" visible="false">
+                           <graphic>
+                              <ImageView fx:id="micButton1" fitHeight="20.0" fitWidth="20.0">
+                                 <image>
+                                    <Image url="@Icons/mic.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
                </children>
             </HBox>
             <VBox layoutX="1050.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0">
