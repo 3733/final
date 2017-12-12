@@ -10,10 +10,6 @@ public class SingletonTTS implements Voice{
 
     private SingletonTTS() {}
 
-    /*public void printSquat() {
-        System.out.println("Hello World");
-    }*/
-
     public static SingletonTTS getInstance() {
         // Double Checked Locking: google this on wikipedia
         if (INSTANCE == null) { // Single check
@@ -24,7 +20,6 @@ public class SingletonTTS implements Voice{
                     INSTANCE = new SingletonTTS();
                 }
             }
-//            INSTANCE = new SingletonTTS();
         }
         return INSTANCE;
     }
@@ -36,8 +31,4 @@ public class SingletonTTS implements Voice{
         System.out.println(tosay); // For troubleshooting
 
     }
-// Voice voice = new Voice("kevin16");
-    // String sayme = "I suck because I just don't work.";
-    // voice.say(sayme);
-
 }

@@ -66,7 +66,6 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     //other variables
     private Main mainController;
 
-
     public Node selectedNode; // Used for opening map editing windows
 
     public double calcX; // Used for opening map editing windows

@@ -20,8 +20,6 @@ import java.util.Timer;
 import java.awt.event.*;
 import java.util.Scanner;
 
-
-
 public class Main extends Application implements Data{
 
     private  static String destination;
