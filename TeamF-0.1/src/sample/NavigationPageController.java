@@ -300,8 +300,8 @@ public class NavigationPageController implements Initializable, Data{
             else if(after.getPriv().equals(AuthenticationInfo.Privilege.STAFF)){
                 createServButton.setVisible(true);
                 existServButton.setVisible(true);
-                editMapButton.setVisible(true);
-                editUsersButton.setVisible(true);
+                //editMapButton.setVisible(true);
+                //editUsersButton.setVisible(true);
                 Image logoutPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/f61b5f54.png"));
                 ImageView logoutIMG = new ImageView(logoutPNG);
                 logoutIMG.setFitHeight(25);

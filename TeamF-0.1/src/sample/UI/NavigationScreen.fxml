@@ -226,7 +226,7 @@
                   <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                </tabs>
             </JFXTabPane>
-            <JFXListView fx:id="searchList" layoutX="445.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="618.0" visible="false" />
+            <JFXListView fx:id="searchList" layoutX="500.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="618.0" visible="false" />
             <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="891.0">
                <children>
                   <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">

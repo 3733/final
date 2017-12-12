@@ -462,7 +462,13 @@ public class Main extends Application implements Data{
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-        /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
+        /*Staff admin = new Staff("Admin", "Admin", 11, "Admin", "Admin", "Admin", "Admin@gmail.com");
+        Staff staff = new Staff("Staff", "Staff", 12, "Staff", "Staff", "IT", "Staff@gmail.com");
+
+        testEmbeddedDB.addStaff(admin);
+        testEmbeddedDB.addStaff(staff);
+
+        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
         Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
         Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
         Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
