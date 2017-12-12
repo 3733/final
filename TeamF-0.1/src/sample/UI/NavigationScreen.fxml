@@ -225,7 +225,7 @@
                   <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                </tabs>
             </JFXTabPane>
-            <JFXListView fx:id="searchList" layoutX="20.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="266.0" visible="false" />
+            <JFXListView fx:id="searchList" layoutX="445.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="618.0" visible="false" />
             <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="690.0">
                <children>
                   <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
@@ -314,9 +314,17 @@
                   <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />
                </children>
             </JFXDrawersStack>
-            <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="462.0">
+            <HBox alignment="TOP_CENTER" layoutX="398.0" layoutY="36.0" prefHeight="34.0" prefWidth="730.0">
                <children>
-                  <JFXTextField fx:id="destination" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="266.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                  <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
+                     <graphic>
+                        <JFXHamburger fx:id="hamburger" layoutX="200.0" layoutY="36.0" prefHeight="16.0" prefWidth="20.0" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXTextField fx:id="destination" layoutX="60.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="618.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
                      <font>
                         <Font name="Montserrat Regular" size="12.0" />
                      </font>
@@ -335,11 +343,6 @@
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
-                  </JFXButton>
-                  <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
-                     <graphic>
-                        <JFXHamburger fx:id="hamburger" prefHeight="16.0" prefWidth="20.0" />
-                     </graphic>
                   </JFXButton>
                </children>
             </HBox>

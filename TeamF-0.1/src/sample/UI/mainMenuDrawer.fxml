@@ -31,12 +31,12 @@
                   </VBox>
                   <VBox prefHeight="142.0" prefWidth="368.0">
                      <children>
-                        <JFXTextField fx:id="startLabel" style="-fx-background-color: #e8e8e8;">
+                        <JFXTextField fx:id="startLabel" onAction="#searchStart" style="-fx-background-color: #e8e8e8;">
                            <VBox.margin>
                               <Insets top="30.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="endLabel" prefHeight="26.0" prefWidth="172.0" style="-fx-background-color: #e8e8e8;">
+                        <JFXTextField fx:id="endLabel" onAction="#searchEnd" prefHeight="26.0" prefWidth="172.0" style="-fx-background-color: #e8e8e8;">
                            <VBox.margin>
                               <Insets top="95.0" />
                            </VBox.margin>
@@ -62,7 +62,7 @@
                         <Font name="Montserrat Regular" size="12.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="85.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="85.0" fitWidth="31.0" onDragDetected="#reverse" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icons/reverse-icon-0.png" />
                            </image>

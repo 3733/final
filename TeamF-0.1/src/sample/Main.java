@@ -172,6 +172,7 @@ public class Main extends Application implements Data{
         Parent menuWin = menuWinLoader.load();
         menuDrawerController = menuWinLoader.getController();
         menuDrawerController.setMainController(this);
+        menuDrawerController.setNavController(navigationPageController);
         menuDrawer = new Scene(menuWin);
 
 

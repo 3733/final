@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import javafx.scene.layout.HBox;
@@ -35,6 +36,8 @@ public class MenuDrawerController implements Initializable{
     private JFXListView floorPoints;
     @FXML
     private JFXButton reverseButton;
+
+    private NavigationPageController navigationPageController;
 
     // Contains the map, object path is necessary otherwise the wrong imageview loads -F
     @FXML
@@ -89,44 +92,7 @@ public class MenuDrawerController implements Initializable{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        startLabel.setText(data.kiosk.getLongName().trim());
-        if(data.destinationNode!=null){
-            endLabel.setText(data.destinationNode.getLongName().trim());
-        }
-        floorPoints = new JFXListView();
-
-        //popluating list view -- three
-        threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
-
-        // Second Floor
-        twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
-
-        // First Floor
-        oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
-
-        // Ground Floor
-        groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
-
-        // Lower 1 Floor
-        lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
-
-        // Lower 2 Floor
-        lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
-
-        // All entries
-        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
-
-
-        if(!data.directions.isEmpty()){
-            floorPoints.setVisible(false);
-            directionSteps.setVisible(true);
-            setDirectionSteps();
-        }
-        else{
-            floorPoints.setVisible(true);
-            directionSteps.setVisible(false);
-            showPOI();
-        }
+        update();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -170,21 +136,36 @@ public class MenuDrawerController implements Initializable{
     }
 
     @FXML
-    public void settingSearch(){
-     /*   if (points.getSelectedToggle() == start) {
+    public void searchEnd() throws IOException, InterruptedException {
+        mainController.navigationPageController.setDestination(endLabel.getText());
+        mainController.navigationPageController.settingFields();
+        update();
 
-            destination.setText(startLabel.getText());
+    }
 
-        }
-        else{
-            destination.setText(endLabel.getText());
-        }
-        */
+    @FXML
+    public void searchStart() throws IOException, InterruptedException {
+        data.kiosk = SearchEngine.SearchNode(startLabel.getText());
+
+        String start = data.kiosk.getLongName().trim();
+        startLabel.setText(start);
+        mainController.navigationPageController.settingFields();
+        update();
+    }
+
+    @FXML
+    public void reverse(){
+
     }
 
     @FXML
     public void setStart(){
         startLabel.setText(data.kiosk.getLongName().trim());
+    }
+
+
+    public void setNavController(NavigationPageController in){
+        navigationPageController = in;
     }
 
 
@@ -338,13 +319,17 @@ public class MenuDrawerController implements Initializable{
         directionSteps.setItems(data.directions);
     }
 
+    @FXML
     public void reverseDirections() throws IOException, InterruptedException {
         //System.out.println("WUT????");
         String begin = startLabel.getText();
         String dest = endLabel.getText();
         startLabel.setText(dest);
-        endLabel.setText(begin);
-        ObservableList<HBox> current = FXCollections.observableArrayList();
+        mainController.navigationPageController.setDestination(begin);
+        data.kiosk = data.destinationNode;
+        mainController.navigationPageController.settingFields();
+        update();
+        /*ObservableList<HBox> current = FXCollections.observableArrayList();
         for(int i = data.directions.size(); i >0; i--){
             current.add(data.directions.get(i-1));
         }
@@ -352,8 +337,48 @@ public class MenuDrawerController implements Initializable{
         for (HBox h : current){
             data.directions.add(h);
         }
-        setDirectionSteps();
+        setDirectionSteps();*/
     }
 
+    public void update(){
+        startLabel.setText(data.kiosk.getLongName().trim());
+        if(data.destinationNode!=null){
+            endLabel.setText(data.destinationNode.getLongName().trim());
+        }
+        floorPoints = new JFXListView();
+
+        //popluating list view -- three
+        threeItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("3"));
+
+        // Second Floor
+        twoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("2"));
+
+        // First Floor
+        oneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("1"));
+
+        // Ground Floor
+        groundItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("G"));
+
+        // Lower 1 Floor
+        lowerOneItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L1"));
+
+        // Lower 2 Floor
+        lowerTwoItems = FXCollections.observableArrayList(testEmbeddedDB.getLongNamesByFloor("L2"));
+
+        // All entries
+        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
+
+
+        if(!data.directions.isEmpty()){
+            floorPoints.setVisible(false);
+            directionSteps.setVisible(true);
+            setDirectionSteps();
+        }
+        else{
+            floorPoints.setVisible(true);
+            directionSteps.setVisible(false);
+            showPOI();
+        }
+    }
 
 }

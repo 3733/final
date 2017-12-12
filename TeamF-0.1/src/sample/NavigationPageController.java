@@ -413,6 +413,7 @@ public class NavigationPageController implements Initializable, Data{
 
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
         data.destinationNode = currNode;
+        destination.setText(currNode.getLongName().trim());
 /*
         if (points.getSelectedToggle() == start) {
 
@@ -1501,12 +1502,12 @@ public class NavigationPageController implements Initializable, Data{
             mainMenu.setSidePane(menuBox);
             if(mainMenu.visibleProperty().get()){
                 mainMenu.setVisible(false);
-                destination.setVisible(true);
-                search.setVisible(true);
+                //destination.setVisible(true);
+                //search.setVisible(true);
             }else{
                 mainMenu.setVisible(true);
-                destination.setVisible(false);
-                search.setVisible(false);
+                //destination.setVisible(false);
+                //search.setVisible(false);
             }
 
         }catch (IOException e){
