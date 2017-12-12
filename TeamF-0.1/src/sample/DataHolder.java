@@ -1,6 +1,7 @@
 package sample;
 
 //import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.animation.PathTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -91,6 +92,7 @@ public class DataHolder {
 
     public Vector<Node> nodeAlign = new Vector<Node>();
 
+    public PathTransition animation;
     public ObservableList<HBox> directions =  FXCollections.observableArrayList();
     public Staff loggedInGuy;
 }
