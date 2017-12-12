@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -81,29 +80,6 @@
             <Insets top="90.0" />
          </VBox.margin>
       </AnchorPane>
-      <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="200.0">
-         <children>
-            <JFXCheckBox fx:id="stairs" checkedColor="#1a479a" style="-fx-background-color: #f4f4f4;" text="Stairs">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Montserrat Regular" size="12.0" />
-               </font>
-            </JFXCheckBox>
-            <JFXCheckBox fx:id="elevator" checkedColor="#1a479a" style="-fx-background-color: #f4f4f4;" text="Elevator">
-               <HBox.margin>
-                  <Insets left="25.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="Montserrat Regular" size="12.0" />
-               </font>
-            </JFXCheckBox>
-         </children>
-         <VBox.margin>
-            <Insets top="25.0" />
-         </VBox.margin>
-      </HBox>
       <HBox alignment="TOP_CENTER" prefHeight="51.0" prefWidth="242.0">
          <children>
             <JFXButton buttonType="RAISED" onAction="#clear" prefHeight="23.0" prefWidth="50.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Clear " textFill="WHITE">
@@ -154,7 +130,7 @@
             <Insets />
          </VBox.margin>
       </HBox>
-      <StackPane prefHeight="306.0" prefWidth="426.0">
+      <StackPane prefWidth="426.0">
          <children>
             <JFXListView fx:id="directionSteps" prefHeight="469.0" prefWidth="425.0" visible="false" />
             <JFXListView fx:id="floorPoints" prefHeight="326.0" prefWidth="426.0" visible="false" />
