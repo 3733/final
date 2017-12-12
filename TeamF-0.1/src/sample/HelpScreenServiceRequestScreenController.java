@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.fxml.FXML;
 import sample.Main;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ public class HelpScreenServiceRequestScreenController {
     public void setMainController(Main main){ this.mainController = main;}
 
     @FXML
-    public void back(){Main.startScreen();}
+    public void back() throws IOException, InterruptedException {Main.mapScreen();}
 
     @FXML
     public void help(){Main.setHelpScreenServiceRequestScreen();}
