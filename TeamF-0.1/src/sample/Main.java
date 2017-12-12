@@ -261,6 +261,7 @@ public class Main extends Application implements Data{
 
     public static void mapEditScreen(){
         stage.setScene(mapEdit);
+        mapEditPageController.someAction();
         // The timeout thing needs to go here
         stage.centerOnScreen();
     }
@@ -366,6 +367,7 @@ public class Main extends Application implements Data{
 
     public static void editUsersScreen(){
         stage.setScene(editUsers);
+        editUsersController.someAction();
         stage.centerOnScreen();
         editUsersController.disableButtons();
         editUsersController.refreshTable();
@@ -383,7 +385,7 @@ public class Main extends Application implements Data{
 
     public static void editUserWindow(JFXButton btn1){
         popUp = new Stage();
-        // editUsersController.someAction();
+        editUserWindowController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -393,18 +395,12 @@ public class Main extends Application implements Data{
 
     public static void aboutWindow(JFXButton btn1){
         popUp = new Stage();
-        // editUserWindowController.addingUsers();
-        // aboutPageController.startTimer();
         aboutPageController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.initOwner(btn1.getScene().getWindow());
         popUp.showAndWait();
-
-//        timer.cancel();
-//        timer = new Timer();
-//        timer.schedule(AndrewTimer.restoreNavScreen(timer), 10 * 1000); // 10 thousand milliseconds.
     }
 
     // This is called by the thread from the timer.
