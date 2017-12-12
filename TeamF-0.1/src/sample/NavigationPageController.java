@@ -3,6 +3,7 @@ package sample;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -47,6 +48,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
@@ -161,6 +163,8 @@ public class NavigationPageController implements Initializable, Data{
     private Vector<String> floorsVisited = new Vector<>();
 
     private Vector<ImageView> buttonPanes = new Vector<>();
+
+    private Vector<TranslateTransition> animations = new Vector<>();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -884,18 +888,30 @@ public class NavigationPageController implements Initializable, Data{
             String nameDept = path.get(0).getShortName();
             // Setting up the proper color settings
             Data.data.gc.setLineWidth(3);
-            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
             Data.data.gc.stroke();
             // Iterate through all the path nodes to draw the path
             for (int i = 0; i < length; i++) {
                 Node node = path.get(i);
+                Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
                 //System.out.println("This is node: " + node.getNodeID());
                 if (i + 1 < length) {
                     Node node2 = path.get(i + 1);
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
+                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst
+                                , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
+                        Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(255,0,0));
+                        Rectangle rectSeq = new Rectangle(node.getxCoordinate() / data.divisionCst + data.offset,node.getyCoordinate() / data.divisionCst + data.offset,3,3);
+                        rectSeq.setFill(Color.RED);
+                        TranslateTransition animation = new TranslateTransition(Duration.millis(1000), rectSeq);
+                        animation.setFromX(node.getxCoordinate() / data.divisionCst + data.offset);
+                        animation.setToX(node2.getxCoordinate() / data.divisionCst + data.offset);
+                        animation.setFromY(node.getyCoordinate() / data.divisionCst + data.offset);
+                        animation.setToY(node2.getxCoordinate() / data.divisionCst + data.offset);
+                        animation.setAutoReverse(true);
+                        animation.play();
+                        //animations.add(animation);
                     }
                 }
             }
