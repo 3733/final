@@ -1,4 +1,11 @@
 NODEID,XCOORD,YCOORD,FLOOR,BUILDING,NODETYPE,LONGNAME,SHORTNAME,TEAMASSIGNED
+FDEPT00101               ,1617,825,1   ,Tower          ,DEPT,Center for International Medicine                           ,CIM                                                         ,Team F
+FSERV00401               ,1721,970,1   ,Tower          ,DEPT,Spiritual Care Office                                       ,SCO                                                         ,Team F
+FDEPT00301               ,1721,931,1   ,Tower          ,DEPT,Multifaith Chapel                                           ,Chapel                                                      ,Team F
+FDEPT00201               ,1610,1120,1   ,Tower          ,DEPT,Bretholtz Center for Patients and Families                  ,Bretholtz WR                                                ,Team F
+FDEPT00401               ,1794,1146,1   ,Tower          ,DEPT,Sharf Admitting Center                                      ,Sharf Center                                                ,Team F
+FDEPT00501               ,2128,1300,1   ,Tower          ,DEPT,Emergency Department                                        ,Emergency                                                   ,Team F
+FDEPT00601               ,1780,1029,1   ,Tower          ,DEPT,International Patient Center                                ,IPC                                                         ,Team F
 ADEPT0020G               ,1552,2843,G   ,BTM            ,DEPT,Infusion Waiting Area                                       ,Infusion Waiting Area                                       ,Team A
 ADEPT00101               ,1401,2628,1   ,BTM            ,DEPT,Neuroscience Waiting Room                                   ,Neuro Waiting Room                                          ,Team A
 ADEPT00102               ,1395,2674,2   ,BTM            ,DEPT,Orthopedics and Rhemutalogy                                 ,Orthopedics and Rhemutalogy                                 ,Team A
@@ -43,10 +50,3 @@ IDEPT00603               ,2333,764,3   ,45 Francis     ,DEPT,Maternal Fetal Prac
 IDEPT00703               ,2400,764,3   ,45 Francis     ,DEPT,Obstetrics                                                  ,D7                                                          ,Team I
 IDEPT00803               ,2492,887,3   ,45 Francis     ,DEPT,Fetal Med & Genetics                                        ,D8                                                          ,Team I
 IDEPT00903               ,2631,851,3   ,45 Francis     ,DEPT,Gynecology                                                  ,D9                                                          ,Team I
-FDEPT00101               ,1617,825,1   ,Tower          ,DEPT,Center for International Medicine                           ,CIM                                                         ,Team F
-FSERV00401               ,1721,970,1   ,Tower          ,DEPT,Spiritual Care Office                                       ,SCO                                                         ,Team F
-FDEPT00301               ,1721,931,1   ,Tower          ,DEPT,Multifaith Chapel                                           ,Chapel                                                      ,Team F
-FDEPT00201               ,1610,1120,1   ,Tower          ,DEPT,Bretholtz Center for Patients and Families                  ,Bretholtz WR                                                ,Team F
-FDEPT00401               ,1794,1146,1   ,Tower          ,DEPT,Sharf Admitting Center                                      ,Sharf Center                                                ,Team F
-FDEPT00501               ,2128,1300,1   ,Tower          ,DEPT,Emergency Department                                        ,Emergency                                                   ,Team F
-FDEPT00601               ,1780,1029,1   ,Tower          ,DEPT,International Patient Center                                ,IPC                                                         ,Team F

@@ -462,32 +462,7 @@ public class Main extends Application implements Data{
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-        /*Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago", "Kaguya", "Nurse", "eyago@yagokorolab.net");
-        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel", "Oak", "Janitor", "gary@droak.com");
-        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal", "Jaber", "Admin", "tjaber15@gmail.com");
-        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin", "Roth", "Admin", "rothgr16@gmail.com");
-        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris", "van Rossum", "Admin", "florisvanrossum@gmail.com");
-        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke", "Ludington", "Admin", "Pmwws1@gmail.com");
-        Staff Will = new Staff("William", "Godsey", 4, "William", "Godsey", "Admin", "willgodsey@gmail.com");
-        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin", "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
-        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan", "Wang", "Admin", "WillisWang514@gmail.com");
-        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion", "Patias", "Admin", "Parmenion.Patias@gmail.com");
-        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie", "Raca", "Admin", "stephanie.r.racca@gmail.com");
-        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos", "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
-        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew", "Schueler", "Admin", "andrewtheschueler@gmail.com");
-        testEmbeddedDB.addStaff(Gary);
-        testEmbeddedDB.addStaff(Eirin);
-        testEmbeddedDB.addStaff(Talal);
-        testEmbeddedDB.addStaff(Griffin);
-        testEmbeddedDB.addStaff(Floris);
-        testEmbeddedDB.addStaff(Luke);
-        testEmbeddedDB.addStaff(Will);
-        testEmbeddedDB.addStaff(Ben);
-        testEmbeddedDB.addStaff(Willis);
-        testEmbeddedDB.addStaff(Parm);
-        testEmbeddedDB.addStaff(Steph);
-        testEmbeddedDB.addStaff(Nik);
-        testEmbeddedDB.addStaff(Andrew);//*/
+        //testEmbeddedDB.addStaffTestData();
 
         launch(args);
 

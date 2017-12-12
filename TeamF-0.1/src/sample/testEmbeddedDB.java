@@ -5,6 +5,7 @@ import com.opencsv.CSVWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.FileWriter;
 import java.sql.*;
 import java.util.HashMap;
@@ -37,12 +38,12 @@ public class testEmbeddedDB {
             testEmbeddedDB.fillNodesTable();
 
             testEmbeddedDB.fillEdgesTable();
-/*
-            Node test = new Node("dickbutt", 4, 4,
-                    4, "test", "test", "test",
-                    "test",'t');
 
-            Staff bob = new Staff("bob", "larkson", 1111, "boblrksn",
+            /*Node test = new Node("dickbutt", 4, 4,
+                    4, "test", "test", "test",
+                    "test",'t');*/
+
+            /*Staff bob = new Staff("bob", "larkson", 1111, "boblrksn",
                     "test", "assistance", "bob@bob.com");
 
             Staff tom = new Staff("tom", "larkson", 2222, "tomlrksn",
@@ -73,8 +74,8 @@ public class testEmbeddedDB {
 
             SecurityRequest s = new SecurityRequest(test, "test", 5555, "test",
                     "tetst", "test", 5,"security",
-                    "security", 4);
-*/
+                    "security", 4);//*/
+
             /*testEmbeddedDB.addFoodRequest(f);
 
             testEmbeddedDB.addAssistanceRequest(a);
@@ -111,6 +112,8 @@ public class testEmbeddedDB {
             testEmbeddedDB.createStaffTable();
 
             testEmbeddedDB.createAssignmentsTable();
+
+            testEmbeddedDB.createFoodTable();
 
             /*testEmbeddedDB.addFoodRequest("dickbutt", "penis", 6969, "6969",
                     420, "gimme the g00dSucc", "Joseph Stalin",
@@ -220,6 +223,87 @@ public class testEmbeddedDB {
         }
     }
 
+    public static void createFoodTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("CREATE TABLE FOOD (" +
+                    "foodName char(75) PRIMARY KEY ," +
+                    "price INTEGER," +
+                    "photourl CHAR(40))");
+
+        } catch (Exception e){
+            System.out.println("createFoodTable Error: " + e.getMessage());
+        }
+
+    }
+
+    public static void dropFoodTable(){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DROP TABLE FOOD");
+
+
+        } catch (Exception e){
+            System.out.println("dropFoodTable error: " + e.getMessage());
+        }
+    }
+
+    public static void addFood(String foodName, int price, String path){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("INSERT INTO FOOD(foodName, price, photourl) VALUES (" +
+                    "'" + foodName + "', " + price + ", '" + path + "')");
+
+        } catch (Exception e){
+            System.out.println("addFood error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodName(String food, String newfood){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set foodName = '" + newfood + "'");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodPrice(String food, int price){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set price = " + price + "");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
+    public static void editFoodURL(String food, String newURL){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("UPDATE Food WHERE foodName = " +
+                    "'" + food + "' set photourl = '" + newURL + "'");
+
+        } catch (Exception e){
+            System.out.println("editFoodName error: " + e.getMessage());
+        }
+    }
+
     //Talal wants to work on this
 
     public static void createServiceRequestTable(){
@@ -326,27 +410,33 @@ public class testEmbeddedDB {
                 n = testEmbeddedDB.getNode(dest);
 
                 if(typeofreq.contains("food")){
-                    req = new FoodRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
-                            typeofreq, completionStatus, patName, timeToBeServed, order);
+                    req = new FoodRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID, typeofreq,
+                            completionStatus, patName, timeToBeServed, order);
 
                 } else if(typeofreq.contains("assistance")){
-                    req = new AssistanceRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new AssistanceRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
 
                 } else if(typeofreq.contains("transport")){
-                    req = new TransportRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
-                            typeofreq, completionStatus, arrival, patName, typeOfTransport);
+                    req = new TransportRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID, typeofreq,
+                            completionStatus, arrival, patName, typeOfTransport);
 
                 } else if(typeofreq.contains("cleaning")){
-                    req = new CleaningRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new CleaningRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
 
                 } else if(typeofreq.contains("security")){
-                    req = new SecurityRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new SecurityRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
 
                 } else if(typeofreq.contains("it")){
-                    req = new ItRequest(n, desc, serviceID, serviceTime, acceptTime, finishTime, serviceEmployeeID,
+                    req = new ItRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
                             typeofreq, completionStatus, urgency);
                 }
 
@@ -1057,7 +1147,7 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void writeToCSV(){
+    public static void writeToEdgesCSV(String path){
 
         CSVWriter w = null;
         FileWriter f = null;
@@ -1065,20 +1155,49 @@ public class testEmbeddedDB {
 
 
         try{
-            f = new FileWriter("TeamF-0.1/src/sample/Data/databaseOutput.csv");
+            f = new FileWriter(path + "/databaseEdges.csv");
             w = new CSVWriter(f, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 
             Connection c = DriverManager.getConnection(url);
 
             Statement s = c.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM NODES WHERE NODETYPE = 'DEPT'");
+            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
+            w.writeAll(r, true);
 
-            /*while(r.next()) {
-                String name = r.getString("nodeID");
-                System.out.println("nodeID: " + name);
-            }*/
+            c.close();
 
+            System.out.println("printed!");
+
+
+        } catch (Exception e){
+            System.out.println("writeToCSV error: " + e.getMessage());
+        } finally {
+            try{
+                w.close();
+
+            } catch (Exception e){
+                System.out.println("finally error: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void writeToNodesCSV(String path){
+
+        CSVWriter w = null;
+        FileWriter f = null;
+        final String url = "jdbc:derby:Skynet";
+
+
+        try{
+            f = new FileWriter(path + "/databaseNodes.csv");
+            w = new CSVWriter(f, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT * FROM NODES");
             w.writeAll(r, true);
 
             c.close();
@@ -1511,6 +1630,122 @@ public class testEmbeddedDB {
                 return "oh no";
         }
 
+    }
+
+    public static void addStaffTestData(){
+        Staff Eirin = new Staff("Eirin", "Yagokoro", 1200, "eYago",
+                "Kaguya", "Nurse", "eyago@yagokorolab.net");
+        Staff Gary = new Staff("Gary", "Oak", 6678, "Samuel",
+                "Oak", "Janitor", "gary@droak.com");
+        Staff Talal = new Staff("Talal", "Jaber", 0, "Talal",
+                "Jaber", "Admin", "tjaber15@gmail.com");
+        Staff Griffin = new Staff("Griffin", "Roth", 1, "Griffin",
+                "Roth", "Admin", "rothgr16@gmail.com");
+        Staff Floris = new Staff("Floris", "van Rossum", 2, "Floris",
+                "van Rossum", "Admin", "florisvanrossum@gmail.com");
+        Staff Luke = new Staff("Luke", "Ludington", 3, "Luke",
+                "Ludington", "Admin", "Pmwws1@gmail.com");
+        Staff Will = new Staff("William", "Godsey", 4, "William",
+                "Godsey", "Admin", "willgodsey@gmail.com");
+        Staff Ben = new Staff("Benjamin", "Mattiuzzi", 5, "Benjamin",
+                "Mattiuzzi", "Admin", "ultranerd3.14@gmail.com");
+        Staff Willis = new Staff("Yuan", "Wang", 6, "Yuan",
+                "Wang", "Admin", "WillisWang514@gmail.com");
+        Staff Parm = new Staff("Parmenion", "Patias", 7, "Parmenion",
+                "Patias", "Admin", "Parmenion.Patias@gmail.com");
+        Staff Steph = new Staff("Stephanie", "Raca", 8, "Stephanie",
+                "Raca", "Admin", "stephanie.r.racca@gmail.com");
+        Staff Nik = new Staff("Nikolaos", "Kalampalikis", 9, "Nikolaos",
+                "Kalampalikis", "Admin", "nkalampalikis97@gmail.com");
+        Staff Andrew = new Staff("Andrew", "Schueler", 10, "Andrew",
+                "Schueler", "Admin", "andrewtheschueler@gmail.com");
+        addStaff(Gary);
+        addStaff(Eirin);
+        addStaff(Talal);
+        addStaff(Griffin);
+        addStaff(Floris);
+        addStaff(Luke);
+        addStaff(Will);
+        addStaff(Ben);
+        addStaff(Willis);
+        addStaff(Parm);
+        addStaff(Steph);
+        addStaff(Nik);
+        addStaff(Andrew);//*/
+
+    }
+
+    public static void getEmployeesFromServiceRequest(int employeeID){
+        try{
+            Vector<ServiceRequest> reqs = new Vector<>();
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+
+            ResultSet r = s.executeQuery("SELECT * FROM " +
+                    "(SERVICEREQUESTS JOIN ASSIGNMENTS ON " +
+                    "SERVICEREQUESTS.SERVICEID = ASSIGNMENTS.SERVICEID) " +
+                    "WHERE EMPLOYEEID = " + employeeID);
+
+            while(r.next()) {
+                ServiceRequest req = null;
+                Node n;
+                String dest = r.getString("destination");
+                String desc = r.getString("description");
+                String serviceTime = r.getString("servicetime");
+                String acceptTime = r.getString("accepttime");
+                String finishTime = r.getString("finishtime");
+                String typeofreq = r.getString("typeofrequest");
+                String patName = r.getString("patientname");
+                String timeToBeServed = r.getString("timetobeserved");
+                String order = r.getString("foodorder");
+                int urgency = r.getInt("urgency");
+                boolean arrival = r.getBoolean("arrival");
+                String typeOfTransport = r.getString("typeoftransport");
+                String completionStatus = r.getString("completionstatus");
+                int serviceID = r.getInt("serviceid");
+                int serviceEmployeeID = r.getInt("serviceemployeeid");
+
+                n = testEmbeddedDB.getNode(dest);
+
+                if (typeofreq.contains("food")) {
+                    req = new FoodRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID, typeofreq, completionStatus,
+                            patName, timeToBeServed, order);
+
+                } else if (typeofreq.contains("assistance")) {
+                    req = new AssistanceRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+
+                } else if (typeofreq.contains("transport")) {
+                    req = new TransportRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID, typeofreq, completionStatus,
+                            arrival, patName, typeOfTransport);
+
+                } else if (typeofreq.contains("cleaning")) {
+                    req = new CleaningRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+
+                } else if (typeofreq.contains("security")) {
+                    req = new SecurityRequest(n, desc, serviceID, serviceTime,
+                            acceptTime, finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+
+                } else if (typeofreq.contains("it")) {
+                    req = new ItRequest(n, desc, serviceID, serviceTime, acceptTime,
+                            finishTime, serviceEmployeeID,
+                            typeofreq, completionStatus, urgency);
+                }
+
+                reqs.add(req);
+            }
+
+
+        } catch (Exception e){
+            System.out.println("getEmployeesByServicerequest error: " + e.getMessage());
+        }
     }
 
 

@@ -26,12 +26,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -89,6 +96,8 @@ public class MapEditPageController implements Initializable, Data{
     public double calcY; // Used for opening map editing windows
 
     boolean editEdges;
+
+
 
     //initialization
     @Override
@@ -343,11 +352,75 @@ public class MapEditPageController implements Initializable, Data{
     public void importCSV(){
         testEmbeddedDB.fillEdgesTable();
         testEmbeddedDB.fillNodesTable();
+
     }
+
+    public void importEdgesCSV(){
+        final FileChooser fileChooser = new FileChooser();
+        Path path;
+        String p = new String();
+        List<File> filelist;
+        ArrayList<String> paths = new ArrayList<>();
+
+        //File file = fileChooser.showOpenDialog(new Stage());
+        filelist = fileChooser.showOpenMultipleDialog(new Stage());
+
+        for(File f : filelist){
+            if (f != null) {
+                p = f.getAbsolutePath();
+                paths.add(p);
+                System.out.println(p);
+                testEmbeddedDB.loadEdgesFile(p);
+
+            }
+        }
+
+//        testEmbeddedDB.fillEdgesTable();
+//        testEmbeddedDB.fillNodesTable();
+
+    }
+
+    public void importNodesCSV(){
+        final FileChooser fileChooser = new FileChooser();
+        Path path;
+        String p = new String();
+        List<File> filelist;
+        ArrayList<String> paths = new ArrayList<>();
+
+        //File file = fileChooser.showOpenDialog(new Stage());
+        filelist = fileChooser.showOpenMultipleDialog(new Stage());
+
+        for(File f : filelist){
+            if (f != null) {
+                p = f.getAbsolutePath();
+                paths.add(p);
+                System.out.println(p);
+                testEmbeddedDB.loadNodesFile(p);
+            }
+        }
+
+//        testEmbeddedDB.fillEdgesTable();
+//        testEmbeddedDB.fillNodesTable();
+
+    }
+
+
 
     @FXML
     public void exportCSV(){
-        testEmbeddedDB.writeToCSV();
+        final DirectoryChooser dirChooser = new DirectoryChooser();
+        String s = new String();
+
+        File dir = dirChooser.showDialog(new Stage());
+
+        if(dir != null){
+            s = dir.getAbsolutePath();
+            System.out.println(s);
+            testEmbeddedDB.writeToEdgesCSV(s);
+            testEmbeddedDB.writeToNodesCSV(s);
+        }
+
+        //testEmbeddedDB.writeToCSV();
     }
 
 
