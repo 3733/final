@@ -77,15 +77,6 @@ public class Main extends Application implements Data{
 
     private static Timer timer;
 
-    // For memento - Andrew S
-        // originator.set(start);
-    // This is the state to revert to.
-    // savedStates.add(originator.saveToMemento());
-    // ates = new ArrayList<Originator.MementoWindow>();
-    //    originator.set(start); // For the memento
-
-
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
@@ -383,7 +374,7 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
-    public static void editUserWindow(JFXButton btn1){
+    public static void editUserWindow(JFXButton btn1){ // for adding users
         popUp = new Stage();
         editUserWindowController.someAction();
         popUp.setScene(aboutWin);
@@ -407,26 +398,13 @@ public class Main extends Application implements Data{
     public static void closePopup()
     {
         popUp.close();
-        //timer.cancel(); // This is not working for some reason.
-        // aboutcontroller.setShowing(false);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    public static void editUserWindowEdit(Staff staff, JFXButton btn1){
-        Stage popUp = new Stage();
+    public static void editUserWindowEdit(Staff staff, JFXButton btn1){ // for editing users
+        popUp = new Stage();
         editUserWindowController.fillFields(staff);
         editUserWindowController.editingUsers();
+        editUserWindowController.someAction();
         popUp.setScene(editUserWin);
         popUp.setTitle("Edit User");
         popUp.initModality(Modality.APPLICATION_MODAL);
