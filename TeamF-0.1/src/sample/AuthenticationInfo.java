@@ -2,6 +2,13 @@ package sample;
 
 import java.net.Authenticator;
 
+/**This is the Authentication Info page
+ * <p>
+ *     This page contains the information and methodology used to authenticate a user
+ * </p>
+ *
+ */
+
 public class AuthenticationInfo {
 
     private String user;
