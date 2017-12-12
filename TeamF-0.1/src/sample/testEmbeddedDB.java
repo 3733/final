@@ -109,6 +109,10 @@ public class testEmbeddedDB {
 
             testEmbeddedDB.dropStaffTable();
 
+            testEmbeddedDB.dropFoodTable();
+
+            testEmbeddedDB.createFoodTable();
+
             testEmbeddedDB.createServiceRequestTable();
 
             testEmbeddedDB.createStaffTable();
@@ -232,13 +236,58 @@ public class testEmbeddedDB {
             Statement s = c.createStatement();
             s.execute("CREATE TABLE FOOD (" +
                     "foodName char(75) PRIMARY KEY ," +
-                    "price INTEGER," +
-                    "photourl CHAR(40))");
+                    "price FLOAT ," +
+                    "photourl CHAR(200)," +
+                    "defaultImage BOOLEAN DEFAULT FALSE )");
 
         } catch (Exception e){
             System.out.println("createFoodTable Error: " + e.getMessage());
         }
 
+    }
+
+    public static void deleteFood(String foodName){
+        try{
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            s.execute("DELETE FROM Food WHERE foodNAME = '" + foodName + "'");
+
+        } catch (Exception e){
+            System.out.println("deleteFood error: " + e.getMessage());
+        }
+    }
+
+    public static Vector<Food> getAllFoods(){
+        Vector<Food> allFood = new Vector<>();
+
+        try{
+
+            final String url = "jdbc:derby:Skynet";
+            Connection c = DriverManager.getConnection(url);
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT * from FOOD");
+
+            while(r.next()){
+                Food f;
+                String name = r.getString("foodname");
+                float price = r.getInt("price");
+                String path = r.getString("photourl");
+                boolean defimg = r.getBoolean("defaultImage");
+
+                f = new Food(name, (double) price, path, defimg);
+
+                allFood.add(f);
+
+            }
+
+
+
+        } catch (Exception e){
+            System.out.println("getAllFood error: " + e.getMessage());
+        }
+
+        return allFood;
     }
 
     public static void dropFoodTable(){
@@ -254,13 +303,13 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void addFood(String foodName, int price, String path){
+    public static void addFood(String foodName, double price, String path, boolean defaultImage){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
-            s.execute("INSERT INTO FOOD(foodName, price, photourl) VALUES (" +
-                    "'" + foodName + "', " + price + ", '" + path + "')");
+            s.execute("INSERT INTO FOOD(foodName, price, photourl, defaultImage) VALUES (" +
+                    "'" + foodName + "', " + (float) price + ", '" + path + "', " + defaultImage + ")");
 
         } catch (Exception e){
             System.out.println("addFood error: " + e.getMessage());
@@ -280,13 +329,13 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void editFoodPrice(String food, int price){
+    public static void editFoodPrice(String food, double price){
         try{
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
             s.execute("UPDATE Food WHERE foodName = " +
-                    "'" + food + "' set price = " + price + "");
+                    "'" + food + "' set price = " + (float) price + "");
 
         } catch (Exception e){
             System.out.println("editFoodName error: " + e.getMessage());
@@ -317,7 +366,7 @@ public class testEmbeddedDB {
             //remove the servieceEmployee ID from this table!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             s.execute("CREATE TABLE ServiceRequests (" +
-                    "destination CHAR(25) NOT NULL ," +
+                    "destination CHAR(30) NOT NULL ," +
                     "description CHAR(150) NOT NULL ," +
                     "serviceID BIGINT NOT NULL," +
                     "serviceTime CHAR(20) NOT NULL ," +
@@ -1648,9 +1697,31 @@ public class testEmbeddedDB {
 
     }
 
-    public static void getEmployeesFromServiceRequest(int employeeID){
+    public static void defaultMenu() {
+        testEmbeddedDB.addFood("apple pie", 8.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thN0HD2MIW.jpg", true);
+        testEmbeddedDB.addFood("banana", 0.58, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/banana.png", true);
+        testEmbeddedDB.addFood("sardines", 2.50, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/sardines.png", true);
+        testEmbeddedDB.addFood("smoked salmon", 2.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/smoked_salmon.png", true);
+        testEmbeddedDB.addFood("steak with lamb sauce", 15.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thR6E02SIM.jpg", true);
+        testEmbeddedDB.addFood("oreos", 3.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/th5MUPYTVT.jpg", true);
+        testEmbeddedDB.addFood("water", 1.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/th6FB1GCKJ.jpg", true);
+        testEmbeddedDB.addFood("catfish soup", 8.59, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/th6W9F71G7.jpg", true);
+        testEmbeddedDB.addFood("olive pizza", 13.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thB0H4P1OS.jpg", true);
+        testEmbeddedDB.addFood("chocolate cake", 4.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thFUUOROA2.jpg", true);
+        testEmbeddedDB.addFood("orange juice", 3.59, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thI21VG95P.jpg", true);
+        testEmbeddedDB.addFood("mashed potatoes", 3.99, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thIIS9OC4M.jpg", true);
+        testEmbeddedDB.addFood("loaf of bread", 2.40, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thJHMODTJX.jpg", true);
+        testEmbeddedDB.addFood("hamburger", 1.25, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thOM2SZM21.jpg", true);
+        testEmbeddedDB.addFood("lobster casserole", 18.95, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thQC8LHS8B.jpg", true);
+        testEmbeddedDB.addFood("chicken parmesan", 7.99, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thS1391HVZ.jpg", true);
+        testEmbeddedDB.addFood("tuna potato", 5.52, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thT0K5P8SP.jpg", true);
+        testEmbeddedDB.addFood("popcorn shrimps", 8.10, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thT9IF11RU.jpg", true);
+    }
+
+    public static Vector<ServiceRequest> getEmployeesFromServiceRequest(long employeeID){
+        Vector<ServiceRequest> reqs = new Vector<>();
+
         try{
-            Vector<ServiceRequest> reqs = new Vector<>();
             final String url = "jdbc:derby:Skynet";
             Connection c = DriverManager.getConnection(url);
             Statement s = c.createStatement();
@@ -1715,10 +1786,10 @@ public class testEmbeddedDB {
                 reqs.add(req);
             }
 
-
         } catch (Exception e){
             System.out.println("getEmployeesByServicerequest error: " + e.getMessage());
         }
+        return reqs;
     }
 
 

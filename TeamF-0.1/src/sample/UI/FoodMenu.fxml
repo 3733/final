@@ -73,7 +73,7 @@
       </AnchorPane>
    </left>
    <right>
-      <VBox alignment="TOP_CENTER" prefHeight="614.0" prefWidth="206.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="614.0" prefWidth="214.0" BorderPane.alignment="CENTER">
          <children>
             <JFXButton fx:id="edit" buttonType="RAISED" onAction="#startEdit" prefHeight="26.0" prefWidth="117.0" style="-fx-background-color: #abcdef;" text="Edit Hospital Menu" />
             <JFXTextField fx:id="name" maxWidth="-Infinity" prefHeight="26.0" prefWidth="208.0" promptText="Food name" translateX="7.0" translateY="60.0" visible="false" />
@@ -100,7 +100,7 @@
             <JFXButton fx:id="upload" buttonType="RAISED" onAction="#uploadImage" prefHeight="24.0" prefWidth="112.0" ripplerFill="#8e8e8e" style="-fx-background-color: #b2b1b1;" text="Upload Image" translateY="100.0" visible="false" />
             <HBox fx:id="selectionBox" alignment="CENTER" maxWidth="-Infinity" prefHeight="50.0" prefWidth="231.0" style="-fx-border-color: #cecee7;" translateY="150.0" visible="false">
                <children>
-                  <JFXButton fx:id="add" buttonType="RAISED" onAction="#addFoodMenu" prefHeight="26.0" prefWidth="88.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="Add to Menu">
+                  <JFXButton fx:id="add" buttonType="RAISED" onAction="#addFoodMenu" prefHeight="26.0" prefWidth="94.0" ripplerFill="#8e8e8e" style="-fx-background-color: #f4f4f4;" text="Add to Menu">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>

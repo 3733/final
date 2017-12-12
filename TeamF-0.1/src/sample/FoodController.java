@@ -28,7 +28,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 import static sample.Main.setFoodString;
 
@@ -107,9 +109,9 @@ public class FoodController implements Initializable {
 
 
     //formatted list of food that go into menu
-    private ObservableList<Food> foodObserve = FXCollections.observableArrayList(applePie, banana, sardines,
+    private ObservableList<Food> foodObserve = FXCollections.observableArrayList();/*(applePie, banana, sardines,
             smokedSalmon, steak, oreos, water, soup, pizza, cake, orangeJuice, mashedPotatoes, bread, burger,
-            casserole, parmesan, tuna, shrimps);
+            casserole, parmesan, tuna, shrimps);*/
 
 
     private ObservableList<Food> invoiceObserve = FXCollections.observableArrayList();;
@@ -185,7 +187,23 @@ public class FoodController implements Initializable {
     }
 
     public void refresh() {
+
+        Vector foodFromDatabase = testEmbeddedDB.getAllFoods();
+        ArrayList<Food> arrayOfFoodFromDatabase = new ArrayList<Food>(foodFromDatabase);
+
+        for (int i = 0; i < arrayOfFoodFromDatabase.size(); i++) {   //searches through the list from the database
+            boolean alreadyInTable = false;
+           /* for (int j = 0; j < foodObserve.size(); j++) {        //searches through the list in the table
+                if ((arrayOfFoodFromDatabase.get(i)).getName().trim().equals(foodObserve.get(j).getName())) {  //if the service is already in the table
+                    alreadyInTable = true;
+                }
+            }*/
+            if ( !alreadyInTable)
+                foodObserve.add(arrayOfFoodFromDatabase.get(i));
+        }
+
         foodMenu.setItems(foodObserve);
+        //foodMenu.setItems(foodObserve);
     }
 
     @FXML
@@ -204,9 +222,10 @@ public class FoodController implements Initializable {
         newFood.setName(name.getText());
         newFood.setPrice(Double.parseDouble(price.getText()));
         newFood.setFileLocation(fileLocation);
-        foodObserve.add(newFood);
-        foodMenu.setItems(foodObserve);
-
+        //foodObserve.add(newFood);
+        //foodMenu.setItems(foodObserve);
+        testEmbeddedDB.addFood(name.getText(), Float.parseFloat(price.getText()), fileLocation, false);
+        refresh();
     }
 
     @FXML
@@ -219,7 +238,9 @@ public class FoodController implements Initializable {
 
         //loop over the selected rows and remove the Food objects from the table
         for (Food i : selectedRows)
-            allfood.remove(i);
+            testEmbeddedDB.deleteFood(i.getName());
+
+        refresh();
     }
 
     @FXML
@@ -287,7 +308,7 @@ public class FoodController implements Initializable {
         String order = "";
 
         for(int i = 0; i < invoiceObserve.size(); i++)
-            order += invoiceObserve.get(i).getName() + "!";
+            order += invoiceObserve.get(i).getName().trim() + "!";
 
         setFoodString(order);
 
