@@ -1816,6 +1816,8 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
+        int length = animationPane.getChildren().size();
+        animationPane.getChildren().remove(0,length);
         data.buttonNodes = null;
         clearButtons();
     }
