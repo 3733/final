@@ -1,6 +1,8 @@
 package sample;
 
 import com.jfoenix.controls.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,9 +50,6 @@ public class MenuDrawerController implements Initializable{
 
     //@FXML
     //private JFXRadioButton start, end;
-
-    @FXML
-    private JFXTextField startField, endField;
 
     @FXML
     private ToggleGroup points;
@@ -117,6 +116,14 @@ public class MenuDrawerController implements Initializable{
 
         // All entries
         allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
+
+        floorPoints.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                endLabel.setText(newValue);
+                //searchEnd goes here
+            }
+        });
 
 
         if(!data.directions.isEmpty()){
@@ -301,16 +308,11 @@ public class MenuDrawerController implements Initializable{
         floorPoints.setVisible(true);
         directionSteps.setVisible(false);
         ObservableList<HBox> boxList = FXCollections.observableArrayList();
-        for(int i = 0; i<allEntries.size(); i++){
-            HBox point = new HBox();
-            Label label = new Label();
-            label.setText(allEntries.get(i));
-
-            point.getChildren().addAll(label);
-            point.setAlignment(Pos.CENTER_LEFT);
-
-            boxList.add(point);
-        }
+        HBox point = new HBox();
+        Label label = new Label();
+        point.getChildren().addAll(label);
+        point.setAlignment(Pos.CENTER_LEFT);
+        boxList.add(point);
 
         floorPoints.setItems(boxList);
         if(data.currentMap.equals("3")) {

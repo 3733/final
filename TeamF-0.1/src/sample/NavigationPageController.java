@@ -190,8 +190,6 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<JFXButton> floorButtons = new Vector<>();
 
-    private MenuDrawerController menuDrawer = mainController.menuDrawerController;
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -461,9 +459,6 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathL1);
         Data.data.currentMap = "L1";
         hierarchicalText("L1");
-        if(!menuDrawer.getDirectionSteps().isVisible()){
-            menuDrawer.showPOI();
-        }
     }
 
     @FXML
@@ -475,9 +470,6 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathL2);
         Data.data.currentMap = "L2";
         hierarchicalText("L2");
-        if(!menuDrawer.getDirectionSteps().isVisible()){
-            menuDrawer.showPOI();
-        }
     }
 
     @FXML
@@ -489,9 +481,6 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathFirst);
         Data.data.currentMap = "1";
         hierarchicalText("1");
-        if(!menuDrawer.getDirectionSteps().isVisible()){
-            menuDrawer.showPOI();
-        }
     }
 
     @FXML
@@ -505,9 +494,6 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathSecond);
         Data.data.currentMap = "2";
         hierarchicalText("2");
-        if(!menuDrawer.getDirectionSteps().isVisible()){
-            menuDrawer.showPOI();
-        }
     }
 
     @FXML
@@ -521,9 +507,6 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathThird);
         Data.data.currentMap = "3";
         hierarchicalText("3");
-        if(!menuDrawer.getDirectionSteps().isVisible()){
-            menuDrawer.showPOI();
-        }
     }
 
     @FXML
@@ -535,9 +518,6 @@ public class NavigationPageController implements Initializable, Data{
         testDrawDirections(Data.data.pathG);
         Data.data.currentMap = "G";
         hierarchicalText("G");
-        if(!menuDrawer.getDirectionSteps().isVisible()){
-            menuDrawer.showPOI();
-        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
