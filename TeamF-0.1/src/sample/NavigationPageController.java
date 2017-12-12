@@ -469,33 +469,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     //setting start and end nodes
     @FXML
     public void settingFields() throws IOException, InterruptedException {
-        /*searchList.setVisible(false);
-        oneArrow.setVisible(false);
-        twoArrow.setVisible(false);
-        threeArrow.setVisible(false);
-        groundArrow.setVisible(false);
-        lowerOneArrow.setVisible(false);
-        lowerTwoArrow.setVisible(false);*/
-
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
         data.destinationNode = currNode;
         destination.setText(currNode.getLongName().trim());
-/*
-        if (points.getSelectedToggle() == start) {
-
-            //System.out.println("LABEL!!!!!");
-
-            data.kiosk = currNode;
-            destination.setText(startLabel.getText().trim());
-        }
-        else if(points.getSelectedToggle() == end){
-
-            //System.out.println("LABEL!!!!!");
-            endLabel.setText(currNode.getLongName().trim());
-            data.destinationNode = currNode;
-            destination.setText(endLabel.getText().trim());
-        }
-*/
         go();
 
     }
@@ -523,7 +499,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L1Floor);
-        //testDrawDirections(Data.data.pathL1);
         clearAnimations();
         drawAnimation(data.pathL1);
         clearButtons();
@@ -541,7 +516,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0,x,y);
         map.setImage(Data.data.L2Floor);
-        //testDrawDirections(Data.data.pathL2);
         clearAnimations();
         drawAnimation(data.pathL2);
         clearButtons();
@@ -559,7 +533,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         double x = pathCanvas.getWidth();
         data.gc.clearRect(0,0, x, y);
         map.setImage(Data.data.firstFloor);
-        //testDrawDirections(Data.data.pathFirst);
         clearAnimations();
         drawAnimation(data.pathFirst);
         clearButtons();
@@ -579,7 +552,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.secondFloor);
-        //testDrawDirections(Data.data.pathSecond);
         clearAnimations();
         drawAnimation(data.pathSecond);
         clearButtons();
@@ -599,7 +571,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             Data.data.gc.clearRect(0, 0, x, y);
         }
         map.setImage(Data.data.thirdFloor);
-        //testDrawDirections(Data.data.pathThird);
         clearAnimations();
         drawAnimation(data.pathThird);
         clearButtons();
@@ -664,14 +635,8 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         data.buttonNodes = findFloorHyperLinks(this.path);
 
         MultiFloorPathDrawing(this.path);
-/*
-        directionSteps.setVisible(true);
-        sendLabel.setVisible(true);
-        email.setVisible(true);
-        sendButton.setVisible(true);*/
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
-        //System.out.println("This is the last floor: " + lastFloor);
         setMap(lastFloor.trim());
     }
 
@@ -681,37 +646,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     public void clearFields(){
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
-        /*sendLabel.setVisible(false);
-        email.setVisible(false);
-        sendButton.setVisible(false);
-        directionSteps.setVisible(false);
-        endLabel.setText("");
-        startLabel.setText("Lower Pike Hallway Exit Lobby");
-        destination.setText("");
-        directionSteps.getItems().clear();
-        reset(map, width, height);*/
     }
 
     @FXML
     public void go() throws IOException,InterruptedException{
         clear();
         findPath();
-        /*
-        SettingSingleton.getSettingSingleton().getauthPropertyProperty().addListener((ObservableValue<? extends AuthenticationInfo> a, AuthenticationInfo before, AuthenticationInfo after) -> {
-            if(after.getPriv().equals(AuthenticationInfo.Privilege.ADMIN)){
-                sendLabel.setVisible(false);
-                email.setVisible(false);
-                sendButton.setVisible(false);
-            }
-            else{
-                sendLabel.setVisible(true);
-                email.setVisible(true);
-                sendButton.setVisible(true);
-            }
-        });
-        //setArrows(floorsVisited);
-        searchList.setVisible(false);
-        directionSteps.setVisible(true);*/
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1039,11 +979,8 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         floorVisD.setVisible(false);
         floorVisE.setVisible(false);
         floorVisF.setVisible(false);
-        ///HERE////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         sequence.clear();
         data.directions.clear();
-        //ObservableList<HBox> populateSteps = FXCollections.observableArrayList();
-        //edit later
         String directions = directions(path);
         String[] directionParts = directions.split("<br>");
 
@@ -1195,35 +1132,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
-    // Purpose: Draw a path of nodes on the map
-    @FXML
-    public void testDrawDirections(Vector<Node> path) {
-        if(path != null) {
-            int length = path.size();
-            String nameDest = path.get(length - 1).getShortName();
-            String nameDept = path.get(0).getShortName();
-            // Setting up the proper color settings
-            Data.data.gc.setLineWidth(3);
-            Data.data.gc.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
-            Data.data.gc.stroke();
-            // Iterate through all the path nodes to draw the path
-            for (int i = 0; i < length; i++) {
-                Node node = path.get(i);
-                //System.out.println("This is node: " + node.getNodeID());
-                if (i + 1 < length) {
-                    Node node2 = path.get(i + 1);
-                    //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
-                    // Lines are drawn offset,
-                    if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Point2D calcPoint = convertFromImage(node.getxCoordinate(),node.getyCoordinate());
-                        Point2D calcPoint2 = convertFromImage(node2.getxCoordinate(), node2.getyCoordinate());
-                        Data.data.gc.strokeLine(calcPoint.getX(), calcPoint.getY(), calcPoint2.getX(), calcPoint2.getY());
-                    }
-                }
-            }
-            String floor = path.get(0).getFloor().replaceAll("\\s+","");
-        }
-    }
 
     /**
      * Draw the all the buttons of a current floor on the navigation screen
@@ -1375,7 +1283,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     public void drawAnimation( Vector<Node> path) {
         if (path != null) {
-            System.out.println("This is animation");
             int length = path.size();
             Path animationPath = new Path();
             Vector<PathElement> holder = new Vector<>();
@@ -1404,8 +1311,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                     }
                 }
             }
-            //holder.remove(holder.size()-1);
-            //holder.add(new ClosePath());
             int length2 = holder.size();
             PathElement[] pathEl = new PathElement[length2];
             for(int i = 0; i < length2; i++){
@@ -1414,23 +1319,12 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
             animationPath.setStroke(javafx.scene.paint.Color.rgb(26,71,154));
             animationPath.setStrokeWidth(3);
-            //animationPath.setStrokeType();
             animationPath.getElements().addAll(pathEl);
-
-  //          ImageView person = new ImageView();
-//            person.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/stick_fig_png.png")));
-
-    //        person.setPreserveRatio(true);
-      //      person.setX(20);
-
-            //Rectangle rect = new Rectangle(0,0,200,200);
 
             javafx.scene.shape.Circle rectangle = new Circle(3, 0,3);
             rectangle.setFill(javafx.scene.paint.Color.LIGHTBLUE);
-            //rect.setFill(javafx.scene.paint.Color.BLUE);
             PathTransition animation = new PathTransition();
             animation.setNode(rectangle);
-            //animation.setRate(5);
             animation.setPath(animationPath);
             animation.setInterpolator(Interpolator.LINEAR);
             animation.setDuration(new Duration(5000));
@@ -1438,36 +1332,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             animation.play();
             data.animation = animation;
             animationPane.getChildren().addAll(animationPath,rectangle);
-            //animationPane.setVisible(false);
-            /*// Iterate through all the path nodes to draw the path
-            for (int i = 0; i < length; i++) {
-                Node node = path.get(i);
-                //System.out.println("This is node: " + node.getNodeID());
-                if (i + 1 < length) {
-                    Node node2 = path.get(i + 1);
-                    //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
-                    // Lines are drawn offset,
-                    if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Rectangle rectSeq = new Rectangle(node.getxCoordinate() / data.divisionCst + data.offset,node.getyCoordinate() / data.divisionCst + data.offset,3,3);
-                        rectSeq.setFill(Color.RED);
-                        TranslateTransition animation = new TranslateTransition(Duration.millis(1000), rectSeq);
-                        animation.setFromX(node.getxCoordinate() / data.divisionCst + data.offset);
-                        animation.setToX(node2.getxCoordinate() / data.divisionCst + data.offset);
-                        animation.setFromY(node.getyCoordinate() / data.divisionCst + data.offset);
-                        animation.setToY(node2.getxCoordinate() / data.divisionCst + data.offset);
-                        animation.setAutoReverse(true);
-                        animations.add(animation);
-                        animationPane.getChildren().add(rectSeq);
-                        animationPane.getChildren().add(new Rectangle(200,200,100,100));
-                    }
-                }
-            }
-            int length2 = animations.size();
-            for (int i = 0; i < length2; i++) {
-                animations.get(i).play();
-            }
-            String floor = path.get(0).getFloor().replaceAll("\\s+","");
-        }*/
         }
     }
 
