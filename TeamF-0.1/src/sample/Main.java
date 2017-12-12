@@ -23,6 +23,12 @@ import java.util.Scanner;
 
 public class Main extends Application implements Data{
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        Runtime.getRuntime().exit(0);
+    }
+
     private  static String destination;
     private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private String filePath = "/sample/UI/Icons/";
@@ -538,7 +544,7 @@ public class Main extends Application implements Data{
         testEmbeddedDB.addStaff(Andrew);//*/
 
         launch(args);
-
+        System.out.println(" Finished program. Have all threads closed? ");
         //controller.drawDirections(Vec);
     }
 
