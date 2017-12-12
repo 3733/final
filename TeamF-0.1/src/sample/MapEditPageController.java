@@ -33,9 +33,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.Vector;
 
-public class MapEditPageController implements Initializable, Data{
+public class MapEditPageController implements Initializable, Data, ITimed{
+
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
 
     //fxml components
     @FXML
@@ -81,7 +86,6 @@ public class MapEditPageController implements Initializable, Data{
     //other variables
     private Main mainController;
 
-
     public Node selectedNode; // Used for opening map editing windows
 
     public double calcX; // Used for opening map editing windows
@@ -90,9 +94,28 @@ public class MapEditPageController implements Initializable, Data{
 
     boolean editEdges;
 
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
+    }
+
     //initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // 30 per steph request.
+        timeoutController.setTimer(atimer, false); // This is not a popup
+
         updateNodes();
         updateEdges();
         Data.data.gc1 = pathCanvas1.getGraphicsContext2D();

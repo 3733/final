@@ -2,8 +2,6 @@ package sample;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,24 +10,21 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.stage.Stage;
 
 import java.awt.*;
-import java.util.Map.Entry;
 
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Vector;
+import java.util.Timer;
+
+// For listening to events
+import java.awt.event.*;
+import java.util.Scanner;
 
 public class Main extends Application implements Data{
 
     private  static String destination;
+    private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private String filePath = "/sample/UI/Icons/";
     private Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "A2@yorha.net");
 
@@ -53,6 +48,11 @@ public class Main extends Application implements Data{
     private static Scene helpRequest;
     private static Scene aboutWin;
 
+    // This is a  setter for the scene for the momento-timeout.
+    public static void setStartScene()
+    {
+        stage.setScene(map);
+    }
     private static Scene menuDrawer;
 
 
@@ -70,14 +70,25 @@ public class Main extends Application implements Data{
     public static GenErrorController genErrorController = new GenErrorController();
     public static EditUserWindowController editUserWindowController = new EditUserWindowController();
     public static HelpScreenServiceRequestScreenController helpScreenServiceRequestScreenController = new HelpScreenServiceRequestScreenController();
+    public static AboutPageController aboutPageController = new AboutPageController();
 
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
 
 
+    // private static AboutPageController aboutcontroller;
+
+    // The memento pattern needs these objects to be created in Main
+    // This is where the states are being set and stored. When a window is initilized, set here.
+    public static Originator originator; // = new Originator();
+    // This is the memento saved states array getup. This is only for the start page because that is where the application time-outs to.
+    public static Originator.MementoWindow savedStates; // = new Originator.MementoWindow(start);
+
+    private static Timer timer;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.DataStart();
+        //data.kiosk = data.graph.getNodes().get(0);
         data.loggedInGuy = guest;
 
         for(int i = 0;i<data.graph.getNodes().size();i++){
@@ -104,8 +115,7 @@ public class Main extends Application implements Data{
         Parent HelpRequest = helpRequestLoader.load();
         helpScreenServiceRequestScreenController = helpRequestLoader.getController();
         helpScreenServiceRequestScreenController.setMainController(this);
-        helpRequest = new Scene(HelpRequest)
-        ;
+        helpRequest = new Scene(HelpRequest);
 
         FXMLLoader navLoader = new FXMLLoader(getClass().getResource("UI/NavigationScreen.fxml"));
         Parent Nav = navLoader.load();
@@ -160,6 +170,8 @@ public class Main extends Application implements Data{
 
         FXMLLoader aboutLoader = new FXMLLoader(getClass().getResource("UI/AboutPage.fxml"));
         Parent about = aboutLoader.load();
+        aboutPageController = aboutLoader.getController();
+        aboutPageController.setMainController(this);
         aboutWin = new Scene(about);
 
         FXMLLoader editUserWinLoader = new FXMLLoader(getClass().getResource("UI/EditUserWindow.fxml"));
@@ -219,7 +231,8 @@ public class Main extends Application implements Data{
 
     public static void loginScreen(JFXButton btn1){
         //SingletonTTS.getInstance().say("Hey Sexy?");
-        Stage popUp = new Stage();
+        popUp = new Stage();
+        loginPageController.someAction();
         popUp.setScene(login);
         popUp.setTitle("Log In");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -237,6 +250,8 @@ public class Main extends Application implements Data{
         menuDrawerController.setEnd();
     }
     public static void mapScreen() throws IOException, InterruptedException {
+        System.out.println("Nav screen showed up");
+        // closePopup();
         stage.setScene(map);
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
@@ -262,11 +277,13 @@ public class Main extends Application implements Data{
 
     public static void mapEditScreen(){
         stage.setScene(mapEdit);
+        mapEditPageController.someAction();
+        // The timeout thing needs to go here
         stage.centerOnScreen();
     }
 
     public static void nodeEditScreen(JFXButton btn1){
-        Stage popUp = new Stage();
+        popUp = new Stage();
         popUp.setScene(nodeEdit);
         popUp.setTitle("Edit Node");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -275,7 +292,7 @@ public class Main extends Application implements Data{
     }
 
     public static void nodeEditScreenClick(Node selected, JFXButton btn1) {
-        Stage popUp = new Stage();
+        popUp = new Stage();
         popUp.setScene(nodeEdit);
         popUp.setTitle("Edit Node");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -301,7 +318,7 @@ public class Main extends Application implements Data{
     }
 
     public static void nodeAddEditScreenClick(JFXButton btn1, double x, double y) {
-        Stage popUp = new Stage();
+        popUp = new Stage();
         popUp.setScene(nodeEdit);
         popUp.setTitle("Edit Node");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -327,7 +344,7 @@ public class Main extends Application implements Data{
     }
 
     public static void edgeEditScreen(JFXButton btn1){
-        Stage popUp = new Stage();
+        popUp = new Stage();
         popUp.setScene(edgeEdit);
         popUp.setTitle("Edit Edge");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -336,7 +353,7 @@ public class Main extends Application implements Data{
     }
 
     public static void edgeStartEditScreen(JFXButton btn1, Node startNode){
-        Stage popUp = new Stage();
+        popUp = new Stage();
         popUp.setScene(edgeEdit);
         popUp.setTitle("Edit Edge");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -346,7 +363,7 @@ public class Main extends Application implements Data{
     }
 
     public static void edgeEndEditScreen(JFXButton btn1, Node endNode){
-        Stage popUp = new Stage();
+        popUp = new Stage();
         popUp.setScene(edgeEdit);
         popUp.setTitle("Edit Edge");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -366,6 +383,7 @@ public class Main extends Application implements Data{
 
     public static void editUsersScreen(){
         stage.setScene(editUsers);
+        editUsersController.someAction();
         stage.centerOnScreen();
         editUsersController.disableButtons();
         editUsersController.refreshTable();
@@ -381,8 +399,9 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
-    public static void editUserWindow(JFXButton btn1){
-        Stage popUp = new Stage();
+    public static void editUserWindow(JFXButton btn1){ // for adding users
+        popUp = new Stage();
+        editUserWindowController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -391,8 +410,8 @@ public class Main extends Application implements Data{
     }
 
     public static void aboutWindow(JFXButton btn1){
-        Stage popUp = new Stage();
-        editUserWindowController.addingUsers();
+        popUp = new Stage();
+        aboutPageController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -400,10 +419,17 @@ public class Main extends Application implements Data{
         popUp.showAndWait();
     }
 
-    public static void editUserWindowEdit(Staff staff, JFXButton btn1){
-        Stage popUp = new Stage();
+    // This is called by the thread from the timer.
+    public static void closePopup()
+    {
+        popUp.close();
+    }
+
+    public static void editUserWindowEdit(Staff staff, JFXButton btn1){ // for editing users
+        popUp = new Stage();
         editUserWindowController.fillFields(staff);
         editUserWindowController.editingUsers();
+        editUserWindowController.someAction();
         popUp.setScene(editUserWin);
         popUp.setTitle("Edit User");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -435,6 +461,22 @@ public class Main extends Application implements Data{
 
 
     public static void main(String[] args) throws IOException{
+
+        // The memento pattern needs these objects to be created in Main
+        // This is where the states are being set and stored. When a window is initilized, set here.
+        originator = new Originator();
+        // This is the memento saved states array getup. This is only for the start page because that is where the application time-outs to.
+        savedStates = new Originator.MementoWindow(map); // start screen is going away
+
+        // For memento - Andrew S
+        originator.set(map);
+        // This is the state to revert to.
+        // savedStates.add(originator.saveToMemento());
+        // ates = new ArrayList<Originator.MementoWindow>();
+        //    originator.set(start); // For the memento
+
+//       timer = new Timer();
+//       timer.schedule(AndrewTimer.testNewTask(), 2 * 1000);
 
         //testEmbeddedDB db = new testEmbeddedDB();
         /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
@@ -503,19 +545,6 @@ public class Main extends Application implements Data{
     public static Map startMap() throws IOException{
 
         Map CurMap = testEmbeddedDB.dbBuildMap();
-
-/*
-        for (int i =0; i<CurMap.getNodes().size();i++){
-
-            System.out.println((i+1)+ " : "+CurMap.getNodes().get(i).getLongName());
-
-            for (int j =0; j<CurMap.getNodes().get(i).getNeighbors().size();j++){
-
-                System.out.println( "      =====> "+CurMap.getNodes().get(i).getNeighbors().get(j).getLongName());
-            }
-        }
-*/
-
         return CurMap;
     }
 

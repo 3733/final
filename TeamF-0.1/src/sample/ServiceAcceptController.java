@@ -18,14 +18,15 @@ import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.*;
 
 import static sample.Main.getLoggedInGuy;
 
-public class ServiceAcceptController implements Initializable{
+public class ServiceAcceptController implements Initializable, ITimed{
+
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
 
     //top menu bar
     @FXML
@@ -96,8 +97,28 @@ public class ServiceAcceptController implements Initializable{
     //formats an int into being able to be displayed in table
     public ObservableValue<Integer> intToObsValue(int cellEntry) {return new SimpleIntegerProperty(cellEntry).asObject(); }
 
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(60); // per steph request.
+        timeoutController.setTimer(atimer, false);
+
         requests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
         status.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getStatus()).trim()));   //sets service status in column
         finishedRequests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column

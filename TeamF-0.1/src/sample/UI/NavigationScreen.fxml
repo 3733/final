@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMouseExited="#someAction" onMouseMoved="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onTouchStationary="#someAction" onZoom="#someAction" onZoomFinished="#someAction" onZoomStarted="#someAction" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
    <center>
       <AnchorPane prefHeight="810.0" prefWidth="1518.0" BorderPane.alignment="CENTER">
          <children>

@@ -55,7 +55,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public class NavigationPageController implements Initializable, Data{
+import static sample.Main.getLoggedInGuy;
+
+public class NavigationPageController implements Initializable, Data, ITimed{
+
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
 
     //FXML UI Components
 
@@ -197,12 +203,42 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<ImageView> buttonPanes = new Vector<>();
 
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+        // AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+        // Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "z@yorha.net");
+        if (getLoggedInGuy().getEmployeeType().trim().equals("User"))
+        {
+            // do nothing
+        }
+        else
+        {
+            try
+            {
+                timeoutController.doNavTimer();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Could not start timer.");
+            }
+        }
+
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
 
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimerNav(atimer);
+
         menuDrawerController = mainController.menuDrawerController;
         mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
@@ -585,7 +621,7 @@ public class NavigationPageController implements Initializable, Data{
         sendButton.setVisible(true);*/
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
-        System.out.println("This is the last floor: " + lastFloor);
+        //System.out.println("This is the last floor: " + lastFloor);
         setMap(lastFloor.trim());
     }
 
@@ -1144,8 +1180,8 @@ public class NavigationPageController implements Initializable, Data{
         if(changeFloorNodes != null) {
             int length = changeFloorNodes.size();
             for (int i = 0; i < length; i += 2) {
-                System.out.println("This is the floor node: " + changeFloorNodes.get(i).getNodeID());
-                System.out.println("This is the other floor node: " + changeFloorNodes.get(i + 1).getNodeID());
+                //System.out.println("This is the floor node: " + changeFloorNodes.get(i).getNodeID());
+                //System.out.println("This is the other floor node: " + changeFloorNodes.get(i + 1).getNodeID());
                 Node floor1Node = changeFloorNodes.get(i);
                 Node floor2Node = changeFloorNodes.get(i);
                 if(i + 1 < length) {
@@ -1153,13 +1189,13 @@ public class NavigationPageController implements Initializable, Data{
                 }
                 int x = floor1Node.getxCoordinate();
                 int y = floor1Node.getyCoordinate();
-                System.out.println("This is currentFloor: " + currentFloor + " This is the changefloor: " + floor1Node.getFloor());
+                //System.out.println("This is currentFloor: " + currentFloor + " This is the changefloor: " + floor1Node.getFloor());
                 if (floor1Node.getFloor().trim().equals(currentFloor.trim())) {
-                    System.out.println("This happened");
+                    //System.out.println("This happened");
                     Point2D point = convertFromImage(x,y);
                     createFloorChangeButton(point.getX(), point.getY(), floor2Node.getFloor());
                 } else if (floor2Node.getFloor().trim().equals(currentFloor.trim())) {
-                    System.out.println("This happened too");
+                    //System.out.println("This happened too");
                     Point2D point = convertFromImage(floor2Node.getxCoordinate(), floor2Node.getyCoordinate());
                     createFloorChangeButton(point.getX(), point.getY(), floor1Node.getFloor());
                 }
@@ -1210,7 +1246,7 @@ public class NavigationPageController implements Initializable, Data{
             floorIcon.setImage(new Image(getClass().getResourceAsStream("/sample/UI/Icons/elevUp3.png")));
         }
 
-        System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
+        //System.out.println("Printing a pane at: (" + canvasX + ", " + canvasY + ")");
         floorIcon.setFitHeight(20);
         floorIcon.setFitWidth(20);
         floorIcon.setX(canvasX - 10);
@@ -1220,7 +1256,7 @@ public class NavigationPageController implements Initializable, Data{
         floorIcon.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("TRYING TO CHANGE THE MAP TO: " + floorTo);
+                //System.out.println("TRYING TO CHANGE THE MAP TO: " + floorTo);
                 setMap(floorTo.trim());
             }
         });
@@ -1271,8 +1307,8 @@ public class NavigationPageController implements Initializable, Data{
             Node n = path.get(i);
             if(!n.getFloor().equals(floor)) {
                 if (i < length) {
-                    System.out.println("Added: " + path.get(i).getNodeID());
-                    System.out.println("Added: " + path.get(i-1).getNodeID());
+                    //System.out.println("Added: " + path.get(i).getNodeID());
+                    //System.out.println("Added: " + path.get(i-1).getNodeID());
                     returnVector.add(path.get(i-1));
                     returnVector.add(path.get(i));
                     floor = path.get(i).getFloor();
@@ -1297,12 +1333,12 @@ public class NavigationPageController implements Initializable, Data{
     public Point2D convertToImage(double x, double y){
         updateImageCoordinates();
         updateCanvasCoordinates();
-        System.out.println("This is the image view: " + data.canvasX + ", " + data.canvasY);
-        System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
-        System.out.println("This is the input point: " + x + ", " + y);
+        //System.out.println("This is the image view: " + data.canvasX + ", " + data.canvasY);
+        //System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
+        //System.out.println("This is the input point: " + x + ", " + y);
         double returnX = x * ((data.imageViewX / data.canvasX) * (data.MapX/data.imageViewX));
         double returnY = (y) * ((data.imageViewY / data.canvasY) * (data.MapY/data.imageViewY));
-        System.out.println("This is the point: " + returnX + " ," + returnY);
+        //System.out.println("This is the point: " + returnX + " ," + returnY);
         return new Point2D(returnX,returnY);
     }
 
@@ -1399,7 +1435,7 @@ public class NavigationPageController implements Initializable, Data{
                     Point2D calcPoint = convertToImage(selectedNode.getxCoordinate(),selectedNode.getyCoordinate());
                     Data.data.gc.strokeOval(calcPoint.getX(), calcPoint.getY(), 7.0, 7.0);
                     Data.data.gc.fillOval(calcPoint.getX(), calcPoint.getY(), 7.0, 7.0);
-                    System.out.println("This is the selected node: " + selectedNode.getNodeID());
+                    //System.out.println("This is the selected node: " + selectedNode.getNodeID());
 
                     if (points.getSelectedToggle() == start) {
                         startLabel.setText(selectedNode.getLongName().trim());
