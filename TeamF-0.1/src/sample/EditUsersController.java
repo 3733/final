@@ -23,6 +23,14 @@ import java.util.Timer;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**This is the EditUsers pages controller
+ * <p>
+ *     This controller allows the user from the UI end to edit edges
+ * </p>
+ *
+ */
+
+
 public class EditUsersController implements Initializable, ITimed{
 
     private TimeoutController timeoutController;

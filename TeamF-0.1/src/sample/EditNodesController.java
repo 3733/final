@@ -12,6 +12,14 @@ import sample.testEmbeddedDB;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**This is the EditNodes pages controller
+ * <p>
+ *     This controller allows the nodes from the UI end to edit edges
+ * </p>
+ *
+ */
+
+
 public class EditNodesController {
     @FXML
     private JFXButton close, addNodeBtn, editNodeBtn, remNodeBtn;

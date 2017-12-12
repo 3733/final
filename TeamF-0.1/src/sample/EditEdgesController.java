@@ -8,6 +8,13 @@ import javafx.scene.control.TextField;
 import sample.Main;
 import sample.testEmbeddedDB;
 
+/**This is the EditNodes pages controller
+ * <p>
+ *     This controller allows the edges from the UI end to edit edges
+ * </p>
+ *
+ */
+
 public class EditEdgesController {
     @FXML
     private Button backButton;

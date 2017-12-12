@@ -2,6 +2,13 @@ package sample;
 
 import sample.Node;
 
+/** This is the Edge class
+ * <p>
+ *     THe Edge class represents the vector between any two given nodes, containing an edge ID, start node, and end node
+ * </p>
+ * @param String EdgeID, Node Start, Node End
+ */
+
 public class Edge {
 
     //Fields
