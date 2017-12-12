@@ -12,6 +12,12 @@ import java.util.TimerTask;
 import static com.jfoenix.svg.SVGGlyphLoader.clear;
 
 public class AndrewTimer {
+    /** This is the timer functionality that does nothing
+     * </p>
+     * Currently this code is not enabled
+     *
+     * @return
+     */
 
     // Test thread
     public static TimerTask testNewTask() {
