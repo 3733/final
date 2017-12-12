@@ -1748,5 +1748,10 @@ public class NavigationPageController implements Initializable, Data{
         }
     }
 
+    @FXML
+    public void runVoice(){
+
+    }
+
 
 }

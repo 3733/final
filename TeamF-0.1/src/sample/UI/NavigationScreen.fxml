@@ -315,7 +315,7 @@
                   <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />
                </children>
             </JFXDrawersStack>
-            <HBox alignment="TOP_CENTER" layoutX="398.0" layoutY="36.0" prefHeight="34.0" prefWidth="730.0">
+            <HBox alignment="TOP_CENTER" layoutX="398.0" layoutY="36.0" prefHeight="34.0" prefWidth="876.0">
                <children>
                   <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
                      <graphic>
@@ -344,6 +344,15 @@
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="mic" contentDisplay="CENTER" onAction="#runVoice" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0">
+                           <image>
+                              <Image url="@Icons/mic.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </JFXButton>
                </children>
             </HBox>
