@@ -192,11 +192,6 @@ public class Main extends Application implements Data{
 
         stage = primaryStage;
 
-        //GraphicsDevice gd =  new GraphicsEnvironment().getDe
-       // primaryStage.setResizable(true);
-//        primaryStage.minWidthProperty().bind(stage.heightProperty().multiply(1));
-//        primaryStage.maxHeightProperty().bind(stage.widthProperty().divide(1));
-//        primaryStage.show();
 
 
 
@@ -226,11 +221,7 @@ public class Main extends Application implements Data{
         editUserWin.getStylesheets().add("sample/UI/style.css");
         aboutWin.getStylesheets().add("sample/UI/style.css");
         helpRequest.getStylesheets().add("sample/UI/style.css");
-
         menuWin.getStylesheets().add("sample/UI/style.css");
-
-//        primaryStage.minWidthProperty().bind(stage.heightProperty().multiply(2));
-//        primaryStage.maxHeightProperty().bind(stage.widthProperty().divide(2));
 
 
 
@@ -239,12 +230,9 @@ public class Main extends Application implements Data{
         stage.setScene(welcomeScreen);
         stage.setResizable(true);
         //stage.setFullScreen(true);
-
-
-
-        //primaryStage.setFullScreen(true);
         stage.centerOnScreen();
         stage.show();
+
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
         destination = "";
@@ -270,9 +258,9 @@ public class Main extends Application implements Data{
         menuDrawerController.setEnd();
     }
     public static void mapScreen() throws IOException, InterruptedException {
-        stage.setFullScreen(true);
         stage.setScene(map);
         stage.centerOnScreen();
+        stage.setFullScreen(true);
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
         //startMap();
