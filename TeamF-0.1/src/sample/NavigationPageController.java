@@ -226,6 +226,8 @@ public class NavigationPageController implements Initializable, Data{
         scrollMap.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         zoom();
 
+        updateImageCoordinates();
+
         floorButtons.add(floorVisA);
         floorButtons.add(floorVisB);
         floorButtons.add(floorVisC);
@@ -1089,7 +1091,9 @@ public class NavigationPageController implements Initializable, Data{
                     //System.out.println("This is node + 1: " + node2.getNodeID() + "\n\n");
                     // Lines are drawn offset,
                     if (!(node2.getNodeID().equals("BLANK")) && !(node.getNodeID().equals("BLANK"))) {
-                        Data.data.gc.strokeLine(node.getxCoordinate() / data.divisionCst + data.offset, node.getyCoordinate() / data.divisionCst , node2.getxCoordinate() / data.divisionCst + data.offset, node2.getyCoordinate() / data.divisionCst);
+                        Point2D calcPoint = convertFromImage(node.getxCoordinate(),node.getyCoordinate());
+                        Point2D calcPoint2 = convertFromImage(node2.getxCoordinate(), node2.getyCoordinate());
+                        Data.data.gc.strokeLine(calcPoint.getX(), calcPoint.getY(), calcPoint2.getX(), calcPoint2.getY());
                     }
                 }
             }
@@ -1124,6 +1128,34 @@ public class NavigationPageController implements Initializable, Data{
         }
         map.setImage(SwingFXUtils.toFXImage(firstFloor,null));
     } */
+
+    public Point2D convertFromImage(double x, double y){
+        updateImageCoordinates();
+        System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
+        System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
+        System.out.println("This is the input point: " + x + ", " + y);
+        double returnX = x/(data.MapX / data.imageViewX);
+        double returnY = y/(data.MapX / data.imageViewY);
+        System.out.println("This is the point: " + returnX + " ," + returnY);
+        return new Point2D(returnX,returnY);
+    }
+
+    public Point2D convertToImage(double x, double y){
+        updateImageCoordinates();
+        System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
+        System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
+        System.out.println("This is the input point: " + x + ", " + y);
+        double returnX = x * (data.imageViewX / data.MapX);
+        double returnY = y * (data.MapY/ data.imageViewY);
+        System.out.println("This is the point: " + returnX + " ," + returnY);
+        return new Point2D(returnX,returnY);
+
+    }
+
+    public void updateImageCoordinates(){
+        data.imageViewX = map.getFitWidth();
+        data.imageViewY = map.getFitWidth();
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
@@ -1172,22 +1204,29 @@ public class NavigationPageController implements Initializable, Data{
 //                Data.data.gc.fillOval(newX1, newY1, 7.0, 7.0);
 
                 if (floorLowerTwo.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                    Point2D calcPoint = convertToImage(newX1, newY1);
+                    selectedNode = mousePosition(calcPoint.getX() , calcPoint.getY(), Data.data.lowerLevel02FloorNodes);
                 } else if (floorLowerOne.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                    Point2D calcPoint = convertToImage(newX1, newY1);
+                    selectedNode = mousePosition(calcPoint.getX(), calcPoint.getY(), Data.data.lowerLevel01FloorNodes);
                 } else if (floorGround.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.groundFloorNodes);
+                    Point2D calcPoint = convertToImage(newX1, newY1);
+                    selectedNode = mousePosition(calcPoint.getX(), calcPoint.getY(), Data.data.groundFloorNodes);
                 } else if (floorOne.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.firstFloorNodes);
+                    Point2D calcPoint = convertToImage(newX1, newY1);
+                    selectedNode = mousePosition(calcPoint.getX(), calcPoint.getY(), Data.data.firstFloorNodes);
                 } else if (floorTwo.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.secondFloorNodes);
+                    Point2D calcPoint = convertToImage(newX1, newY1);
+                    selectedNode = mousePosition(calcPoint.getX(), calcPoint.getY(), Data.data.secondFloorNodes);
                 } else if (floorThree.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * data.divisionCst + offset, (newY1 - 2) * data.divisionCst + offset, Data.data.thirdFloorNodes);
+                    Point2D calcPoint = convertToImage(newX1, newY1);
+                    selectedNode = mousePosition(calcPoint.getX(), calcPoint.getY(), Data.data.thirdFloorNodes);
                 }
 
                 if(event.getClickCount() == 2) {
-                    Data.data.gc.strokeOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
-                    Data.data.gc.fillOval(selectedNode.getxCoordinate() / data.divisionCst + data.offset, selectedNode.getyCoordinate() / data.divisionCst + data.offset, 7.0, 7.0);
+                    Point2D calcPoint = convertToImage(selectedNode.getxCoordinate(),selectedNode.getyCoordinate());
+                    Data.data.gc.strokeOval(calcPoint.getX(), calcPoint.getY(), 7.0, 7.0);
+                    Data.data.gc.fillOval(calcPoint.getX(), calcPoint.getY(), 7.0, 7.0);
                     System.out.println("This is the selected node: " + selectedNode.getNodeID());
 
                     if (points.getSelectedToggle() == start) {
