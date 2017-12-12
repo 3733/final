@@ -18,12 +18,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Timer;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+public class EditUsersController implements Initializable, ITimed{
 
-public class EditUsersController implements Initializable{
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
+
     private Main mainController;
 
     @FXML
@@ -36,6 +41,21 @@ public class EditUsersController implements Initializable{
     public void setMainController(Main main){
         this.mainController = main;
     }
+
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
+    }
+
     @FXML
     public void back()throws IOException, InterruptedException{ Main.mapScreen();}
 
@@ -102,6 +122,12 @@ public class EditUsersController implements Initializable{
     //Initializes the table
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // 30 per steph request.
+        timeoutController.setTimer(atimer, false);
+
         lastName.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getLastName()).trim()));
         firstName.setCellValueFactory(cellData ->stringToStringProperty((cellData.getValue().getFirstName()).trim()));
         id.setCellValueFactory(cellData ->stringToStringProperty(Long.toString(cellData.getValue().getEmployeeID())));

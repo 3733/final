@@ -7,6 +7,8 @@ import sample.Main;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+// This class is now depreciated.
 public class HelpScreenServiceRequestScreenController {
     private Main mainController;
     public void setMainController(Main main){ this.mainController = main;}
@@ -18,6 +20,7 @@ public class HelpScreenServiceRequestScreenController {
     public void help(){Main.setHelpScreenServiceRequestScreen();}
 
     Node n1 = new Node("FDEPT00101", 1614, 829, "1", "Tower", "DEPT", "Center for International Medecine", "CIM", 'F');
+
     @FXML
     public JFXTextArea box;
 

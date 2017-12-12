@@ -4,15 +4,11 @@ import com.sun.speech.freetts.VoiceManager;
 
 public class SingletonTTS implements Voice{
 
-    private static SingletonTTS INSTANCE;
+    private volatile static SingletonTTS INSTANCE;
     private static String name = "kevin16";
     private com.sun.speech.freetts.Voice voice = VoiceManager.getInstance().getVoice(this.name);
 
     private SingletonTTS() {}
-
-    /*public void printSquat() {
-        System.out.println("Hello World");
-    }*/
 
     public static SingletonTTS getInstance() {
         // Double Checked Locking: google this on wikipedia
@@ -24,7 +20,6 @@ public class SingletonTTS implements Voice{
                     INSTANCE = new SingletonTTS();
                 }
             }
-//            INSTANCE = new SingletonTTS();
         }
         return INSTANCE;
     }
@@ -36,8 +31,4 @@ public class SingletonTTS implements Voice{
         System.out.println(tosay); // For troubleshooting
 
     }
-// Voice voice = new Voice("kevin16");
-    // String sayme = "I suck because I just don't work.";
-    // voice.say(sayme);
-
 }
