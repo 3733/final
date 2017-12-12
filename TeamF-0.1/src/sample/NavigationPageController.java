@@ -55,7 +55,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-public class NavigationPageController implements Initializable, Data{
+import static sample.Main.getLoggedInGuy;
+
+public class NavigationPageController implements Initializable, Data, ITimed{
+
+    private TimeoutController timeoutController;
+
+    private Timer atimer;
 
     //FXML UI Components
 
@@ -197,12 +203,42 @@ public class NavigationPageController implements Initializable, Data{
 
     private Vector<ImageView> buttonPanes = new Vector<>();
 
+    @FXML // This is the method that gets called everywhere in the fxml files.
+    public void someAction()//  throws IOException, InterruptedException
+    {
+        // AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
+        // Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "z@yorha.net");
+        if (getLoggedInGuy().getEmployeeType().trim().equals("User"))
+        {
+            // do nothing
+        }
+        else
+        {
+            try
+            {
+                timeoutController.doNavTimer();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Could not start timer.");
+            }
+        }
+
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
 
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimerNav(atimer);
+
         menuDrawerController = mainController.menuDrawerController;
         mainMenu.setVisible(false);
         Data.data.gc = pathCanvas.getGraphicsContext2D();
@@ -1541,6 +1577,8 @@ public class NavigationPageController implements Initializable, Data{
         settingFields();
     }
 
+
+
     @FXML
     public void logout() throws IOException, InterruptedException{
         AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
@@ -1577,7 +1615,6 @@ public class NavigationPageController implements Initializable, Data{
 
    @FXML
     public void chat(){
-        Main.setHelpScreenServiceRequestScreen();
         try{
             messenger.API m = new messenger.API();
             m.run(6,6,600,600,

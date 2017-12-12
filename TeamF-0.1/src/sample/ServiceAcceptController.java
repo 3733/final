@@ -116,7 +116,7 @@ public class ServiceAcceptController implements Initializable, ITimed{
 
         timeoutController = new TimeoutController();
         atimer = new Timer();
-        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.updateDelay(60); // per steph request.
         timeoutController.setTimer(atimer, false);
 
         requests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column

@@ -19,6 +19,12 @@ public class TimeoutController {
         isPopUp = isPop;
     }
 
+    public void setTimerNav(Timer time)
+    {
+        atime = time;
+        isPopUp = false;
+    }
+
     public void setShowing(boolean in)
     {
         isshowing = in;
@@ -35,6 +41,21 @@ public class TimeoutController {
         atime.cancel();
         System.out.println("   2_2_2   ");
         startTimer();
+    }
+
+    public void doNavTimer()
+    {
+        System.out.println("   1_1_1   ");
+        atime.cancel();
+        System.out.println("   2_2_2   ");
+        startNavTimer();
+    }
+
+    public void startNavTimer()
+    {
+        System.out.println("    I suck a lot.    ");
+        atime = new Timer();
+        atime.schedule(AndrewTimer.restoreNavFromNav(atime), this.delayTime * 1000); // AndrewTimer.getDelay() * 1000);
     }
 
     public void startTimer()
