@@ -79,7 +79,7 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     @FXML
     private ContextMenu contextMenu2;
     @FXML
-    private JFXListView startAuto;
+    private JFXListView<String> startAuto;
     @FXML
     private JFXTextField startLabel;
 
@@ -867,6 +867,7 @@ public class MapEditPageController implements Initializable, Data, ITimed{
 
     @FXML
     public void startAutoClose(){
+        startLabel.setText(startAuto.getItems().get(0));
         startAuto.setVisible(false);
     }
 
