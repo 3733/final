@@ -32,9 +32,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MapEditPageController implements Initializable, Data, ITimed{
 
@@ -75,7 +78,12 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     private ContextMenu contextMenu;
     @FXML
     private ContextMenu contextMenu2;
+    @FXML
+    private JFXListView startAuto;
+    @FXML
+    private JFXTextField startLabel;
 
+    private ObservableList<String> allEntries;
    /* public final ObjectProperty<Point2D> lastMouseCoordinates = new SimpleObjectProperty<>();
 */
     @FXML
@@ -100,6 +108,7 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     //initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        startAuto.setVisible(false);
 
         updateNodes();
         updateEdges();
@@ -151,6 +160,8 @@ public class MapEditPageController implements Initializable, Data, ITimed{
         tabPane.getSelectionModel().select(floorOne);
         map.setImage(data.firstFloor);//new Image(getClass().getResourceAsStream("/sample/UI/Icons/01_thefirstfloor.png")));
 
+
+        allEntries = FXCollections.observableArrayList(testEmbeddedDB.getAllLongNames());
             /*
             * AStar -1
             * Breadth -2
@@ -854,4 +865,51 @@ public class MapEditPageController implements Initializable, Data, ITimed{
                 viewport.getMinY() + yProportion * viewport.getHeight());
     }
 
+    @FXML
+    public void startAutoClose(){
+        startAuto.setVisible(false);
+    }
+
+    @FXML
+    public void startAutoComplete(){
+        startAuto.setVisible(true);
+        ObservableList<String> filteredEntries = FXCollections.observableArrayList("empty");
+        //filtering
+        startLabel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                LinkedList<String> searchResult = new LinkedList<>();
+                //Check if the entered Text is part of some entry
+                String text = startLabel.getText();
+                Pattern pattern;
+                pattern = Pattern.compile(".*" + text + ".*",
+                        Pattern.CASE_INSENSITIVE);
+
+                for (String entry : allEntries) {
+                    Matcher matcher = pattern.matcher(entry);
+                    if (matcher.matches()) {
+                        searchResult.add(entry);
+                    }
+                }
+
+                if (allEntries.size() > 0) {
+                    filteredEntries.clear();
+                    filteredEntries.addAll(searchResult);
+                }
+                startAuto.setItems(filteredEntries);
+            }
+        });
+
+        startAuto.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                startLabel.setText(newValue);
+            }
+        });
+    }
+
+    @FXML
+    public void setDefaultStart(){
+        data.kiosk = SearchEngine.SearchNode(startLabel.getText());
+    }
 }

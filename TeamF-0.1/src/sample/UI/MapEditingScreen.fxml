@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
@@ -23,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMouseExited="#someAction" onMouseMoved="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onTouchStationary="#someAction" onZoom="#someAction" onZoomFinished="#someAction" onZoomStarted="#someAction" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMouseExited="#someAction" onMouseMoved="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onTouchStationary="#someAction" onZoom="#someAction" onZoomFinished="#someAction" onZoomStarted="#someAction" prefHeight="848.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MapEditPageController">
    <center>
       <AnchorPane prefHeight="777.0" prefWidth="1142.0" BorderPane.alignment="CENTER">
          <children>
@@ -221,14 +222,14 @@
                   </JFXButton>
                </children>
             </HBox>
-            <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="501.0">
+            <HBox layoutX="20.0" layoutY="36.0" prefHeight="100.0" prefWidth="564.0">
                <children>
-                  <JFXTextField prefHeight="26.0" prefWidth="209.0" style="-fx-background-color: #ffffff;">
+                  <JFXTextField fx:id="startLabel" onKeyTyped="#startAutoComplete" prefHeight="26.0" prefWidth="354.0" style="-fx-background-color: #ffffff;">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </JFXTextField>
-                  <JFXButton buttonType="RAISED" prefHeight="30.0" prefWidth="152.0" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Set Default Start" textFill="WHITE">
+                  <JFXButton buttonType="RAISED" onAction="#setDefaultStart" prefHeight="30.0" prefWidth="152.0" ripplerFill="#e8e8e8" style="-fx-background-color: #1a479a;" text="Set Default Start" textFill="WHITE">
                      <font>
                         <Font name="Montserrat Regular" size="12.0" />
                      </font>
@@ -238,6 +239,7 @@
                   </JFXButton>
                </children>
             </HBox>
+            <JFXListView fx:id="startAuto" layoutX="19.0" layoutY="64.0" onMouseExited="#startAutoClose" prefHeight="160.0" prefWidth="354.0" />
          </children>
       </AnchorPane>
    </center>
