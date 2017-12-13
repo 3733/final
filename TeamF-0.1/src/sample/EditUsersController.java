@@ -25,9 +25,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EditUsersController implements Initializable, ITimed{
 
-    private TimeoutController timeoutController;
+    //private TimeoutController timeoutController;
 
-    private Timer atimer;
+    //private Timer atimer;
 
     private Main mainController;
 
@@ -45,15 +45,15 @@ public class EditUsersController implements Initializable, ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction()//  throws IOException, InterruptedException
     {
-        try
-        {
-            timeoutController.doTimer();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("Could not start timer.");
-        }
+//        try
+//        {
+//            timeoutController.doTimer();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            System.out.println("Could not start timer.");
+//        }
     }
 
     @FXML
@@ -123,10 +123,10 @@ public class EditUsersController implements Initializable, ITimed{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(30); // 30 per steph request.
-        timeoutController.setTimer(atimer, false);
+//        timeoutController = new TimeoutController();
+//        atimer = new Timer();
+//        timeoutController.updateDelay(30); // 30 per steph request.
+//        timeoutController.setTimer(atimer, false);
 
         lastName.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getLastName()).trim()));
         firstName.setCellValueFactory(cellData ->stringToStringProperty((cellData.getValue().getFirstName()).trim()));

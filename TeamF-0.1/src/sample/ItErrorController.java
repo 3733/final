@@ -8,7 +8,7 @@ import java.util.Timer;
 
 public class ItErrorController implements ITimed{
 
-    private Timer atimer;
+    //private Timer atimer;
 
     @FXML
     private Label itErrorLabel;

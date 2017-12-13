@@ -37,9 +37,9 @@ import static sample.Main.setFoodString;
 
 public class FoodController implements Initializable, ITimed{
 
-    private TimeoutController timeoutController;
+    //private TimeoutController timeoutController;
 
-    private Timer atimer;
+    //private Timer atimer;
 
     private Main mainController;
 
@@ -96,15 +96,15 @@ public class FoodController implements Initializable, ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction()//  throws IOException, InterruptedException
     {
-        try
-        {
-            timeoutController.doTimer();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("Could not start timer.");
-        }
+//        try
+//        {
+//            timeoutController.doTimer();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            System.out.println("Could not start timer.");
+//        }
     }
 
     Food applePie = new Food("apple pie", 8.00, /*"C:/Users/Talal/Desktop/serveIT3/iteration2/TeamF-0.1/src*/"/sample/UI/Icons/foodpics/thN0HD2MIW.jpg", true);
@@ -168,10 +168,10 @@ public class FoodController implements Initializable, ITimed{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(30); // per steph request.
-        timeoutController.setTimer(atimer, true);
+//        timeoutController = new TimeoutController();
+//        atimer = new Timer();
+//        timeoutController.updateDelay(30); // per steph request.
+//        timeoutController.setTimer(atimer, true);
 
         foodMenu.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         names.setStyle("-fx-alignment: CENTER-LEFT");

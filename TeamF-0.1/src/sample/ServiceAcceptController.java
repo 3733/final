@@ -24,9 +24,9 @@ import static sample.Main.getLoggedInGuy;
 
 public class ServiceAcceptController implements Initializable, ITimed{
 
-    private TimeoutController timeoutController;
+    //private TimeoutController timeoutController;
 
-    private Timer atimer;
+    //private Timer atimer;
 
     //top menu bar
     @FXML
@@ -107,24 +107,24 @@ public class ServiceAcceptController implements Initializable, ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction()
     {
-        try
-        {
-            timeoutController.doTimer();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("Could not start timer.");
-        }
+//        try
+//        {
+//            timeoutController.doTimer();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            System.out.println("Could not start timer.");
+//        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(30); // per steph request.
-        timeoutController.setTimer(atimer, false);
+//        timeoutController = new TimeoutController();
+//        atimer = new Timer();
+//        timeoutController.updateDelay(30); // per steph request.
+//        timeoutController.setTimer(atimer, false);
 
         requests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
         status.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getServiceTime()).trim()));   //sets service status in column
