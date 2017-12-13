@@ -342,7 +342,17 @@ public class MapEditPageController implements Initializable, Data{
     public void importCSV(){
         //testEmbeddedDB.fillEdgesTable();
         //testEmbeddedDB.fillNodesTable();
-        System.out.println(nodeEdgeEdit.isSelected());
+
+        //nodes is false, edges is true
+
+        //System.out.println(nodeEdgeEdit.isSelected());
+    if(nodeEdgeEdit.isSelected()){
+        System.out.println("edge");
+        importEdgesCSV();
+    } else {
+        System.out.println("nodes");
+        importNodesCSV();
+    }
 
     }
 
