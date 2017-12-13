@@ -48,12 +48,13 @@ import static sample.Main.setFoodString;
 
 public class ServiceRequestController implements Initializable, Data, ITimed {
 
+    private TimeoutController timeoutController;
+
     private Timer atimer;
 
     ObservableList<String> allEntries;
+
     //top menu bar
-
-
     @FXML
     public void backToAdmin() throws IOException, InterruptedException{
         Main.mapScreen();
@@ -611,8 +612,6 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
     @FXML
     private JFXButton refrrresh;
 
-
-
     //formatted list of requests that go into table
     private ObservableList<ServiceRequest> requestObserve = FXCollections.observableArrayList();
 
@@ -621,16 +620,27 @@ public class ServiceRequestController implements Initializable, Data, ITimed {
         return new SimpleStringProperty(cellEntry);
     }
 
-
-
     @FXML // This is the method that gets called everywhere in the fxml files.
-    public void someAction()//  throws IOException, InterruptedException
+    public void someAction()
     {
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimer(atimer, false);
 
         requests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
         status.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getStatus()).trim()));   //sets service status in column

@@ -24,6 +24,8 @@ import static sample.Main.getLoggedInGuy;
 
 public class ServiceAcceptController implements Initializable, ITimed{
 
+    private TimeoutController timeoutController;
+
     private Timer atimer;
 
     //top menu bar
@@ -52,7 +54,6 @@ public class ServiceAcceptController implements Initializable, ITimed{
         return input.replace(" ", "");
     }
 
-
     //for current service requests
     @FXML
     private TableView<ServiceRequest> tableView;
@@ -69,7 +70,6 @@ public class ServiceAcceptController implements Initializable, ITimed{
     //formatted list of requests that go into table
     private ObservableList<ServiceRequest> requestObserve = FXCollections.observableArrayList();
 
-
     //for finished service requests
     @FXML
     private TableView<ServiceRequest> finishedTableView;
@@ -80,10 +80,8 @@ public class ServiceAcceptController implements Initializable, ITimed{
     @FXML
     private  TableColumn<ServiceRequest, String> requestIDs;
 
-
     //formatted list of requests that go into table
     private ObservableList<ServiceRequest> finishedRequestObserve = FXCollections.observableArrayList();
-
 
     //for your started service requests
     @FXML
@@ -95,11 +93,8 @@ public class ServiceAcceptController implements Initializable, ITimed{
     @FXML
     private  TableColumn<ServiceRequest, String> acceptedIDs;
 
-
     //formatted list of requests that go into table
     private ObservableList<ServiceRequest> acceptededRequestObserve = FXCollections.observableArrayList();
-
-
 
     //formats a string into being able to be displayed in table
     public StringProperty stringToStringProperty(String cellEntry) {
@@ -110,12 +105,26 @@ public class ServiceAcceptController implements Initializable, ITimed{
     public ObservableValue<Integer> intToObsValue(int cellEntry) {return new SimpleIntegerProperty(cellEntry).asObject(); }
 
     @FXML // This is the method that gets called everywhere in the fxml files.
-    public void someAction()//  throws IOException, InterruptedException
+    public void someAction()
     {
+        try
+        {
+            timeoutController.doTimer();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Could not start timer.");
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimer(atimer, false);
 
         requests.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getType()).trim()));   //sets service name in column
         status.setCellValueFactory(cellData -> stringToStringProperty((cellData.getValue().getServiceTime()).trim()));   //sets service status in column

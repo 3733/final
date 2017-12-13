@@ -212,14 +212,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction()//  throws IOException, InterruptedException
     {
-        if (getLoggedInGuy().getEmployeeType().trim().equals("User"))
+        if (!(getLoggedInGuy().getEmployeeType().trim().equals("User")))
         {
-            // Do nothing
-        }
-        else
-        {
-            try
-            {
+            try {
                 // timeoutController.doNavTimer();
                 timeoutController.doTimer();
             }
@@ -228,6 +223,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 e.printStackTrace();
                 System.out.println("Could not start timer.");
             }
+        }
+        else
+        {
+            // Do nothing
         }
     }
 
