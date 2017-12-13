@@ -461,6 +461,12 @@ public class MenuDrawerController implements Initializable{
             }
         });
 
+        if(startLabel.getText().equals("") || endLabel.getText().equals("")){
+            reverseButton.setDisable(true);
+        }
+        else{
+            reverseButton.setDisable(false);
+        }
 
         if(!data.directions.isEmpty()){
             floorPoints.setVisible(false);
