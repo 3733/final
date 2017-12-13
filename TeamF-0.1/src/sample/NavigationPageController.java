@@ -8,6 +8,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -139,6 +140,8 @@ public class NavigationPageController implements Initializable, Data, ITimed{
 
     @FXML
     private String defaultStart;
+
+    public SpeechRecognizer speechRecognition;
 
     @FXML
     private Label startLabel, endLabel;
@@ -378,6 +381,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             }
         });
         startZoom();
+        speechRecognition = new SpeechRecognizer();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -522,6 +526,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     public void settingFields() throws IOException, InterruptedException {
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
         data.destinationNode = currNode;
+        destination.textProperty().unbind();
         destination.setText(currNode.getLongName().trim());
         go();
     }
@@ -1905,10 +1910,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
    @FXML
     public void chat(){
         //Main.setHelpScreenServiceRequestScreen();
-        try{
+        try{/*
             messenger.API m = new messenger.API();
             m.run(6,6,600,600,
-                    "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");
+                    "/src/UI/style.css", "test", "test", "sip:HELP@130.215.213.204:6969");*/
         } catch (Exception e){
             System.out.println("API ERROR: " + e.getLocalizedMessage());
         }
@@ -1958,6 +1963,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         searchList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                destination.textProperty().unbind();
                 destination.setText(newValue);
                 try {
                     settingFields();
@@ -2077,11 +2083,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         }
     }
 
-    @FXML
-    public void runVoice(){
-
-    }
-
     public void transportRequest(){
         //APIApp api = new APIApp();
         try{
@@ -2129,7 +2130,33 @@ public class NavigationPageController implements Initializable, Data, ITimed{
        stackPane.setLayoutY(Ymove);
 */
 
-   }
+    }
+
+    @FXML
+    private JFXButton voiceButton;
+
+    @FXML
+    public void runVoice()
+    {
+
+        //mic.disableProperty().bind(speechRecognition.speechRecognizerThreadRunningProperty());
+        speechRecognition.startSpeechRecognition();
+
+        destination.textProperty().bind(Bindings.createStringBinding(() -> speechRecognition.getSpeechRecognitionResultProperty().get(),
+                speechRecognition.getSpeechRecognitionResultProperty()));
+
+
+        destination.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (newPropertyValue == true) {
+                    destination.textProperty().unbind();
+                }
+            }
+        });
+
+    }
+
 
 
 }
