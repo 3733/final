@@ -1196,7 +1196,7 @@ public class testEmbeddedDB {
         }
     }
 
-    public static void writeToCSV(){
+    public static void writeToEdgesCSV(String path){
 
         CSVWriter w = null;
         FileWriter f = null;
@@ -1204,20 +1204,49 @@ public class testEmbeddedDB {
 
 
         try{
-            f = new FileWriter("TeamF-0.1/src/sample/Data/databaseOutput.csv");
+            f = new FileWriter(path + "/databaseEdges.csv");
             w = new CSVWriter(f, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
                     CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 
             Connection c = DriverManager.getConnection(url);
 
             Statement s = c.createStatement();
-            ResultSet r = s.executeQuery("SELECT * FROM NODES WHERE NODETYPE = 'DEPT'");
+            ResultSet r = s.executeQuery("SELECT * FROM EDGES");
+            w.writeAll(r, true);
 
-            /*while(r.next()) {
-                String name = r.getString("nodeID");
-                System.out.println("nodeID: " + name);
-            }*/
+            c.close();
 
+            System.out.println("printed!");
+
+
+        } catch (Exception e){
+            System.out.println("writeToCSV error: " + e.getMessage());
+        } finally {
+            try{
+                w.close();
+
+            } catch (Exception e){
+                System.out.println("finally error: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void writeToNodesCSV(String path){
+
+        CSVWriter w = null;
+        FileWriter f = null;
+        final String url = "jdbc:derby:Skynet";
+
+
+        try{
+            f = new FileWriter(path + "/databaseNodes.csv");
+            w = new CSVWriter(f, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+
+            Connection c = DriverManager.getConnection(url);
+
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery("SELECT * FROM NODES");
             w.writeAll(r, true);
 
             c.close();
