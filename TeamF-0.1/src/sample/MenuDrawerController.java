@@ -243,16 +243,22 @@ public class MenuDrawerController implements Initializable{
     // Purpose: Method to clear the path on the map when the user presses clear map
     @FXML
     public void clear() throws FileNotFoundException{
-        /*Data.data.gc.clearRect(0,0,pathCanvas.getWidth(),pathCanvas.getHeight());
         Data.data.pathThird = null;
         Data.data.pathSecond = null;
         Data.data.pathFirst = null;
         Data.data.pathL1 = null;
         Data.data.pathL2 = null;
         Data.data.pathG = null;
+
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
-        }*/
+        }
+
+        data.startEndNodes = null;
+        int length = data.animation.getChildren().size();
+        data.animation.getChildren().remove(0,length);
+        data.buttonNodes = null;
+        data.button.getChildren().remove(0,data.button.getChildren().size());
         showPOI();
     }
 
