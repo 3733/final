@@ -167,7 +167,6 @@ public class Main extends Application implements Data{
         editNodesController.setMainController(this);
         nodeEdit = new Scene(NodeEdit);
 
-
         FXMLLoader edgeEditLoader = new FXMLLoader(getClass().getResource("UI/EditEdgesWindow.fxml"));
         Parent EdgeEdit = edgeEditLoader.load();
         editEdgesController = edgeEditLoader.getController();
@@ -564,6 +563,7 @@ public class Main extends Application implements Data{
 
         /*testEmbeddedDB.addStaffTestData();
         testEmbeddedDB.defaultMenu();//*/
+        //testEmbeddedDB.addStaffTestData();
 
         launch(args);
 
