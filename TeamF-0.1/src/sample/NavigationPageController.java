@@ -62,6 +62,7 @@ import static sample.Main.getLoggedInGuy;
 
 public class NavigationPageController implements Initializable, Data, ITimed{
 
+    private TimeoutController timeoutController;
 
     private Timer atimer;
 
@@ -168,7 +169,6 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     @FXML
     private ImageView threeArrow, twoArrow, oneArrow, lowerOneArrow, lowerTwoArrow, groundArrow;
 
-
     @FXML
     private JFXButton createServButton;
 
@@ -216,17 +216,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction()//  throws IOException, InterruptedException
     {
-        // AuthenticationInfo clearAuth = new AuthenticationInfo("guest", AuthenticationInfo.Privilege.USER);
-        // Staff guest = new Staff("2", "B", 999999, "9", "2", "User", "z@yorha.net");
-        if (getLoggedInGuy().getEmployeeType().trim().equals("User"))
+        if (!(getLoggedInGuy().getEmployeeType().trim().equals("User")))
         {
-            // do nothing
-        }
-        else
-        {
-            try
-            {
-                //timeoutController.doNavTimer();
+            try {
+                // timeoutController.doNavTimer();
+                timeoutController.doTimer();
             }
             catch (Exception e)
             {
@@ -234,7 +228,10 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 System.out.println("Could not start timer.");
             }
         }
-
+        else
+        {
+            // Do nothing
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,6 +240,11 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     //Purpose: Initialize all the UI components
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+        timeoutController = new TimeoutController();
+        atimer = new Timer();
+        timeoutController.updateDelay(30); // per steph request.
+        timeoutController.setTimer(atimer, false);
 
         menuDrawerController = mainController.menuDrawerController;
         mainMenu.setVisible(false);

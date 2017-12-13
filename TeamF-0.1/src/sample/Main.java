@@ -30,6 +30,12 @@ import java.util.Scanner;
 
 public class Main extends Application implements Data{
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        Runtime.getRuntime().exit(0);
+    }
+
     private  static String destination;
     private  static Staff loggedInGuy = new Staff("Placeholder", "McPlaceholderface", 0000, "PlaceMe", "NotMe", "Janitor", "nope@nope.net");
     private  static String foodString = "";
@@ -83,7 +89,6 @@ public class Main extends Application implements Data{
     public static FoodController foodController = new FoodController();
     public static AboutPageController aboutPageController = new AboutPageController();
     public static MenuDrawerController menuDrawerController = new MenuDrawerController();
-    public static TimeoutController timeoutController = new TimeoutController();
 
 
     // private static AboutPageController aboutcontroller;
@@ -197,12 +202,6 @@ public class Main extends Application implements Data{
         editUserWindowController.setMainController(this);
         editUserWin = new Scene(userWin);
 
-        FXMLLoader timeoutLoader = new FXMLLoader(getClass().getResource("UI/TimeoutWindow.fxml"));
-        Parent TimeOut = timeoutLoader.load();
-        timeoutController = timeoutLoader.getController();
-        timeoutController.setMainController(this);
-        timeEdit = new Scene(TimeOut);
-
         FXMLLoader menuWinLoader = new FXMLLoader(getClass().getResource("UI/mainMenuDrawer.fxml"));
         Parent menuWin = menuWinLoader.load();
         menuDrawerController = menuWinLoader.getController();
@@ -212,7 +211,6 @@ public class Main extends Application implements Data{
 
         stage = primaryStage;
         popUp = new Stage();
-
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
         //login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 600, 344);
@@ -238,7 +236,6 @@ public class Main extends Application implements Data{
         helpRequest.getStylesheets().add("sample/UI/style.css");
         menuWin.getStylesheets().add("sample/UI/style.css");
         food.getStylesheets().add("sample/UI/style.css");
-        timeEdit.getStylesheets().add("sample/UI/style.css");
 
 
         stage.setTitle("Team F Hospital GPS");
@@ -258,7 +255,7 @@ public class Main extends Application implements Data{
 
     public static void loginScreen(JFXButton btn1){
         //SingletonTTS.getInstance().say("Hey Sexy?");
-        Stage popUp = new Stage();
+        popUp = new Stage();
         loginPageController.someAction();
         popUp.setScene(login);
         popUp.setTitle("Log In");
@@ -276,7 +273,11 @@ public class Main extends Application implements Data{
         menuDrawerController.setStart();
         menuDrawerController.setEnd();
     }
+
+    // This is the Admin control page.
     public static void mapScreen() throws IOException, InterruptedException {
+        System.out.println("Nav screen showed up");
+        // closePopup();
         stage.setScene(map);
         stage.setFullScreen(true);
         stage.centerOnScreen();
@@ -290,6 +291,7 @@ public class Main extends Application implements Data{
     }
 
     public static void serviceScreen(){
+        System.out.println("New service screen showed up");
         serviceRequestController.refreshTable();
         stage.setScene(service);
         stage.setFullScreen(true);
@@ -304,9 +306,10 @@ public class Main extends Application implements Data{
     }
 
     public static void mapEditScreen(){
+        System.out.println(" Showing Map Edit Screen. ");
         stage.setScene(mapEdit);
-        //mapEditPageController.someAction();
         // The timeout thing needs to go here
+        mapEditPageController.someAction();
         stage.setResizable(true);
         stage.setFullScreen(true);
         stage.centerOnScreen();
@@ -413,10 +416,10 @@ public class Main extends Application implements Data{
 
     public static void editUsersScreen(){
         stage.setScene(editUsers);
-        //editUsersController.someAction();
         stage.centerOnScreen();
         editUsersController.disableButtons();
         editUsersController.refreshTable();
+        editUsersController.someAction();
     }
 
     public static void genErrorScreen(){
@@ -429,9 +432,12 @@ public class Main extends Application implements Data{
         stage.centerOnScreen();
     }
 
-    public static void editUserWindow(JFXButton btn1){
-        Stage popUp = new Stage();
+    public static void editUserWindow(JFXButton btn1){ // for adding users
+        // Stage popUp = new Stage();
+        popUp = new Stage();
+        editUserWindowController.someAction();
         editUserWindowController.addingUsers();
+
         popUp.setScene(editUserWin);
         popUp.setTitle("Add User");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -441,7 +447,7 @@ public class Main extends Application implements Data{
 
     public static void aboutWindow(JFXButton btn1){
         popUp = new Stage();
-        //aboutPageController.someAction();
+        aboutPageController.someAction();
         popUp.setScene(aboutWin);
         popUp.setTitle("About Team F");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -459,7 +465,7 @@ public class Main extends Application implements Data{
         popUp = new Stage();
         editUserWindowController.fillFields(staff);
         editUserWindowController.editingUsers();
-        //editUserWindowController.someAction();
+        editUserWindowController.someAction();
         popUp.setScene(editUserWin);
         popUp.setTitle("Edit User");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -468,7 +474,7 @@ public class Main extends Application implements Data{
     }
 
     public static void timeOutWindow(JFXButton btn1){
-        Stage popUp = new Stage();
+        Stage popUp = new Stage(); // this looks wrong
         popUp.setScene(timeEdit);
         popUp.setTitle("Change Timeout");
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -517,22 +523,6 @@ public class Main extends Application implements Data{
 
     public static void main(String[] args) throws IOException{
 
-        // The memento pattern needs these objects to be created in Main
-        // This is where the states are being set and stored. When a window is initilized, set here.
-        originator = new Originator();
-        // This is the memento saved states array getup. This is only for the start page because that is where the application time-outs to.
-        savedStates = new Originator.MementoWindow(map); // start screen is going away
-
-        // For memento - Andrew S
-        originator.set(map);
-        // This is the state to revert to.
-        // savedStates.add(originator.saveToMemento());
-        // ates = new ArrayList<Originator.MementoWindow>();
-        //    originator.set(start); // For the memento
-
-//       timer = new Timer();
-//       timer.schedule(AndrewTimer.testNewTask(), 2 * 1000);
-
         //testEmbeddedDB db = new testEmbeddedDB();
         /*ObservableList<String> o = testEmbeddedDB.getAllLongNames();
 
@@ -551,10 +541,7 @@ public class Main extends Application implements Data{
             System.out.println(entry.getKey() + " trimmed/" + entry.getValue() + " trimmed");
         }*/
 
-
-
-
-        //
+        //testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
@@ -562,10 +549,9 @@ public class Main extends Application implements Data{
         /*testEmbeddedDB db = new testEmbeddedDB();
         testEmbeddedDB.addStaffTestData();
         testEmbeddedDB.defaultMenu();//*/
-        //testEmbeddedDB.addStaffTestData();
 
         launch(args);
-
+        System.out.println(" Finished program. Have all threads closed? ");
         //controller.drawDirections(Vec);
     }
 
