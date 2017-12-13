@@ -230,7 +230,7 @@
                      </tabs>
                   </JFXTabPane>
                   <JFXListView fx:id="searchList" layoutX="500.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="618.0" visible="false" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="436.0" AnchorPane.topAnchor="63.0" />
-                  <HBox layoutX="650.0" layoutY="700.0" prefHeight="60.0" prefWidth="364.0" AnchorPane.bottomAnchor="20.0">
+                  <HBox alignment="CENTER" layoutX="650.0" layoutY="650.0" prefHeight="60.0" prefWidth="310.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="35.0">
                      <children>
                         <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
                            <font>
@@ -350,7 +350,7 @@
                         </JFXButton>
                      </children>
                   </HBox>
-                  <VBox layoutX="1050.0" layoutY="555.0" prefHeight="200.0" prefWidth="221.0" AnchorPane.rightAnchor="70.0">
+                  <VBox layoutX="1050.0" layoutY="555.0" prefHeight="200.0" prefWidth="278.0" AnchorPane.rightAnchor="70.0">
                      <children>
                         <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="222.0">
                            <children>
@@ -378,6 +378,18 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                            <children>
+                              <JFXButton fx:id="transportButton" contentDisplay="CENTER" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Transport Request" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
                               <JFXButton fx:id="timeoutButton" contentDisplay="CENTER" onAction="#changeTimeout" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Change Timeout" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
@@ -388,9 +400,17 @@
                               </JFXButton>
                            </children>
                         </HBox>
-                        <HBox alignment="TOP_RIGHT" prefHeight="16.0" prefWidth="222.0">
+                        <HBox alignment="TOP_RIGHT" prefHeight="16.0" prefWidth="273.0">
                            <children>
                               <JFXButton fx:id="editMapButton" contentDisplay="CENTER" onAction="#edit" prefHeight="23.0" prefWidth="156.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Map" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="editUsersButton1" contentDisplay="CENTER" onAction="#editUsers" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Users" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
@@ -399,18 +419,6 @@
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <JFXButton fx:id="editUsersButton" contentDisplay="CENTER" onAction="#editUsers" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Users" textFill="WHITE">
-                                 <font>
-                                    <Font name="Montserrat Regular" size="14.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </HBox.margin>
-                              </JFXButton>
-                           </children>
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="32.0" prefWidth="290.0">
                            <children>
