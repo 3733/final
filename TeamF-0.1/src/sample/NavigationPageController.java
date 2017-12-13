@@ -4,6 +4,7 @@ package sample;
 //import Healthcare.HealthCareRun;
 import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import controllers.API.APIApp;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -2086,9 +2087,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     }
 
     public void transportRequest(){
-        //APIApp api = new APIApp();
+        APIApp api = new APIApp();
         try{
-            //APIApp.run(300, 400,600,500,"","","");
+            APIApp.run(300, 400,600,500,"","","");
 
         } catch (Exception e){
             e.printStackTrace();
