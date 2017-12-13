@@ -101,13 +101,13 @@ public class testEmbeddedDB {
             //NOTE THE ASSIGNMENTS TABLE MUST BE DROPPED BEFORE YOU CAN
             // DROP SERVICEREQUESTS OR STAFF
 
-            testEmbeddedDB.dropAssignmentsTable();
+            /*testEmbeddedDB.dropAssignmentsTable();
 
             testEmbeddedDB.dropServiceRequestsTable();
 
             testEmbeddedDB.dropStaffTable();
 
-            testEmbeddedDB.dropFoodTable();
+            testEmbeddedDB.dropFoodTable();//*/
 
             testEmbeddedDB.createFoodTable();
 
