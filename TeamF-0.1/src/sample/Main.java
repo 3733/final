@@ -207,6 +207,7 @@ public class Main extends Application implements Data{
 
         stage = primaryStage;
         popUp = new Stage();
+
         //start = new Scene(FXMLLoader.load(getClass().getResource("UI/StartPage.fxml")), 600, 344);
         start.getStylesheets().add("sample/UI/style.css");
         //login = new Scene(FXMLLoader.load(getClass().getResource("UI/LogIn.fxml")), 600, 344);
@@ -251,7 +252,7 @@ public class Main extends Application implements Data{
 
     public static void loginScreen(JFXButton btn1){
         //SingletonTTS.getInstance().say("Hey Sexy?");
-        popUp = new Stage();
+        Stage popUp = new Stage();
         loginPageController.someAction();
         popUp.setScene(login);
         popUp.setTitle("Log In");
@@ -271,6 +272,7 @@ public class Main extends Application implements Data{
     }
     public static void mapScreen() throws IOException, InterruptedException {
         stage.setScene(map);
+        stage.setFullScreen(true);
         stage.centerOnScreen();
         Data.data.XWindow = stage.getX();
         Data.data.YWindow = stage.getY();
@@ -284,12 +286,14 @@ public class Main extends Application implements Data{
     public static void serviceScreen(){
         serviceRequestController.refreshTable();
         stage.setScene(service);
+        stage.setFullScreen(true);
         stage.centerOnScreen();
     }
 
     public static void acceptScreen(){
         serviceAcceptController.refreshTable();
         stage.setScene(accept);
+        stage.setFullScreen(true);
         stage.centerOnScreen();
     }
 
@@ -297,6 +301,8 @@ public class Main extends Application implements Data{
         stage.setScene(mapEdit);
         //mapEditPageController.someAction();
         // The timeout thing needs to go here
+        stage.setResizable(true);
+        stage.setFullScreen(true);
         stage.centerOnScreen();
     }
 
