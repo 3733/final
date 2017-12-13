@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMouseExited="#someAction" onMouseMoved="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onTouchStationary="#someAction" onZoom="#someAction" onZoomFinished="#someAction" onZoomStarted="#someAction" prefHeight="848.0" prefWidth="1430.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
+<AnchorPane fx:id="mainPane" onContextMenuRequested="#someAction" onDragDetected="#someAction" onDragDone="#someAction" onDragDropped="#someAction" onDragEntered="#someAction" onDragExited="#someAction" onDragOver="#someAction" onInputMethodTextChanged="#someAction" onKeyPressed="#someAction" onKeyReleased="#someAction" onKeyTyped="#someAction" onMouseClicked="#someAction" onMouseDragEntered="#someAction" onMouseDragExited="#someAction" onMouseDragOver="#someAction" onMouseDragReleased="#someAction" onMouseDragged="#someAction" onMouseEntered="#someAction" onMouseExited="#someAction" onMouseMoved="#someAction" onMousePressed="#someAction" onMouseReleased="#someAction" onScroll="#someAction" onScrollFinished="#someAction" onScrollStarted="#someAction" onSwipeDown="#someAction" onSwipeLeft="#someAction" onSwipeRight="#someAction" onSwipeUp="#someAction" onTouchMoved="#someAction" onTouchPressed="#someAction" onTouchReleased="#someAction" onTouchStationary="#someAction" onZoom="#someAction" onZoomFinished="#someAction" onZoomStarted="#someAction" prefHeight="848.0" prefWidth="1430.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.NavigationPageController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="848.0" prefWidth="1554.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -341,7 +341,7 @@
                                     <Insets right="15.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <JFXButton fx:id="search1" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                              <JFXButton fx:id="search1" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;" visible="false">
                                  <graphic>
                                     <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -387,7 +387,7 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <JFXButton fx:id="timeoutButton" contentDisplay="CENTER" onAction="#changeTimeout" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Change Timeout" textFill="WHITE">
+                              <JFXButton fx:id="timeoutButton" contentDisplay="CENTER" onAction="#changeTimeout" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Change Timeout" textFill="WHITE" visible="false">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
@@ -422,7 +422,7 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <JFXButton fx:id="transportButton" contentDisplay="CENTER" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Transport Request" textFill="WHITE">
+                              <JFXButton fx:id="transportButton" contentDisplay="CENTER" onAction="#transportRequest" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Transport Request" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>

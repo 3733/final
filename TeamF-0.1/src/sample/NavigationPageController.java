@@ -4,6 +4,7 @@ package sample;
 //import Healthcare.HealthCareRun;
 import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import controllers.API.APIApp;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -333,7 +334,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 editUsersButton.setVisible(true);
                 existServButton.setVisible(true);
                 transportButton.setVisible(true);
-                timeoutButton.setVisible(true);
+                //timeoutButton.setVisible(true);
                 Image logoutPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/f61b5f54.png"));
                 ImageView logoutIMG = new ImageView(logoutPNG);
                 loginButton.setOnAction((event) -> {
@@ -371,6 +372,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 editUsersButton.setVisible(false);
                 existServButton.setVisible(false);
                 timeoutButton.setVisible(false);
+                transportButton.setVisible(false);
                 loginButton.setOnAction((event) -> {
                     try {
                         login();
@@ -2086,9 +2088,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     }
 
     public void transportRequest(){
-        //APIApp api = new APIApp();
+        APIApp api = new APIApp();
         try{
-            //APIApp.run(300, 400,600,500,"","","");
+            APIApp.run(300, 400,600,500,"","","");
 
         } catch (Exception e){
             e.printStackTrace();

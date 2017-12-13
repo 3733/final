@@ -380,6 +380,59 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     @FXML
     public void back() throws IOException, InterruptedException{Main.mapScreen();}
 
+    /**
+     * Convert from the map image (5000x3400) to the anchorpane drawing/ canvas pathcanvas
+     * All the constants and window sizes are stored inside data holder
+     * @param x X coordinate to be converted
+     * @param y Y coordinate to be converted
+     * @return A point representing the two converted values as a point
+     */
+    public Point2D convertFromImage(double x, double y){
+        updateImageCoordinates();
+        updateCanvasCoordinates();
+        //System.out.println("This is the image view: " + data.imageViewX + ", " + data.imageViewY);
+        //System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
+        //System.out.println("This is the input point: " + x + ", " + y);
+        double returnX = x / ((data.imageViewX / data.canvasX) * (data.MapX/data.imageViewX));
+        double returnY = y / ((data.imageViewY / data.canvasY) * (data.MapY/data.imageViewY));
+        //System.out.println("This is the point: " + returnX + " ," + returnY);
+        return new Point2D(returnX,returnY);
+    }
+
+    /**
+     * Convert an input point from the anchorpane / canvas to the image (5000x3400)
+     * @param x Input from anchorpane or canvas
+     * @param y Input from anchorpane or canvas
+     * @return return a point representing the converted point
+     */
+    public Point2D convertToImage(double x, double y){
+        updateImageCoordinates();
+        updateCanvasCoordinates();
+        //System.out.println("This is the image view: " + data.canvasX + ", " + data.canvasY);
+        //System.out.println("This is the map image: " + data.MapX + ", " + data.MapY);
+        //System.out.println("This is the input point: " + x + ", " + y);
+        double returnX = x * ((data.imageViewX / data.canvasX) * (data.MapX/data.imageViewX));
+        double returnY = (y) * ((data.imageViewY / data.canvasY) * (data.MapY/data.imageViewY));
+        //System.out.println("This is the point: " + returnX + " ," + returnY);
+        return new Point2D(returnX,returnY);
+    }
+
+    /**
+     * Update the stored sizes for the image view object
+     */
+    public void updateImageCoordinates() {
+        data.imageViewX = map.getLayoutBounds().getWidth();
+        data.imageViewY = map.getLayoutBounds().getHeight();
+    }
+
+    /**
+     * Update the stored sizes for the pathcanvs object
+     */
+    public void updateCanvasCoordinates() {
+        data.canvasX = pathCanvas1.getWidth();
+        data.canvasY = pathCanvas1.getHeight();
+    }
+
     //other functions
     @FXML
     public void importCSV(){
@@ -485,8 +538,9 @@ public class MapEditPageController implements Initializable, Data, ITimed{
                 Node nodesMap = FloorNodes.get(i);
                 double divisionCst = 4.15;
                 int offset = 0;
-                data.gc1.strokeOval(nodesMap.getxCoordinate()/divisionCst + offset ,nodesMap.getyCoordinate()/divisionCst + offset, 4.0, 4.0);
-                data.gc1.fillOval(nodesMap.getxCoordinate()/divisionCst + offset ,nodesMap.getyCoordinate()/divisionCst + offset, 4.0, 4.0);
+                Point2D point = convertFromImage(nodesMap.getxCoordinate(), nodesMap.getyCoordinate());
+                data.gc1.strokeOval(point.getX(),point.getY(), 4.0, 4.0);
+                data.gc1.fillOval(point.getX() ,point.getY(), 4.0, 4.0);
             }
         }
     }
@@ -503,7 +557,9 @@ public class MapEditPageController implements Initializable, Data, ITimed{
                 double divisionCst = 4.15;
                 Node start = edge.getStart();
                 Node stop = edge.getEnd();
-                data.gc1.strokeLine(start.getxCoordinate() / divisionCst + 1,start.getyCoordinate() / divisionCst + 1, stop.getxCoordinate() / divisionCst + 1, stop.getyCoordinate()/ divisionCst  + 1);
+                Point2D startPoint = convertFromImage(start.getxCoordinate(), start.getyCoordinate());
+                Point2D stopPoint = convertFromImage(stop.getxCoordinate(), stop.getyCoordinate());
+                data.gc1.strokeLine(startPoint.getX(),startPoint.getY(), stopPoint.getX(), stopPoint.getY());
             }
         }
     }
@@ -525,27 +581,30 @@ public class MapEditPageController implements Initializable, Data, ITimed{
 
                 double divisionCst = 4.15;
                 int offset = 1;
+                Point2D point = convertToImage(newX1, newY1);
                 if (floorLowerTwo.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.lowerLevel02FloorNodes);
                 } else if (floorLowerOne.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.lowerLevel01FloorNodes);
                 } else if (floorGround.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.groundFloorNodes);
                 } else if (floorOne.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.firstFloorNodes);
                 } else if (floorTwo.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.secondFloorNodes);
                 } else if (floorThree.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.thirdFloorNodes);
                 }
 
                 if (e.isPrimaryButtonDown()) {
                     //e.consume();
                     Data.data.gc1.setStroke(Color.RED);
                     Data.data.gc1.stroke();
-
-                    Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                    Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    double xSel = selectedNode.getxCoordinate();
+                    double ySel = selectedNode.getyCoordinate();
+                    Point2D point2 = convertFromImage(xSel,ySel);
+                    Data.data.gc1.strokeOval(point2.getX(), point2.getY(), 7.0, 7.0);
+                    Data.data.gc1.fillOval(point2.getX(), point2.getY(), 7.0, 7.0);
                     Main.nodeEditScreenClick(selectedNode, editNodeBtn);
 
                     /*if(data.nodeAlign.size()>=3){
@@ -802,29 +861,31 @@ public class MapEditPageController implements Initializable, Data, ITimed{
                 double newX1 = (event.getX());
                 double newY1 = (event.getY());
 
-                Data.data.gc1.strokeOval(newX1, newY1, 7.0, 7.0);
-                Data.data.gc1.fillOval(newX1, newY1, 7.0, 7.0);
+                //Data.data.gc1.strokeOval(newX1, newY1, 7.0, 7.0);
+                //Data.data.gc1.fillOval(newX1, newY1, 7.0, 7.0);
 
                 double divisionCst = 4.15;
                 int offset = 1;
+                Point2D point = convertToImage(newX1, newY1);
                 if (floorLowerTwo.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel02FloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.lowerLevel02FloorNodes);
                 } else if (floorLowerOne.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.lowerLevel01FloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.lowerLevel01FloorNodes);
                 } else if (floorGround.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.groundFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.groundFloorNodes);
                 } else if (floorOne.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.firstFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.firstFloorNodes);
                 } else if (floorTwo.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.secondFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.secondFloorNodes);
                 } else if (floorThree.isSelected()) {
-                    selectedNode = mousePosition((newX1 - 2) * divisionCst + offset, (newY1 - 2) * divisionCst + offset, Data.data.thirdFloorNodes);
+                    selectedNode = mousePosition(point.getX(), point.getY(), Data.data.thirdFloorNodes);
                 }
 
                 if (event.isSecondaryButtonDown()) {
                     //event.consume();
-                    Data.data.gc1.strokeOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
-                    Data.data.gc1.fillOval(selectedNode.getxCoordinate() / divisionCst, selectedNode.getyCoordinate() / divisionCst, 7.0, 7.0);
+                    Point2D point2 = convertFromImage(selectedNode.getxCoordinate(), selectedNode.getyCoordinate());
+                    Data.data.gc1.strokeOval(point2.getX(), point2.getY(), 7.0, 7.0);
+                    Data.data.gc1.fillOval(point2.getX(), point2.getY(), 7.0, 7.0);
                     if (editEdges) {
                         contextMenu2.show(pathCanvas1, newX1 - 40, newY1);
                         contextMenu2.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
