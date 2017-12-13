@@ -10,6 +10,6 @@ public <feelings>  = ( how are you | say hello);
 public <voices>  = ( change to voice one  | change to voice two | change to voice three );
 public <amazing>  = ( say amazing | what day is today );
 public <nervous>  = (who is your daddy | obey to me beach | hey boss);
-public <location> = (bath | bathroom);
+public <location> = (bath | bathroom | x ray);
 
 

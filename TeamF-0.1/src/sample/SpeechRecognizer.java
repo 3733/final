@@ -90,6 +90,7 @@ public class SpeechRecognizer {
 
         try {
             recognizer = new LiveSpeechRecognizer(configuration);
+
         } catch (IOException ex) {
             logger.log(Level.SEVERE, null, ex);
         }
@@ -131,7 +132,9 @@ public class SpeechRecognizer {
 						/*
 						 * This method will return when the end of speech is reached. Note that the end pointer will determine the end of speech.
 						 */
+
                         SpeechResult speechResult = recognizer.getResult();
+
 
                         //Check if we ignore the speech recognition results
                         if (!ignoreSpeechRecognitionResults.get()) {
@@ -153,10 +156,10 @@ public class SpeechRecognizer {
 
                                 //Call the appropriate method
 
-                                //recognizer.stopRecognition();
-                                break;
+                                recognizer.stopRecognition();
 
-                                //return startResourcesThread();
+
+                                //break;
 
 
                                //makeDecision(speechRecognitionResult, speechResult.getWords());
@@ -166,6 +169,11 @@ public class SpeechRecognizer {
                             logger.log(Level.INFO, "Ingoring Speech Recognition Results...");
 
                     }
+                }  catch (IllegalStateException ey) {
+                    //ey.printStackTrace();
+                    //System.out.println("Warning from speech rec");
+                    //Because that is the lack of the api..
+
                 } catch (Exception ex) {
                     logger.log(Level.WARNING, null, ex);
                     Platform.runLater(() -> speechRecognizerThreadRunning.set(false));

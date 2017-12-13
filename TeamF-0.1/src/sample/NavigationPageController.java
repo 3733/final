@@ -3,6 +3,7 @@ package sample;
 //import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import Healthcare.HealthCareRun;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import edu.cmu.sphinx.api.LiveSpeechRecognizer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
@@ -45,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -203,7 +205,7 @@ public class NavigationPageController implements Initializable, Data{
 
 
 
-    private SpeechRecognizer speechRecognition = new SpeechRecognizer();
+    //private SpeechRecognizer speechRecognition = new SpeechRecognizer();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization and Start
@@ -429,6 +431,8 @@ public class NavigationPageController implements Initializable, Data{
         lowerTwoArrow.setVisible(false);*/
         System.out.println("RESULTS  text" + destination.getText());
         System.out.println("RESULTS trim " + destination.getText().trim());
+
+
         Node currNode = SearchEngine.SearchClosestNode(destination.getText().trim());
         System.out.println("RESULTS " + destination.getText());
         data.destinationNode = currNode;
@@ -1770,18 +1774,15 @@ public class NavigationPageController implements Initializable, Data{
     @FXML
     public void runVoice()
     {
+         SpeechRecognizer speechRecognition = new SpeechRecognizer();
 
         //mic.disableProperty().bind(speechRecognition.speechRecognizerThreadRunningProperty());
-
         speechRecognition.startSpeechRecognition();
+
         destination.textProperty().bind(Bindings.createStringBinding(() -> speechRecognition.getSpeechRecognitionResultProperty().get(),
                 speechRecognition.getSpeechRecognitionResultProperty()));
 
-        //System.out.println("Speech result: " + speechRecognition.speechRecognitionResult);
-        //destination.setText(speechRecognition.speechRecognitionResult);
-        //autoComplete();
-        //destination.setText(sound.getText());
-        //destination.textProperty().setValue(speechRecognition.getSpeechRecognitionResultProperty().getValue());
+
         destination.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) {
@@ -1790,23 +1791,18 @@ public class NavigationPageController implements Initializable, Data{
                 }
             }
         });
-//        destination.setText(speechRecognition.getSpeechRecognitionResultProperty().getValue());
-
-//        System.out.println("Result:" + destination.getText());
-        //stopVoice();
-
     }
 
     @FXML
     public void stopVoice(){
-        mic.setDisable(false);
-        mic.setVisible(true);
-        micStop.setDisable(true);
-        micStop.setVisible(false);
-
-        micStop.setOnAction(a -> {
-            speechRecognition.ignoreSpeechRecognitionResults();
-        });
+//        mic.setDisable(false);
+//        mic.setVisible(true);
+//        micStop.setDisable(true);
+//        micStop.setVisible(false);
+//
+//        micStop.setOnAction(a -> {
+//            speechRecognition.ignoreSpeechRecognitionResults();
+//        });
 
     }
 
