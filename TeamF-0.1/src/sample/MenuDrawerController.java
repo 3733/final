@@ -31,7 +31,7 @@ public class MenuDrawerController implements Initializable{
     //FXML UI Components
 
     @FXML
-    private Label sendLabel;
+    private Label eta;
     @FXML
     private JFXButton sendButton;
     @FXML
@@ -144,7 +144,7 @@ public class MenuDrawerController implements Initializable{
         mainController.navigationPageController.setDestination(endLabel.getText());
         mainController.navigationPageController.settingFields();
         update();
-
+        setEta();
     }
 
     @FXML
@@ -155,6 +155,7 @@ public class MenuDrawerController implements Initializable{
         startLabel.setText(start);
         mainController.navigationPageController.settingFields();
         update();
+        setEta();
     }
 
     @FXML
@@ -167,33 +168,6 @@ public class MenuDrawerController implements Initializable{
         startLabel.setText(data.kiosk.getLongName().trim());
     }
 
-
-
-    //setting start and end nodes
-    /*@FXML
-    public void settingFields() throws IOException, InterruptedException {
-        String destinationText = destination.getText();
-        if (points.getSelectedToggle() == start) {
-
-            System.out.println("LABEL!!!!!");
-            startLabel.setText(SearchEngine.SearchPath(destinationText).getLongName().trim());
-            if(!destinationText.equals("")&&!startLabel.getText().equals("")) {
-                //go();
-            }
-        }
-        else{
-
-            System.out.println("LABEL!!!!!");
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-
-            System.out.println(endLabel.getText()+"<=============DESTINATION LABEL");
-            destination.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            endLabel.setText(SearchEngine.SearchPath(destinationText,data.graph,data.kiosk).getLongName().trim());
-            if(!destinationText.equals("")) {
-                //go();
-            }
-        }
-    }*/
 
     //sets invalid email label when necessary for errorhandling
     @FXML
@@ -224,9 +198,6 @@ public class MenuDrawerController implements Initializable{
     public void clearFields(){
         double width = map.getImage().getWidth();
         double height = map.getImage().getHeight();
-        sendLabel.setVisible(false);
-        email.setVisible(false);
-        sendButton.setVisible(false);
         directionSteps.setVisible(false);
         endLabel.setText("");
         startLabel.setText("Lower Pike Hallway Exit Lobby");
@@ -320,6 +291,14 @@ public class MenuDrawerController implements Initializable{
         directionSteps.setItems(data.directions);
     }
 
+    public void setEta(){
+        String time;
+        Time t1 = Time.getETE(this.path);
+        time = t1.getMinutes() +":"+t1.getSeconds();
+        //System.out.println("This works" + time);
+        eta.setText("ETE:\t " + time);
+    }
+
     @FXML
     public void startAutoComplete(){
         startAuto.setVisible(true);
@@ -354,6 +333,13 @@ public class MenuDrawerController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 startLabel.setText(newValue);
+                try {
+                    searchStart();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -392,6 +378,13 @@ public class MenuDrawerController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 endLabel.setText(newValue);
+                try {
+                    searchEnd();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -428,6 +421,8 @@ public class MenuDrawerController implements Initializable{
     }
 
     public void update(){
+        this.path = mainController.navigationPageController.getPath();
+        setEta();
         startLabel.setText(data.kiosk.getLongName().trim());
         if(data.destinationNode!=null){
             endLabel.setText(data.destinationNode.getLongName().trim());

@@ -132,6 +132,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     private JFXTextField startField, endField;
 
     @FXML
+    private HBox borderButtons;
+
+    @FXML
     private ToggleGroup points;
 
     @FXML
@@ -173,7 +176,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
     private JFXButton existServButton;
 
     @FXML
-    private JFXButton editMapButton;
+    private JFXButton editMapButton, transportButton;
 
     @FXML
     private JFXButton editUsersButton;
@@ -263,6 +266,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         editUsersButton.setVisible(false);
         existServButton.setVisible(false);
         timeoutButton.setVisible(false);
+        transportButton.setVisible(false);
 
 
         //mainMenu.setOnDrawerClosed(mainMenu.setVisible(t););
@@ -287,6 +291,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         floorVisD.setVisible(false);
         floorVisE.setVisible(false);
         floorVisF.setVisible(false);
+        borderButtons.setVisible(false);
 
 
 
@@ -325,6 +330,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 editMapButton.setVisible(true);
                 editUsersButton.setVisible(true);
                 existServButton.setVisible(true);
+                transportButton.setVisible(true);
                 timeoutButton.setVisible(true);
 
                 loginButton.setOnAction((event) -> {
@@ -340,6 +346,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             else if(after.getPriv().equals(AuthenticationInfo.Privilege.STAFF)){
                 createServButton.setVisible(true);
                 existServButton.setVisible(true);
+                transportButton.setVisible(true);
                 Image logoutPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/f61b5f54.png"));
                 ImageView logoutIMG = new ImageView(logoutPNG);
                 logoutIMG.setFitHeight(25);
@@ -703,6 +710,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         int length = path.size();
         String lastFloor = path.get(length - 1).getFloor();
         setMap(lastFloor.trim());
+        //data.path = this.path;
 
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
         transition.setRate(-1);
@@ -712,6 +720,9 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         transition.play();
     }
 
+    public Vector<Node> getPath(){
+        return this.path;
+    }
 
     /**
      * clear the fields of the ImageView map object
@@ -928,6 +939,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         int b = 0;
         floorVisA.setText(a);
         floorVisA.setVisible(true);
+        borderButtons.setVisible(true);
         floorVisA.setOnAction((event) -> {
             if(floorVisA.getText().equals("3")){
                 changeFloor3();

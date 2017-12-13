@@ -219,7 +219,7 @@
                         </Group>
                      </content>
                   </ScrollPane>
-                  <JFXTabPane fx:id="tabPane" layoutX="1400.0" layoutY="400.0" prefHeight="215.0" prefWidth="99.0" side="LEFT" AnchorPane.rightAnchor="55.0">
+                  <JFXTabPane fx:id="tabPane" layoutX="1400.0" layoutY="300.0" prefHeight="215.0" prefWidth="99.0" side="LEFT" AnchorPane.rightAnchor="15.0">
                      <tabs>
                         <Tab fx:id="floorThree" onSelectionChanged="#changeFloor3" style="-fx-rotate: 90;" text="3" />
                         <Tab fx:id="floorTwo" onSelectionChanged="#changeFloor2" style="-fx-rotate: 90;" text="2" />
@@ -229,12 +229,7 @@
                         <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                      </tabs>
                   </JFXTabPane>
-                  <JFXButton fx:id="insuranceButton" contentDisplay="CENTER" onAction="#insurance" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Insurance Info" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
-                     <font>
-                        <Font name="Montserrat Regular" size="14.0" />
-                     </font>
-                  </JFXButton>
-                  <HBox layoutX="650.0" layoutY="700.0" prefHeight="100.0" prefWidth="891.0" AnchorPane.bottomAnchor="48.0">
+                  <HBox fx:id="borderButtons" alignment="CENTER" layoutX="650.0" layoutY="700.0" prefHeight="69.0" prefWidth="284.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="48.0">
                      <children>
                         <JFXButton fx:id="floorVisA" onAction="#changeFloorL2" style="-fx-background-color: #1a479a;" text="L2" textFill="WHITE">
                            <font>
@@ -346,16 +341,25 @@
                                     <Insets right="15.0" />
                                  </HBox.margin>
                               </JFXButton>
+                              <JFXButton fx:id="search1" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/mic.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
                            </children>
                         </HBox>
                         <JFXListView fx:id="searchList" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="620.0" visible="false" VBox.vgrow="NEVER">
                            <VBox.margin>
-                              <Insets right="18.0" />
+                              <Insets right="53.0" />
                            </VBox.margin>
                         </JFXListView>
                      </children>
                   </VBox>
-                  <VBox layoutX="1050.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="203.0">
+                  <VBox layoutX="1100.0" layoutY="600.0" prefHeight="226.0" prefWidth="267.0" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="75.0">
                      <children>
                         <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="222.0">
                            <children>
@@ -389,6 +393,9 @@
                                  </font>
                               </JFXButton>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
                         </HBox>
                         <HBox alignment="TOP_RIGHT" prefHeight="16.0" prefWidth="222.0">
                            <children>
@@ -396,6 +403,17 @@
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                              <JFXButton fx:id="editUsersButton" contentDisplay="CENTER" onAction="#editUsers" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Users" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin>
                               </JFXButton>
                            </children>
                            <VBox.margin>
@@ -404,7 +422,37 @@
                         </HBox>
                         <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <JFXButton fx:id="editUsersButton" contentDisplay="CENTER" onAction="#editUsers" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Edit Users" textFill="WHITE">
+                              <JFXButton fx:id="transportButton" contentDisplay="CENTER" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Transport Request" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton fx:id="aboutButton" contentDisplay="CENTER" onAction="#about" prefHeight="23.0" prefWidth="134.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="About" textFill="WHITE">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXButton fx:id="insuranceButton" contentDisplay="CENTER" onAction="#insurance" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Insurance Info" textFill="WHITE">
                                  <font>
                                     <Font name="Montserrat Regular" size="14.0" />
                                  </font>
@@ -413,11 +461,6 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <JFXButton fx:id="aboutButton" contentDisplay="CENTER" layoutX="1325.0" layoutY="725.0" onAction="#about" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" text="©  Fuschia Fairies" AnchorPane.bottomAnchor="98.0" AnchorPane.rightAnchor="77.0">
-                     <font>
-                        <Font name="Montserrat Regular" size="12.0" />
-                     </font>
-                  </JFXButton>
                </children>
             </AnchorPane>
          </center>
