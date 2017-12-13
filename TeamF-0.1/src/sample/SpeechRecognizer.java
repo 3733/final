@@ -39,6 +39,8 @@ public class SpeechRecognizer {
      */
     public String speechRecognitionResult;
 
+    public String prevSpeechRecognitionResult;
+
     /**
      * A simple property to bind the current SpeechRecognitionResult
      */
@@ -82,7 +84,7 @@ public class SpeechRecognizer {
         configuration.setDictionaryPath("TeamF-0.1/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
 
         //this can detect what you have said
-        //configuration.setLanguageModelPath("TeamF-0.1/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
+        //        configuration.setLanguageModelPath("TeamF-0.1/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
         //        Grammar
         configuration.setGrammarPath("TeamF-0.1/grammars");
         configuration.setGrammarName("grammar");
@@ -145,8 +147,12 @@ public class SpeechRecognizer {
                             else {
 
                                 //Get the hypothesis
-                                speechRecognitionResult = speechResult.getHypothesis();
-
+                                //if(speechResult.getHypothesis() != prevSpeechRecognitionResult) {
+                                    speechRecognitionResult = speechResult.getHypothesis();
+                                    //prevSpeechRecognitionResult = speechRecognitionResult;
+                                /*} else {
+                                    speechRecognitionResult = null;
+                                }*/
 
 
                                 //You said?
