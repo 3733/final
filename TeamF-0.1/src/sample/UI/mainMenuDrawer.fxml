@@ -94,7 +94,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="29.0" prefWidth="242.0">
          <children>
-            <Label fx:id="sendLabel" prefHeight="26.0" prefWidth="151.0" text="Send Directions by Email" visible="false">
+            <Label fx:id="eta" prefHeight="26.0" prefWidth="151.0">
                <font>
                   <Font name="Montserrat Regular" size="12.0" />
                </font>
@@ -105,29 +105,6 @@
          </children>
          <VBox.margin>
             <Insets top="15.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox prefHeight="34.0" prefWidth="228.0">
-         <children>
-            <JFXTextField fx:id="email" unFocusColor="#8e8e8e" visible="false">
-               <font>
-                  <Font name="Montserrat Regular" size="12.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="15.0" right="10.0" />
-               </HBox.margin>
-            </JFXTextField>
-            <JFXButton fx:id="sendButton" buttonType="RAISED" prefHeight="26.0" prefWidth="58.0" style="-fx-background-color: #1a479a;" text="Send" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="Montserrat Regular" size="12.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="15.0" />
-               </HBox.margin>
-            </JFXButton>
-         </children>
-         <VBox.margin>
-            <Insets />
          </VBox.margin>
       </HBox>
       <StackPane prefWidth="426.0">
