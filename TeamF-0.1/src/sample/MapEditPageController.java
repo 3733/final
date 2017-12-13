@@ -108,7 +108,7 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     //initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        startAuto.setVisible(false);
+        //startAuto.setVisible(false);
 
         updateNodes();
         updateEdges();
