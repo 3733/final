@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -30,8 +31,8 @@ public class TimeoutController implements Initializable{
     }
 
     @FXML
-    public void close() {
-        Main.mapEditScreen();
+    public void close() throws IOException, InterruptedException{
+        Main.mapScreen();
         Main.closePopUp(back);
     }
 
