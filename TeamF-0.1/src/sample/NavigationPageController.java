@@ -1447,7 +1447,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
             animation.setDuration(new Duration(5000));
             animation.setCycleCount(Timeline.INDEFINITE);
             animation.play();
-            data.animation = animation;
+            data.animation = animationPane;
             animationPane.getChildren().addAll(animationPath,rectangle);
         }
     }
@@ -1593,6 +1593,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         floorIcon.setY(canvasY - 20);
         floorIcon.toFront();
         buttonHolder.getChildren().add(floorIcon);
+        data.button = buttonHolder;
     }
 
     /**
@@ -1609,6 +1610,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         floorIcon.setY(canvasY - 20);
         floorIcon.toFront();
         buttonHolder.getChildren().add(floorIcon);
+        data.button = buttonHolder;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Zooming Panning & Dragging functions
@@ -1824,6 +1826,8 @@ public class NavigationPageController implements Initializable, Data, ITimed{
         for(int i = 0; i < Data.data.floorList.size() ; i++){
             Data.data.floorList.set(i,false);
         }
+        int length = animationPane.getChildren().size();
+        animationPane.getChildren().remove(0,length);
         data.buttonNodes = null;
         clearButtons();
     }

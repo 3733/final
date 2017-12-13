@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.lang.reflect.Array;
@@ -94,7 +95,10 @@ public class DataHolder {
 
     public Vector<Node> startEndNodes;
 
-    public PathTransition animation;
+
+
+    public AnchorPane animation;
+    public AnchorPane button;
     public ObservableList<HBox> directions =  FXCollections.observableArrayList();
     public Staff loggedInGuy;
 }
