@@ -340,8 +340,9 @@ public class MapEditPageController implements Initializable, Data{
     //other functions
     @FXML
     public void importCSV(){
-        testEmbeddedDB.fillEdgesTable();
-        testEmbeddedDB.fillNodesTable();
+        //testEmbeddedDB.fillEdgesTable();
+        //testEmbeddedDB.fillNodesTable();
+        System.out.println(nodeEdgeEdit.isSelected());
 
     }
 
