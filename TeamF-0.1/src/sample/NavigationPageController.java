@@ -334,7 +334,8 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 existServButton.setVisible(true);
                 transportButton.setVisible(true);
                 timeoutButton.setVisible(true);
-
+                Image logoutPNG = new Image(getClass().getResourceAsStream("/sample/UI/Icons/f61b5f54.png"));
+                ImageView logoutIMG = new ImageView(logoutPNG);
                 loginButton.setOnAction((event) -> {
                     try {
                         logout();
