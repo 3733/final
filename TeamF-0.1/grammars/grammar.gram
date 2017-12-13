@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar 
+ */
+
+grammar grammar;
+
+public <location> = (bath | bathroom | x ray );
+public <location2> = (Urology);
+public <location3> = (Shapiro);
+public <location4> = (
+
+
+
