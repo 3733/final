@@ -422,14 +422,14 @@ public class Main extends Application implements Data{
 
 
 
-        //testEmbeddedDB db = new testEmbeddedDB();
+        testEmbeddedDB db = new testEmbeddedDB();
 //        testEmbeddedDB.dropNodes();
 //        testEmbeddedDB.dropTables();
 //        testEmbeddedDB.createTable();
 
-        //testEmbeddedDB.addStaffTestData();
+        testEmbeddedDB.addStaffTestData();
 
-        launch(args);
+        //launch(args);
 
         //controller.drawDirections(Vec);
     }
