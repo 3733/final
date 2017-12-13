@@ -48,9 +48,9 @@ import java.util.regex.Pattern;
 
 public class MapEditPageController implements Initializable, Data, ITimed{
 
-    private TimeoutController timeoutController;
+    //private TimeoutController timeoutController;
 
-    private Timer atimer;
+    //private Timer atimer;
 
     //fxml components
     @FXML
@@ -112,26 +112,26 @@ public class MapEditPageController implements Initializable, Data, ITimed{
     @FXML // This is the method that gets called everywhere in the fxml files.
     public void someAction() //  throws IOException, InterruptedException
     {
-        try
-        {
-            timeoutController.doTimer();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            System.out.println("Could not start timer.");
-        }
+//        try
+//        {
+//            timeoutController.doTimer();
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//            System.out.println("Could not start timer.");
+//        }
     }
 
     //initialization
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //startAuto.setVisible(false);
-
-        timeoutController = new TimeoutController();
-        atimer = new Timer();
-        timeoutController.updateDelay(30); // 30 per steph request.
-        timeoutController.setTimer(atimer, false); // This is not a popup
+//
+//        timeoutController = new TimeoutController();
+//        atimer = new Timer();
+//        timeoutController.updateDelay(30); // 30 per steph request.
+//        timeoutController.setTimer(atimer, false); // This is not a popup
 
         updateNodes();
         updateEdges();
