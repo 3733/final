@@ -229,7 +229,6 @@
                         <Tab fx:id="floorLowerTwo" onSelectionChanged="#changeFloorL2" style="-fx-rotate: 90;" text="L2" />
                      </tabs>
                   </JFXTabPane>
-                  <JFXListView fx:id="searchList" layoutX="500.0" layoutY="63.0" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="618.0" visible="false" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="436.0" AnchorPane.topAnchor="63.0" />
                   <JFXButton fx:id="insuranceButton" contentDisplay="CENTER" onAction="#insurance" prefHeight="23.0" prefWidth="152.0" ripplerFill="#8e8e8e" style="-fx-background-color: #1a479a;" text="Insurance Info" textFill="WHITE" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0">
                      <font>
                         <Font name="Montserrat Regular" size="14.0" />
@@ -315,48 +314,48 @@
                         <JFXDrawer fx:id="mainMenu" defaultDrawerSize="342.0" prefHeight="810.0" prefWidth="354.0" />
                      </children>
                   </JFXDrawersStack>
-                  <HBox alignment="TOP_CENTER" layoutX="398.0" layoutY="36.0" prefHeight="34.0" prefWidth="876.0" AnchorPane.leftAnchor="398.0" AnchorPane.rightAnchor="280.0" AnchorPane.topAnchor="36.0">
+                  <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="398.0" layoutY="36.0" prefWidth="818.0" AnchorPane.leftAnchor="398.0" AnchorPane.rightAnchor="338.0" AnchorPane.topAnchor="36.0">
                      <children>
-                        <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
-                           <graphic>
-                              <JFXHamburger fx:id="hamburger" layoutX="200.0" layoutY="36.0" prefHeight="16.0" prefWidth="20.0" />
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </JFXButton>
-                        <JFXTextField fx:id="destination" layoutX="60.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="618.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
-                           <font>
-                              <Font name="Montserrat Regular" size="12.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </JFXTextField>
-                        <JFXButton fx:id="search" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="15.0" />
-                           </HBox.margin>
-                        </JFXButton>
-                        <JFXButton fx:id="mic" contentDisplay="CENTER" onAction="#runVoice" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0">
-                                 <image>
-                                    <Image url="@Icons/mic.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
+                        <HBox alignment="TOP_CENTER" prefHeight="34.0" prefWidth="876.0">
+                           <children>
+                              <JFXButton fx:id="menuButton" contentDisplay="CENTER" onAction="#initDrawer" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #ffffff;">
+                                 <graphic>
+                                    <JFXHamburger fx:id="hamburger" layoutX="200.0" layoutY="36.0" prefHeight="16.0" prefWidth="20.0" />
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                              <JFXTextField fx:id="destination" layoutX="60.0" onAction="#settingFields" onKeyTyped="#autoComplete" prefHeight="26.0" prefWidth="618.0" style="-fx-background-color: #ffffff;" styleClass=".text-field-search">
+                                 <font>
+                                    <Font name="Montserrat Regular" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXButton fx:id="search" contentDisplay="CENTER" onAction="#settingFields" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: #1a479a;">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icons/VisualEditor_-_Icon_-_Search-big_-_white.svg.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                        <JFXListView fx:id="searchList" onMouseExited="#autoClose" prefHeight="101.0" prefWidth="620.0" visible="false" VBox.vgrow="NEVER">
+                           <VBox.margin>
+                              <Insets right="18.0" />
+                           </VBox.margin>
+                        </JFXListView>
                      </children>
-                  </HBox>
-                  <VBox layoutX="1050.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0" AnchorPane.rightAnchor="283.0">
+                  </VBox>
+                  <VBox layoutX="1050.0" layoutY="600.0" prefHeight="200.0" prefWidth="221.0" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="203.0">
                      <children>
                         <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="222.0">
                            <children>

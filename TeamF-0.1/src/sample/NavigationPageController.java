@@ -359,6 +359,7 @@ public class NavigationPageController implements Initializable, Data, ITimed{
                 editMapButton.setVisible(false);
                 editUsersButton.setVisible(false);
                 existServButton.setVisible(false);
+                timeoutButton.setVisible(false);
                 loginButton.setOnAction((event) -> {
                     try {
                         login();
